@@ -10,8 +10,8 @@ options(stringsAsFactors=FALSE)
 #http://oncoscape-static.s3-website-us-west-2.amazonaws.com/
 
 #--------------------------------- make plot data -----------------------------#
-diseaseAbbr <-c("BRCA", "LUNG", "LUAD","PRAD","LGG","GBM","LGG.GBM", "PAAD")
-diseaseDataP <- c("TCGAbrca", "TCGAlung","TCGAluad","TCGAprad","TCGAlgg","TCGAgbm","TCGAbrain", "TCGApaad")
+diseaseAbbr <-c("BRCA", "LUNG", "LUAD","PRAD","LGG","GBM","LGG.GBM", "PAAD", "COADREAD")
+diseaseDataP <- c("TCGAbrca", "TCGAlung","TCGAluad","TCGAprad","TCGAlgg","TCGAgbm","TCGAbrain", "TCGApaad", "TCGAcoadread")
 
 #----------------------------------------------------------------------------------------------------
 create.and.display <- function(includeUnpositionedSamples=TRUE)
@@ -26,9 +26,9 @@ create.and.display <- function(includeUnpositionedSamples=TRUE)
  #	goi <- getAlteredGeneNames(netMaker)
    gistic.scores <-c(-2, 2)
    
-   #calculateSampleSimilarityMatrix(netMaker, genes=goi, copyNumberValues=gistic.scores)
-   filename <- "MDS.SNV.CNV.tsv"
-   usePrecalculatedSampleSimilarityMatrix(netMaker, filename)
+   calculateSampleSimilarityMatrix(netMaker, copyNumberValues=gistic.scores)
+   #filename <- "MDS.SNV.CNV.tsv"
+   #usePrecalculatedSampleSimilarityMatrix(netMaker, filename)
 
    g <- getSamplesGraph(netMaker, includeUnpositionedSamples)
    rcy <- RCyjs(portRange=6047:6100, quiet=TRUE, graph=g, hideEdges=TRUE)

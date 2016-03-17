@@ -102,25 +102,19 @@ setMethod("usePrecalculatedSampleSimilarityMatrix", "NetworkMaker",
 
 #----------------------------------------------------------------------------------------------------
 # samples and genes args are only for testing; in normal operation the full lists from
-setMethod("calcSimilarity", "NetworkMaker",
- function(obj, indicatorMatrix) {
+calcSimilarity <- function(indicatorMatrix) {
 	similarity=NULL
-	maxI <- dim(indicatorMatrix)[2]
-	for (i in 1:maxI) {
-		innerProd <- indicatorMatrix[,i] %*% indicatorMatrix[,-i]
-		innerProd[maxI] <- NA
-		if (i<maxI) {
-			innerProd[(i+1):maxI] <- innerProd[i:(maxI-1)]
-		}
-		innerProd[i] <- 1
-		similarity <- cbind(similarity, innerProd)
-	}
+	similarity <- apply(indicatorMatrix,2, function(ptCol){
+		ptCol %*% indicatorMatrix
+	})
+	diag(similarity) <- 1
 	rownames(similarity) <- colnames(indicatorMatrix)
 	colnames(similarity) <- colnames(indicatorMatrix)
 	return(similarity)
 }
 
 
+#----------------------------------------------------------------------------------------------------
 setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
 
   function (obj, samples=NA, genes=NA, copyNumberValues=c(-2, 2)) {
@@ -141,7 +135,7 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
         # mutation matrices indicate wildtype by what token?  "" or NA or "NA"?
         # until this is standardized and enforced check for each
 
-     mut.01 <- .mutationMatrixTo01Matrix(mut)
+     mut.01 <- .createIndicatorMatrix(mut)
 
      stopifnot(all(sort(unique(as.integer(mut.01))) == c(0,1)))
 
@@ -157,25 +151,36 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
         }
 
     cn[!cn %in% copyNumberValues] <- 0
+	cn <- t(cn)
 
-        # we distinguish between copy number genes, and mutated genes:
-     colnames(cn) <-     paste(colnames(cn),     ".cn", sep="");
-     colnames(mut.01) <- paste(colnames(mut.01), ".mut", sep="");
+	similaritySNV <- calcSimilarity(mut.01)
+	similarityCNV <- calcSimilarity(cn)
 
-     all.genes   <- sort(unique(c(colnames(cn), colnames(mut.01))))
-     all.samples <- sort(unique(c(rownames(cn), rownames(mut.01))))
-     
-     mtx <- matrix(0, nrow=length(all.samples), ncol=length(all.genes), byrow=FALSE,
-                   dimnames<-list(all.samples, all.genes))
-     mtx[rownames(cn), colnames(cn)] <- cn
-     mtx[rownames(mut.01), colnames(mut.01)] <- mut.01
+	sharedSnvCnv <- intersect(rownames(similaritySNV), rownames(similarityCNV))
+	simSNV <- similaritySNV[sharedSnvCnv, sharedSnvCnv]
+	simCNV <- similarityCNV[sharedSnvCnv, sharedSnvCnv]
 
-     dmtx <- as.matrix(dist(mtx))
-     tbl.pos <- as.data.frame(cmdscale(dmtx, k=3))
-     colnames(tbl.pos) <- c("x", "y", "z")
-	 ptIDs <- canonicalizePatientIDs(obj@pkg, rownames(tbl.pos))
-	 tbl.pos <- tbl.pos[!duplicated(ptIDs),]
-     rownames(tbl.pos) <- ptIDs[!duplicated(ptIDs)]
+	SNV.CNV <- ((simSNV)/sum(simSNV)) + 
+			   ((simCNV)/sum(simCNV))
+
+	D <- as.dist(max(SNV.CNV) - SNV.CNV)
+	tbl.pos <- cmdscale(D, k=2) #MDS.SNV.CNV
+	colnames(tbl.pos) <- c("x", "y")
+	tbl.pos <- as.data.frame(tbl.pos)
+
+#	if (diseaseName=="BRCA") {
+#		outliers <- names(which(MDS.SNV.CNV[,1]<(-1e-04)))
+#		save(outliers, file="SNV.CNV.outliers.RData")
+#		MDS.SNV.CNV <- MDS.SNV.CNV[setdiff(rownames(MDS.SNV.CNV), outliers), ]
+#	} else if (diseaseName=="LGG.GBM") {
+#		outliers <- names(which(MDS.SNV.CNV[ ,1]<(-0.0001)))
+#		save(outliers, file="SNV.CNV.outliers.RData")
+#		MDS.SNV.CNV <- MDS.SNV.CNV[setdiff(rownames(MDS.SNV.CNV), outliers), ]
+#	}
+
+#	 ptIDs <- canonicalizePatientIDs(obj@pkg, rownames(tbl.pos))
+#	 tbl.pos <- tbl.pos[!duplicated(ptIDs),]
+#     rownames(tbl.pos) <- ptIDs[!duplicated(ptIDs)]
      obj@state[["similarityMatrix"]] <- tbl.pos
      })
 
@@ -635,6 +640,22 @@ chromosomeLocToCanvas <- function(tbl, yOrigin, yMax, spaceAroundCentromere=100)
    screen.x
 
 } # .calculate.screen.X
+#----------------------------------------------------------------------------------------------------
+# converts NA and blank strings "" to 0 and any other value to 1, returning a transposed matrix with genes in rows and patients in columns
+.createIndicatorMatrix <- function(mtx.mut)
+{
+     mtx.01 <- mtx.mut
+     
+     mtx.01[is.na(mtx.01)] <- 0
+     mtx.01[mtx.01 == ""] <- 0
+     mtx.01[nchar(mtx.01) >1] <- 1
+     
+     mtx.01 <- apply(mtx.01, 1, as.integer)
+     rownames(mtx.01) <- colnames(mtx.mut)
+
+	mtx.01
+	
+} # .createIndicatorMatrix
 #----------------------------------------------------------------------------------------------------
 .mutationMatrixTo01Matrix <- function(mtx.mut)
 {

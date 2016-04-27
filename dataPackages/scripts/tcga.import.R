@@ -5,19 +5,6 @@
 #       
 ###
 
-# Configuration -----------------------------------------------------------
-rm(list = ls(all = TRUE))
-options(stringsAsFactors = FALSE)
-os.data.batch.inputFile <- "tcga.filename.manifest.txt"
-os.data.batch.outputDir <- "../tcga.clean/"
-
-os.data.batch.inputFile.fileCols <- c("pt", "drug", "rad","f1","f2", "f3","nte","omf","nte_f1")
-os.data.batch.inputFile.studyCol <- "study"
-os.data.batch.inputFile.dirCol   <- "directory"
-
-dir.create(file.path(os.data.batch.outputDir), showWarnings = FALSE)
-
-
 # Library Imports ---------------------------------------------------------
 library(RUnit)
 library(R.utils)
@@ -25,9 +12,22 @@ library(stringr)
 library(plyr)
 library(jsonlite)
 
-#os.tcga.batch.inputFile    <- fromJSON("os.tcga.file.manifest.json")
+# Configuration -----------------------------------------------------------
+rm(list = ls(all = TRUE))
+options(stringsAsFactors = FALSE)
+
+os.tcga.batch.inputFile    <- "os.tcga.filename.manifest.json"
 os.tcga.field.enumerations  <- fromJSON("os.tcga.field.enumerations.json")
 os.tcga.column.enumerations <- fromJSON("os.tcga.column.enumerations.json")
+
+os.data.batch.outputDir <- "../tcga.clean/"
+dir.create(file.path(os.data.batch.outputDir), showWarnings = FALSE)
+
+
+#os.data.batch.inputFile.fileCols <- c("pt", "drug", "rad","f1","f2", "f3","nte","omf","nte_f1")
+#os.data.batch.inputFile.studyCol <- "study"
+#os.data.batch.inputFile.dirCol   <- "directory"
+
 
 # Class Definitions :: Enumerations -------------------------------------------------------
 os.enum.na <- c("", "NA", "[NOTAVAILABLE]","[UNKNOWN]","[NOT AVAILABLE]","[NOT EVALUATED]","UKNOWN","[DISCREPANCY]","NOT LISTED IN MEDICAL RECORD","[NOT APPLICABLE]","[PENDING]","PENDING", "[NOT AVAILABLE]","[PENDING]","[NOTAVAILABLE]","NOT SPECIFIED","[NOT AVAILABLE]|[NOT AVAILABLE]","[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]","[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]","[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]")
@@ -156,7 +156,7 @@ setAs("character","os.class.tcgaBoolean", function(from){
 # IO Utility Functions :: [Batch, Load, Save]  -------------------------------------------------------
 
 ### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
-os.data.save <- function(df, file, format = c("tsv", "csv", "RData")){
+os.data.save <- function(df, file, format = c("tsv", "csv", "RData"), metaData=NA){
   
   # Write Tab Delimited
   if("tsv" %in% format)
@@ -169,6 +169,10 @@ os.data.save <- function(df, file, format = c("tsv", "csv", "RData")){
   # Write RData File
   if("RData" %in% format)
     save(df, file=paste(file,".RData", sep = "") )
+  
+  # Write JSON File
+  if(!missing(metaData))
+    write(toJSON(metaData, pretty=TRUE), file=paste(file,"_metadata.json", sep = "") )
   
   # Return DataFrame For Chaining
   return(df)
@@ -219,37 +223,41 @@ os.data.load <- function(inputFile, checkEnumerations=FALSE, checkClassType = "c
         print("---Unused columns")
         print(unMappedData)
       }
+      
+      metaData <- unMappedData
 
-      return(mappedTable)
+      return(list(df=mappedTable, metaData=metaData))
 }
 
 ### Batch Is Used To Process Multiple TCGA Files Defined 
 os.data.batch <- function(inputFile, outputDirectory, ...){
         
-        # Load Input File 
-        inputFiles <- read.delim(inputFile, sep="\t", header=TRUE)
+    # Load Input File 
+    dataFiles <- fromJSON(inputFile)
                         
-        # Loop Column Wise: for each file type
-        for (currentTable in os.data.batch.inputFile.fileCols)
-        {
-		        # Loop Row Wise: for each disease type
-                for (rowIndex in 1:nrow(inputFiles))
-                {
-                    currentDisease   <- inputFiles[ rowIndex, os.data.batch.inputFile.studyCol ];
-                    currentDirectory <- inputFiles[ rowIndex, os.data.batch.inputFile.dirCol ]
-				          	currentDataFile  <- inputFiles[ rowIndex, currentTable]
-					if (is.na(currentDataFile)) next()
-				          	cat(currentDisease, currentTable,"\n")
-					inputFile <- paste(currentDirectory, currentDataFile, sep = "")
-					outputFile <- paste(outputDirectory, currentDisease, "_", currentTable, sep="")
+		# Loop for each disease type
+		for (diseaseName in names(dataFiles))
+		{
+		  currentDirectory <- dataFiles[[diseaseName]][["directory"]]
+		  currentFiles <- dataFiles[[diseaseName]][["files"]]
+		  
+		    # Loop Column Wise: for each file type
+				for (currentTable in names(currentFiles))
+				{
+				  cat(diseaseName, currentTable,"\n")
+					inputFile <- paste(currentDirectory, currentFiles[[currentTable]], sep = "")
+					outputFile <- paste(outputDirectory, currentTable, sep="")
 					
 					# Load Data Frame - map and filter by named columns
-					df <- os.data.load( inputFile = inputFile, ...)
-
+					result <- os.data.load( inputFile = inputFile, ...)
+          df <- result$df
+          metaData <- list("directory"=currentDirectory, "file"=currentTable, "data"=result$metaData)
+            
 					# Save Data Frame
 					os.data.save(
 							df = df,
-							file = outputFile)
+							file = outputFile,
+							metaData = metaData)
 					
 					# Remove Df From Memory
 					rm(df)
@@ -259,7 +267,7 @@ os.data.batch <- function(inputFile, outputDirectory, ...){
 
 # Run Block  -------------------------------------------------------
 os.data.batch(
-        inputFile = os.data.batch.inputFile,
+        inputFile = os.tcga.batch.inputFile,
         outputDirectory = os.data.batch.outputDir,
         checkEnumerations = TRUE,
         checkClassType = "os.class.tcgaCharacter")

@@ -3,19 +3,16 @@
 		"MALE": ["M", "MALE"],
 		"FEMALE": ["F", "FEMALE"]
 	},
-
 	"os.class.race": {
 		"WHITE": ["WHITE"],
 		"BLACK OR AFRICAN AMERICAN": ["BLACK OR AFRICAN AMERICAN"],
 		"ASIAN": ["ASIAN"],
 		"AMERICAN INDIAN OR ALASKA NATIVE": ["AMERICAN INDIAN OR ALASKA NATIVE"]
 	},
-
 	"os.class.ethnicity": {
 		"HISPANIC OR LATINO": ["HISPANIC OR LATINO"],
 		"NOT HISPANIC OR LATINO": ["NOT HISPANIC OR LATINO"]
 	},
-
 	"os.class.route": {
 		"ORAL": ["ORAL", "INTRAVENOUS (IV)|ORAL", "PO", "(PI)", "IV|PO"],
 		"INTRAVENOUS": ["INTRAVENOUS", "INTRAVENOUS (IV)", "(IV)", "IV", "INTRA-PERITONEAL (IP)|INTRAVENOUS (IV)", "INTRAVENOUS (IV)|ORAL", "INTRAMUSCULAR (IM)|INTRAVENOUS (IV)", "IV|PO", "IM|IV", "IP|IV"],
@@ -27,24 +24,28 @@
 		"INHALATION": ["IH", "(IH)"],
 		"OTHER": ["OTHER","OTHER: SPECIFY IN NOTES","OTHER (SPECIFY BELOW)","SPECIFY"]
 	},
-
 	"os.class.vital": {
 		"DEAD": ["DEAD"],
 		"ALIVE": ["ALIVE"]
 	},
 
-	"os.class.status": {
-		"WITH TUMOR": ["WITH TUMOR"],
-		"TUMOR FREE": ["TUMOR FREE"]
-	},
-	
 	"os.class.margin_status": {
 		"NEGATIVE": ["NEGATIVE"],
 		"CLOSE": ["CLOSE"],
 		"POSITIVE": ["POSITIVE"]
 	},
-	
-
+	"os.class.malignancy_type": {
+		"PRIOR MALIGNANCY": ["PRIOR MALIGNANCY"],
+		"SYNCHRONOUS MALIGNANCY": [""],
+		"36": ["36"] //strange?
+	},
+	"os.class.ihc_score": {
+		"2+": ["2+"],
+		"0":  ["0"],
+		"1+": ["1+"],
+		"3+": ["3+"],
+		"4+": ["4+"]  //not capturing???
+	},
 	"os.class.staging_system": {
 		"6TH": ["6TH"],
 		"7TH": ["7TH"],
@@ -56,29 +57,98 @@
 		"1ST":["1ST"],
 		"1995":["1995"]
 	},
-
 	"os.class.test_results": {
 		"POSITIVE": ["POSITIVE"],
 		"NEGATIVE": ["NEGATIVE"],
 		"INDETERMINATE": ["INDETERMINATE"],
-		"EQUIVOCAL": ["EQUIVOCAL"]
+		"EQUIVOCAL": ["EQUIVOCAL"],
+		"POSITIVE - SS18-SSX2":["POSITIVE - SS18-SSX2"]
 	},
-
 	"os.class.braf_result": {
 		"ABNORMAL": ["ABNORMAL"],
 		"NORMAL": ["NORMAL"]
 	},
 
+	"os.class.positivity_scale_method": {
+		"3 POINT SCALE": ["3 POINT SCALE"],
+		"4 POINT SCALE": ["4 POINT SCALE"],
+		 "OTHER REPORTING SCALE":["OTHER REPORTING SCALE"]
+	},  
+	"os.class.grade_tier_system": {
+		"THREE TIER": ["THREE TIER"],
+		"FOUR TIER": ["FOUR TIER"]
+	},
+	"os.class.alcohol_exposure_intensity": {
+		"WEEKLY DRINKER": ["WEEKLY DRINKER"],
+		"DAILY DRINKER": ["DAILY DRINKER"],
+		"NONE": ["NONE"],
+		"SOCIAL DRINKER": ["SOCIAL DRINKER"],
+		"OCCASIONAL DRINKER": ["OCCASIONAL DRINKER"]
+	},
+	"os.class.egfr_amplification": {
+		"AMPLIFIED": ["AMPLIFIED"],
+		"UNAMPLIFIED": ["UNAMPLIFIED"]
+	},
+	"os.class.test_method": {
+		"IHC": ["IHC"],
+		"SEQUENCE ANALYSIS": ["SEQUENCE ANALYSIS"],
+		"FISH": ["FISH"],
+		"RT-PCR": ["RT-PCR"],
+		"FISH FOR SS18 SPLIT":["FISH FOR SS18 SPLIT"]
+	},
+	"os.class.mutation_type": {
+		"G12C": ["G12C"],
+		"G12A": ["G12A"],
+		"G12D": ["G12D"],
+		"G12V": ["G12V"],
+		"G12S": ["G12S"],
+		"EXON 19 DELETION": ["EXON 19 DELETION"],
+		"OTHER": ["OTHER"],
+		"L858R": ["L858R"],
+		"T790M": ["T790M"],
+		"L861Q": ["L861Q "] 	
+	},
+	"os.class.zone_of_origin": {
+		"PERIPHERAL ZONE": ["PERIPHERAL ZONE"],
+		"OVERLAPPING": ["OVERLAPPING","OVERLAPPING / MULTIPLE ZONES"],
+		"MULTIPLE ZONES":["MULTIPLE ZONES","OVERLAPPING / MULTIPLE ZONES"],
+		"CENTRAL ZONE": ["CENTRAL ZONE"],
+		"TRANSITION ZONE": ["TRANSITION ZONE"]
+	},
+	"os.class.tumor_level": {
+		"APEX": ["APEX","APEX|MIDDLE|BASE","APEX|MIDDLE","APEX|BASE"  ],
+		"MIDDLE": ["MIDDLE","APEX|MIDDLE|BASE","MIDDLE|BASE","APEX|MIDDLE" ],
+		"BASE": ["BASE","APEX|MIDDLE|BASE","APEX|BASE" ]
+	},
+	"os.class.new_tumor": {
+		"LOCOREGIONAL DISEASE": ["LOCOREGIONAL DISEASE"],
+		"RECURRENCE": ["RECURRENCE"],
+		"PROGRESSION OF DISEASE": ["PROGRESSION OF DISEASE", "BIOCHEMICAL EVIDENCE OF DISEASE"],
+		"METASTATIC": ["METASTATIC"],
+		"DISTANT METASTASIS": ["DISTANT METASTASIS", "LOCOREGIONAL RECURRENCE|DISTANT METASTASIS", "DISTANT METASTASIS|NEW PRIMARY TUMOR"],
+		"LOCOREGIONAL RECURRENCE": ["LOCOREGIONAL RECURRENCE", "LOCOREGIONAL RECURRENCE|DISTANT METASTASIS"],
+		"NEW PRIMARY TUMOR": ["NEW PRIMARY TUMOR", "DISTANT METASTASIS|NEW PRIMARY TUMOR"],
+		"NO NEW TUMOR EVENT": ["NO NEW TUMOR EVENT"],
+		"LOCOREGIONAL_UROTHELIAL": ["LOCOREGIONAL (UROTHELIAL TUMOR EVENT)"]
+	},
+	"os.class.tumor_total_depth":{
+		"SUPERFICIAL":["SUPERFICIAL"], 
+		"DEEP":["DEEP"] 
+	},
+	"os.class.status": {
+		"WITH TUMOR": ["WITH TUMOR"],
+		"TUMOR FREE": ["TUMOR FREE"]
+	},
 	"os.class.treatment_outcome_first_course": {
-		"COMPLETE REMISSION/RESPONSE": ["COMPLETE REMISSION/RESPONSE"],
+		"COMPLETE REMISSION": ["COMPLETE REMISSION/RESPONSE","COMPLETE REMISSION"],
+		"RESPONSE": ["RESPONSE","COMPLETE REMISSION/RESPONSE","PARTIAL REMISSION/RESPONSE"],
 		"STABLE DISEASE": ["STABLE DISEASE"],             
 		"PROGRESSIVE DISEASE": ["PROGRESSIVE DISEASE"],        
-        "PARTIAL REMISSION/RESPONSE": ["PARTIAL REMISSION/RESPONSE"],
+        "PARTIAL REMISSION": ["PARTIAL REMISSION/RESPONSE","PARTIAL REMISSION"],
         "PERSISTENT DISEASE":["PERSISTENT DISEASE"],
         "COMPLETE RESPONSE":["COMPLETE RESPONSE"],
         "PARTIAL RESPONSE": ["PARTIAL RESPONSE"] 
 	},
-
 	"os.class.laterality": {
 		"RIGHT": ["RIGHT"],
 		"LEFT": ["LEFT"],
@@ -87,47 +157,56 @@
 		"BILATERAL":["BILATERAL"],
 		"6TH":["6TH"] //STRANGE!
 	},
-
 	"os.class.cyto_risk_group": {
-		"INTERMEDIATE/NORMAL": ["INTERMEDIATE/NORMAL"],
+		"INTERMEDIATE": ["INTERMEDIATE","INTERMEDIATE/NORMAL"],
 		"FAVORABLE": ["FAVORABLE"],
+		"NORMAL":["NORMAL","INTERMEDIATE/NORMAL"],
 		"POOR":["POOR"]
 	},
-
 	"os.class.extracapsular_extension_present": {
 		"EXTENSIVE": ["EXTENSIVE"],
 		"FOCAL": ["FOCAL"]
-
 	},
-	
+	"os.class.cause_of_death": {
+		"PROSTATE CANCER":["PROSTATE CANCER"],
+		"PANCREATIC CANCER":["PANCREATIC CANCER"],
+		"SURGICAL COMPLICATIONS":["SURGICAL COMPLICATIONS"],
+		"OTHER, NON-MALIGNANT DISEASE":["OTHER, NON-MALIGNANT DISEASE"],
+		"OTHER, SPECIFY":["OTHER, SPECIFY"],
+		"OTHER MALIGNANCY":["OTHER MALIGNANCY"], //other is a little different
+		"RELATED TO HEAD & NECK CANCER":["RELATED TO HEAD & NECK CANCER"],
+		"CANCER RELATED":["CANCER RELATED"]
+	},
+
 	"os.class.cause_of_death_source": {
 		"MEDICAL RECORD": ["MEDICAL RECORD"],
 		"DEATH CERTIFICATE": ["DEATH CERTIFICATE"],
 		"AUTOPSY":["AUTOPSY"]
 	},
-
-	"os.class.drug_units": {
-		"MG/KG": ["MG/KG"],
-		"MG": ["MG"],
-		"MG/M2":["MG/M2"],
-		"UG":["UG"],
-		"MG/M2/DAY":["MG/M2/DAY"],
-		"MG/DAY":["MG/DAY"],
-		"G/DAY":["G/DAY"],
-		"UG/M2":["UG/M2"],
-		"ML":["ML"],
+	"os.class.dose_units": {
+		"KG": ["MG/KG","KG","MG/KG/DAY"],
+		"MG": ["MG","MG/KG","MG/M2","MG/M2/DAY","MG/DAY","MG/DL","MG/KG/DAY","MG/ML","MG/M2/WK","MG/WK"],
+		"M2":["MG/M2","M2","MG/M2/DAY","UG/M2","G/M2","MG/M2/WK"],
+		"UG":["UG","UG/M2"],
+		"DAY":["MG/M2/DAY","DAY","MG/DAY","G/DAY","MG/KG/DAY"],
+		"G":["G/DAY","G","G/M2"],
+		"ML":["ML","MG/ML"],
 		"{WAFER}":["{WAFER}"],
 		"MEQ":["MEQ"],
 		"AUC":["AUC"],
-		"MG/DL":["MG/DL"],
+		"DL":["MG/DL","DL"],
 		"MCI":["MCI"],
-		"MG/KG/DAY":["MG/KG/DAY"],
-		"G/M2":["G/M2"],
-		"MG/ML": ["MG/ML"],
-		"MG/M2/WK": ["MG/M2/WK"],
-		"MG/WK":["MG/WK"]	
+		"WK":["WK","MG/WK"],
+		"GY":["GY"],
+		"CGY":["CGY"],
+		"MCI":["MCI"]
 	},
-
+	"os.class.therapy_extent": {
+		"SYSTEMIC": ["SYSTEMIC"],
+		"M0": ["M0"],
+		"LOCOREGIONAL":["LOCOREGIONAL"],
+		"BREAST":["BREAST"]
+	},
 	"os.class.treatment_outcomes": {
 		"CLINICAL PROGRESSIVE DISEASE":["CLINICAL PROGRESSIVE DISEASE"],
 		"COMPLETE RESPONSE":["COMPLETE RESPONSE"],
@@ -139,29 +218,26 @@
 		"PARTIAL REMISSION/RESPONSE":["PARTIAL REMISSION/RESPONSE"],
 		"PERSISTENT DISEASE":["PERSISTENT DISEASE"]
 	},
-
-
 	"os.class.followup_reason": {
 		"SCHEDULED FOLLOW-UP SUBMISSION":["SCHEDULED FOLLOW-UP SUBMISSION"],
 		"ADDITIONAL NEW TUMOR EVENT":["ADDITIONAL NEW TUMOR EVENT"]
 	},
+	
+
 
 	"os.class.residual_tumor": {
 		"R0": ["R0"],
 		"R2": ["R2"],
 		"RX": ["RX"],
-		"R1": ["R1"]	
+		"R1": ["R1"]	//maybe added to stage?
 	},
-	
 	"os.class.grade": {
 		"G1":["G1"],
 		"G2":["G2"],
 		"G3":["G3"],
 		"G4":["G4"],
-		"GX":["GX"]
+		"GX":["GX"] //maybe added to stage?
 	},
-
-            
 	"os.class.stage": {
 		"cM0(i+)": ["CM0 (I+)"],
 		"M0":  ["M0"],
@@ -187,20 +263,16 @@
 		"T0":  ["T0"],	
 		"TIS (LCIS)":["TIS (LCIS)"],
 		"TIS (DCIS)":["TIS (DCIS)"],
-		"TA": ["TA"]
-
-	},
-	
-	"os.class.new_tumor": {
-		"LOCOREGIONAL DISEASE": ["LOCOREGIONAL DISEASE"],
-		"RECURRENCE": ["RECURRENCE"],
-		"PROGRESSION OF DISEASE": ["PROGRESSION OF DISEASE", "BIOCHEMICAL EVIDENCE OF DISEASE"],
-		"METASTATIC": ["METASTATIC"],
-		"DISTANT METASTASIS": ["DISTANT METASTASIS", "LOCOREGIONAL RECURRENCE|DISTANT METASTASIS", "DISTANT METASTASIS|NEW PRIMARY TUMOR"],
-		"LOCOREGIONAL RECURRENCE": ["LOCOREGIONAL RECURRENCE", "LOCOREGIONAL RECURRENCE|DISTANT METASTASIS"],
-		"NEW PRIMARY TUMOR": ["NEW PRIMARY TUMOR", "DISTANT METASTASIS|NEW PRIMARY TUMOR"],
-		"NO NEW TUMOR EVENT": ["NO NEW TUMOR EVENT"],
-		"LOCOREGIONAL_UROTHELIAL": ["LOCOREGIONAL (UROTHELIAL TUMOR EVENT)"]
+		"TA": ["TA"],
+		"PT2A": ["PT2A"],
+		"PT1C": ["PT1C"],
+		"PT1A": ["PT1A"],
+		"PT2C": ["PT2C"],
+		"PT2B": ["PT2B"],
+		"PT3B": ["PT3B"],
+ 		"PT3A": ["PT3A"],
+		"PT2": ["PT2"],
+		"PT3": ["PT3"]
 	},
 
 	"os.class.encounter_type": {
@@ -211,21 +283,17 @@
 		"OTHER": ["OTHER","OTHER: SPECIFY IN NOTES","OTHER (SPECIFY BELOW)","SPECIFY"]
 		
 	},
-
 	"os.class.therapy_regimen": {
 		"ADJUVANT": ["ADJUVANT"],
 		"RECURRENCE": ["RECURRENCE"],
 		"PROGRESSION": ["PROGRESSION"],
 		"PALLIATIVE": ["PALLIATIVE"],
-		"OTHER, SPECIFY IN NOTES":["OTHER, SPECIFY IN NOTES"]
+		"OTHER":["OTHER, SPECIFY IN NOTES","OTHER"]
 	},
-
-
-
-"os.class.pathologic_method":{
+	"os.class.pathologic_method":{
 		"TUMOR RESECTION": ["TUMOR RESECTION"],
 		"EXCISIONAL BIOPSY": ["EXCISIONAL BIOPSY"],
-		"OTHER METHOD, SPECIFY:": ["OTHER METHOD, SPECIFY:"],
+		"OTHER": ["OTHER","OTHER METHOD, SPECIFY:"],
 		"INCISIONAL BIOPSY": ["INCISIONAL BIOPSY"],
 		"FINE NEEDLE ASPIRATION BIOPSY": ["FINE NEEDLE ASPIRATION BIOPSY"],
 		"CORE NEEDLE BIOPSY":["CORE NEEDLE BIOPSY"],
@@ -233,9 +301,7 @@
 		"TRANSURETHRAL RESECTION (TURBT)":["TRANSURETHRAL RESECTION (TURBT)"],
 		"ENDOSCOPIC BIOPSY":["ENDOSCOPIC BIOPSY"],
 		"TISSUE BIOPSY":["TISSUE BIOPSY"]
-},
-
-
+	},
 	"os.class.radiation_type": {
 		"COMBINATION":["COMBINATION"],
 		"EXTERNAL":["EXTERNAL"],
@@ -245,9 +311,7 @@
 		"RADIOISOTOPES":["RADIOISOTOPES", "RADIOISOTOPE"],
 		"SYSTEMIC": ["SYSTEMIC"],
 		"OTHER": ["OTHER","OTHER: SPECIFY IN NOTES","OTHER (SPECIFY BELOW)","OTHER: SPECIFY IN NOTES IMPLANTS","OTHER: SPECIFY IN NOTES RADIOISOTOPES", "SPECIFY"]
-
 	}, 
-	
 	"os.class.radiation_therapy_site": {
 		"REGIONAL SITE": ["REGIONAL SITE"],
 		"DISTANT RECURRENCE": ["DISTANT RECURRENCE"],
@@ -255,8 +319,6 @@
 		"DISTANT SITE": ["DISTANT SITE"],
 		"DPRIMARY TUMOR FIELD": ["PRIMARY TUMOR FIELD"]
 	},
-
-
 	"os.class.radiation_type_other": {
 		"2 KNIFE":["2 KNIFE"],
 		"BRACHYTHERAPY":["BRACHTHERAPY", "BRACHYTHERAPY", "BRACHYTHERAPY (IRIDIUM 192)"],

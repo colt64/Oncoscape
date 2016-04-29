@@ -27,8 +27,19 @@
                 return;
             }
 
+           // Properties
+            var cohortPatient = osApi.getCohortPatient();
+
             // View Model
             var vm = this;
+            vm.datasource = $stateParams.datasource;
+            vm.filter;
+            vm.diagnosisMin = vm.diagnosisMinValue = 1;
+            vm.diagnosisMax = vm.diagnosisMaxValue = 99;
+            vm.optCohortPatients = cohortPatient.get();
+            vm.optCohortPatient = vm.optCohortPatients[0];
+
+
          }
     }
 })();

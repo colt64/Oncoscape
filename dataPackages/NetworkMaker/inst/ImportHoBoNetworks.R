@@ -24,9 +24,9 @@ create.and.display <- function(includeUnpositionedSamples=TRUE)
    goi <- goi[-which(goi=="MAPT")]
  
  #	goi <- getAlteredGeneNames(netMaker)
-   gistic.scores <-c(-2, 2)
+   gistic.scores <-c(-2,-1,0,1, 2)
    
-   calculateSampleSimilarityMatrix(netMaker, copyNumberValues=gistic.scores)
+   calculateSampleSimilarityMatrix(netMaker, copyNumberValues=gistic.scores, genes = oncoVogel274)
    #filename <- "MDS.SNV.CNV.tsv"
    #usePrecalculatedSampleSimilarityMatrix(netMaker, filename)
 
@@ -80,6 +80,8 @@ saveGraph <- function(rcy)
 
 } # saveGraph
 #----------------------------------------------------------------------------------------------------
+
+   oncoVogel274 <- get(load("oncoVogel274.RData"))
 
 for(i in 1:length(diseaseAbbr)){
 	diseaseName= diseaseAbbr[i]

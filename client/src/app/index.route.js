@@ -80,6 +80,16 @@
                 template: '<os-survival>',
                 authenticate: true
             })
+              .state('sunburst', {
+                url: '/sunburst/{datasource}',
+                template: '<os-sunburst>',
+                authenticate: true
+            })
+            .state('template', {
+                url: '/template/{datasource}',
+                template: '<os-template>',
+                authenticate: true
+            })
             .state('compare', {
                 url: '/compare/{datasource}',
                 template: '<os-compare>',

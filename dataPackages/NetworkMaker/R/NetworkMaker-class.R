@@ -43,21 +43,21 @@ NetworkMaker <- function(dataPackage, samples=NA, genes=NA, verbose=FALSE)
 
   if(!all(is.na(samples))){
       recognized.samples <- intersect(samples, all.known.samples)
+      stopifnot(length(recognized.samples) > 2)
       if(verbose)
           warning(sprintf("%d of %d samples found in both mut and cn matrices",
                           length(recognized.samples), length(samples)))
       
          # allow for incoming samples like "TCGA.FG.A6J3" and matrices with rownames "TCGA.FG.A6J3.01"
-      mut.sample.indices <- as.integer(lapply(recognized.samples, function(s) grep(s, rownames(mtx.mut))))
-      mut.sample.indices <- mut.sample.indices[which(!is.na(mut.sample.indices))]
-      stopifnot(length(mut.sample.indices) >= 2)   # a bare minimum
-      mtx.mut <- mtx.mut[mut.sample.indices,]
+      mut.sample.rownames <- sapply(recognized.samples, function(s) grep(s, rownames(mtx.mut), value =T))
+      stopifnot(length(mut.sample.rownames) >= 2)   # a bare minimum
+      mtx.mut <- mtx.mut[mut.sample.rownames,]
 
-      cn.sample.indices <- as.integer(lapply(recognized.samples, function(s) grep(s, rownames(mtx.cn))))
-      cn.sample.indices <- cn.sample.indices[which(!is.na(cn.sample.indices))]
-      stopifnot(length(cn.sample.indices) >= 2)   # a bare minimum
-      mtx.cn <- mtx.cn[cn.sample.indices,]
-      } # samples specfied in constructor call
+      cn.sample.rownames <- as.integer(lapply(recognized.samples, function(s) grep(s, rownames(mtx.cn), value=T)))
+#      cn.sample.indices <- cn.sample.indices[which(!is.na(cn.sample.indices))]
+      stopifnot(length(cn.sample.rownames) >= 2)   # a bare minimum
+      mtx.cn <- mtx.cn[cn.sample.rownames,]
+  } # samples specfied in constructor call
 
   if(!all(is.na(genes))){
       recognized.genes <- intersect(genes, intersect(colnames(mtx.mut), colnames(mtx.cn)))
@@ -69,7 +69,7 @@ NetworkMaker <- function(dataPackage, samples=NA, genes=NA, verbose=FALSE)
       mtx.cn  <- mtx.cn[,recognized.genes]
       } # genes specfied in constructor call
 
-  #browser()
+  # original? only use samples with .01 extension (or .03 | .09 for AML)
   obj <- .NetworkMaker(pkg=dataPackage, mtx.mut=mtx.mut, mtx.cn=mtx.cn, state=new.env(parent=emptyenv()))
 
   obj
@@ -136,7 +136,8 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
         # until this is standardized and enforced check for each
 
      mut.01 <- .createIndicatorMatrix(mut)
-
+		# returns transposed matrix with genes as rows and patients as columns 
+		
      stopifnot(all(sort(unique(as.integer(mut.01))) == c(0,1)))
 
      cn <- obj@mtx.cn
@@ -150,11 +151,11 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
         cn <- cn[, genes]
         }
 
-    cn[!cn %in% copyNumberValues] <- 0
+#    cn[!cn %in% copyNumberValues] <- 0
 	cn <- t(cn)
 
-	similaritySNV <- calcSimilarity(mut.01)
-	similarityCNV <- calcSimilarity(cn)
+	similaritySNV <- calcSimilarity(as.matrix(mut.01))
+	similarityCNV <- calcSimilarity(as.matrix(cn))
 
 	sharedSnvCnv <- intersect(rownames(similaritySNV), rownames(similarityCNV))
 	simSNV <- similaritySNV[sharedSnvCnv, sharedSnvCnv]

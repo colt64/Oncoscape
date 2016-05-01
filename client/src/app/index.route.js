@@ -95,6 +95,16 @@
                 template: '<os-sunburst>',
                 authenticate: true
             })
+           .state('barplot', {
+                url: '/barplot/{datasource}',
+                template: '<os-barplot>',
+                authenticate: true
+            })
+           .state('bubble', {
+                url: '/bubble/{datasource}',
+                template: '<os-bubble>',
+                authenticate: true
+            })
             .state('compare', {
                 url: '/compare/{datasource}',
                 template: '<os-compare>',

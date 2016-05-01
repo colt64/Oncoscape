@@ -4,6 +4,8 @@ addRMessageHandler("getDataManifest", "getDataManifest");
 addRMessageHandler("specifyCurrentDataset", "specifyCurrentDataset")
 addRMessageHandler("getPatientHistoryTable", "getPatientHistoryTable")
 addRMessageHandler("getFlowData", "getFlowData")
+addRMessageHandler("getCountsData", "getCountsData")
+addRMessageHandler("getJSONdata", "getJSONdata")
 addRMessageHandler("getPatientHistoryDxAndSurvivalMinMax", "getPatientHistoryDxAndSurvivalMinMax")
 addRMessageHandler("getSampleDataFrame", "getSampleDataFrame")
 addRMessageHandler("getGeneSetNames",    "wsGetGeneSetNames")
@@ -400,6 +402,48 @@ getFlowData <- function(msg)
   
 
 } # getFlowData
+#----------------------------------------------------------------------------------------------------
+getCountsData <- function(msg)
+{
+  datasetName <- state[["currentDatasetName"]]
+  dataset <- datasets[[datasetName]]
+  tableName = "mtx.counts"
+
+  printf("getting Flow data for %s", datasetName)
+
+  if(tableName %in% names(matrices(dataset))){
+	  payload <- matrices(dataset)[[tableName]]
+	  return.msg <- list(cmd=msg$callback, status="success", callback="", payload=payload)
+  }else{
+    printf("wsDatasets.getCountsData, %s not in %s", tableName, datasetName);
+    payload <- paste("error: wsDatasets.getCountsData, ",tableName, " not in ", datasetName, sep="")
+    return.msg <- list(cmd=msg$callback, status="error", callback="", payload=payload)
+  }
+  toJSON(return.msg)
+  
+
+} # getFlowData
+#----------------------------------------------------------------------------------------------------
+getJSONdata <- function(msg)
+{
+  datasetName <- state[["currentDatasetName"]]
+  dataset <- datasets[[datasetName]]
+  tableName = msg$payload
+
+  printf("getting JSON data for %s from %s", msg$payload, datasetName)
+
+  if(tableName %in% names(networks(dataset))){
+	  payload <- networks(dataset)[[tableName]]
+	  return.msg <- list(cmd=msg$callback, status="success", callback="", payload=payload)
+  }else{
+    printf("wsDatasets.getJSONdata, %s not in %s", tableName, datasetName);
+    payload <- paste("error: wsDatasets.getJSONdata, ",tableName, " not in ", datasetName, sep="")
+    return.msg <- list(cmd=msg$callback, status="error", callback="", payload=payload)
+  }
+  toJSON(return.msg)
+  
+
+} # getJSONdata
 
 #----------------------------------------------------------------------------------------------------
 getPathway <- function(msg)

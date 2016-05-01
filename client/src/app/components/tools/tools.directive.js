@@ -69,14 +69,24 @@
                 img: 'metadata.png',
                 copy: ''
             }, {
-                name: 'Example',
-                route: 'Example',
-                img: 'logo-blue.png',
-                copy: ''
-            }, {
                 name: 'Sunburst',
                 route: 'sunburst',
                 img: 'sunburst.png',
+                copy: ''
+            }, {
+                name: 'Barplot',
+                route: 'barplot',
+                img: 'barplot.png',
+                copy: ''
+            }, {
+                name: 'Bubble',
+                route: 'bubble',
+                img: 'bubbles.png',
+                copy: ''
+            }, {
+                name: 'Example',
+                route: 'Example',
+                img: 'logo-blue.png',
                 copy: ''
             }
             ];

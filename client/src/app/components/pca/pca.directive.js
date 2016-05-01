@@ -119,7 +119,6 @@
                 setScale();
 
                 xAxis = d3.svg.axis().scale(xScale).orient("top").ticks(5);
-
                 yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(5);
 
                 var circles = d3Chart.selectAll("circle").data(rawData, function(d) { return d; });
@@ -144,6 +143,10 @@
             );
 
         } //draw
+
+        // Event Handlers
+        vm.resize = draw;
+
       } //controller
     } //explore
 })();

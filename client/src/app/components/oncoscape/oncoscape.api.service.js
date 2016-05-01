@@ -282,7 +282,18 @@
                 payload: 'mtx.flow'
             });
         }
-
+        function getCountsData() {
+            return osSocket.request({
+                cmd: "getCountsData",
+                payload: 'mtx.counts'
+            });
+        }
+        function getJSONdata(file) {
+            return osSocket.request({
+                cmd: "getJSONdata",
+                payload: file
+            });
+        }
 
         var _cohortPatient = collection(signals, {name:'All Patients', ids:'*'}, "osCohortPatient");
         function getCohortPatient(){ return _cohortPatient; }
@@ -375,6 +386,8 @@
             getCnvData: getCnvData,
             getMutationData: getMutationData,
             getFlowData: getFlowData,
+            getCountsData: getCountsData,
+            getJSONdata: getJSONdata,
             getModuleModificationDate: getModuleModificationDate
         }
 

@@ -16,3 +16,7 @@ egfr.json.RData	g.egfr.json	character	network	egfr signaling	32	14	nodes	edges	N
 gbmPathways.json.RData	g.gbmPathways.json	character	network	GBM-related Pathways	156	203	nodes	edges	NA	NA	manual curation by Hamid Bolouri
 ericsEightGliomaClusters.RData	tbl.glioma8	data.frame	categorized samples	tumors	704	2	patient	cluster & color	NA	NA	8 clusters; manual curation by Eric Holland
 verhaakGbmClustersAugmented.RData	tbl.verhaakPlus1	data.frame	categorized samples	tumors	548	2	patient	cluster & color	NA	NA	5 clusters; Verhaak 2010 + G-CIMP
+BiomarkerTree.json.RData	biomarkerTree.json	character	network	flow data of immune biomarkers	NA	NA	biomarker	biomarker	NA	NA	gated organization of flow biomarkers for immunity
+mtx.flow.RData	mtx.flow	matrix	flow biomarkers	percents	20	65	patient	gene	NA	NA	randomized percent populations
+mtx.counts.RData	mtx.counts	matrix	number genes	counts	20	5	patient	summaryStatistic	NA	NA	counts of genes with delta psi >0.1 for each patient and splicing type
+json.data.RData	json.data	character	network	nations income & population	NA	NA	nation	income by year	NA	NA	https://bost.ocks.org/mike/nations/

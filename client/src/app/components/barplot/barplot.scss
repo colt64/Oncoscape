@@ -1,0 +1,36 @@
+// Namespace
+.barplot{
+// class name should match the component name
+// anything defined in here will only apply to this component and
+//   not bleed into other components
+
+    .bar:hover {
+      fill: brown;
+    }
+
+    .axis {
+      font: 8px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .x.axis path {
+      display: none;
+    }
+    form {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+
+}
+
+
+// If nesting within the .template structure is too complex
+// follow the namespace conventions of using .template_*

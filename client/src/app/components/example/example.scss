@@ -1,5 +1,5 @@
 // Namespace
-.template{
+.example{
 // class name should match the component name
 // anything defined in here will only apply to this component and
 //   not bleed into other components
@@ -9,5 +9,5 @@
 }
 
 
-// If nesting within the .template structure is too complex
-// follow the namespace conventions of using .template_*
+// If nesting within the .example structure is too complex
+// follow the namespace conventions of using .example_*

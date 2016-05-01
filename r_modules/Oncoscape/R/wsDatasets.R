@@ -3,6 +3,7 @@ addRMessageHandler("getDataSetNames", "getAllDataSetNames");
 addRMessageHandler("getDataManifest", "getDataManifest");
 addRMessageHandler("specifyCurrentDataset", "specifyCurrentDataset")
 addRMessageHandler("getPatientHistoryTable", "getPatientHistoryTable")
+addRMessageHandler("getFlowData", "getFlowData")
 addRMessageHandler("getPatientHistoryDxAndSurvivalMinMax", "getPatientHistoryDxAndSurvivalMinMax")
 addRMessageHandler("getSampleDataFrame", "getSampleDataFrame")
 addRMessageHandler("getGeneSetNames",    "wsGetGeneSetNames")
@@ -378,6 +379,28 @@ getMarkersAndSamplesNetwork <- function(msg)
   
 
 } # getMarkersAndSamplesNetwork
+#----------------------------------------------------------------------------------------------------
+getFlowData <- function(msg)
+{
+  datasetName <- state[["currentDatasetName"]]
+  dataset <- datasets[[datasetName]]
+  tableName = "mtx.flow"
+
+  printf("getting Flow data for %s", datasetName)
+
+  if(tableName %in% names(matrices(dataset))){
+	  payload <- matrices(dataset)[[tableName]]
+	  return.msg <- list(cmd=msg$callback, status="success", callback="", payload=payload)
+  }else{
+    printf("wsDatasets.getFlowData, %s not in %s", tableName, datasetName);
+    payload <- paste("error: wsDatasets.getFlowData, ",tableName, " not in ", datasetName, sep="")
+    return.msg <- list(cmd=msg$callback, status="error", callback="", payload=payload)
+  }
+  toJSON(return.msg)
+  
+
+} # getFlowData
+
 #----------------------------------------------------------------------------------------------------
 getPathway <- function(msg)
 {

@@ -30,8 +30,8 @@
             // Elements
             var d3Chart = d3.select("#sunburst-chart").append("svg").attr("id", "chart");
             var ptRow = 1;
-            var svg;
-            var g, path, text;
+            var svg, node;
+            var Fullg, path, text;
             var arc;
             var partition = d3.layout.partition()
                 .sort(null)
@@ -39,7 +39,7 @@
 
            // Properties
             var cohortPatient = osApi.getCohortPatient();
-            var rawPatientData, tbl;
+            var tbl;
             var width, height, radius;
             var x, y;
             var color = d3.scale.category20c();
@@ -78,12 +78,13 @@
 
 
             osApi.setBusy(true)("Loading Dataset");
-            osApi.setDataset(vm.datasource).then(function(response) {
+            osApi.setDataset(vm.datasource).then(function() {
 
                 // Percent Population Data
               osApi.getFlowData().then(function(response) {
 
                     tbl = response.payload;
+                    node = root;
                     osApi.setBusy(false);
 
                     setScale();
@@ -122,11 +123,12 @@
             function click(d) {
 
                 text.transition().attr("opacity", 0);
+              	node = d;
 
                 path.transition()
                   .duration(1000)
                   .attrTween("d", arcTweenZoom(d))
-                  .each("end", function(e, i) {
+                  .each("end", function(e) {
                       // check if the animated element's data e lies within the visible angle span given in d
                       if (e.x >= d.x && e.x < (d.x + d.dx)) {
                       // get a selection of the associated text element
@@ -143,16 +145,19 @@
             // add/update data to path and text
             function draw(){
 
-                g = svg.selectAll("g")
-                  .data(partition.nodes(root))
-                  .enter().append("g");
+              //----------------------------------
+              Fullg = svg.datum(root).selectAll("path")
+                  .data(partition.nodes)
+                .enter().append("g")
 
-                path = g.append("path")
+              path = Fullg.append("path")
                   .attr("d", arc)
+                  .attr("id", function(d) { return (d.name)})
                   .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
-                  .on("click", click);
+                  .on("click", click)
+                  .each(stash);
 
-                text = g.append("text")
+              text = Fullg.append("text")
                   .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
                   .attr("x", function(d) { return y(d.y); })
                   .attr("dx", "6") // margin
@@ -164,11 +169,18 @@
                   ? function() { return 1; }
                   : function(d){ return getRelativeSize(d) };
 
-                path
-                  .data(partition.value(value).nodes)
+                path.data(partition.value(value).nodes)
                   .transition()
                   .duration(1000)
                   .attrTween("d", arcTweenData);
+
+                var arcText = Fullg.selectAll("text");
+                      // fade in the text element and recalculate positions
+                      arcText.transition().duration(750)
+                        .attr("opacity", 1)
+                        .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")" })
+                        .attr("x", function(d) { return y(d.y); });
+
               }); // change input path
 
             }
@@ -176,7 +188,7 @@
             //----------------------------------
             function getRelativeSize(d){
                 if(d.depth == 0){ return +tbl[ptRow][d.name];}
-                else return setRelSize(d.parent) * +tbl[ptRow][d.name] /100;
+                else return getRelativeSize(d.parent) * +tbl[ptRow][d.name] /100;
             }
 
 

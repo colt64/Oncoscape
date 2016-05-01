@@ -71,12 +71,12 @@
             }, {
                 name: 'Example',
                 route: 'Example',
-                img: 'logo-thumb-green.png',
+                img: 'logo-blue.png',
                 copy: ''
             }, {
                 name: 'Sunburst',
                 route: 'sunburst',
-                img: 'logo-thumb-green.png',
+                img: 'sunburst.png',
                 copy: ''
             }
             ];

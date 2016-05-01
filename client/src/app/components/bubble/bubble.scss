@@ -1,0 +1,51 @@
+// Namespace
+.bubble{
+// class name should match the component name
+// anything defined in here will only apply to this component and
+//   not bleed into other components
+
+      #chart {
+        margin-left: -40px;
+        height: 506px;
+      }
+
+      text {
+        font: 10px sans-serif;
+      }
+
+      .dot {
+        stroke: #000;
+      }
+
+      .axis path, .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+      }
+
+      .label {
+        fill: #777;
+      }
+
+      .year.label {
+        font: 500 196px "Helvetica Neue";
+        fill: #ddd;
+      }
+
+      .year.label.active {
+        fill: #aaa;
+      }
+
+      .overlay {
+        fill: none;
+        pointer-events: all;
+        cursor: ew-resize;
+      }
+
+
+
+}
+
+
+// If nesting within the .example structure is too complex
+// follow the namespace conventions of using .example_*

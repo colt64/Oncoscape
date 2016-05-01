@@ -69,16 +69,17 @@
                 img: 'metadata.png',
                 copy: ''
             }, {
+                name: 'Example',
+                route: 'Example',
+                img: 'logo-thumb-green.png',
+                copy: ''
+            }, {
                 name: 'Sunburst',
                 route: 'sunburst',
                 img: 'logo-thumb-green.png',
                 copy: ''
-            }, {
-                name: 'Template',
-                route: 'template',
-                img: 'logo-thumb-green.png',
-                copy: ''
-            }];
+            }
+            ];
             vm.explore = function(tool, datasource) {
                 $state.go(tool, {
                     datasource: datasource

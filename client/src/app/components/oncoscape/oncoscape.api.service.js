@@ -51,7 +51,7 @@
             }
             var login = function(user){
                 _user = user;
-           
+
                 var req = {
                     method: 'POST',
                     url: $location.protocol()+"://"+$location.host()+":"+ (($location.port()=="3002") ? 80 : $location.port()) +'/login',
@@ -107,7 +107,7 @@
             angular.element("#filter-dropdown").slideToggle();
         }
 
-        
+
         /*** R Service Calls ***/
         function setDataset(dataPackage) {
             osSocket.setDataSource(dataPackage);
@@ -116,7 +116,7 @@
                 payload: dataPackage
             });
         }
-        
+
         function getDataManifest(dataPackage) {
             return osSocket.request({
                 cmd: "getDataManifest",
@@ -276,6 +276,13 @@
                 }
             });
         }
+        function getFlowData() {
+            return osSocket.request({
+                cmd: "getFlowData",
+                payload: 'mtx.flow'
+            });
+        }
+
 
         var _cohortPatient = collection(signals, {name:'All Patients', ids:'*'}, "osCohortPatient");
         function getCohortPatient(){ return _cohortPatient; }
@@ -290,22 +297,22 @@
             var onSelect = new signals.Signal();
 
             var _collection = [defaultValue];
-            
+
             function get() { return _collection; }
-            
-            function add(value){ 
-                _collection.push(value); 
+
+            function add(value){
+                _collection.push(value);
                 onAdd.dispatch(_collection);
             }
             function clear(){
-                _collection = [defaultValue]   
+                _collection = [defaultValue]
             }
             function remove(value){
                 if (_selected==value) select(_collection[0]);
-                _collection.splice(_collection.indexOf(value)); 
+                _collection.splice(_collection.indexOf(value));
                 onRemove.dispatch(_collection);
             }
-           
+
             function save(key){
 
             }
@@ -327,8 +334,8 @@
         }
 
 
-   
-  
+
+
         return {
             getCohortPatient: getCohortPatient,
             getCohortGene: getCohortGene,
@@ -367,6 +374,7 @@
             getMrnaData: getMrnaData,
             getCnvData: getCnvData,
             getMutationData: getMutationData,
+            getFlowData: getFlowData,
             getModuleModificationDate: getModuleModificationDate
         }
 

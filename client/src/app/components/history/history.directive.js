@@ -90,7 +90,7 @@
                     dtTable.fnAddData(data);
                     dtTable.api().draw();
                 });
-                
+
             }
 
             // Load Datasets
@@ -112,6 +112,6 @@
                     }, 0, false);
                 });
             });
-        }
-    }
+        } //HistoryController
+    } //history
 })();

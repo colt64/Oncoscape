@@ -1,4 +1,4 @@
-<os-tray caption="Template" content="tray-content-block">
+<os-tray caption="Example" content="tray-content-block">
     <section class="tray-content">
             <div class="row">
                 <div class="col-xs-12 form-label">
@@ -40,7 +40,7 @@
 
 <section class="tray-content-block">
     <div class="container-fluid">
-        <h2>Template</h2>
+        <h2>Example</h2>
       <p>
         To add a new analysis tool, follow these steps:
       </p>
@@ -48,9 +48,9 @@
        <ol>
         <li> Create a New Component
           <ul>
-          <li> Copy the template component within apps/components/
+          <li> Copy the example component within apps/components/
           <li> Update the 3 files to match the new tool needs
-          <li> Replace all "template" with the name of the new method
+          <li> Replace all "example" with the name of the new method
           <li> Update the HTML file to define the necessary user interface
           <li> Handle all stylistic changes within the <>.scss file
           <li> Change the <>.directive.js file for data and input handling
@@ -61,13 +61,22 @@
           </ul>
        <li> Link the tool using the Rest API
           <ul>
-          <li> Within app/index.route.js, add the state url, template, and authentication settings.
+          <li> Within app/index.route.js, add the state url, example, and authentication settings.
           </ul>
        </ol>
 
     <p>  Add interactions with R through the R message handler.  This can be accessed through the osApi
-         variable in the AngularJS directive.
+         variable in the AngularJS directive.  Commands must be registered within app/component/oncoscape/oncoscape.api.service.js.
+         To monitor the R console for debugging, set silent to false in the server/process.js file.
     </p>
+
+    <p>  To use specific JS libraries (eg d3), include them in the constructor of the controller within the directive.
+
+    </p>
+
+    <h3>Example Chart</h3>
+    <div id="example-chart"></div>
+
 
     </div>
 </section>

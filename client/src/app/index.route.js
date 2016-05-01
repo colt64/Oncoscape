@@ -80,14 +80,19 @@
                 template: '<os-survival>',
                 authenticate: true
             })
-              .state('sunburst', {
-                url: '/sunburst/{datasource}',
-                template: '<os-sunburst>',
+            .state('biomarker', {
+                url: '/biomarker/{datasource}',
+                template: '<os-biomarker>',
                 authenticate: true
             })
             .state('template', {
                 url: '/template/{datasource}',
                 template: '<os-template>',
+                authenticate: true
+            })
+            .state('sunburst', {
+                url: '/sunburst/{datasource}',
+                template: '<os-sunburst>',
                 authenticate: true
             })
             .state('compare', {

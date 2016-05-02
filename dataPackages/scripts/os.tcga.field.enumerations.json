@@ -44,7 +44,7 @@
 		"0":  ["0"],
 		"1+": ["1+"],
 		"3+": ["3+"],
-		"4+": ["4+"]  //not capturing???
+		"4+": ["4+"]  
 	},
 	"os.class.staging_system": {
 		"6TH": ["6TH"],
@@ -64,11 +64,23 @@
 		"EQUIVOCAL": ["EQUIVOCAL"],
 		"POSITIVE - SS18-SSX2":["POSITIVE - SS18-SSX2"]
 	},
+	
+	"os.class.ihc_percent_positive": {
+		"<10%": ["<10%"],
+		"50-59%": ["50-59%"],
+		"60-69%": ["60-69%"],
+		"90-99%": ["90-99%"],
+		"70-79%": ["70-79%"],
+		"80-89%": ["80-89%"],
+		"20-29%": ["20-29%"],
+		"40-49%": ["40-49%"],
+		"30-39%": ["30-39%"],
+		"10-19%": ["10-19%"]
+	},
 	"os.class.braf_result": {
 		"ABNORMAL": ["ABNORMAL"],
 		"NORMAL": ["NORMAL"]
 	},
-
 	"os.class.positivity_scale_method": {
 		"3 POINT SCALE": ["3 POINT SCALE"],
 		"4 POINT SCALE": ["4 POINT SCALE"],
@@ -96,6 +108,7 @@
 		"RT-PCR": ["RT-PCR"],
 		"FISH FOR SS18 SPLIT":["FISH FOR SS18 SPLIT"]
 	},
+	
 	"os.class.mutation_type": {
 		"G12C": ["G12C"],
 		"G12A": ["G12A"],
@@ -222,8 +235,6 @@
 		"SCHEDULED FOLLOW-UP SUBMISSION":["SCHEDULED FOLLOW-UP SUBMISSION"],
 		"ADDITIONAL NEW TUMOR EVENT":["ADDITIONAL NEW TUMOR EVENT"]
 	},
-	
-
 
 	"os.class.residual_tumor": {
 		"R0": ["R0"],
@@ -272,7 +283,16 @@
 		"PT3B": ["PT3B"],
  		"PT3A": ["PT3A"],
 		"PT2": ["PT2"],
-		"PT3": ["PT3"]
+		"PT3": ["PT3"],
+		"M4": ["M4"],
+		"M1": ["M1"],
+		"M6": ["M6"],
+		"M3": ["M3"],
+		"M2": ["M2"],
+		"M7": ["M7"],
+		"M0 UNDIFFERENTIATED": ["M0 UNDIFFERENTIATED"],
+ 		"M5": ["M5"],
+		"NOT CLASSIFIED": ["NOT CLASSIFIED"]
 	},
 
 	"os.class.encounter_type": {

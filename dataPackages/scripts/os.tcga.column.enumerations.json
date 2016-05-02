@@ -30,7 +30,8 @@
 		"stage_N": ["clinical_N","ajcc_nodes_pathologic_pn", "pathologic_N"],
 		"stage_S": ["clinical_stage", "ajcc_pathologic_tumor_stage"],
 		"stage_T": ["clinical_T", "ajcc_pathologic_tumor_stage","pathologic_T","ajcc_tumor_pathologic_pt"],
-		"prostate_stage": ["ajcc_path_pt_incidental_prostate"]
+		"prostate_stage": ["ajcc_path_pt_incidental_prostate"],
+		"fab_category": ["fab_category"]
 	},
 	"os.class.margin_status": {
 		"margin_status": ["margin_status"],
@@ -46,7 +47,9 @@
 		"her2_status": ["her2_status","nte_her2_status"],
 		"hpv_status_p16": ["hpv_status_p16"],
 		"hpv_status_Ish": ["hpv_status_ish"],
-		"synovial_ss18ssx_fusion_status":["synovial_ss18ssx_fusion_status"]
+		"synovial_ss18ssx_fusion_status":["synovial_ss18ssx_fusion_status"],
+		"nte_her2_fish_status":["nte_her2_fish_status"], //added
+		"her2_status_by_ihc":["her2_status_by_ihc"]
 	},
 	"os.class.braf_result": {
 		"braf_result": ["braf_result"],
@@ -159,7 +162,15 @@
 	"os.class.tumor_total_depth": {
 		"tumor_total_depth": ["tumor_total_depth"]
 	},
-
+	"os.class.ihc_percent_positive": {
+			"er_status_ihc_percent_positive": ["er_status_ihc_Percent_Positive"],
+			"pr_status_ihc_percent_positive": ["pr_status_ihc_percent_positive"],
+			"her2_ihc_percent_positive": ["her2_ihc_percent_positive"],
+			"pr_status_ihcPos": ["nte_pr_status_ihc_positive","nte_pr_status_ihc__positive"],
+			"nte_er_status_ihc_positive": ["nte_er_status_ihc__positive"],
+			"her2_status_ihc_positive": ["nte_her2_status_ihc__positive"]		
+	
+	},		
 	"os.class.tcgaNumeric": {
 		"age_allergy_animals_insects": ["allergy_animals_insects_dx_age"],
 		"age_allergy_food": ["allergy_food_dx_age"],
@@ -272,7 +283,6 @@
 		"radiologic_tumor_burden": ["radiologic_tumor_burden"],
 		"pathologic_tumor_burden": ["pathologic_tumor_burden"]
 	},
-	
 	"os.class.tcgaBoolean": {
 		"egfr_status": ["egfr_mutation_status"],
 		"prospective_collection": ["prospective_collection"],
@@ -288,7 +298,6 @@
 		"disease_multifocal_indicator": ["disease_multifocal_indicator"],
 		"family_history_cancer_indicator": ["family_history_cancer_indicator"],
 		"ct_scan_ab_pelvis_indicator": ["ct_scan_ab_pelvis_indicator"],
-		"steroid_therapy": ["steroid_therapy_administered"],
 		"idh1_mutation_test_indicator": ["idh1_mutation_test_indicator"],
 		"incidental_prostate_cancer_indicator": ["incidental_prostate_cancer_indicator"],
 		"inherited_genetic_syndrome_indicator": ["inherited_genetic_syndrome_indicator"],
@@ -373,10 +382,15 @@
 		"definitive_tx_evidence_disease_after": ["definitive_tx_evidence_disease_after"],
 		"surgery_procedure": ["new_tumor_event_additional_surgery_procedure", "new_tumor_event_additional_surgery_procedure", "new_tumor_event_site_surgery"],	
 		"history_rt_tx_to_site_of_tumor": ["history_rt_tx_to_site_of_tcga_tumor"],
-		"tumor_multifocal": ["tumor_multifocal"]
+		"tumor_multifocal": ["tumor_multifocal"],
+		"lymphovascular_invasion":["lymphovascular_invasion"], //added
+		"leiomyo_major_vessel_involvement":["leiomyo_major_vessel_involvement"],
+		"steroid_therapy_administered": ["steroid_therapy_administered"] //added
 	},
 
 	"os.class.tcgaCharacter": {
+		"her2_status_by_ihc":["her2_status_by_ihc"], //added
+		"pharmaceutical_therapy_type":["pharmaceutical_therapy_type"], //added
 		"occupation_current": ["occupation_current"],
 		"occupation_primary_chemical_exposure": ["occupation_primary_chemical_exposure"],
 		"occupation_primary_industry": ["occupation_primary_industry"],
@@ -392,7 +406,6 @@
 		"therapy_type":["therapy_type"],
 		"drug_type":["drug_type"],
 		"clinical_trial_drug_classification":["clinical_trial_drug_classification"],
-		
 		"anatomic_organ_subdivision": ["anatomic_organ_subdivision"],
 		"asthma_eczema_allergy_first_diagnosis": ["asthma_eczema_allergy_first_dx"],
 		"axillary_staging_method_other": ["axillary_staging_method_other"],
@@ -409,7 +422,6 @@
 		"definitive_tx_method": ["definitive_tx_method"],
 		"elm4_alk_translocation_variant": ["eml4_alk_translocation_variant"],
 		"extracapsular_spread_pathologic": ["extracapsular_spread_pathologic"],
-		"fab_category": ["fab_category"],
 		"first_symptom_longest_duration": ["first_symptom_longest_duration"],
 		"first_surgical_procedure_other": ["first_surgical_procedure_other"],
 		"fish_performed_outcome": ["fish_performed_outcome"],
@@ -418,7 +430,6 @@
 		"histologic_subtype": ["histologic_subtype"],
 		"histologic_type": ["histological_type"],
 		"history_exposure_leukemogenic_agents": ["history_exposure_leukemogenic_agents"],
-		"ihc": ["IHC"],
 		"inherited_genetic_syndrome_specified": ["inherited_genetic_syndrome_specified"],
 		"initial_pathologic_diagnosis_method": ["initial_pathologic_diagnosis_method"],
 		"leason_pattern_secondary": ["leason_pattern_secondary"],
@@ -431,7 +442,6 @@
 		"mismatch_rep_protein_loss_ihc": ["mismatch_rep_proteins_loss_ihc"],
 		"molecular_abnormality_percent": ["molecular_abnormality_percent"],
 		"molecular_abnormality_results": ["molecular_abnormality_results"],
-		
 		"mpnst_nf_familial_or_sporadic": ["mpnst_nf_familial_or_sporadic"],
 		"mpnst_nf1_mutations_identified": ["mpnst_nf1_mutations_identified"],
 		"mri_results": ["mri_results"],
@@ -442,24 +452,14 @@
 		"noninvasive_bladder_ca_tx_type": ["noninvasive_bladder_ca_tx_type"],
 		"pr_positivity_scale_define_method":["pr_positivity_define_method","nte_pr_positivity_define_method"], // various scores
 		"nte_pr_positivity_scale_used": ["nte_pr_positivity_scale_used"],
-		
-		
+		"neoplasm_histologic_grade": ["neoplasm_histologic_grade"],
 		"er_positivity_method": ["er_positivity_method","nte_er_positivity_define_method"], //tests and results
-		
 		"er_positivity_scale_other": ["er_positivity_scale_other"],
-		"er_status_ihc_percent_positive": ["er_status_ihc_Percent_Positive"],
-		
 		"er_positivity_scale_used": ["nte_er_positivity_scale_used"],
-		
-		"nte_er_status_ihc_positive": ["nte_er_status_ihc__positive","nte_er_status_ihc_positiv"],
 		"nte_er_positivity_other_scale": ["nte_er_positivity_other_scale"],
-		
-
-		"her2_status_ihc_positive": ["nte_her2_status_ihc__positive"],
 		"her2_fish_method": ["nte_her2_fish_define_method","her2_fish_method"],
 		"her2_positivity_method": ["nte_her2_positivity_method","her2_positivity_method_text"], //add to method??
 		"her2_cent17_scale_other": ["her2_and_cent17_scale_other"],
-		"her2_ihc_percent_positive": ["her2_ihc_percent_positive"],
 		"her2_positivity_scale_other": ["her2_positivity_scale_other"],
 		"nte_lesion_pathologic_depth": ["nte_lesion_pathologic_depth"],
 		"nte_lesion_pathologic_length": ["nte_lesion_pathologic_length"],
@@ -467,12 +467,9 @@
 		"nte_lesion_radiologic_depth": ["nte_lesion_radiologic_depth"],
 		"nte_lesion_radiologic_length": ["nte_lesion_radiologic_length"],
 		"nte_lesion_radiologic_width": ["nte_lesion_radiologic_width"],
-		"nte_pr_status_ihc_positive": ["nte_pr_status_ihc__positive"],
 		"nte_cent17_her2_other_scale": ["nte_cent17_her2_other_scale"],
 		"nte_cent17_signal_num": ["nte_cent_17_signal_number"],
 		"pr_positivityOtherScale": ["nte_pr_positivity_other_scale"],
-		"pr_status_ihcPos": ["nte_pr_status_ihc_positive"],
-		"pr_status_ihc_percent_positive": ["pr_status_ihc_percent_positive"],
 		"pr_positivity_scale_other": ["pr_positivity_scale_other"],
 		"progression_after_hormone_therapy_type": ["progression_after_hormone_tx_type"],
 		"pr_ihc_status_percent_positive": ["pr_status_ihc_percent_positiv"],
@@ -486,22 +483,17 @@
 		"related_symptom_first_present": ["related_symptom_first_present"],
 		"site_of_primary_tumor_other": ["site_of_primary_tumor_other"],
 		"stage_other": ["stage_other"],
-		"steroid_therapy_administered": ["neoplasm_histologic_grade"],
-		"steroid_therapy_administered": ["steroid_therapy_administered"],
 		"submitted_tumor_site": ["submitted_tumor_site"],
 		"supratentorialLocalization": ["supratentorial_localization"],
 		"surgery_for_positive_margins_other": ["surgery_for_positive_margins_other"],
 		"surgery_for_positive_margins": ["surgery_for_positive_margins"],
 		"surgical_procedure": ["surgical_procedure"],
 		"surgicalProcedureFirst": ["surgical_procedure_first"],
-		"synovial_ss18ssx_fusion_status": ["synovial_ss18ssx_fusion_status"],
-		
 		"therapy_regimen_other": ["therapy_regimen_other"],
 		"tissue_source_site_code": ["tissue_source_site"],
 		"tobacco_smoking_year_started": ["tobacco_smoking_year_started"],
 		"tobacco_smoking_year_stopped": ["tobacco_smoking_year_stopped"],
 		"tumor_sample_type": ["tumor_sample_type"],
-		
 		"tumor_total_necrosis": ["tumor_total_necrosis"],
 		"tumor_site": ["tumor_site"],
 		"tumor_tissue_site": ["tumor_tissue_site"]

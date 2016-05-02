@@ -63,9 +63,8 @@
                 route: 'history',
                 img: 'history.png',
                 copy: ''
-            }, {
-                name: 'MetaData',
-                route: 'metadata',
+            }   name: 'Oncoprint',
+                route: 'oncoprint',
                 img: 'metadata.png',
                 copy: ''
             }, {
@@ -82,6 +81,11 @@
                 name: 'Bubble',
                 route: 'bubble',
                 img: 'bubbles.png',
+                copy: ''
+            }, {
+                name: 'MetaData',
+                route: 'metadata',
+                img: 'metadata.png',
                 copy: ''
             }, {
                 name: 'Example',

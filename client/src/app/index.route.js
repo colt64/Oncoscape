@@ -80,14 +80,9 @@
                 template: '<os-survival>',
                 authenticate: true
             })
-            .state('biomarker', {
-                url: '/biomarker/{datasource}',
-                template: '<os-biomarker>',
-                authenticate: true
-            })
-            .state('template', {
-                url: '/template/{datasource}',
-                template: '<os-template>',
+            .state('example', {
+                url: '/example/{datasource}',
+                template: '<os-example>',
                 authenticate: true
             })
             .state('sunburst', {
@@ -104,6 +99,10 @@
                 url: '/bubble/{datasource}',
                 template: '<os-bubble>',
                 authenticate: true
+            .state('oncoprint', {
+                url: '/oncoprint/{datasource}',
+                template: '<os-oncoprint>',
+                authenticate: false
             })
             .state('compare', {
                 url: '/compare/{datasource}',

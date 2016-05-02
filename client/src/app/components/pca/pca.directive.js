@@ -32,7 +32,7 @@
             // Properties
             var cohortPatient = osApi.getCohortPatient();
             var width, height, xScale, yScale, xMax, yMax, xAxis, yAxis;
-            var rawData, rawPatientData;
+            var rawData;
 
             // View Model
             var vm = this;
@@ -44,7 +44,33 @@
             vm.optCohortPatients = cohortPatient.get();
             vm.optCohortPatient = vm.optCohortPatients[0];
 
-            // Initalizae
+
+            // Cohorts
+            vm.addCohortPatient = function(){
+                var cohortName = "PCA " + moment().format('- H:mm:ss - M/D/YY');
+                var cohortIds = d3Chart.selectAll(".pca-node-selected")[0].map(function(node){return node.__data__.id.toUpperCase(); });
+                if (cohortIds.length==0) return;
+                var cohort = {name:cohortName, ids:cohortIds};
+                cohortPatient.add(cohort);
+                vm.optCohortPatient = cohort;
+            }
+
+
+            var applyCohort = function() {
+                var ids = vm.optCohortPatient.ids;
+                if (ids == "*"){
+                    d3Chart.selectAll(".pca-node-selected").classed("pca-node-selected", false);
+                }
+                else{
+                    d3Chart.selectAll("circle").classed("pca-node-selected", function(){
+                        return (ids.indexOf(this.__data__.id)>=0)
+                    });
+                }
+            };
+            $scope.$watch('vm.optCohortPatient', applyCohort);
+
+            // Initialize
+
             osApi.setBusy(true)("Loading Dataset");
             osApi.setDataset(vm.datasource).then(function(response) {
                 var mtx = response.payload.rownames.filter(function(v) {
@@ -52,9 +78,9 @@
                 });
 
                 // Patient Data
-                osApi.getPatientHistoryTable(vm.datasource).then(function(response) {
+                // osApi.getPatientHistoryTable(vm.datasource).then(function(response) {
 
-                    rawPatientData = response.payload.tbl;
+                    //rawPatientData = response.payload.tbl;
                     mtx = mtx[mtx.length - 1].replace(".RData", "");
                     osApi.getPCA(vm.datasource, mtx).then(function() {
 
@@ -63,7 +89,8 @@
                             // Load Gene Sets
                             vm.geneSets = response.payload;
                             vm.geneSet = vm.geneSets[0];
-                            update();
+                            $scope.$watch('vm.geneSet', function() {
+                                update();
 
                         }); //geneset
                     }); //pca
@@ -81,7 +108,8 @@
                         d.id = ids[i];
                         return d;
                     }, payload.ids);
-                    draw()
+                    draw();
+                    applyCohort();
                     osApi.setBusy(false);
                 });
             };

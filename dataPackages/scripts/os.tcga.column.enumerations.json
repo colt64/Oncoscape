@@ -51,11 +51,11 @@
 		"nte_her2_fish_status":["nte_her2_fish_status"], //added
 		"her2_status_by_ihc":["her2_status_by_ihc"]
 	},
-	"os.class.braf_result": {
+	"os.class.gene_result": {
 		"braf_result": ["braf_result"],
 		"braf_gene_result": ["braf_gene_analysis_result"]
 	},
-	"os.class.treatment_outcomes": {
+	"os.class.treatment_outcomes": { //fix
 		"treatment_outcome_first_course": ["treatment_outcome_first_course"],
 		"treatment_outcome_at_tcga_followup": ["treatment_outcome_at_tcga_followup"],
 		"treatment_best_response": ["treatment_best_response"]	
@@ -71,7 +71,7 @@
 		"radiation_therapy_site": ["radiation_therapy_site"]
 	},
 	// "os.class.new_tumor": {
-	// 	"new_tumor": ["new_tumor_event_type", "new_neoplasm_event_type"]
+	// 	"new_tumor": ["new_tumor_event_type", "new_neoplasm_event_type"] add back character!
 	// },
 	"os.class.drug_agent": {
 		"drug_therapy_name": ["drug_name"]
@@ -102,7 +102,7 @@
 	"os.class.followup_reason": {
 		"followup_reason": ["followup_reason"]
 	},
-	"os.class.staging_system": {
+	"os.class.staging_edition": {
 		"ajcc_staging_edition": ["ajcc_staging_edition"]
 	},
 	"os.class.residual_tumor": {
@@ -127,7 +127,7 @@
 		"her2_positivityOtherScale": ["nte_her2_positivity_other_scale"]
 	},
 
-	"os.class.egfr_amplification": {
+	"os.class.gene_amplification": {
 		"egfr_amplification": ["egfr_amplification_status"]
 	},
 	"os.class.test_method": {
@@ -138,7 +138,7 @@
 	},
 	"os.class.mutation_type": {
 		"kras_mutation_type": ["kras_mutation_identified_type"],
-		"egfr_mutation_type": ["egfr_mutation_identified_type"]
+		"egfr_mutation_type": ["egfr_mutation_identified_type"] //tcgacharacter!
 	},
 	"os.class.zone_of_origin": {
 		"zone_of_origin": ["zone_of_origin"]
@@ -149,10 +149,10 @@
 	"os.class.grade_tier_system": {
 		"grade_tier_system": ["grade_tier_system"]
 	},
-	"os.class.therapy_extent": {
-		"pharmaceutical_therapy_extent": ["pharmaceutical_therapy_extent"],
-		"radiation_therapy_extent": ["radiation_therapy_extent"]
-	},
+	// "os.class.therapy_extent": {
+	// 	"pharmaceutical_therapy_extent": ["pharmaceutical_therapy_extent"],
+	// 	"radiation_therapy_extent": ["radiation_therapy_extent"]
+	// },
 	"os.class.malignancy_type": {
 		"malignancy_type": ["malignancy_type"]
 	},
@@ -389,7 +389,6 @@
 	},
 
 	"os.class.tcgaCharacter": {
-		"her2_status_by_ihc":["her2_status_by_ihc"], //added
 		"pharmaceutical_therapy_type":["pharmaceutical_therapy_type"], //added
 		"occupation_current": ["occupation_current"],
 		"occupation_primary_chemical_exposure": ["occupation_primary_chemical_exposure"],

@@ -37,57 +37,54 @@
 	},
 	"os.class.malignancy_type": {
 		"PRIOR MALIGNANCY": ["PRIOR MALIGNANCY"],
-		"SYNCHRONOUS MALIGNANCY": [""],
-		"36": ["36"], //strange?
-		"-1629":["-1629"]//strange?
+		"SYNCHRONOUS MALIGNANCY": ["SYNCHRONOUS MALIGNANCY"],
+		"NA": ["36","-1629"] 		
 	},
 	"os.class.ihc_score": {
-		"2+": ["2+"],
 		"0":  ["0"],
 		"1+": ["1+"],
+		"2+": ["2+"],
 		"3+": ["3+"],
 		"4+": ["4+"]  
 	},
-	"os.class.staging_system": {
-		"6TH": ["6TH"],
-		"7TH": ["7TH"],
-		"5TH": ["5TH"],
-		"4TH": ["4TH"],
-		"3RD": ["3RD"],
-		"2ND": ["2ND"],
-		"2009":["2009"],
+	"os.class.staging_edition": {
 		"1ST":["1ST"],
+		"2ND": ["2ND"],
+		"3RD": ["3RD"],
+		"4TH": ["4TH"],
+		"5TH": ["5TH"],
+		"6TH": ["6TH"], 
+		"7TH": ["7TH"],
+		"1988":["1988"],
 		"1995":["1995"],
-		"1988":["1988"]
+		"2009":["2009"]		
 	},
 	"os.class.test_results": {
-		"POSITIVE": ["POSITIVE"],
+		"POSITIVE": ["POSITIVE","POSITIVE - SS18-SSX2"], //re-visit!
 		"NEGATIVE": ["NEGATIVE"],
 		"INDETERMINATE": ["INDETERMINATE"],
-		"EQUIVOCAL": ["EQUIVOCAL"],
-		"POSITIVE - SS18-SSX2":["POSITIVE - SS18-SSX2"]
-	},
-	
+		"EQUIVOCAL": ["EQUIVOCAL"]
+	},	
 	"os.class.ihc_percent_positive": {
 		"<10%": ["<10%"],
+		"10-19%": ["10-19%"],
+		"20-29%": ["20-29%"],
+		"30-39%": ["30-39%"],
+		"40-49%": ["40-49%"],
 		"50-59%": ["50-59%"],
 		"60-69%": ["60-69%"],
-		"90-99%": ["90-99%"],
 		"70-79%": ["70-79%"],
 		"80-89%": ["80-89%"],
-		"20-29%": ["20-29%"],
-		"40-49%": ["40-49%"],
-		"30-39%": ["30-39%"],
-		"10-19%": ["10-19%"]
+		"90-99%": ["90-99%"]		
 	},
-	"os.class.braf_result": {
-		"ABNORMAL": ["ABNORMAL"],
+	"os.class.gene_result": {
+		"ABNORMAL": ["ABNORMAL"], // indicator T/F? 
 		"NORMAL": ["NORMAL"]
 	},
 	"os.class.positivity_scale_method": {
 		"3 POINT SCALE": ["3 POINT SCALE"],
 		"4 POINT SCALE": ["4 POINT SCALE"],
-		 "OTHER REPORTING SCALE":["OTHER REPORTING SCALE"]
+		"OTHER":["OTHER REPORTING SCALE"]
 	},  
 	"os.class.grade_tier_system": {
 		"THREE TIER": ["THREE TIER"],
@@ -100,19 +97,19 @@
 		"SOCIAL DRINKER": ["SOCIAL DRINKER"],
 		"OCCASIONAL DRINKER": ["OCCASIONAL DRINKER"]
 	},
-	"os.class.egfr_amplification": {
+	"os.class.gene_amplification": { // indicator T/F?
 		"AMPLIFIED": ["AMPLIFIED"],
 		"UNAMPLIFIED": ["UNAMPLIFIED"]
 	},
 	"os.class.test_method": {
 		"IHC": ["IHC"],
 		"SEQUENCE ANALYSIS": ["SEQUENCE ANALYSIS"],
-		"FISH": ["FISH"],
-		"RT-PCR": ["RT-PCR"],
-		"FISH FOR SS18 SPLIT":["FISH FOR SS18 SPLIT"]
+		"FISH": ["FISH","FISH FOR SS18 SPLIT"],
+		"RT-PCR": ["RT-PCR"]	
 	},
 	
-	"os.class.mutation_type": {
+	"os.class.mutation_type": { //tcgacharacter!
+
 		"G12C": ["G12C"],
 		"G12A": ["G12A"],
 		"G12D": ["G12D"],
@@ -152,26 +149,25 @@
 		"DEEP":["DEEP"] 
 	},
 	"os.class.status": {
-		"WITH TUMOR": ["WITH TUMOR"],
+		"WITH TUMOR": ["WITH TUMOR"], // T/F?
 		"TUMOR FREE": ["TUMOR FREE"]
 	},
-	"os.class.treatment_outcome_first_course": {
-		"COMPLETE REMISSION": ["COMPLETE REMISSION/RESPONSE","COMPLETE REMISSION"],
-		"RESPONSE": ["RESPONSE","COMPLETE REMISSION/RESPONSE","PARTIAL REMISSION/RESPONSE"],
-		"STABLE DISEASE": ["STABLE DISEASE"],             
-		"PROGRESSIVE DISEASE": ["PROGRESSIVE DISEASE"],        
-        "PARTIAL REMISSION": ["PARTIAL REMISSION/RESPONSE","PARTIAL REMISSION"],
-        "PERSISTENT DISEASE":["PERSISTENT DISEASE"],
-        "COMPLETE RESPONSE":["COMPLETE RESPONSE"],
-        "PARTIAL RESPONSE": ["PARTIAL RESPONSE"] 
-	},
+	// "os.class.treatment_outcome_first_course": {
+	// 	"COMPLETE REMISSION": ["COMPLETE REMISSION/RESPONSE","COMPLETE REMISSION"],
+	// 	"RESPONSE": ["RESPONSE","COMPLETE REMISSION/RESPONSE","PARTIAL REMISSION/RESPONSE"],
+	// 	"STABLE DISEASE": ["STABLE DISEASE"],             
+	// 	"PROGRESSIVE DISEASE": ["PROGRESSIVE DISEASE"],        
+ //        "PARTIAL RESPONSE": ["PARTIAL REMISSION/RESPONSE","PARTIAL REMISSION","PARTIAL RESPONSE"],
+ //        "PERSISTENT DISEASE":["PERSISTENT DISEASE"],
+ //        "COMPLETE RESPONSE":["COMPLETE RESPONSE"]      
+	// },
 	"os.class.laterality": {
 		"RIGHT": ["RIGHT"],
 		"LEFT": ["LEFT"],
 		"BOTH":["BOTH"],
 		"MIDLINE":["MIDLINE"],
 		"BILATERAL":["BILATERAL"],
-		"6TH":["6TH"],//STRANGE!
+		"NA":["6TH"],
 		"RIGHT LOBE":["RIGHT LOBE"],
 		"LEFT LOBE":["LEFT LOBE"],
 		"ISTHMUS":["ISTHMUS"] 
@@ -189,55 +185,57 @@
 	"os.class.cause_of_death": {
 		"PROSTATE CANCER":["PROSTATE CANCER"],
 		"PANCREATIC CANCER":["PANCREATIC CANCER"],
-		"SURGICAL COMPLICATIONS":["SURGICAL COMPLICATIONS"],
-		"OTHER, NON-MALIGNANT DISEASE":["OTHER, NON-MALIGNANT DISEASE"],
-		"OTHER, SPECIFY":["OTHER, SPECIFY"],
-		"OTHER MALIGNANCY":["OTHER MALIGNANCY"], //other is a little different
-		"RELATED TO HEAD & NECK CANCER":["RELATED TO HEAD & NECK CANCER"],
+		"SURGICAL COMPLICATIONS":["SURGICAL COMPLICATIONS"],	
+		"OTHER NON-MALIGNANT":["OTHER, NON-MALIGNANT DISEASE"],
+		"OTHER":["OTHER, SPECIFY"],
+		"OTHER MALIGNANT":["OTHER MALIGNANCY"], 
+		"HEAD AND NECK CANCER":["RELATED TO HEAD & NECK CANCER"],
 		"CANCER RELATED":["CANCER RELATED"],
 		"CERVICAL CANCER":["CERVICAL CANCER"],
-		"TESTICULAR GERM CELL TUMOR (TGCT)":["TESTICULAR GERM CELL TUMOR (TGCT)"],
+		"TESTICULAR GERM CELL CANCER":["TESTICULAR GERM CELL TUMOR (TGCT)"],
 		"METASTATIC UVEAL MELANOMA":["METASTATIC UVEAL MELANOMA "],
 		"STOMACH CANCER":["STOMACH CANCER "],
 		"NON-CANCER RELATED":["NON-CANCER RELATED"]
 	},
-
 	"os.class.cause_of_death_source": {
 		"MEDICAL RECORD": ["MEDICAL RECORD"],
 		"DEATH CERTIFICATE": ["DEATH CERTIFICATE"],
 		"AUTOPSY":["AUTOPSY"],
 		"SOCIAL SECURITY DEATH INDEX":["SOCIAL SECURITY DEATH INDEX"]
 	},
-	"os.class.dose_units": {
-		"KG": ["MG/KG","KG","MG/KG/DAY","[IU]/KG"],
+	"os.class.dose_units": { // fix
+		"KG":["KG"],
+		"MG/KG":["MG/KG"],
+		"MG/KG/DAY":["MG/KG/DAY"],
+		"[IU]/KG":["[IU]/KG"],
 		"MG": ["MG","MG/KG","MG/M2","MG/M2/DAY","MG/DAY","MG/DL","MG/KG/DAY","MG/ML","MG/M2/WK","MG/WK","[IU]/MG"],
 		"M2":["MG/M2","M2","MG/M2/DAY","UG/M2","G/M2","MG/M2/WK"],
 		"UG":["UG","UG/M2"],
 		"DAY":["MG/M2/DAY","DAY","MG/DAY","G/DAY","MG/KG/DAY"],
-		"G":["G/DAY","G","G/M2"],
-		"ML":["ML","MG/ML"],
-		"{WAFER}":["{WAFER}"],
+		"G":["G"],
+		"ML":["ML"],
+		"WAFER":["{WAFER}"],
 		"MEQ":["MEQ"],
 		"AUC":["AUC"],
-		"DL":["MG/DL","DL"],
+		"DL":["DL"],
 		"MCI":["MCI"],
-		"WK":["WK","MG/WK"],
+		"WK":["WK"],
 		"GY":["GY"],
 		"CGY":["CGY"],
 		"MCI":["MCI"],
 		"M[IU]":["M[IU]"],
-		"[IU]":["[IU]","[IU]/KG","[IU]/MG"]
+		"[IU]":["[IU]"],		
+		"MG/M2/DAY":["MG/M2/DAY"]
 
-		
 	},
-	"os.class.therapy_extent": {
-		"SYSTEMIC": ["SYSTEMIC"],
-		"M0": ["M0"],
-		"LOCOREGIONAL":["LOCOREGIONAL"],
-		"BREAST":["BREAST"],
-		"LYMPHOMA":["LYMPHOMA"]
-	},
-	"os.class.treatment_outcomes": {
+	// "os.class.therapy_extent": {
+	// 	"SYSTEMIC": ["SYSTEMIC"],
+	// 	"M0": ["M0"],
+	// 	"LOCOREGIONAL":["LOCOREGIONAL"],
+	// 	"BREAST":["BREAST"],
+	// 	"LYMPHOMA":["LYMPHOMA"]
+	// },
+	"os.class.treatment_outcomes": { //FIX
 		"CLINICAL PROGRESSIVE DISEASE":["CLINICAL PROGRESSIVE DISEASE"],
 		"COMPLETE RESPONSE":["COMPLETE RESPONSE"],
 		"PARTIAL RESPONSE":["PARTIAL RESPONSE"],
@@ -248,8 +246,15 @@
 		"PARTIAL REMISSION/RESPONSE":["PARTIAL REMISSION/RESPONSE"],
 		"PERSISTENT DISEASE":["PERSISTENT DISEASE"],
 		"NO MEASUREABLE TUMOR OR TUMOR MARKERS":["NO MEASUREABLE TUMOR OR TUMOR MARKERS"],
-		"NORMALIZATION OF TUMOR MARKERS, BUT RESIDUAL TUMOR MASS":["NORMALIZATION OF TUMOR MARKERS, BUT RESIDUAL TUMOR MASS"]
-
+		"NORMALIZATION OF TUMOR MARKERS, BUT RESIDUAL TUMOR MASS":["NORMALIZATION OF TUMOR MARKERS, BUT RESIDUAL TUMOR MASS"],
+		"COMPLETE REMISSION": ["COMPLETE REMISSION/RESPONSE","COMPLETE REMISSION"],
+		"RESPONSE": ["RESPONSE","COMPLETE REMISSION/RESPONSE","PARTIAL REMISSION/RESPONSE"],
+		"STABLE DISEASE": ["STABLE DISEASE"],             
+		"PROGRESSIVE DISEASE": ["PROGRESSIVE DISEASE"],        
+        "PARTIAL RESPONSE": ["PARTIAL REMISSION/RESPONSE","PARTIAL REMISSION","PARTIAL RESPONSE"],
+        "PERSISTENT DISEASE":["PERSISTENT DISEASE"],
+        "COMPLETE RESPONSE":["COMPLETE RESPONSE"]
+	
 	},
 	"os.class.followup_reason": {
 		"SCHEDULED FOLLOW-UP SUBMISSION":["SCHEDULED FOLLOW-UP SUBMISSION"],
@@ -272,7 +277,7 @@
 	},
 	"os.class.stage": {
 		"cM0(i+)": ["CM0 (I+)"],
-		"M0":  ["M0"],
+		"M0":  ["M0","M0 UNDIFFERENTIATED"],
 		"M1":  ["M1"], "M1A": ["M1A"], "M1B": ["M1B"], "M1C": ["M1C"],
 		"MX":  ["MX"],
 		"N0":  ["N0"], "N0(i-)":["N0 (I-)"], "N0(i+)":["N0 (I+)"], "N0(mol+)":["N0 (MOL+)"],
@@ -311,7 +316,6 @@
 		"M3": ["M3"],
 		"M2": ["M2"],
 		"M7": ["M7"],
-		"M0 UNDIFFERENTIATED": ["M0 UNDIFFERENTIATED"],
  		"M5": ["M5"],
 		"NOT CLASSIFIED": ["NOT CLASSIFIED"],
 		"T2A2":["T2A2"],

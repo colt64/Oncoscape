@@ -276,10 +276,10 @@
                 }
             });
         }
-        function getFlowData() {
+        function getFlowData(file) {
             return osSocket.request({
                 cmd: "getFlowData",
-                payload: 'mtx.flow'
+                payload: file
             });
         }
         function getCountsData() {
@@ -292,6 +292,8 @@
             return osSocket.request({
                 cmd: "getJSONdata",
                 payload: file
+            });
+        }
         function getOncoprint(geneSetAndPatients) {
             //console.log("***** within osApi.getOncoprint: ", geneSetAndPatients);
             //debugger;

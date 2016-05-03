@@ -18,5 +18,6 @@ ericsEightGliomaClusters.RData	tbl.glioma8	data.frame	categorized samples	tumors
 verhaakGbmClustersAugmented.RData	tbl.verhaakPlus1	data.frame	categorized samples	tumors	548	2	patient	cluster & color	NA	NA	5 clusters; Verhaak 2010 + G-CIMP
 BiomarkerTree.json.RData	biomarkerTree.json	character	network	flow data of immune biomarkers	NA	NA	biomarker	biomarker	NA	NA	gated organization of flow biomarkers for immunity
 mtx.flow.RData	mtx.flow	matrix	flow biomarkers	percents	20	65	patient	gene	NA	NA	randomized percent populations
+mtx.flow2.RData	mtx.flow2	matrix	flow biomarkers	percents	78	29	patient	gene	NA	NA	randomized percent populations
 mtx.counts.RData	mtx.counts	matrix	number genes	counts	20	5	patient	summaryStatistic	NA	NA	counts of genes with delta psi >0.1 for each patient and splicing type
 json.data.RData	json.data	character	network	nations income & population	NA	NA	nation	income by year	NA	NA	https://bost.ocks.org/mike/nations/

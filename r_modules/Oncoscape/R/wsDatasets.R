@@ -386,7 +386,7 @@ getFlowData <- function(msg)
 {
   datasetName <- state[["currentDatasetName"]]
   dataset <- datasets[[datasetName]]
-  tableName = "mtx.flow"
+  tableName = msg$payload
 
   printf("getting Flow data for %s", datasetName)
 

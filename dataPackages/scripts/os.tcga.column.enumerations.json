@@ -1,4 +1,4 @@
-//need to add date for smoking status "1999"
+//need to add date for smoking status "1999" and handle the CRAZY Not Available strings
 
 {
 	"os.class.tcgaId": {
@@ -70,9 +70,9 @@
 	"os.class.radiation_therapy_site": {
 		"radiation_therapy_site": ["radiation_therapy_site"]
 	},
-	"os.class.new_tumor": {
-		"new_tumor": ["new_tumor_event_type", "new_neoplasm_event_type"]
-	},
+	// "os.class.new_tumor": {
+	// 	"new_tumor": ["new_tumor_event_type", "new_neoplasm_event_type"]
+	// },
 	"os.class.drug_agent": {
 		"drug_therapy_name": ["drug_name"]
 	},

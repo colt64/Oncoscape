@@ -99,6 +99,7 @@
                 url: '/bubble/{datasource}',
                 template: '<os-bubble>',
                 authenticate: true
+            })
             .state('oncoprint', {
                 url: '/oncoprint/{datasource}',
                 template: '<os-oncoprint>',

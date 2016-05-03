@@ -63,7 +63,8 @@
                 route: 'history',
                 img: 'history.png',
                 copy: ''
-            }   name: 'Oncoprint',
+            }, {
+                name: 'Oncoprint',
                 route: 'oncoprint',
                 img: 'metadata.png',
                 copy: ''
@@ -89,7 +90,7 @@
                 copy: ''
             }, {
                 name: 'Example',
-                route: 'Example',
+                route: 'example',
                 img: 'logo-blue.png',
                 copy: ''
             }

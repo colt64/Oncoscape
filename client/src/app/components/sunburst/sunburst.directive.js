@@ -29,7 +29,7 @@
 
             // Elements
             var d3Chart = d3.select("#sunburst-chart").append("svg").attr("id", "chart");
-            var ptRow = 2;
+            var ptRow = 77;
             var svg, node;
             var Fullg, path, text;
             var arc;
@@ -56,16 +56,27 @@
                     			    {"name": "Tgd", "size": 1, "children": [
                                 {"name": "Tgd_INFG", "size": 1},
                         				{"name": "Tgd_IL22", "size": 1},
-                        				{"name": "Tgd_IL17", "size": 1}				]},
-                      			{"name": "NKT", "size": 1},
-                      			{"name": "CD8", "size": 1, "children": [
-                      				{"name": "CD8_INFG", "size": 1}			]},
-                      			{"name": "CD4", "size": 1, "children": [
-                              {"name": "Th22", "size": 1},
-                              {"name": "Th17", "size": 1},
-                              {"name": "Th1", "size": 1},
-                              {"name": "Treg", "size": 1}  ]}  ]} ]},
-                        {"name": "epCAM","size": 1}   ]}
+                        				{"name": "Tgd_IL17", "size": 1},
+                        				{"name": "other_Tgd", "size":0}
+                      				]},
+                      			  {"name": "NKT", "size": 1},
+                      			  {"name": "CD8", "size": 1, "children": [
+                      				  {"name": "CD8_INFG", "size": 1},
+                      				  {"name": "other_CD8", "size": 0}
+                      				]},
+                      			  {"name": "CD4", "size": 1, "children": [
+                                {"name": "Th22", "size": 1},
+                                {"name": "Th17", "size": 1},
+                                {"name": "Th1", "size": 1},
+                                {"name": "Treg", "size": 1},
+                                {"name": "other_CD4", "size":0}
+                              ]},
+                              {"name": "other_CD3", "size":0}
+                            ]},
+                            {"name": "other_CD45", "size":0}
+                          ]},
+                        {"name": "epCAM","size": 1},
+                        {"name": "other_live", "size":0}   ]}
 
             // View Model
             var vm = this;
@@ -81,7 +92,8 @@
             osApi.setDataset(vm.datasource).then(function() {
 
                 // Percent Population Data
-              osApi.getFlowData().then(function(response) {
+                var file = "mtx.flow";
+              osApi.getFlowData(file).then(function(response) {
 
                     tbl = response.payload;
                     node = root;
@@ -195,8 +207,10 @@
 
             //----------------------------------
             function getRelativeSize(d){
-                if(d.depth == 0){ return +tbl[ptRow][d.name];}
-                else return getRelativeSize(d.parent) * +tbl[ptRow][d.name] /100;
+                var percent = typeof tbl[ptRow][d.name] ==="undefined" ? 0 : +tbl[ptRow][d.name];
+                if(percent == 0){ return percent;}
+                if(d.depth == 0){ return percent;}
+                else return getRelativeSize(d.parent) * percent /100;
             }
 
 

@@ -11,7 +11,7 @@ options(stringsAsFactors = FALSE)
 os.data.batch.inputFile <- "tcga.filename.manifest.txt"
 os.data.batch.outputDir <- "../tcga.clean/"
 
-os.data.batch.inputFile.fileCols <- c("pt", "drug", "rad","f1","f2", "f3","nte","omf","nte_f1")
+os.data.batch.inputFile.fileCols <- c("pt", "drug", "rad","f1","f2", "f3","nte","omf","nte_f1","nte_f2")
 os.data.batch.inputFile.studyCol <- "study"
 os.data.batch.inputFile.dirCol   <- "directory"
 

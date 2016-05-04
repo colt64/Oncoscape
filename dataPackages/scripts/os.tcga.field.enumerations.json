@@ -234,7 +234,9 @@
 		"G3":["G3"],
 		"G4":["G4"],
 		"GX":["GX"], //maybe added to stage?
-		"GB":["GB"]
+		"GB":["GB"],
+		"HIGH GRADE":["HIGH GRADE"],
+		"LOW GRADE":["LOW GRADE"] 
 	},
 	"os.class.stage": {
 		"cM0(i+)": ["CM0 (I+)"],

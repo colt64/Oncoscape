@@ -263,3 +263,4 @@ os.data.batch(
   outputDirectory = os.data.batch.outputDir,
   checkEnumerations = TRUE,
   checkClassType = "os.class.tcgaCharacter")
+

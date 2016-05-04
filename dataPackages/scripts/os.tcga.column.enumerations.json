@@ -94,9 +94,6 @@
 	"os.class.weiss_venous_invasion": {
 		"weiss_venous_invasion":["weiss_venous_invasion"]
 	},
-	"os.class.history_immunosuppressive_disease": {
-		"history_immunosuppressive_disease":["history_immunosuppressive_disease"],
-	},
 	"os.class.corpus_involvement": {
 		"corpus_involvement" :["corpus_involvement"]
 	},
@@ -116,8 +113,8 @@
 		"treatment_best_response": ["treatment_best_response"]	
 	},
 	"os.class.laterality": {
-		"laterality": ["laterality","other_malignancy_laterality"],
-		"anatomic_neoplasm_subdivision": ["anatomic_neoplasm_subdivision"]
+		"laterality": ["laterality","other_malignancy_laterality"]
+		
 	},
 	"os.class.radiation_type": {
 		"radiation_type": ["radiation_therapy_type"],
@@ -580,6 +577,7 @@
 	},
 
 	"os.class.tcgaCharacter": {
+		"anatomic_neoplasm_subdivision": ["anatomic_neoplasm_subdivision"],
 		"new_tumor": ["new_tumor_event_type", "new_neoplasm_event_type"], //make a class once we figure out how to handle SKCM
 		"pharmaceutical_therapy_extent": ["pharmaceutical_therapy_extent"], //moved back from os.classes
 		"radiation_therapy_extent": ["radiation_therapy_extent"], //moved back from os.classes

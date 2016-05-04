@@ -77,10 +77,83 @@
 		"80-89%": ["80-89%"],
 		"90-99%": ["90-99%"]		
 	},
+	
+	//Make Boolean??????
 	"os.class.gene_result": {
-		"ABNORMAL": ["ABNORMAL"], // indicator T/F? 
+		"ABNORMAL": ["ABNORMAL"],  
 		"NORMAL": ["NORMAL"]
 	},
+	"os.class.gene_amplification": { 
+		"AMPLIFIED": ["AMPLIFIED"],
+		"UNAMPLIFIED": ["UNAMPLIFIED"]
+	},
+	"os.class.status": {
+		"WITH TUMOR": ["WITH TUMOR"], 
+		"TUMOR FREE": ["TUMOR FREE"]
+	},
+	"os.class.atypical_mitotic_figures": {
+		"ATYPICAL MITOTIC FIGURES ABSENT": ["ATYPICAL MITOTIC FIGURES ABSENT"], 
+		"ATYPICAL MITOTIC FIGURES PRESENT": ["ATYPICAL MITOTIC FIGURES PRESENT"]
+	},
+	"os.class.cytoplasm_presence_less_than_equal_25_percent": {
+		"CYTOPLASM PRESENCE <= 25% PRESENT": ["CYTOPLASM PRESENCE <= 25% PRESENT"],
+		"CYTOPLASM PRESENCE <= 25% ABSENT": ["CYTOPLASM PRESENCE <= 25% ABSENT"]
+	},
+	"os.class.diffuse_architecture": {
+		"DIFFUSE ARCHITECTURE PRESENT": ["DIFFUSE ARCHITECTURE PRESENT"],
+		"DIFFUSE ARCHITECTURE ABSENT": ["DIFFUSE ARCHITECTURE ABSENT"]
+	},
+	"os.class.invasion_of_tumor_capsule": {
+		"INVASION OF TUMOR CAPSULE ABSENT":["INVASION OF TUMOR CAPSULE ABSENT"],
+		"INVASION OF TUMOR CAPSULE PRESENT":["INVASION OF TUMOR CAPSULE PRESENT"]
+	},
+	"os.class.mitotic_rate": {
+		"MITOTIC RATE > 5/50 HPF ABSENT":["MITOTIC RATE > 5/50 HPF ABSENT"],
+		"MITOTIC RATE > 5/50 HPF PRESENT":["MITOTIC RATE > 5/50 HPF PRESENT"]
+	},
+	"os.class.necrosis": {
+		"NECROSIS PRESENT":["NECROSIS PRESENT"],
+		"NECROSIS ABSENT":["NECROSIS ABSENT"]
+	},
+	"os.class.nuclear_grade_III_IV": {
+		"NUCLEAR GRADE III OR IV ABSENT":["nuclear_grade_III_IV"],
+		"NUCLEAR GRADE III OR IV PRESENT":["NUCLEAR GRADE III OR IV PRESENT"]
+	},
+	"os.class.ret": {
+		"RET NEGATIVE":["RET NEGATIVE"]
+	},
+	"os.class.ret": {
+		"RET NEGATIVE":["RET NEGATIVE"]
+	},
+	"os.class.sinusoid_invasion": {
+		"SINUSOID INVASION ABSENT":["SINUSOID INVASION ABSENT"],
+		"SINUSOID INVASION PRESENT":["SINUSOID INVASION PRESENT"]
+	},
+	"os.class.weiss_venous_invasion": {
+		"VENOUS INVASION ABSENT":["VENOUS INVASION ABSENT"],
+		"VENOUS INVASION PRESENT":["VENOUS INVASION PRESENT"]
+	},
+		"os.class.lymphovascular_involvement": {
+		"PRESENT":["PRESENT"],
+		"ABSENT":["ABSENT"]
+	},
+	"os.class.corpus_involvement": {
+		"PRESENT":["PRESENT"],
+		"ABSENT":["ABSENT"]
+	},
+	"os.class.intratubular_germ_cell_neoplasm": {
+		"PRESENT":["PRESENT"],
+		"ABSENT":["ABSENT"]
+	},
+
+	//END
+	
+	"os.class.vascular_invasion": {
+		"MICRO":["MICRO"],
+		"NONE":["NONE"],
+		"MACRO":["MACRO"]
+	},
+
 	"os.class.positivity_scale_method": {
 		"3 POINT SCALE": ["3 POINT SCALE"],
 		"4 POINT SCALE": ["4 POINT SCALE"],
@@ -97,15 +170,14 @@
 		"SOCIAL DRINKER": ["SOCIAL DRINKER"],
 		"OCCASIONAL DRINKER": ["OCCASIONAL DRINKER"]
 	},
-	"os.class.gene_amplification": { // indicator T/F?
-		"AMPLIFIED": ["AMPLIFIED"],
-		"UNAMPLIFIED": ["UNAMPLIFIED"]
-	},
+	
 	"os.class.test_method": {
 		"IHC": ["IHC"],
 		"SEQUENCE ANALYSIS": ["SEQUENCE ANALYSIS"],
 		"FISH": ["FISH","FISH FOR SS18 SPLIT"],
-		"RT-PCR": ["RT-PCR"]	
+		"RT-PCR": ["RT-PCR"],
+		"PCR":["PCR"],
+		"OTHER":["OTHER, SPECIFY"]	
 	},
 	"os.class.zone_of_origin": {
 		"PERIPHERAL ZONE": ["PERIPHERAL ZONE"],
@@ -134,10 +206,7 @@
 		"SUPERFICIAL":["SUPERFICIAL"], 
 		"DEEP":["DEEP"] 
 	},
-	"os.class.status": {
-		"WITH TUMOR": ["WITH TUMOR"], // indicator T/F?
-		"TUMOR FREE": ["TUMOR FREE"]
-	},
+	
 	"os.class.laterality": {
 		"RIGHT": ["RIGHT"],
 		"LEFT": ["LEFT"],
@@ -239,7 +308,7 @@
 		"M0":  ["M0","M0 UNDIFFERENTIATED"],
 		"M1":  ["M1"], "M1A": ["M1A"], "M1B": ["M1B"], "M1C": ["M1C"],
 		"M2":  ["M2"],
-		"M3":  ["M3"],
+		"M3":  ["M3"],    
 		"M4":  ["M4"],
 		"M5":  ["M5"],
 		"M6":  ["M6"],
@@ -277,9 +346,8 @@
 		"PT3": ["PT3"],
 		"NOT CLASSIFIED": ["NOT CLASSIFIED"],
 		"I/II NOS":["I/II NOS"],
-		"IS":["IS"]
+		"IS":["IS", "STAGE IS" ]
 	},
-
 	"os.class.encounter_type": {
 		"PRE-OPERATIVE": ["PRE-OPERATIVE", "PREOPERATIVE"],
 		"PRE-ADJUVANT THERAPY": ["PRE-ADJUVANT THERAPY","POST ADJUVANT THERAPY"],

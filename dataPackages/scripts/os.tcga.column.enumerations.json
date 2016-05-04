@@ -19,19 +19,20 @@
 	"os.class.vital": {
 		"status_vital": ["vital_status"]
 	},
-	"os.class.status": {
-		"status_tumor": ["tumor_status"]
-	},
+	
 	"os.class.encounter_type": {
 		"encounter_type": ["performance_status_timing"]
 	},
 	"os.class.stage": {
-		"stage_M": ["clinical_M", "ajcc_metastasis_pathologic_pm"],
-		"stage_N": ["clinical_N","ajcc_nodes_pathologic_pn", "pathologic_N"],
-		"stage_S": ["clinical_stage", "ajcc_pathologic_tumor_stage"],
-		"stage_T": ["clinical_T", "ajcc_pathologic_tumor_stage","pathologic_T","ajcc_tumor_pathologic_pt"],
+		"stage_M": ["clinical_M", "ajcc_metastasis_pathologic_pm","ajcc_metastasis_clinical_cm"],
+		"stage_N": ["clinical_N","ajcc_nodes_pathologic_pn", "pathologic_N","ajcc_nodes_clinical_cn"],
+		"stage_S": ["clinical_stage", "ajcc_pathologic_tumor_stage","ajcc_clinical_tumor_stage"],
+		"stage_T": ["clinical_T", "ajcc_pathologic_tumor_stage","pathologic_T","ajcc_tumor_pathologic_pt","ajcc_tumor_clinical_ct"],
 		"prostate_stage": ["ajcc_path_pt_incidental_prostate"],
-		"fab_category": ["fab_category"]
+		"fab_category": ["fab_category"],
+		"serum_markers":["serum_markers"],
+		"masaoka_stage":["masaoka_stage"]
+	
 	},
 	"os.class.margin_status": {
 		"margin_status": ["margin_status"],
@@ -51,17 +52,72 @@
 		"nte_her2_fish_status":["nte_her2_fish_status"], 
 		"her2_status_by_ihc":["her2_status_by_ihc"]
 	},
+	
+	//All Boolean Classes???
 	"os.class.gene_result": {
 		"braf_result": ["braf_result"],
 		"braf_gene_result": ["braf_gene_analysis_result"]
 	},
+	"os.class.gene_amplification": {
+		"egfr_amplification": ["egfr_amplification_status"]
+	},
+	"os.class.status": {
+		"status_tumor": ["tumor_status"]
+	},
+	"os.class.atypical_mitotic_figures": {
+		"atypical_mitotic_figures":["atypical_mitotic_figures"]
+	},
+	"os.class.cytoplasm_presence_less_than_equal_25_percent": {
+		"cytoplasm_presence_less_than_equal_25_percent":["cytoplasm_presence_less_than_equal_25_percent"]
+	},
+	"os.class.diffuse_architecture": {
+		"diffuse_architecture":["diffuse_architecture"]
+	},
+	"os.class.invasion_of_tumor_capsule": {
+		"invasion_of_tumor_capsule":["invasion_of_tumor_capsule"]
+	},
+	"os.class.mitotic_rate": {
+		"mitotic_rate":["mitotic_rate"]
+	},
+	"os.class.necrosis": {
+		"necrosis":["necrosis"]
+	},
+	"os.class.nuclear_grade_III_IV": {
+		"nuclear_grade_III_IV":["nuclear_grade_III_IV"]
+	},
+	"os.class.ret": {
+		"ret":["ret"]
+	},
+	"os.class.sinusoid_invasion": {
+		"sinusoid_invasion":["sinusoid_invasion"]
+	},
+	"os.class.weiss_venous_invasion": {
+		"weiss_venous_invasion":["weiss_venous_invasion"]
+	},
+	"os.class.history_immunosuppressive_disease": {
+		"history_immunosuppressive_disease":["history_immunosuppressive_disease"],
+	},
+	"os.class.corpus_involvement": {
+		"corpus_involvement" :["corpus_involvement"]
+	},
+	"os.class.intratubular_germ_cell_neoplasm": {
+		"intratubular_germ_cell_neoplasm":["intratubular_germ_cell_neoplasm"]
+	},
+ 
+	//END
+
+	"os.class.vascular_invasion": {
+		"vascular_invasion":["vascular_invasion"]
+	},
+
 	"os.class.treatment_outcomes": { 
 		"treatment_outcome_first_course": ["treatment_outcome_first_course"],
 		"treatment_outcome_at_tcga_followup": ["treatment_outcome_at_tcga_followup"],
 		"treatment_best_response": ["treatment_best_response"]	
 	},
 	"os.class.laterality": {
-		"laterality": ["laterality","other_malignancy_laterality"]
+		"laterality": ["laterality","other_malignancy_laterality"],
+		"anatomic_neoplasm_subdivision": ["anatomic_neoplasm_subdivision"]
 	},
 	"os.class.radiation_type": {
 		"radiation_type": ["radiation_therapy_type"],
@@ -127,14 +183,13 @@
 		"her2_positivityOtherScale": ["nte_her2_positivity_other_scale"],
 		"er_positivity_scale_used": ["nte_er_positivity_scale_used"]
 	},
-	"os.class.gene_amplification": {
-		"egfr_amplification": ["egfr_amplification_status"]
-	},
+	
 	"os.class.test_method": {
 		"idh1_method": ["idh1_mutation_test_method"],
 		"eml4_alk_analysis_type": ["eml4_alk_analysis_type"],
 		"molecular_analysis_method_type": ["molecular_analysis_method_type"],
-		"synovial_ss18ssx_testing_method": ["synovial_ss18ssx_testing_method"]
+		"synovial_ss18ssx_testing_method": ["synovial_ss18ssx_testing_method"],
+		"hpv_typing_method":["hpv_typing_method"]
 	},
 	"os.class.zone_of_origin": {
 		"zone_of_origin": ["zone_of_origin"]
@@ -178,7 +233,7 @@
 		"days_to_bone_scan": ["days_to_bone_scan"],
 		"days_to_completion_of_curative_tx": ["days_to_completion_of_curative_tx"],
 		"days_to_ctAbPel": ["days_to_ct_scan_ab_pelvis"],
-		"death_days_to": ["death_days_to"],
+		"death_days_to": ["death_days_to","days_to_death"], //two different captures
 		"days_to_diagnosis_diabetes": ["diabetes_diagnosis_days_to"],
 		"days_to_diagnosis_pathologic": ["initial_pathologic_dx_days_to"],
 		"days_to_diagnosis": ["days_to_other_malignancy_dx", "other_malignancy_dx_days_to", "days_to_initial_pathologic_diagnosis"],
@@ -187,6 +242,7 @@
 		"days_to_history_chronic_pancreatitis": ["history_chronic_pancreatitis_days_to"],
 		"days_to_last_known_alive": ["days_to_last_known_alive"],
 		"days_to_last_contact": ["last_contact_days_to"],
+		"days_to_last_followup":["days_to_last_followup"], //acc can this be last contact??
 		"days_to_patient_progression_free":["days_to_patient_progression_free"],
 		"days_to_mri": ["days_to_mri"],
 		"days_to_performance": ["performance_status_days_to", "days_to_performance_status_assessment"],
@@ -341,7 +397,27 @@
 		"lymph_nodes_aortic_pos_by_ihc":["lymph_nodes_aortic_pos_by_ihc"],
 		"lymph_nodes_aortic_pos_total":["lymph_nodes_aortic_pos_total"],
 		"tumor_basal_diameter":["tumor_basal_diameter"],
-		"tumor_thickness":["tumor_thickness"]
+		"tumor_thickness":["tumor_thickness"],
+		"pregnancies_count_total":["pregnancies_count_total"],                                                        
+		"pregnancies_count_live_birth":["pregnancies_count_live_birth"],                                                     
+		"pregnancies_count_miscarriage":["pregnancies_count_miscarriage"],
+		"pregnancies_count_induced_abortion":["pregnancies_count_induced_abortion"],                                               
+		"pregnancies_count_ectopic":["pregnancies_count_ectopic"],                                                       
+		"pregnancies_count_stillbirth":["pregnancies_count_stillbirth"],
+		"cervix_suv_results" :["cervix_suv_results"],
+		"radiation_therapy_dose_paraaortic_nodes":["radiation_therapy_dose_paraaortic_nodes"],
+		"family_history_cancer_number_relatives":["family_history_cancer_number_relatives"],
+		"synchronous_tumor_histology_pct":["synchronous_tumor_histology_pct"],
+		"pre_orchi_hcg":["pre_orchi_hcg"],
+		"pre_orchi_afp":["pre_orchi_afp"],
+		"pre_orchi_lh":["pre_orchi_lh"],
+		"pre_orchi_testosterone":["pre_orchi_testosterone"],
+		"post_orchi_ldh":["post_orchi_ldh"],
+		"post_orchi_hcg":["post_orchi_hcg"],
+		"post_orchi_afp":["post_orchi_afp"],
+		"post_orchi_lh":["post_orchi_lh"],
+		"post_orchi_testosterone":["post_orchi_testosterone"],
+		"pre_orchi_ldh":["pre_orchi_ldh"]
 	},
 	"os.class.tcgaBoolean": {
 		"pharm_tx_mitotane_indicator":["pharm_tx_mitotane_indicator"], //acc
@@ -497,7 +573,10 @@
 		"new_tumor_event_histo_progression":["new_tumor_event_histo_progression"],
 		"first_progression_biopsied_indicator":["first_progression_biopsied_indicator"],
 		"new_tumor_event_liver_transplant":["new_tumor_event_liver_transplant"],
-		"new_tumor_event_ablation_embo_tx":["new_tumor_event_ablation_embo_tx"]
+		"new_tumor_event_ablation_embo_tx":["new_tumor_event_ablation_embo_tx"],
+		"pregnant_at_diagnosis":["pregnant_at_diagnosis"],
+		"genotypic_analysis_detected":["genotypic_analysis_detected"],
+		"radiation_therapy_xrt_sensitizers":["radiation_therapy_xrt_sensitizers"]
 	},
 
 	"os.class.tcgaCharacter": {
@@ -512,19 +591,6 @@
 		"metastatic_tumor_site":["metastatic_tumor_site"], //acc
 		"history_adrenal_hormone_excess":["history_adrenal_hormone_excess"], //acc
 		"history_basis_adrenal_hormone_dx":["history_basis_adrenal_hormone_dx"], //acc
-		"atypical_mitotic_figures":["atypical_mitotic_figures"], //acc
-		"cytoplasm_presence_less_than_equal_25_percent":["cytoplasm_presence_less_than_equal_25_percent"], //acc
-		"diffuse_architecture":["diffuse_architecture"], //acc
-		"invasion_of_tumor_capsule":["invasion_of_tumor_capsule"], //acc
-		"mitotic_rate":["mitotic_rate"], //acc
-		"necrosis":["necrosis"], //acc
-		"nuclear_grade_III_IV":["nuclear_grade_III_IV"], //acc
-		"ret":["ret"], //acc
-		"sinusoid_invasion":["sinusoid_invasion"], //acc
-		"weiss_venous_invasion":["weiss_venous_invasion"], //acc
-		"pharm_tx_mitotane_theraputic_at_rec":["pharm_tx_mitotane_theraputic_at_rec"], //acc
-		"days_to_last_followup":["days_to_last_followup"], //acc can this be last contact??
-		"days_to_death":["days_to_death"], //acc
 		"pharmaceutical_therapy_type":["pharmaceutical_therapy_type"], 
 		"occupation_current": ["occupation_current"],
 		"occupation_primary_chemical_exposure": ["occupation_primary_chemical_exposure"],
@@ -536,7 +602,6 @@
 		"history_family_cancer_relationship": ["family_history_cancer_relationship"],
 		"history_family_cancer_type": ["family_history_cancer_type"],
 		"anatomic_neoplasm_subdivision_other": ["anatomic_neoplasm_subdivision_other"],
-		"anatomic_neoplasm_subdivision": ["anatomic_neoplasm_subdivision"],
 		"pharmaceutical_therapy_drug_name":["pharmaceutical_therapy_drug_name"],
 		"therapy_type":["therapy_type"],
 		"drug_type":["drug_type"],
@@ -633,16 +698,8 @@
 		"patient_pregnancy_count":["patient_pregnancy_count"], 
 		"extranodal_involvement":["extranodal_involvement"],	
 		"live_birth_number":["live_birth_number"],                                                               
-		"history_hormonal_contraceptives_use":["history_hormonal_contraceptives_use"],                                               
-		"pregnancies_count_total":["pregnancies_count_total"],                                                        
-		"pregnancies_count_live_birth":["pregnancies_count_live_birth"],                                                     
-		"pregnancies_count_miscarriage":["pregnancies_count_miscarriage"],                                                    
-		"cause_of_death_other":["cause_of_death_other"],                                                           
-		"pregnancies_count_induced_abortion":["pregnancies_count_induced_abortion"],                                               
-		"pregnancies_count_ectopic":["pregnancies_count_ectopic"],                                                       
-		"pregnancies_count_stillbirth":["pregnancies_count_stillbirth"],                                                     
-		"pregnant_at_diagnosis":["pregnant_at_diagnosis"],                                                            
-		"history_immunosuppressive_disease":["history_immunosuppressive_disease"],                                                
+		"history_hormonal_contraceptives_use":["history_hormonal_contraceptives_use"],                                               		                                                   
+		"cause_of_death_other":["cause_of_death_other"],                                                                                                         
 		"other_immunosuppressive_disease":["other_immunosuppressive_disease"],                                                  
 		"hiv_status":["hiv_status"],                                                                       
 		"performance_status_other_timing":["performance_status_other_timing"],                                                  
@@ -671,30 +728,23 @@
 		"margins_involved_hysterectomy":["margins_involved_hysterectomy"],                                                    
 		"other_involved_margins":["other_involved_margins"],                                                           
 		"pelvic_extension_comment":["pelvic_extension_comment"],                                                         
-		"lymphovascular_involvement":["lymphovascular_involvement"],                                                       
-		"corpus_involvement" :["corpus_involvement"],                                                              
+		"lymphovascular_involvement":["lymphovascular_involvement"],                                                                                                      
 		"fedpet_or_ct_results" :["fedpet_or_ct_results"],                                                            
 		"pos_lymph_node_location" :["pos_lymph_node_location"],                                                         
-		"other_pos_node_location" :["other_pos_node_location"],                                                         
-		"ajcc_tumor_clinical_ct":["ajcc_tumor_clinical_ct"],                                                           
-		"ajcc_nodes_clinical_cn" :["ajcc_nodes_clinical_cn"],                                                          
-		"lymph_nodes_supraclavicular" :["lymph_nodes_supraclavicular"],                                                     
-		"ajcc_metastasis_clinical_cm" :["ajcc_metastasis_clinical_cm"],                                                     
-		"cervix_suv_results" :["cervix_suv_results"],                                                              
+		"other_pos_node_location" :["other_pos_node_location"],                                                                                                                                                    
+		"lymph_nodes_supraclavicular" :["lymph_nodes_supraclavicular"],                                                                                                                                                               
 		"rt_tx_reason_not_completed":["rt_tx_reason_not_completed"],                                                       
 		"rt_tx_reason_not_completed_other":["rt_tx_reason_not_completed_other"],                                                 
 		"brachytherapy_type":["brachytherapy_type"],                                                               
 		"brachytherapy_type_other":["brachytherapy_type_other"],                                                         
 		"brachytherapy_total_dose_point_a":["brachytherapy_total_dose_point_a"],                                                 
 		"radiation_therapy_xrt_type" :["radiation_therapy_xrt_type"],                                                      
-		"rt_tx_total_dose_to_pelvis" :["rt_tx_total_dose_to_pelvis"],                                                      
-		"radiation_therapy_dose_paraaortic_nodes":["radiation_therapy_dose_paraaortic_nodes"],                                          
+		"rt_tx_total_dose_to_pelvis" :["rt_tx_total_dose_to_pelvis"],                                                                                         
 		"chemo_concurrent_reason_not_given":["chemo_concurrent_reason_not_given"],                                                
 		"hpv_types_positive":["hpv_types_positive"],                                                             
 		"chemo_concurrent_reason_not_other":["chemo_concurrent_reason_not_other"],                                                
 		"hpv_types_other":["hpv_types_other"],                                                                  
-		"chemo_concurrent_type":["chemo_concurrent_type"],                                                            
-		"hpv_typing_method":["hpv_typing_method"],                                                                
+		"chemo_concurrent_type":["chemo_concurrent_type"],                                                                                                                        
 		"chemo_concurrent_type_other":["chemo_concurrent_type_other"],                                                      
 		"hpv_typing_method_other":["hpv_typing_method_other"],                                                          
 		"chemo_concurrent_dose":["chemo_concurrent_dose"],                                                            
@@ -703,16 +753,13 @@
 		"pcr_primer_pairs_other":["pcr_primer_pairs_other"],                                                           
 		"chemo_concurrent_fractions_total":["chemo_concurrent_fractions_total"],                                                 
 		"scca_tumor_marker":["scca_tumor_marker"],                                                                                                                                                                       
-		"pathologic_stage" :["pathologic_stage"],                                                                
-		"pregnant_at_diagnosis" :["pregnant_at_diagnosis"],                                                           
+		"pathologic_stage" :["pathologic_stage"],                                                                                                                           
 		"prescribed_dose_units" :["prescribed_dose_units"],                                                          
 		"tumor_response":["tumor_response"],    
-		"family_history_cancer_number_relatives":["family_history_cancer_number_relatives"],
 		"family_cancer_type_txt":["family_cancer_type_txt"],
 		"history_hepato_carcinoma_risk_factors":["history_hepato_carcinoma_risk_factors"],
 		"other_hepato_carcinoma_risk_factors":["other_hepato_carcinoma_risk_factors"],
 		"definitive_surgical_procedure":["definitive_surgical_procedure"],
-		"vascular_invasion":["vascular_invasion"],
 		"child_pugh_classification":["child_pugh_classification"],
 		"ishak_fibrosis_score":["ishak_fibrosis_score"],
 		"cholangitis_tissue_evidence":["cholangitis_tissue_evidence"],
@@ -750,7 +797,6 @@
 		"esophageal_tumor_location_centered":["esophageal_tumor_location_centered"],
 		"esophageal_tumor_location_involved":["esophageal_tumor_location_involved"],
 		"esoph_non_ca_degree_of_dysplasia":["esoph_non_ca_degree_of_dysplasia"],
-		"ajcc_clinical_tumor_stage":["ajcc_clinical_tumor_stage"],
 		"patient_to_undergo_surgery":["patient_to_undergo_surgery"],
 		"treatment_prior_to_surgery_indicator":["treatment_prior_to_surgery_indicator"],
 		"serum_calcium_level":["serum_calcium_level"],
@@ -786,34 +832,20 @@
 		"postoperative_tx":["postoperative_tx"],
 		"bilateral_diagnosis_timing_type":["bilateral_diagnosis_timing_type"],
 		"synchronous_tumor_histology_type":["synchronous_tumor_histology_type"],
-		"synchronous_tumor_histology_pct":["synchronous_tumor_histology_pct"],
 		"testis_tumor_macroextent":["testis_tumor_macroextent"],
 		"testis_tumor_macroextent_other":["testis_tumor_macroextent_other"],
 		"testis_tumor_microextent":["testis_tumor_microextent"],
 		"histologic_diagnosis_percent":["histologic_diagnosis_percent"],
-		"intratubular_germ_cell_neoplasm":["intratubular_germ_cell_neoplasm"],
-		"serum_markers":["serum_markers"],
-		"pre_orchi_hcg":["pre_orchi_hcg"],
-		"pre_orchi_afp":["pre_orchi_afp"],
-		"pre_orchi_lh":["pre_orchi_lh"],
-		"pre_orchi_testosterone":["pre_orchi_testosterone"],
-		"post_orchi_ldh":["post_orchi_ldh"],
-		"post_orchi_hcg":["post_orchi_hcg"],
-		"post_orchi_afp":["post_orchi_afp"],
-		"post_orchi_lh":["post_orchi_lh"],
-		"post_orchi_testosterone":["post_orchi_testosterone"],
 		"post_orchi_lymph_node_dissection":["post_orchi_lymph_node_dissection"],
 		"first_treatment_success":["first_treatment_success"],
 		"molecular_test_result":["molecular_test_result"],
 		"igcccg_stage":["igcccg_stage"],
-		"pre_orchi_ldh":["pre_orchi_ldh"],
 		"history_thyroid_disease":["history_thyroid_disease"],
 		"history_thyroid_disease_other":["history_thyroid_disease_other"],
 		"family_history_thyroid_cancer":["family_history_thyroid_cancer"],
 		"tumor_focality":["tumor_focality"],
 		"lymph_nodes_preop_imaging_type":["lymph_nodes_preop_imaging_type"],
 		"extrathyroidal_extension":["extrathyroidal_extension"],
-		"genotypic_analysis_detected":["genotypic_analysis_detected"],
 		"braf_mutation_result":["braf_mutation_result"],
 		"ras_mutation_result":["ras_mutation_result"],
 		"ret_ptc_rearrangement_result":["ret_ptc_rearrangement_result"],
@@ -824,11 +856,9 @@
 		"i_131_radiation_tx_cumulative_dose":["i_131_radiation_tx_cumulative_dose"],
 		"radiation_therapy_xrt_method_prep":["radiation_therapy_xrt_method_prep"],
 		"radiation_therapy_xrt_dose":["radiation_therapy_xrt_dose"],
-		"radiation_therapy_xrt_sensitizers":["radiation_therapy_xrt_sensitizers"],
 		"genotyping_results_gene_mutation_not_reported_reason":["genotyping_results_gene_mutation_not_reported_reason"],
 		"metastatic_site":["metastatic_site"],
 		"other_metastatic_site":["other_metastatic_site"],
-		"masaoka_stage":["masaoka_stage"],
 		"section_myasthenia_gravis":["section_myasthenia_gravis"],
 		"history_menopausal_hormone_therapy":["history_menopausal_hormone_therapy"],
 		"history_tamoxifen_use":["history_tamoxifen_use"],
@@ -875,8 +905,6 @@
 		"new_tumor_event_tx":["new_tumor_event_tx"],
 		"new_tumor_event_histology":["new_tumor_event_histology"],
 		"new_tumor_event_dx_method_other":["new_tumor_event_dx_method_other"]
-		
-
 	}
 } 
 

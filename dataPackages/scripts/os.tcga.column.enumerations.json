@@ -55,7 +55,7 @@
 		"braf_result": ["braf_result"],
 		"braf_gene_result": ["braf_gene_analysis_result"]
 	},
-	"os.class.treatment_outcomes": { //fix
+	"os.class.treatment_outcomes": { 
 		"treatment_outcome_first_course": ["treatment_outcome_first_course"],
 		"treatment_outcome_at_tcga_followup": ["treatment_outcome_at_tcga_followup"],
 		"treatment_best_response": ["treatment_best_response"]	
@@ -70,8 +70,8 @@
 	"os.class.radiation_therapy_site": {
 		"radiation_therapy_site": ["radiation_therapy_site"]
 	},
-	// "os.class.new_tumor": {
-	// 	"new_tumor": ["new_tumor_event_type", "new_neoplasm_event_type"] add back character!
+	// "os.class.new_tumor": { //added back to tcgacharacter for now
+	// 	"new_tumor": ["new_tumor_event_type", "new_neoplasm_event_type"] 
 	// },
 	"os.class.drug_agent": {
 		"drug_therapy_name": ["drug_name"]
@@ -120,13 +120,11 @@
 		"pr_ihc_score": ["nte_pr_ihc_intensity_score"],
 		"her2_positivity_ihc_score": ["nte_her2_positivity_ihc_score"]	
 	},
-	
 	"os.class.positivity_scale_method": {
 		"pr_positivity_scale_method":["pr_positivity_scale_used"],
 		"er_positivity_scale_method":["er_positivity_scale_used"],
 		"her2_positivityOtherScale": ["nte_her2_positivity_other_scale"]
 	},
-
 	"os.class.gene_amplification": {
 		"egfr_amplification": ["egfr_amplification_status"]
 	},
@@ -135,10 +133,6 @@
 		"eml4_alk_analysis_type": ["eml4_alk_analysis_type"],
 		"molecular_analysis_method_type": ["molecular_analysis_method_type"],
 		"synovial_ss18ssx_testing_method": ["synovial_ss18ssx_testing_method"]
-	},
-	"os.class.mutation_type": {
-		"kras_mutation_type": ["kras_mutation_identified_type"],
-		"egfr_mutation_type": ["egfr_mutation_identified_type"] //tcgacharacter!
 	},
 	"os.class.zone_of_origin": {
 		"zone_of_origin": ["zone_of_origin"]
@@ -149,10 +143,6 @@
 	"os.class.grade_tier_system": {
 		"grade_tier_system": ["grade_tier_system"]
 	},
-	// "os.class.therapy_extent": {
-	// 	"pharmaceutical_therapy_extent": ["pharmaceutical_therapy_extent"],
-	// 	"radiation_therapy_extent": ["radiation_therapy_extent"]
-	// },
 	"os.class.malignancy_type": {
 		"malignancy_type": ["malignancy_type"]
 	},
@@ -383,13 +373,18 @@
 		"surgery_procedure": ["new_tumor_event_additional_surgery_procedure", "new_tumor_event_additional_surgery_procedure", "new_tumor_event_site_surgery"],	
 		"history_rt_tx_to_site_of_tumor": ["history_rt_tx_to_site_of_tcga_tumor"],
 		"tumor_multifocal": ["tumor_multifocal"],
-		"lymphovascular_invasion":["lymphovascular_invasion"], //added
+		"lymphovascular_invasion":["lymphovascular_invasion"], 
 		"leiomyo_major_vessel_involvement":["leiomyo_major_vessel_involvement"],
-		"steroid_therapy_administered": ["steroid_therapy_administered"] //added
+		"steroid_therapy_administered": ["steroid_therapy_administered"] 
 	},
 
 	"os.class.tcgaCharacter": {
-		"pharmaceutical_therapy_type":["pharmaceutical_therapy_type"], //added
+		"new_tumor": ["new_tumor_event_type", "new_neoplasm_event_type"], //make a class once we figure out how to handle SKCM
+		"pharmaceutical_therapy_extent": ["pharmaceutical_therapy_extent"], //moved back from os.classes
+		"radiation_therapy_extent": ["radiation_therapy_extent"], //moved back from os.classes
+		"kras_mutation_type": ["kras_mutation_identified_type"], //moved back from os.classes
+		"egfr_mutation_type": ["egfr_mutation_identified_type"], //moved back from os.classes
+		"pharmaceutical_therapy_type":["pharmaceutical_therapy_type"], 
 		"occupation_current": ["occupation_current"],
 		"occupation_primary_chemical_exposure": ["occupation_primary_chemical_exposure"],
 		"occupation_primary_industry": ["occupation_primary_industry"],

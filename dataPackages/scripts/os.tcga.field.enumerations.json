@@ -107,20 +107,6 @@
 		"FISH": ["FISH","FISH FOR SS18 SPLIT"],
 		"RT-PCR": ["RT-PCR"]	
 	},
-	
-	"os.class.mutation_type": { //tcgacharacter!
-
-		"G12C": ["G12C"],
-		"G12A": ["G12A"],
-		"G12D": ["G12D"],
-		"G12V": ["G12V"],
-		"G12S": ["G12S"],
-		"EXON 19 DELETION": ["EXON 19 DELETION"],
-		"OTHER": ["OTHER"],
-		"L858R": ["L858R"],
-		"T790M": ["T790M"],
-		"L861Q": ["L861Q "] 	
-	},
 	"os.class.zone_of_origin": {
 		"PERIPHERAL ZONE": ["PERIPHERAL ZONE"],
 		"OVERLAPPING": ["OVERLAPPING","OVERLAPPING / MULTIPLE ZONES"],
@@ -133,7 +119,7 @@
 		"MIDDLE": ["MIDDLE","APEX|MIDDLE|BASE","MIDDLE|BASE","APEX|MIDDLE" ],
 		"BASE": ["BASE","APEX|MIDDLE|BASE","APEX|BASE" ]
 	},
-	// "os.class.new_tumor": { //SKCM broke it!
+	// "os.class.new_tumor": { //SKCM broke it! 
 	// 	"LOCOREGIONAL DISEASE": ["LOCOREGIONAL DISEASE"],
 	// 	"RECURRENCE": ["RECURRENCE"],
 	// 	"PROGRESSION OF DISEASE": ["PROGRESSION OF DISEASE", "BIOCHEMICAL EVIDENCE OF DISEASE"],
@@ -149,18 +135,9 @@
 		"DEEP":["DEEP"] 
 	},
 	"os.class.status": {
-		"WITH TUMOR": ["WITH TUMOR"], // T/F?
+		"WITH TUMOR": ["WITH TUMOR"], // indicator T/F?
 		"TUMOR FREE": ["TUMOR FREE"]
 	},
-	// "os.class.treatment_outcome_first_course": {
-	// 	"COMPLETE REMISSION": ["COMPLETE REMISSION/RESPONSE","COMPLETE REMISSION"],
-	// 	"RESPONSE": ["RESPONSE","COMPLETE REMISSION/RESPONSE","PARTIAL REMISSION/RESPONSE"],
-	// 	"STABLE DISEASE": ["STABLE DISEASE"],             
-	// 	"PROGRESSIVE DISEASE": ["PROGRESSIVE DISEASE"],        
- //        "PARTIAL RESPONSE": ["PARTIAL REMISSION/RESPONSE","PARTIAL REMISSION","PARTIAL RESPONSE"],
- //        "PERSISTENT DISEASE":["PERSISTENT DISEASE"],
- //        "COMPLETE RESPONSE":["COMPLETE RESPONSE"]      
-	// },
 	"os.class.laterality": {
 		"RIGHT": ["RIGHT"],
 		"LEFT": ["LEFT"],
@@ -205,14 +182,12 @@
 	},
 	"os.class.dose_units": { // fix
 		"KG":["KG"],
-		"MG/KG":["MG/KG"],
-		"MG/KG/DAY":["MG/KG/DAY"],
-		"[IU]/KG":["[IU]/KG"],
-		"MG": ["MG","MG/KG","MG/M2","MG/M2/DAY","MG/DAY","MG/DL","MG/KG/DAY","MG/ML","MG/M2/WK","MG/WK","[IU]/MG"],
-		"M2":["MG/M2","M2","MG/M2/DAY","UG/M2","G/M2","MG/M2/WK"],
-		"UG":["UG","UG/M2"],
-		"DAY":["MG/M2/DAY","DAY","MG/DAY","G/DAY","MG/KG/DAY"],
-		"G":["G"],
+		"[IU]":["[IU]"], "[IU]/KG":["[IU]/KG"], "[IU]/MG":["[IU]/MG"], 
+		"MG": ["MG"], "MG/KG":["MG/KG"], "MG/M2":["MG/M2"], "MG/M2/DAY":["MG/M2/DAY"], "MG/DAY":["MG/DAY"], "MG/DL":["MG/DL"], "MG/KG/DAY":["MG/KG/DAY"], "MG/ML":["MG/ML"], "MG/M2/WK":["MG/M2/WK"], "MG/WK":["MG/WK"],
+		"M2":["M2"],
+		"UG":["UG"], "UG/M2":["UG/M2"],"UG/M2":["UG/M2"],
+		"G":["G"], "G/M2":["G/M2"], "G/DAY":["G/DAY"],
+		"DAY":["DAY"],
 		"ML":["ML"],
 		"WAFER":["{WAFER}"],
 		"MEQ":["MEQ"],
@@ -223,38 +198,20 @@
 		"GY":["GY"],
 		"CGY":["CGY"],
 		"MCI":["MCI"],
-		"M[IU]":["M[IU]"],
-		"[IU]":["[IU]"],		
-		"MG/M2/DAY":["MG/M2/DAY"]
-
+		"M[IU]":["M[IU]"]
 	},
-	// "os.class.therapy_extent": {
-	// 	"SYSTEMIC": ["SYSTEMIC"],
-	// 	"M0": ["M0"],
-	// 	"LOCOREGIONAL":["LOCOREGIONAL"],
-	// 	"BREAST":["BREAST"],
-	// 	"LYMPHOMA":["LYMPHOMA"]
-	// },
-	"os.class.treatment_outcomes": { //FIX
-		"CLINICAL PROGRESSIVE DISEASE":["CLINICAL PROGRESSIVE DISEASE"],
+	"os.class.treatment_outcomes": { //can we combine more???
+		"PROGRESSIVE DISEASE":["CLINICAL PROGRESSIVE DISEASE","PROGRESSIVE DISEASE"],
 		"COMPLETE RESPONSE":["COMPLETE RESPONSE"],
-		"PARTIAL RESPONSE":["PARTIAL RESPONSE"],
+		"PARTIAL RESPONSE": ["PARTIAL REMISSION/RESPONSE","PARTIAL REMISSION","PARTIAL RESPONSE"],	
 		"STABLE DISEASE":["STABLE DISEASE"],
 		"RADIOGRAPHIC PROGRESSIVE DISEASE":["RADIOGRAPHIC PROGRESSIVE DISEASE"],	
-		"COMPLETE REMISSION/RESPONSE":["COMPLETE REMISSION/RESPONSE"],
-		"PROGRESSIVE DISEASE":["PROGRESSIVE DISEASE"],
-		"PARTIAL REMISSION/RESPONSE":["PARTIAL REMISSION/RESPONSE"],
 		"PERSISTENT DISEASE":["PERSISTENT DISEASE"],
 		"NO MEASUREABLE TUMOR OR TUMOR MARKERS":["NO MEASUREABLE TUMOR OR TUMOR MARKERS"],
 		"NORMALIZATION OF TUMOR MARKERS, BUT RESIDUAL TUMOR MASS":["NORMALIZATION OF TUMOR MARKERS, BUT RESIDUAL TUMOR MASS"],
 		"COMPLETE REMISSION": ["COMPLETE REMISSION/RESPONSE","COMPLETE REMISSION"],
-		"RESPONSE": ["RESPONSE","COMPLETE REMISSION/RESPONSE","PARTIAL REMISSION/RESPONSE"],
-		"STABLE DISEASE": ["STABLE DISEASE"],             
-		"PROGRESSIVE DISEASE": ["PROGRESSIVE DISEASE"],        
-        "PARTIAL RESPONSE": ["PARTIAL REMISSION/RESPONSE","PARTIAL REMISSION","PARTIAL RESPONSE"],
-        "PERSISTENT DISEASE":["PERSISTENT DISEASE"],
-        "COMPLETE RESPONSE":["COMPLETE RESPONSE"]
-	
+		"RESPONSE": ["RESPONSE","COMPLETE REMISSION/RESPONSE","PARTIAL REMISSION/RESPONSE"]
+
 	},
 	"os.class.followup_reason": {
 		"SCHEDULED FOLLOW-UP SUBMISSION":["SCHEDULED FOLLOW-UP SUBMISSION"],
@@ -279,28 +236,34 @@
 		"cM0(i+)": ["CM0 (I+)"],
 		"M0":  ["M0","M0 UNDIFFERENTIATED"],
 		"M1":  ["M1"], "M1A": ["M1A"], "M1B": ["M1B"], "M1C": ["M1C"],
+		"M2":  ["M2"],
+		"M3":  ["M3"],
+		"M4":  ["M4"],
+		"M5":  ["M5"],
+		"M6":  ["M6"],
+		"M7":  ["M7"],
 		"MX":  ["MX"],
 		"N0":  ["N0"], "N0(i-)":["N0 (I-)"], "N0(i+)":["N0 (I+)"], "N0(mol+)":["N0 (MOL+)"],
 		"N1":  ["N1"], "N1A": ["N1A"], "N1B": ["N1B"], "N1C": ["N1C"], "N1MI":["N1MI"],
 		"N2":  ["N2"], "N2A": ["N2A"], "N2B": ["N2B"], "N2C": ["N2C"],
 		"N3":  ["N3"], "N3A": ["N3A"], "N3B": ["N3B"], "N3C": ["N3C"],
 		"NX":  ["NX"],
-		"S0":  ["STAGE 0"], "S0IS": ["STAGE 0IS"],   "S0A": ["STAGE 0A"],
-		"S1":  ["STAGE I"],   "S1A": ["STAGE IA"],   "S1B": ["STAGE IB"],   "S1B2": ["STAGE IB2"], "S1C": ["STAGE IC"],
-		"S2":  ["STAGE II"],  "S2A": ["STAGE IIA"],  "S2B": ["STAGE IIB"],  "S2C": ["STAGE IIC"],
-		"S3":  ["STAGE III"], "S3A": ["STAGE IIIA"], "S3B": ["STAGE IIIB"], "S3C": ["STAGE IIIC"],
+		"S0":  ["STAGE 0"],   "S0IS": ["STAGE 0IS"],   "S0A": ["STAGE 0A"],
+		"S1":  ["STAGE I"],   "S1A": ["STAGE IA"], "S1A1":["STAGE IA1"],"S1A2":["STAGE IA2"], "S1B": ["STAGE IB"], "S1B1":["STAGE IB1"], "S1B2": ["STAGE IB2"], "S1C": ["STAGE IC"],
+		"S2":  ["STAGE II"],  "S2A": ["STAGE IIA"], "S2A1":["STAGE IIA1"],  "S2A2":["STAGE IIA2"],  "S2B": ["STAGE IIB"],  "S2C": ["STAGE IIC"],
+		"S3":  ["STAGE III"], "S3A": ["STAGE IIIA"], "S3B": ["STAGE IIIB"], "S3C": ["STAGE IIIC"], "S3C1":["STAGE IIIC1"], "S3C2":["STAGE IIIC2","IIIC2"],
 		"S4":  ["STAGE IV"],  "S4A": ["STAGE IVA"],  "S4B": ["STAGE IVB"],  "S4C": ["STAGE IVC"],
 		"SX":  ["STAGE X"],
-		"T1":  ["T1"], "T1A": ["T1A"], "T1B": ["T1B"], "T1C": ["T1C"],
-		"T2":  ["T2"], "T2A": ["T2A"], "T2B": ["T2B"], "T2C": ["T2C"],
+		"T1":  ["T1"], "T1A": ["T1A"], "T1B": ["T1B"], "T1C": ["T1C"], "T1B2":["T1B2"], "T1B1":["T1B1"], "T1A1":["T1A1"],
+		"T2":  ["T2"], "T2A": ["T2A"], "T2B": ["T2B"], "T2C": ["T2C"], "T2A2":["T2A2"], "T2A1":["T2A1"],
 		"T3":  ["T3"], "T3A": ["T3A"], "T3B": ["T3B"],"T3C":["T3C"],
 		"T4":  ["T4"], "T4A": ["T4A"], "T4B": ["T4B"], "T4C": ["T4C"], "T4D": ["T4D"],"T4E":["T4E"],
+		"TA": ["TA"],
 		"TX":  ["TX"],
 		"TIS": ["TIS"],
 		"T0":  ["T0"],	
 		"TIS (LCIS)":["TIS (LCIS)"],
 		"TIS (DCIS)":["TIS (DCIS)"],
-		"TA": ["TA"],
 		"PT2A": ["PT2A"],
 		"PT1C": ["PT1C"],
 		"PT1A": ["PT1A"],
@@ -310,30 +273,9 @@
  		"PT3A": ["PT3A"],
 		"PT2": ["PT2"],
 		"PT3": ["PT3"],
-		"M4": ["M4"],
-		"M1": ["M1"],
-		"M6": ["M6"],
-		"M3": ["M3"],
-		"M2": ["M2"],
-		"M7": ["M7"],
- 		"M5": ["M5"],
 		"NOT CLASSIFIED": ["NOT CLASSIFIED"],
-		"T2A2":["T2A2"],
-		"T1B2":["T1B2"],
-		"T1B1":["T1B1"],
-		"T2A1":["T2A1"],
-		"T1A1":["T1A1"],
-		"STAGE IB1":["STAGE IB1"],
-		"STAGE IIA2":["STAGE IIA2"],
-		"STAGE IIA1":["STAGE IIA1"],
-		"STAGE IA2":["STAGE IA2"],
-		"STAGE IA1":["STAGE IA1"],
 		"I/II NOS":["I/II NOS"],
-		"IS":["IS"],
-		"IIIC2":["IIIC2"],
-		"STAGE IIIC1":["STAGE IIIC1"],
-		"STAGE IIIC2":["STAGE IIIC2"]
-
+		"IS":["IS"]
 	},
 
 	"os.class.encounter_type": {

@@ -145,6 +145,7 @@
 		"PRESENT":["PRESENT"],
 		"ABSENT":["ABSENT"]
 	},
+	
 
 	//END
 	
@@ -320,10 +321,10 @@
 		"N3":  ["N3"], "N3A": ["N3A"], "N3B": ["N3B"], "N3C": ["N3C"],
 		"NX":  ["NX"],
 		"S0":  ["STAGE 0"],   "S0IS": ["STAGE 0IS"],   "S0A": ["STAGE 0A"],
-		"S1":  ["STAGE I"],   "S1A": ["STAGE IA"], "S1A1":["STAGE IA1"],"S1A2":["STAGE IA2"], "S1B": ["STAGE IB"], "S1B1":["STAGE IB1"], "S1B2": ["STAGE IB2"], "S1C": ["STAGE IC"],
-		"S2":  ["STAGE II"],  "S2A": ["STAGE IIA"], "S2A1":["STAGE IIA1"],  "S2A2":["STAGE IIA2"],  "S2B": ["STAGE IIB"],  "S2C": ["STAGE IIC"],
-		"S3":  ["STAGE III"], "S3A": ["STAGE IIIA"], "S3B": ["STAGE IIIB"], "S3C": ["STAGE IIIC"], "S3C1":["STAGE IIIC1"], "S3C2":["STAGE IIIC2","IIIC2"],
-		"S4":  ["STAGE IV"],  "S4A": ["STAGE IVA"],  "S4B": ["STAGE IVB"],  "S4C": ["STAGE IVC"],
+		"S1":  ["STAGE I","I"],   "S1A": ["STAGE IA"], "S1A1":["STAGE IA1"],"S1A2":["STAGE IA2"], "S1B": ["STAGE IB"], "S1B1":["STAGE IB1"], "S1B2": ["STAGE IB2"], "S1C": ["STAGE IC"],
+		"S2":  ["STAGE II"],  "S2A": ["STAGE IIA","IIA"], "S2A1":["STAGE IIA1"],  "S2A2":["STAGE IIA2"],  "S2B": ["STAGE IIB","IIB"],  "S2C": ["STAGE IIC"],
+		"S3":  ["STAGE III","III"], "S3A": ["STAGE IIIA"], "S3B": ["STAGE IIIB"], "S3C": ["STAGE IIIC"], "S3C1":["STAGE IIIC1"], "S3C2":["STAGE IIIC2","IIIC2"],
+		"S4":  ["STAGE IV"],  "S4A": ["STAGE IVA","IVA"],  "S4B": ["STAGE IVB","IVB"],  "S4C": ["STAGE IVC"],
 		"SX":  ["STAGE X"],
 		"T1":  ["T1"], "T1A": ["T1A"], "T1B": ["T1B"], "T1C": ["T1C"], "T1B2":["T1B2"], "T1B1":["T1B1"], "T1A1":["T1A1"],
 		"T2":  ["T2"], "T2A": ["T2A"], "T2B": ["T2B"], "T2C": ["T2C"], "T2A2":["T2A2"], "T2A1":["T2A1"],
@@ -346,7 +347,7 @@
 		"PT3": ["PT3"],
 		"NOT CLASSIFIED": ["NOT CLASSIFIED"],
 		"I/II NOS":["I/II NOS"],
-		"IS":["IS", "STAGE IS" ]
+		"IS":["IS", "STAGE IS"]
 	},
 	"os.class.encounter_type": {
 		"PRE-OPERATIVE": ["PRE-OPERATIVE", "PREOPERATIVE"],

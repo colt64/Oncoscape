@@ -112,7 +112,8 @@
 		"pathologic_method": ["method_initial_path_dx"]
 	},
 	"os.class.grade": {
-		"grade": ["tumor_grade"]
+		"grade": ["tumor_grade"],
+		"neoplasm_histologic_grade": ["neoplasm_histologic_grade"]
 	},
 	"os.class.ihc_score": {
 		"er_ihc_score": ["er_ihc_score","nte_er_ihc_intensity_score"],
@@ -123,7 +124,8 @@
 	"os.class.positivity_scale_method": {
 		"pr_positivity_scale_method":["pr_positivity_scale_used"],
 		"er_positivity_scale_method":["er_positivity_scale_used"],
-		"her2_positivityOtherScale": ["nte_her2_positivity_other_scale"]
+		"her2_positivityOtherScale": ["nte_her2_positivity_other_scale"],
+		"er_positivity_scale_used": ["nte_er_positivity_scale_used"]
 	},
 	"os.class.gene_amplification": {
 		"egfr_amplification": ["egfr_amplification_status"]
@@ -172,11 +174,11 @@
 		"days_to_biochemical_recurrence_first": ["days_to_biochemical_recurrence_first"],
 		"days_to_biochemical_recurrence_second": ["days_to_biochemical_recurrence_second"],
 		"days_to_biochemical_recurrence_third": ["days_to_biochemical_recurrence_third"],
-		"days_to_birth": ["birth_days_to"],
+		"days_to_birth": ["birth_days_to","days_to_birth"],
 		"days_to_bone_scan": ["days_to_bone_scan"],
 		"days_to_completion_of_curative_tx": ["days_to_completion_of_curative_tx"],
 		"days_to_ctAbPel": ["days_to_ct_scan_ab_pelvis"],
-		"days_to_death": ["death_days_to"],
+		"days_to_death": ["death_days_to","days_to_death"],
 		"days_to_diagnosis_diabetes": ["diabetes_diagnosis_days_to"],
 		"days_to_diagnosis_pathologic": ["initial_pathologic_dx_days_to"],
 		"days_to_diagnosis": ["days_to_other_malignancy_dx", "other_malignancy_dx_days_to", "days_to_initial_pathologic_diagnosis"],
@@ -185,6 +187,7 @@
 		"days_to_history_chronic_pancreatitis": ["history_chronic_pancreatitis_days_to"],
 		"days_to_last_known_alive": ["days_to_last_known_alive"],
 		"days_to_last_contact": ["last_contact_days_to"],
+		"days_to_last_followup":["days_to_last_followup"], //acc can this be last contact??
 		"days_to_mri": ["days_to_mri"],
 		"days_to_performance": ["performance_status_days_to", "days_to_performance_status_assessment"],
 		"days_to_progression": ["days_to_new_tumor_event_after_initial_treatment", "new_tumor_event_dx_days_to"],
@@ -271,9 +274,19 @@
 		"tobacco_smokeless_age_use_started": ["tobacco_smokeless_age_use_started"],
 		"tobacco_smokeless_age_use_ended": ["tobacco_smokeless_age_use_ended"],
 		"radiologic_tumor_burden": ["radiologic_tumor_burden"],
-		"pathologic_tumor_burden": ["pathologic_tumor_burden"]
+		"pathologic_tumor_burden": ["pathologic_tumor_burden"],
+		"weiss_score_overall":["weiss_score_overall"],
+		"mitoses_per_50_hpf":["mitoses_per_50_hpf"]
 	},
 	"os.class.tcgaBoolean": {
+		"pharm_tx_mitotane_indicator":["pharm_tx_mitotane_indicator"], //acc
+		"pharm_tx_mitotane_adjuvant":["pharm_tx_mitotane_adjuvant"], //acc
+		"pharm_tx_mitotane_theraputic_levels":["pharm_tx_mitotane_theraputic_levels"], //acc
+		"pharm_tx_mitotane_for_macro_disease":["pharm_tx_mitotane_for_macro_disease"],//acc
+		"pharm_tx_mitotane_theraputic_at_rec":["harm_tx_mitotane_theraputic_at_rec"], //acc
+		"pharm_tx_mitotane_theraputic_macro":["pharm_tx_mitotane_theraputic_macro"], //acc
+		"pharm_tx_mitotane_theraputic_at_prog":["pharm_tx_mitotane_theraputic_at_prog"], //acc
+		"ct_scan_preop_results":["ct_scan_preop_results"], //acc
 		"egfr_status": ["egfr_mutation_status"],
 		"prospective_collection": ["prospective_collection"],
 		"retrospective_collection": ["retrospective_collection"],
@@ -384,6 +397,22 @@
 		"radiation_therapy_extent": ["radiation_therapy_extent"], //moved back from os.classes
 		"kras_mutation_type": ["kras_mutation_identified_type"], //moved back from os.classes
 		"egfr_mutation_type": ["egfr_mutation_identified_type"], //moved back from os.classes
+		"clinical_status_within_3_mths_surgery":["clinical_status_within_3_mths_surgery"], //acc
+		"metastatic_dx_confirmed_by":["metastatic_dx_confirmed_by"], //acc
+		"metastatic_dx_confirmed_by_other":["metastatic_dx_confirmed_by_other"], //acc
+		"metastatic_tumor_site":["metastatic_tumor_site"], //acc
+		"history_adrenal_hormone_excess":["history_adrenal_hormone_excess"], //acc
+		"history_basis_adrenal_hormone_dx":["history_basis_adrenal_hormone_dx"], //acc
+		"atypical_mitotic_figures":["atypical_mitotic_figures"], //acc
+		"cytoplasm_presence_less_than_equal_25_percent":["cytoplasm_presence_less_than_equal_25_percent"], //acc
+		"diffuse_architecture":["diffuse_architecture"], //acc
+		"invasion_of_tumor_capsule":["invasion_of_tumor_capsule"], //acc
+		"mitotic_rate":["mitotic_rate"], //acc
+		"necrosis":["necrosis"], //acc
+		"nuclear_grade_III_IV":["nuclear_grade_III_IV"], //acc
+		"ret":["ret"], //acc
+		"sinusoid_invasion":["sinusoid_invasion"], //acc
+		"weiss_venous_invasion":["weiss_venous_invasion"], //acc
 		"pharmaceutical_therapy_type":["pharmaceutical_therapy_type"], 
 		"occupation_current": ["occupation_current"],
 		"occupation_primary_chemical_exposure": ["occupation_primary_chemical_exposure"],
@@ -446,10 +475,10 @@
 		"noninvasive_bladder_ca_tx_type": ["noninvasive_bladder_ca_tx_type"],
 		"pr_positivity_scale_define_method":["pr_positivity_define_method","nte_pr_positivity_define_method"], // various scores
 		"nte_pr_positivity_scale_used": ["nte_pr_positivity_scale_used"],
-		"neoplasm_histologic_grade": ["neoplasm_histologic_grade"],
+		
 		"er_positivity_method": ["er_positivity_method","nte_er_positivity_define_method"], //tests and results
 		"er_positivity_scale_other": ["er_positivity_scale_other"],
-		"er_positivity_scale_used": ["nte_er_positivity_scale_used"],
+		
 		"nte_er_positivity_other_scale": ["nte_er_positivity_other_scale"],
 		"her2_fish_method": ["nte_her2_fish_define_method","her2_fish_method"],
 		"her2_positivity_method": ["nte_her2_positivity_method","her2_positivity_method_text"], //add to method??

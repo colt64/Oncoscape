@@ -1,0 +1,166 @@
+/**
+ *  If you want to override some bootstrap variables, you have to change values here.
+ *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
+ */
+$navbar-inverse-link-color: #59a5fb;
+$navbar-height: 70px;
+$navbar-inverse-bg: #000;
+$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+$brand-primary:         darken(#59a5fb, 6.5%) !default; // #337ab7
+$font-family-sans-serif: 'Lato', sans-serif;
+$font-family-serif: 'Lato', sans-serif;
+$font-size-base: 14px;
+$headings-font-weight:    300 !default;
+/**
+ *  Do not remove the comments below. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+// bower:scss
+// endbower
+body{
+	font-weight:300;
+}
+label{
+	font-weight: 300;
+}
+button{
+	font-weight: 300;
+}
+.container-fluid{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.radio label, .checkbox label{
+	font-weight: 300;
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {  }
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+	.container-fluid{
+		padding-left:70px;
+		padding-right:70px;
+	}
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+}
+
+.sro{	// Screen Readers Only
+	display:none !important;
+}
+
+.form-item{
+	color:#000;
+	margin-bottom:20px;
+}
+
+.legend{
+	text-transform:capitalize;
+	display:block !important;
+}
+.legend-bar{
+	text-transform:capitalize;
+	border: solid 0px;
+	border-left-width: 10px;
+	padding-left:10px;
+	display:block;
+	margin-bottom: 1px;
+}
+.legend-dot{
+	border: solid 0px;
+	width:10px;
+	height:10px;
+	border-radius: 5px;
+	margin-right:10px;
+	display: inline-block;
+	margin-bottom: 1px;
+}
+
+/* Overrides */
+.ngrs-range-slider{
+	margin-bottom: 0px !important;
+	margin-top: 0px !important;
+}
+table.dataTable.dtr-inline.collapsed tbody td:first-child:before, table.dataTable.dtr-inline.collapsed tbody th:first-child:before{
+	background-color: #59a5fb !important;
+	box-shadow: 0 0 1px #59a5fb !important;
+}
+table.dataTable.dtr-inline.collapsed tbody tr.parent td:first-child:before, table.dataTable.dtr-inline.collapsed tbody tr.parent th:first-child:before{
+	background-color: #FFF !important;
+	color: #59a5fb !important;
+}
+/*
+.ngrs-range-slider{
+	margin-top:0px !important;
+}
+.ngrs-range-slider-no-pad{
+	margin-bottom:0px;
+	padding-bottom:0px;
+}
+.ngrs-range-slider .ngrs-join{
+	height: 10px;
+}
+*/
+.bs-dropdown{
+	width: 100%;
+	button{
+		width: 100%;
+		text-align: left;
+		height: 34px;
+		line-height: 14px;
+		overflow: hidden;
+    	text-overflow: ellipsis;
+    	font-weight: 300;
+    	margin-right:50px;
+    	position: relative;
+		.caret{
+			position: absolute;
+			right: 15px;
+			top: 15px;
+			
+		}
+	}
+	ul{
+		li{
+			padding:5px;
+		}
+	}
+}
+
+.container-main{
+	position:absolute;
+	width: 100%;
+	height: 100vh;
+	//overflow:hidden;
+	padding:0px;
+	padding-top:70px;
+	
+	
+}
+
+.legend{
+	display: inline-block;
+	color:#000;
+	ul{
+		list-style-type: none;
+		margin:20px 20px 20px 0px;
+		padding:0px;
+		font-weight:300;
+	}
+}
+
+.legend-section{
+	font-size:1.5em;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+/**
+ *  Do not remove the comments below. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+// injector
+// endinjector

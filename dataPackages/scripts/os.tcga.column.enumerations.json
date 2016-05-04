@@ -178,7 +178,7 @@
 		"days_to_bone_scan": ["days_to_bone_scan"],
 		"days_to_completion_of_curative_tx": ["days_to_completion_of_curative_tx"],
 		"days_to_ctAbPel": ["days_to_ct_scan_ab_pelvis"],
-		"days_to_death": ["death_days_to"],
+		"death_days_to": ["death_days_to"],
 		"days_to_diagnosis_diabetes": ["diabetes_diagnosis_days_to"],
 		"days_to_diagnosis_pathologic": ["initial_pathologic_dx_days_to"],
 		"days_to_diagnosis": ["days_to_other_malignancy_dx", "other_malignancy_dx_days_to", "days_to_initial_pathologic_diagnosis"],
@@ -203,8 +203,7 @@
 		"days_to_diagnostic_computed_tomography_performed":["days_to_diagnostic_computed_tomography_performed"],                                 
 		"days_to_diagnostic_mri_performed":["days_to_diagnostic_mri_performed"],                                                 
 		"days_to_fdg_or_ct_pet_performed":["days_to_fdg_or_ct_pet_performed"],                                                  
-		"days_to_hiv_diagnosis" :["days_to_hiv_diagnosis"],                                                           
-		"days_to_laboratory_procedure_tumor_marker_squamous_cell_carcinoma_antigen_result":["days_to_laboratory_procedure_tumor_marker_squamous_cell_carcinoma_antigen_result"], 
+		"days_to_hiv_diagnosis" :["days_to_hiv_diagnosis"],                                                           	
 		"days_to_sample_procurement":["days_to_sample_procurement"],    
 		"days_to_submitted_tumor_dx":["submitted_tumor_dx_days_to"],
 		"days_to_bilateral_tumor_dx":["days_to_bilateral_tumor_dx"],
@@ -216,6 +215,7 @@
 		"days_to_brachytherapy_end_occurrence":["days_to_brachytherapy_end_occurrence"],
 		"days_to_chemotherapy_end":["days_to_chemotherapy_end"],
 		"days_to_chemotherapy_start":["days_to_chemotherapy_start"],
+		"days_to_laboratory_procedure_tumor_marker_squamous_cell_carcinoma_antigen_result":["days_to_laboratory_procedure_tumor_marker_squamous_cell_carcinoma_antigen_result"],
 		"ECOG": ["ecog_score"],
 		"fev1_percent_post": ["fev1_percent_ref_postbroncholiator"],
 		"fev1_percent_pre": ["fev1_percent_ref_prebroncholiator"],
@@ -665,7 +665,7 @@
 		"history_relevant_infectious_dx":["history_relevant_infectious_dx"],                                                   
 		"history_immunosuppresive_dx_other":["history_immunosuppresive_dx_other"],                                                
 		"keratinization_squamous_cell":["keratinization_squamous_cell"],                                                     
-		"hysterectomy_Performed_Ind-3":["hysterectomy_Performed_Ind-3"],                                                     
+		"hysterectomy_Performed_Ind_3":["hysterectomy_Performed_Ind-3"],                                                     
 		"hysterectomy_type":["hysterectomy_type"],                                                                
 		"other_hysterectomy_type":["other_hysterectomy_type"],                                                          
 		"margins_involved_hysterectomy":["margins_involved_hysterectomy"],                                                    
@@ -875,9 +875,12 @@
 		"new_tumor_event_tx":["new_tumor_event_tx"],
 		"new_tumor_event_histology":["new_tumor_event_histology"],
 		"new_tumor_event_dx_method_other":["new_tumor_event_dx_method_other"]
+		
 
 	}
 } 
 
 
-           
+
+                                                               
+ 

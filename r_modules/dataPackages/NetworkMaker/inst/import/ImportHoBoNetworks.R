@@ -13,6 +13,11 @@ options(stringsAsFactors=FALSE)
 diseaseAbbr <-c("BRCA", "LUNG", "LUAD","PRAD","LGG","GBM","LGG.GBM", "PAAD", "COADREAD")
 diseaseDataP <- c("TCGAbrca", "TCGAlung","TCGAluad","TCGAprad","TCGAlgg","TCGAgbm","TCGAbrain", "TCGApaad", "TCGAcoadread")
 
+dataPackage_dir = "../../../";
+markerFolder = "inst/import";
+
+oncoVogel274 <- get(load(paste(dataPackage_dir,"NetworkMaker/inst/extdata", "oncoVogel274.RData", sep="/")))
+
 #----------------------------------------------------------------------------------------------------
 create.and.display <- function(includeUnpositionedSamples=TRUE)
 {
@@ -81,7 +86,6 @@ saveGraph <- function(rcy)
 } # saveGraph
 #----------------------------------------------------------------------------------------------------
 
-   oncoVogel274 <- get(load("oncoVogel274.RData"))
 
 for(i in 1:length(diseaseAbbr)){
 	diseaseName= diseaseAbbr[i]
@@ -89,7 +93,7 @@ for(i in 1:length(diseaseAbbr)){
 	
 	print(diseaseName)
 
-	setwd(paste("/Volumes/homes/Lisa/oncoscape/OncoGit/Oncoscape/dataPackages",dataFolderName, "inst/import/network/marker/", sep="/"))
+	setwd(paste(dataPackage_dir,dataFolderName, markerFolder, sep="/"))
 #	filePath <- paste0("/Volumes/homes/HollandLabShared/Hamid/Oncoscape2015/", diseaseName)
 
 #	MDS.SNV.CNV.OV <- get(load(paste0(filePath,"/MDS.SNV.CNV.OV.RData")))

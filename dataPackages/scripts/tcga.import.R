@@ -262,5 +262,5 @@ os.data.batch(
   inputFile = os.data.batch.inputFile,
   outputDirectory = os.data.batch.outputDir,
   checkEnumerations = TRUE,
-  checkClassType = "os.class.tcgaCharacter")
+  checkClassType = "character")
 

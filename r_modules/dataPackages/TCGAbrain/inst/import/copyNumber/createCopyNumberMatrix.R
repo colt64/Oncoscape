@@ -34,3 +34,15 @@ checkEquals(as.list(table(mtx.cn)), list(`-2`=95773,`-1`=3380402,  `0`=18618648,
 save(mtx.cn, file="../../extdata/mtx.cn.RData")
 
 
+
+
+# indx <- match(rownames(tcgaLGG.cnv), rownames(tcgaGBM.cnv))
+# iLGG <- which(!is.na(indx))
+# iGBM <- indx[!is.na(indx)]
+# LGG.GBM.cnv <- cbind(tcgaLGG.cnv[iLGG, ], tcgaGBM.cnv[iGBM, ])			# 24174 x 1034
+
+# indx <- match(rownames(tcgaLGG.mut), rownames(tcgaGBM.mut))
+# iLGG <- which(!is.na(indx))
+# iGBM <- indx[!is.na(indx)]
+# LGG.GBM.mut <- cbind(tcgaLGG.mut[iLGG, ], tcgaGBM.mut[iGBM, ])			# 39356 x 746
+

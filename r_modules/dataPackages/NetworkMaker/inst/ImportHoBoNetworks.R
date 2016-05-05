@@ -88,7 +88,7 @@ saveGraph <- function(rcy)
 } # saveGraph
 #----------------------------------------------------------------------------------------------------
 
-dataPackage_dir = "../../../../../../dataPackages/Raw_UCSC";
+dataPackage_dir = "../../";
 markerFolder = "inst/import";
 
 

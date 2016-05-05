@@ -76,6 +76,18 @@ NetworkMaker <- function(dataPackage, samples=NA, genes=NA, verbose=FALSE)
 
 } # NetworkMaker constructor
 #----------------------------------------------------------------------------------------------------
+setMethod("get.filtered.sampleIDs ", "NetworkMaker",
+  function (obj, regex)
+{		
+		# keep only primary tumors
+		mut.samples <- grep(regex, colnames(mutTbl), value=TRUE)
+		cnv.samples <- grep(regex, colnames(cnTbl),  value=TRUE)
+
+		return (unique(c(mut.samples, cnv.samples)))			
+})
+
+#----------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------
 .allKnownSampleIDsCanonicalized <- function(pkg)
 {
    all.ids <- c(rownames(matrices(pkg)$mtx.mut),
@@ -117,7 +129,7 @@ calcSimilarity <- function(indicatorMatrix) {
 #----------------------------------------------------------------------------------------------------
 setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
 
-  function (obj, samples=NA, genes=NA, copyNumberValues=c(-2, 2)) {
+  function (obj, samples=NA, genes=NA, copyNumberValues=c(-2, 2), threshold=NA) {
 
      mut <- obj@mtx.mut
 
@@ -134,6 +146,11 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
         # coerce mut into a matrix of 0/1
         # mutation matrices indicate wildtype by what token?  "" or NA or "NA"?
         # until this is standardized and enforced check for each
+
+		#remove any genes with NA in mutation
+		tmp <- apply(mut, 1, function(x) any(is.na(x)))
+		mut <- mut[-which(tmp), ]
+
 
      mut.01 <- .createIndicatorMatrix(mut)
 		# returns transposed matrix with genes as rows and patients as columns 
@@ -169,15 +186,10 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
 	colnames(tbl.pos) <- c("x", "y")
 	tbl.pos <- as.data.frame(tbl.pos)
 
-#	if (diseaseName=="BRCA") {
-#		outliers <- names(which(MDS.SNV.CNV[,1]<(-1e-04)))
-#		save(outliers, file="SNV.CNV.outliers.RData")
-#		MDS.SNV.CNV <- MDS.SNV.CNV[setdiff(rownames(MDS.SNV.CNV), outliers), ]
-#	} else if (diseaseName=="LGG.GBM") {
-#		outliers <- names(which(MDS.SNV.CNV[ ,1]<(-0.0001)))
-#		save(outliers, file="SNV.CNV.outliers.RData")
-#		MDS.SNV.CNV <- MDS.SNV.CNV[setdiff(rownames(MDS.SNV.CNV), outliers), ]
-#	}
+	if(!is.na(threshold)){
+    	outliers <- names(which(MDS.SNV.CNV[,1]<threshold))
+		tbl.pos <- tbl.pos[setdiff(rownames(tbl.pos), outliers), ]
+	}
 
 #	 ptIDs <- canonicalizePatientIDs(obj@pkg, rownames(tbl.pos))
 #	 tbl.pos <- tbl.pos[!duplicated(ptIDs),]

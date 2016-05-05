@@ -1,0 +1,35 @@
+{
+  "name": "cytoscape-qtip",
+  "main": "cytoscape-qtip.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cytoscape/cytoscape.js-qtip.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "keywords": [
+    "cytoscape",
+    "qtip",
+    "extension",
+    "popup",
+    "tooltip",
+    "cyext"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/cytoscape/cytoscape.js-qtip",
+  "version": "2.3.0",
+  "_release": "2.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.3.0",
+    "commit": "9701283af4cddf64da888116c3fb0d109c39a9c2"
+  },
+  "_source": "https://github.com/cytoscape/cytoscape.js-qtip.git",
+  "_target": "^2.3.0",
+  "_originalSource": "cytoscape-qtip"
+}

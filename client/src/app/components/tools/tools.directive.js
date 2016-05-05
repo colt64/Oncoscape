@@ -64,6 +64,11 @@
                 img: 'history.png',
                 copy: ''
             }, {
+                name: 'Oncoprint',
+                route: 'oncoprint',
+                img: 'metadata.png',
+                copy: ''
+            }, {
                 name: 'MetaData',
                 route: 'metadata',
                 img: 'metadata.png',

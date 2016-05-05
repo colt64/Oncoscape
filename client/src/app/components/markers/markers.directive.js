@@ -82,6 +82,9 @@
 
                 // Initialize Zoom
                 initializeZoom(cyChart, _);
+
+                // Initialize Commands
+                initializeCommands(cyChart, vm);
                 
                 // Ready
                 osApi.setBusy(false);
@@ -134,6 +137,99 @@
             });
         }
             
+        function initializeCommands(chart, vm){
+            vm.optInteractiveMode = vm.optInteractiveModes[0];
+            vm.optCommands = [
+                
+                {name:"Show Edges Of Selected Patient", cmd:function(){
+                    var degmap = {};
+                    chart.$('node[nodeType="patient"]:selected')
+                        .forEach(function(node){
+                            node.neighborhood('edge').forEach(function(item){
+                                this[item.id()] = {display:'element'};
+                            }, this);
+                    }, degmap);
+                    chart.batchData(degmap);
+                }},
+                {name:"Show Edges Of Selected Genes", cmd:function(){
+                    var degmap = {};
+                    chart.$('node[nodeType="gene"]:selected')
+                        .forEach(function(node){
+                            node.neighborhood('edge').forEach(function(item){
+                                this[item.id()] = {display:'element'};
+                            }, this);
+                    }, degmap);
+                    chart.batchData(degmap);
+                }},
+                {name:"Show All Edges", cmd:function(){
+                    var degmap = {};
+                    chart.$('edge[edgeType!="chromosome"]')
+                        .forEach(function(item){
+                            this[item.id()] = {display:'element'};
+                        }, degmap);
+                    chart.batchData(degmap);
+                }},
+                {name:"Hide All Edges", cmd:function(){
+                    var degmap = {};
+                    chart.$('edge[edgeType!="chromosome"]')
+                        .forEach(function(item){
+                            this[item.id()] = {display:'none'};
+                        }, degmap);
+                    chart.batchData(degmap);
+                }},{name:"Select Connected Genes", cmd:function(){
+                    chart.startBatch();
+                    chart.$('node[nodeType="patient"]:selected')
+                        .neighborhood('node')
+                        .forEach( function(ele){
+                            ele.select();
+                        });
+                    chart.endBatch();
+                }},
+                {name:"Select Connected Patients", cmd:function(){
+                    chart.startBatch();
+                    chart.$('node[nodeType="gene"]:selected')
+                        .neighborhood('node')
+                        .forEach( function(ele){
+                            ele.select();
+                        });
+                    chart.endBatch();
+                }},
+                {name:"Deselect All Patients", cmd:function(){
+                    chart.startBatch();
+                    chart.$('node[nodeType="patient"]:selected')
+                        .forEach( function(ele){
+                            ele.deselect();
+                        });
+                    chart.endBatch();
+                }},
+                {name:"Deselect All Genes", cmd:function(){
+                    chart.startBatch();
+                    chart.$('node[nodeType="gene"]:selected')
+                        .forEach( function(ele){
+                            ele.deselect();
+                        });
+                    chart.endBatch();
+                }},
+                {name:"Invert Patient Selection", cmd:function(){
+                    chart.startBatch();
+                    chart.$('node[nodeType="patient"]')
+                        .forEach( function(ele){
+                            ele[ele._private.selected?"deselect":"select"]();
+                        });
+                    chart.endBatch();
+                }},
+                {name:"Invert Gene Selection", cmd:function(){
+                    chart.startBatch();
+                    chart.$('node[nodeType="gene"]')
+                        .forEach( function(ele){
+                            ele[ele._private.selected?"deselect":"select"]();
+                        });
+                    chart.endBatch();
+                }},
+
+            ]
+                
+        }
         function initializeViewModel(vm, $stateParams){
             vm.datasource = $stateParams.datasource;
             vm.optInteractiveModes;
@@ -156,6 +252,7 @@
             vm.optCohortPatient;
             vm.optCohortGenes;
             vm.optCohortGene;
+            vm.optCommands;
             vm.frame;
             return vm;
         }
@@ -168,18 +265,25 @@
             vm.optCohortGenes = cohortGene.get();
             vm.optCohortGene = vm.optCohortGenes[0];
 
+            vm.addCohorts = function(){
+                vm.addCohortGene();
+                vm.addCohortPatient();
+            }
+
             vm.addCohortGene = function(){
                 var cohortName = "P+M " + moment().format('- H:mm - M/D/YY');
                 var cohortIds = chart.$('node[nodeType="gene"]:selected').map(function(ele){ return ele.data().id.toUpperCase() });
                 var cohort = {name:cohortName, ids:cohortIds};
-                vm.optCohortGenes.push(cohort);
+                if (cohortIds.length==0) return;
+                cohortGene.add(cohort);
                 vm.optCohortGene = cohort;
             }
             vm.addCohortPatient = function(){
                 var cohortName = "P+M " + moment().format('- H:mm - M/D/YY');
                 var cohortIds = chart.$('node[nodeType="patient"]:selected').map(function(ele){ return ele.data().id.toUpperCase() });
                 var cohort = {name:cohortName, ids:cohortIds};
-                vm.optCohortPatients.push(cohort);
+                if (cohortIds.length==0) return;
+                cohortPatient.add(cohort);
                 vm.optCohortPatient = cohort;
             }
 
@@ -305,7 +409,9 @@
             }, {
                 selector: 'node[nodeType="patient"]:selected',
                 style: {
-                    'border-color': "#FF0000"
+                    'border-color': "#FF0000",
+                    'border-width': 10
+
                 }
             }, {
                 selector: 'node[nodeType="gene"]',
@@ -319,7 +425,8 @@
             }, {
                 selector: 'node[nodeType="gene"]:selected',
                 style: {
-                    'border-color': "#FF0000"
+                    'border-color': "#FF0000",
+                    'border-width': 10
                 }
             },{
                 selector: 'node[nodeType="centromere"]',
@@ -420,6 +527,23 @@
                     });
                     return this;
                 },
+                // showDegreeOneConnected: function(e){
+                    
+                //     var degmap = {};
+                //     chart.off('select', 'node');
+                //     e.cyTarget.neighborhood('node').select();
+                //     e.cyTarget.neighborhood('edge')
+                //         .forEach(function(edge){
+                //             if (
+                //                 edge._private.source.selected() &&
+                //                 edge._private.target.selected()
+                //             ) this[edge.id()] = {display:'element'};
+                //         }, degmap);
+                //     chart.batchData(degmap);  
+                //     chart.on('select', 'node', {ui:true}, function(e){
+                //         behaviors.showDegreeOne(e);
+                //     });            
+                // },
                 showDegreeOne: function(e){
                     var degmap = {};
                     e.cyTarget.neighborhood('edge')
@@ -477,57 +601,19 @@
             }
 
             // Use States To Associate Events + Behaviors
-            var states = [{
-                name: 'Hide All',
-                register: function() {
-                    events.click(function(e) {
-                        behaviors
-                            .showOncoPrint(e)
-                    });
-                    events.over(function(e) {
-                        behaviors
-                            .showPatientInfo(e)
-                    });
-                    events.out(function(e) {
-                        behaviors
-                            .hidePatientInfo(e)
-                    });
-                },
-                unregister: function() {
-                    events.removeAll();
-                }
-            }, {
-                name: 'Show All',
-                register: function() {
-                    events.click(function(e) {
-                        behaviors
-                            .showOncoPrint(e)
-                    });
-                    events.over(function(e) {
-                        behaviors
-                            .showPatientInfo(e)
-                    });
-                    events.out(function(e) {
-                        behaviors
-                            .hidePatientInfo(e)
-                    });
-
-                    // Show all Edges
-                    var degmap = {};
-                    chart.$('edge[edgeType!="chromosome"]')
-                        .forEach(function(node){
-                            this[node.id()] = { display: 'element' };
-                        }, degmap);
-                    chart.batchData(degmap);
-                },
-                unregister: function() {
-                    events.removeAll();
+            var states = [
+            {
+                name: 'Commands', //1° When 
+                register: function(){},
+                unregister: function(){
 
                     // Hide All Edges
                     chart.batchData(hidePatientEdges);
                 }
-            },{
-                name: '1° When Selected',
+
+            },
+            {
+                name: 'Selection Highlight', //1° When 
                 register: function(){
 
                     var degmap = {};
@@ -540,10 +626,10 @@
                     chart.batchData(degmap);
 
 
-                    chart.on('select', 'node', function(e){
+                    chart.on('select', 'node', {ui:true}, function(e){
                         behaviors.showDegreeOne(e);
                     });
-                    chart.on('unselect','node',function(e){
+                    chart.on('unselect','node',{ui:true}, function(e){
                         behaviors.hideDegreeOne(e);
                     });
                 },
@@ -555,39 +641,9 @@
                     chart.off('unselect', 'node');
                 }
 
-            },{
-                name: '2° When Selected',
-                register: function(){
-                    var degmap = {};
-                    chart.$('node[nodeType="patient"]:selected')
-                        .forEach(function(node){
-                            node.neighborhood('node')
-                                .forEach(function(node){
-                                    node.neighborhood('edge')
-                                        .forEach(function(item){
-                                            this[item.id()] = {display:'element'};
-                                        }, this)
-                                }, this)
-                        }, degmap);
-                    chart.batchData(degmap);
-                    
-                    chart.on('select', 'node', function(e){
-                        behaviors.showDegreeTwo(e);
-                    });
-                    chart.on('unselect','node',function(e){
-                        behaviors.hideDegreeTwo(e);
-                    });
-                },
-                unregister: function(){
-
-                    // Hide All Edges
-                    chart.batchData(hidePatientEdges);
-                    chart.off('select', 'node');
-                    chart.off('unselect', 'node');
-                }
-
-            },{
-                name: '1° On Mouse Over',
+            },
+            {
+                name: 'Roll Over Highlight', //1° On 
                 register: function() {
                     events.click(function(e) {
                         behaviors
@@ -608,28 +664,8 @@
                 unregister: function() {
                     events.removeAll();
                 }
-            }, {
-                name: '2° On Mouse Over',
-                register: function() {
-                    events.click(function(e) {
-                        behaviors
-                            .showOncoPrint(e)
-                    });
-                    events.over(function(e) {
-                        behaviors
-                            .showPatientInfo(e)
-                            .showDegreeTwo(e)
-                    });
-                    events.out(function(e) {
-                        behaviors
-                            .hidePatientInfo(e)
-                            .hideDegreeTwo(e)                           
-                    });
-                },
-                unregister: function() {
-                    events.removeAll();
-                }
-            }];
+            }
+          ];
 
             vm.optInteractiveModes = states;
             vm.optInteractiveMode = vm.optInteractiveModes[0];
@@ -687,7 +723,7 @@
                 var degmap = {};
                 chart.edges('edge[edgeType!="chromosome"]')
                     .forEach(function(edge){
-                        this[edge.id()] = {color:colorMap[edge.data("edgeType")].color};
+                        this[edge.id()] = {'color':colorMap[edge.data("edgeType")].color, sizeEle:3};
                     }, degmap);
                 chart.batchData(degmap);
             });
@@ -701,17 +737,17 @@
                     case "Highlight":
                         item.state = "Show";
                         color = '#3993fa';
-                        state = {color:color, display:'element'};
+                        state = {'color':color, sizeEle:3};
                         break;
                     case "Show":
                         item.state = "Hide";
                         color = '#EEEEEE';
-                        state = {color:'#FFF', display:'none'};
+                        state = {'color':'#FF0000', sizeEle:0 };
                         break;
                     default:
                         item.state = "Highlight";
                         color = item.color;
-                        state = {color:color, display:'element'};
+                        state = {'color':color, sizeEle:3 };
                         break;
                 }
 
@@ -722,6 +758,7 @@
                 var degmap = {};
                 chart.edges('edge[edgeType="'+item.name+'"]')
                     .forEach(function(edge){
+                        
                         this.degmap[edge.id()] = this.state;
                     }, {degmap:degmap, state:state});
                 chart.batchData(degmap);
@@ -749,36 +786,37 @@
         function initializeNodeColors(chart, vm, $scope, osApi){
             
             osApi.getSampleCategorizationNames().then(function(response) {
-                var optNodeColors =  [{name: 'Hobo'},{name: 'Gender'},{name: 'Age At Diagnosis'}];
+                var optNodeColors =  [{name: 'Default'},{name: 'Gender'},{name: 'Age At Diagnosis'}];
                 if (angular.isDefined(response.payload.length)){
-                    optNodeColors.concat( response.payload
+                    optNodeColors = optNodeColors.concat( response.payload
                         .map(function(item) { return {'name': item} }));
 
                 }
                 vm.optNodeColors = optNodeColors;
                 vm.optNodeColor = vm.optNodeColors[0];
-
                 $scope.$watch("vm.optNodeColor", function(){
                     var degmap = {};
                     switch(vm.optNodeColor.name){
-                        case "Hobo":
+                        case "Default":
                             vm.legandNodes = [{name:'Patients', color:'#3993fa'}];
                             chart.$('node[nodeType="patient"]')
                                 .forEach(function(node){
                                     degmap[node.id()] = {color:'#3993fa'};
                                 });
+                            chart.batchData(degmap);
                             break;
                         case "Gender":
-                            vm.legandNodes = [{name:'Male', color:'blue'}, {name:'Female', color:'pink'}];
+                            vm.legandNodes = [{name:'Male', color:'purple'}, {name:'Female', color:'green'}];
                             chart.$('node[nodeType="patient"]')
                                 .forEach(function(node){
                                     try{
                                         var gender = node.data("patient")[0][2];
-                                        degmap[node.id()] = {color: (gender==='male') ? 'rgb(5, 108, 225)' :  'pink' };
+                                        degmap[node.id()] = {color: (gender==='male') ? 'purple' :  'green' };
                                     }catch(e){
                                         degmap[node.id()] = {color: '#EEEEEE'};
                                     }
                                 });
+                            chart.batchData(degmap);
                             break;
                         case "Age At Diagnosis":
                             vm.legandNodes = [{name:'Young', color:'green'}, {name:'Old', color:'red'}];
@@ -791,6 +829,7 @@
                                         degmap[node.id()] = {color: '#000000'};
                                     }
                                 });
+                            chart.batchData(degmap);
                             break;
                         default:
                             osApi.getSampleCategorization(vm.optNodeColor.name).then(function(response) {
@@ -802,8 +841,8 @@
 
                                     var rows = response.payload.rownames;
                                     var tbl = response.payload.tbl;
-                                    var degmap = {};
                                     var nodes = chart.$('node[nodeType="patient"]');
+
                                     // Revisit This.  Would be faster to not loop.
                                     for (var i=0; i<nodes.length; i++){
                                         var id = nodes[i].id();
@@ -811,21 +850,29 @@
                                         for (var ii=0; ii<rows.length; ii++){
                                             if (id==rows[ii]){
                                                 degmap[id] = {color:tbl[ii][1]}
-                                                break;
                                             }
                                         }
                                     }
+                                    chart.batchData(degmap);
                                 });
+            
                             break;
                         }
-                        chart.batchData(degmap);
                     });
-
             });
+
+            vm.updateNode = function(item){
+                chart.startBatch();
+                chart.nodes('node[nodeType="patient"]')
+                    .forEach(function(node){ 
+                        if (node.style("background-color")==item.color) node.select();
+                });
+                chart.endBatch();
+            }
         }
 
         function initializeLayouts(chart, vm, $scope){
-            vm.optPatientLayouts = [{name: 'Hobo'},{name: 'Age At Diagnosis'},{name: 'Gender'}];
+            vm.optPatientLayouts = [{name: 'Hobo'},{name: 'Age At Diagnosis'}]; //,{name: 'Gender'}
             vm.optPatientLayout = vm.optPatientLayouts[0];
             $scope.$watch('vm.optPatientLayout', function(layout){                
                 var nodes = chart.nodes('node[nodeType="patient"]');
@@ -863,8 +910,8 @@
                                 catch(e){ return false; }
                             })
                             .forEach(function(node, index){
-                                var a = 400;
-                                var b = 400;
+                                var a = 10;
+                                var b = 100;
                                 var angle = 0.1 * (index+1);
                                 var x = -1000 + (a+b * angle) * Math.cos(angle);
                                 var y = -1200 + (a+b * angle) * Math.sin(angle);
@@ -948,7 +995,7 @@
                                 data.sizeLbl = 12;
                                 data.sizeBdr = 5;
                                 value.locked = true;
-                                value.selectable = true;
+                                value.selectable = (value.data.nodeType==="gene");
                                 value.grabbable = false;
                                 return value;
                             });

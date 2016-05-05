@@ -63,7 +63,8 @@
 		"POSITIVE": ["POSITIVE","POSITIVE - SS18-SSX2"], //re-visit!
 		"NEGATIVE": ["NEGATIVE"],
 		"INDETERMINATE": ["INDETERMINATE"],
-		"EQUIVOCAL": ["EQUIVOCAL"]
+		"EQUIVOCAL": ["EQUIVOCAL"],
+		"NOT DONE":["NOT DONE"]
 	},	
 	"os.class.ihc_percent_positive": {
 		"<10%": ["<10%"],
@@ -122,9 +123,6 @@
 	"os.class.ret": {
 		"RET NEGATIVE":["RET NEGATIVE"]
 	},
-	"os.class.ret": {
-		"RET NEGATIVE":["RET NEGATIVE"]
-	},
 	"os.class.sinusoid_invasion": {
 		"SINUSOID INVASION ABSENT":["SINUSOID INVASION ABSENT"],
 		"SINUSOID INVASION PRESENT":["SINUSOID INVASION PRESENT"]
@@ -145,16 +143,30 @@
 		"PRESENT":["PRESENT"],
 		"ABSENT":["ABSENT"]
 	},
-	
-
+	"os.class.igh_genotype_result": {
+		 "CLONAL":["CLONAL"],
+		 "NON-CLONAL":["NON-CLONAL"]
+	},
+	"os.class.history_hpylori_infection_indicator": {
+		 "NEVER":["NEVER"],
+		 "CURRENT":["CURRENT"]
+	},
+	"os.class.tumor_focality": {
+		 "UNIFOCAL":["UNIFOCAL"],
+		 "MULTIFOCAL":["MULTIFOCAL"]
+	},
 	//END
-	
-	"os.class.vascular_invasion": {
+	"os.class.test_levels":{
+		"ELEVATED":["ELEVATED"],
+		"":[""],
+		"NORMAL":["NORMAL"],
+		"LOW":["LOW"]
+	},
+	"os.class.vascular_invasion":{
 		"MICRO":["MICRO"],
 		"NONE":["NONE"],
 		"MACRO":["MACRO"]
 	},
-
 	"os.class.positivity_scale_method": {
 		"3 POINT SCALE": ["3 POINT SCALE"],
 		"4 POINT SCALE": ["4 POINT SCALE"],
@@ -171,11 +183,10 @@
 		"SOCIAL DRINKER": ["SOCIAL DRINKER"],
 		"OCCASIONAL DRINKER": ["OCCASIONAL DRINKER"]
 	},
-	
 	"os.class.test_method": {
 		"IHC": ["IHC"],
 		"SEQUENCE ANALYSIS": ["SEQUENCE ANALYSIS"],
-		"FISH": ["FISH","FISH FOR SS18 SPLIT"],
+		"FISH": ["FISH","FISH FOR SS18 SPLIT","FISH|FISH|FISH|FISH","FISH|FISH|FISH|FISH|FISH","FISH|FISH","FISH|FISH|FISH"],
 		"RT-PCR": ["RT-PCR"],
 		"PCR":["PCR"],
 		"OTHER":["OTHER, SPECIFY"]	
@@ -207,7 +218,6 @@
 		"SUPERFICIAL":["SUPERFICIAL"], 
 		"DEEP":["DEEP"] 
 	},
-	
 	"os.class.laterality": {
 		"RIGHT": ["RIGHT"],
 		"LEFT": ["LEFT"],
@@ -281,13 +291,11 @@
 		"NORMALIZATION OF TUMOR MARKERS, BUT RESIDUAL TUMOR MASS":["NORMALIZATION OF TUMOR MARKERS, BUT RESIDUAL TUMOR MASS"],
 		"COMPLETE REMISSION": ["COMPLETE REMISSION/RESPONSE","COMPLETE REMISSION"],
 		"RESPONSE": ["RESPONSE","COMPLETE REMISSION/RESPONSE","PARTIAL REMISSION/RESPONSE"]
-
 	},
 	"os.class.followup_reason": {
 		"SCHEDULED FOLLOW-UP SUBMISSION":["SCHEDULED FOLLOW-UP SUBMISSION"],
 		"ADDITIONAL NEW TUMOR EVENT":["ADDITIONAL NEW TUMOR EVENT"]
 	},
-
 	"os.class.residual_tumor": {
 		"R0": ["R0"],
 		"R2": ["R2"],
@@ -356,8 +364,7 @@
 		"ADJUVANT THERAPY": ["ADJUVANT THERAPY"],
 		"OTHER": ["OTHER","OTHER: SPECIFY IN NOTES","OTHER (SPECIFY BELOW)","SPECIFY"],
 		"POST SECONDARY THERAPY":["POST SECONDARY THERAPY"],
-		"AT RECURRENCE/PROGRESSION OF DISEASE":["AT RECURRENCE/PROGRESSION OF DISEASE"]
-		
+		"AT RECURRENCE/PROGRESSION OF DISEASE":["AT RECURRENCE/PROGRESSION OF DISEASE"]	
 	},
 	"os.class.therapy_regimen": {
 		"ADJUVANT": ["ADJUVANT"],
@@ -407,7 +414,6 @@
 		"OTHER": ["OTHER","OTHER: SPECIFY IN NOTES","OTHER (SPECIFY BELOW)","OTHER: SPECIFY IN NOTES IMPLANTS","OTHER: SPECIFY IN NOTES RADIOISOTOPES", "SPECIFY"],
 		"WHOLE PELVIS SPLIT FIELD":["WHOLE PELVIS SPLIT FIELD"],
 		"EXTERNAL BEAM AND BILATERAL PARAMETRIAL BOOST":["EXTERNAL BEAM AND BILATERAL PARAMETRIAL BOOST"]
-
 	}, 
 	"os.class.radiation_therapy_site": {
 		"REGIONAL SITE": ["REGIONAL SITE"],

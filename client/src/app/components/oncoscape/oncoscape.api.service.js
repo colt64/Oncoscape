@@ -276,6 +276,71 @@
                 }
             });
         }
+        function getOncoprint(geneSetAndPatients) {
+            return osSocket.request({
+                cmd: "oncoprint_data_selection",
+                payload: {
+                    patientIdsAndGenes: geneSetAndPatients
+                }
+            });
+        }
+
+
+
+        var history = (function(){
+
+            var _geneSelections = [];
+            var _geneSelection = null;
+            var _patientSelections = [];
+            var _patientSelection = null;
+
+            var addGeneSelection = function(name, ids){
+                _geneSelections.push({name:name, ids:ids})
+            };
+            var getGeneSelections = function(){
+                return _geneSelection;
+            };
+            var setGeneSelection = function(selection){
+                _geneSelection = selection;
+            };
+
+            var getGeneSelection = function(selection){
+                return _geneSelection;
+            };
+
+            var _patientSelections = [];
+            var addPatientSelection = function(name, ids){
+                console.log("ADD PATIENT SELECTION");
+                _patientSelections.push({name:name, ids:ids})
+
+            };
+            var getPatientSelections = function(){
+                console.log("GET PATIENT SELECTION");
+                return _patientSelections;
+            };
+            var setPatientSelection = function(selection){
+                console.log("SET PATIENT SELECTION");
+                _patientSelection = selection;
+            };
+            var getPatientSelection = function(){
+                console.log("GET PATIENT SELECTION")
+                return _patientSelection;
+            };
+
+            return {
+                addGeneSelection: addGeneSelection,
+                setGeneSelection: setGeneSelection,
+                getGeneSelections: getGeneSelections,
+                addPatientSelection: addPatientSelection,
+                setPatientSelection: setPatientSelection,
+                getPatientSelection: getPatientSelection,
+                getPatientSelections: getPatientSelections
+
+            }
+        });
+
+
+
 
         var _cohortPatient = collection(signals, {name:'All Patients', ids:'*'}, "osCohortPatient");
         function getCohortPatient(){ return _cohortPatient; }
@@ -283,35 +348,33 @@
         var _cohortGene = collection(signals, {name:'All Genes', ids:'*'}, "osCohortGene");
         function getCohortGene(){ return _cohortGene; }
 
-        function collection(signals, defaultValue, collectionName){
+        function collection(signals, defaultValue){ //, collectionName
 
             var onAdd = new signals.Signal();
             var onRemove = new signals.Signal();
-            var onSelect = new signals.Signal();
+            //var onSelect = new signals.Signal();
 
             var _collection = [defaultValue];
             
             function get() { return _collection; }
             
             function add(value){ 
-                _collection.push(value); 
+                _collection.unshift(value); 
                 onAdd.dispatch(_collection);
             }
             function clear(){
                 _collection = [defaultValue]   
             }
             function remove(value){
-                if (_selected==value) select(_collection[0]);
                 _collection.splice(_collection.indexOf(value)); 
                 onRemove.dispatch(_collection);
             }
            
-            function save(key){
-
+            function save(){
+                
             }
 
-            function load(key){
-
+            function load(){
             }
 
             return{
@@ -326,8 +389,6 @@
             }
         }
 
-
-   
   
         return {
             getCohortPatient: getCohortPatient,
@@ -367,7 +428,8 @@
             getMrnaData: getMrnaData,
             getCnvData: getCnvData,
             getMutationData: getMutationData,
-            getModuleModificationDate: getModuleModificationDate
+            getModuleModificationDate: getModuleModificationDate,
+            getOncoprint: getOncoprint
         }
 
     }

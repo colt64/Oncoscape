@@ -32,3 +32,15 @@ checkEquals(nrow(mtx.mut), nrow(tbl.TCGAgbm) + nrow(tbl.TCGAlgg) )
 save(mtx.mut, file="../../extdata/mtx.mut.RData")
 
 
+
+
+# indx <- match(rownames(tcgaLGG.cnv), rownames(tcgaGBM.cnv))
+# iLGG <- which(!is.na(indx))
+# iGBM <- indx[!is.na(indx)]
+# LGG.GBM.cnv <- cbind(tcgaLGG.cnv[iLGG, ], tcgaGBM.cnv[iGBM, ])			# 24174 x 1034
+
+# indx <- match(rownames(tcgaLGG.mut), rownames(tcgaGBM.mut))
+# iLGG <- which(!is.na(indx))
+# iGBM <- indx[!is.na(indx)]
+# LGG.GBM.mut <- cbind(tcgaLGG.mut[iLGG, ], tcgaGBM.mut[iGBM, ])			# 39356 x 746
+

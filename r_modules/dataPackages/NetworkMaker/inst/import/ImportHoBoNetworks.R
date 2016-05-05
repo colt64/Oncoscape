@@ -19,19 +19,24 @@ markerFolder = "inst/import";
 oncoVogel274 <- get(load(paste(dataPackage_dir,"NetworkMaker/inst/extdata", "oncoVogel274.RData", sep="/")))
 
 #----------------------------------------------------------------------------------------------------
-create.and.display <- function(includeUnpositionedSamples=TRUE)
+create.and.display <- function(includeUnpositionedSamples=TRUE, threshold = NA, regex= NA)
 {
-   load(system.file(package="NetworkMaker", "extdata", "genesets.RData"))
-   goi <- sort(unique(c(genesets$tcga.GBM.classifiers, genesets$marker.genes.545)))
-   db <- org.Hs.eg.db
-   tbl <- select(db, columns=c("SYMBOL", "MAP", "CHRLOC"), keytype="SYMBOL", keys=goi)
-   goi <- unique(tbl[!is.na(tbl$MAP),"SYMBOL"]);
-   goi <- goi[-which(goi=="MAPT")]
- 
- #	goi <- getAlteredGeneNames(netMaker)
+#   load(system.file(package="NetworkMaker", "extdata", "genesets.RData"))
+#   goi <- sort(unique(c(genesets$tcga.GBM.classifiers, genesets$marker.genes.545)))
+#   db <- org.Hs.eg.db
+#   tbl <- select(db, columns=c("SYMBOL", "MAP", "CHRLOC"), keytype="SYMBOL", keys=goi)
+#   goi <- unique(tbl[!is.na(tbl$MAP),"SYMBOL"]);
+#   goi <- goi[-which(goi=="MAPT")]
+#	goi <- getAlteredGeneNames(netMaker)
+
+
    gistic.scores <-c(-2,-1,0,1, 2)
+  
+   goi = oncoVogel274
+   if(!is.na(regex))  samples <- NA
+   else{              samples <- get.filtered.sampleIDs(regex) }
    
-   calculateSampleSimilarityMatrix(netMaker, copyNumberValues=gistic.scores, genes = oncoVogel274)
+   calculateSampleSimilarityMatrix(netMaker, copyNumberValues=gistic.scores, genes = goi, samples=samples)
    #filename <- "MDS.SNV.CNV.tsv"
    #usePrecalculatedSampleSimilarityMatrix(netMaker, filename)
 
@@ -95,9 +100,7 @@ for(i in 1:length(diseaseAbbr)){
 
 	setwd(paste(dataPackage_dir,dataFolderName, markerFolder, sep="/"))
 #	filePath <- paste0("/Volumes/homes/HollandLabShared/Hamid/Oncoscape2015/", diseaseName)
-
 #	MDS.SNV.CNV.OV <- get(load(paste0(filePath,"/MDS.SNV.CNV.OV.RData")))
-
 #	write.table(MDS.SNV.CNV.OV, file="MDS.SNV.CNV.tsv", quote=F, sep="\t", col.names=c("x","y"))
 
 	eval(parse(text=sprintf("library(%s)", dataFolderName)))
@@ -105,7 +108,13 @@ for(i in 1:length(diseaseAbbr)){
 
 	netMaker <- NetworkMaker(dz)
 	
-	x <- create.and.display(includeUnpositionedSamples=FALSE) 
+	regex = ".01$"; threshold = NA;
+	if(diseaseName == "AML"){       regex = ".03$|.09$" }
+	else if(diseaseName == "LUAD"){ regex = "TCGA.(17)^.\d{4}.01$" }
+
+	if(diseaseName == "BRCA" | diseaseName == "LGG.GBM")  threshold = -1e-04
+
+	x <- create.and.display(includeUnpositionedSamples=FALSE, regex, threshold) 
 	rcy <- x$rcy
 
 	hideAllEdges(rcy)  # deselect any selections

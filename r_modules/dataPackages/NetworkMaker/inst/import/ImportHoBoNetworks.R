@@ -13,13 +13,10 @@ options(stringsAsFactors=FALSE)
 diseaseAbbr <-c("BRCA", "LUNG", "LUAD","PRAD","LGG","GBM","LGG.GBM", "PAAD", "COADREAD")
 diseaseDataP <- c("TCGAbrca", "TCGAlung","TCGAluad","TCGAprad","TCGAlgg","TCGAgbm","TCGAbrain", "TCGApaad", "TCGAcoadread")
 
-dataPackage_dir = "../../../";
-markerFolder = "inst/import";
-
-oncoVogel274 <- get(load(paste(dataPackage_dir,"NetworkMaker/inst/extdata", "oncoVogel274.RData", sep="/")))
+oncoVogel274 <- get(load(paste("../extdata/oncoVogel274.RData", sep="/")))
 
 #----------------------------------------------------------------------------------------------------
-create.and.display <- function(includeUnpositionedSamples=TRUE, threshold = NA, regex= NA)
+create.and.display <- function(netMaker, includeUnpositionedSamples=TRUE, threshold = NA, regex= NA)
 {
 #   load(system.file(package="NetworkMaker", "extdata", "genesets.RData"))
 #   goi <- sort(unique(c(genesets$tcga.GBM.classifiers, genesets$marker.genes.545)))
@@ -33,8 +30,8 @@ create.and.display <- function(includeUnpositionedSamples=TRUE, threshold = NA, 
    gistic.scores <-c(-2,-1,0,1, 2)
   
    goi = oncoVogel274
-   if(!is.na(regex))  samples <- NA
-   else{              samples <- get.filtered.sampleIDs(regex) }
+   if(is.na(regex)){ samples <- NA
+   } else{           samples <- get.filtered.sampleIDs(netMaker, regex) }
    
    calculateSampleSimilarityMatrix(netMaker, copyNumberValues=gistic.scores, genes = goi, samples=samples)
    #filename <- "MDS.SNV.CNV.tsv"
@@ -90,35 +87,45 @@ saveGraph <- function(rcy)
 
 } # saveGraph
 #----------------------------------------------------------------------------------------------------
-
-
-for(i in 1:length(diseaseAbbr)){
-	diseaseName= diseaseAbbr[i]
-	dataFolderName = diseaseDataP[i]
+calculate.networks <- function(diseaseName, dataFolderName ){
 	
-	print(diseaseName)
-
 	setwd(paste(dataPackage_dir,dataFolderName, markerFolder, sep="/"))
-#	filePath <- paste0("/Volumes/homes/HollandLabShared/Hamid/Oncoscape2015/", diseaseName)
-#	MDS.SNV.CNV.OV <- get(load(paste0(filePath,"/MDS.SNV.CNV.OV.RData")))
-#	write.table(MDS.SNV.CNV.OV, file="MDS.SNV.CNV.tsv", quote=F, sep="\t", col.names=c("x","y"))
 
-	eval(parse(text=sprintf("library(%s)", dataFolderName)))
-	eval(parse(text=sprintf("dz <- %s()" , dataFolderName)))
-
+	library(dataFolderName, character.only =T)
+	constructor <- get(dataFolderName, mode="function")
+	dz <- constructor()
+	
 	netMaker <- NetworkMaker(dz)
 	
 	regex = ".01$"; threshold = NA;
-	if(diseaseName == "AML"){       regex = ".03$|.09$" }
-	else if(diseaseName == "LUAD"){ regex = "TCGA.(17)^.\d{4}.01$" }
+	if(diseaseName == "AML"){       regex = ".03$|.09$";
+	} else if(diseaseName == "LUAD"){ regex = "TCGA.(17)^.\\d{4}.01$" }
 
 	if(diseaseName == "BRCA" | diseaseName == "LGG.GBM")  threshold = -1e-04
 
-	x <- create.and.display(includeUnpositionedSamples=FALSE, regex, threshold) 
+	x <- create.and.display(netMaker, includeUnpositionedSamples=FALSE, regex, threshold) 
 	rcy <- x$rcy
 
 	hideAllEdges(rcy)  # deselect any selections
 	showEdges(rcy, "chromosome")
 	saveGraph(rcy)
+	
+}
+#----------------------------------------------------------------------------------------------------
+run.batch <- function(){
+
+	for(i in 1:length(diseaseAbbr)){
+		diseaseName= diseaseAbbr[i]
+		dataFolderName = diseaseDataP[i]
+
+		print(diseaseName)
+	
+		calculate.networks(diseaseName, dataFolderName)
+	}
 
 }
+#----------------------------------------------------------------------------------------------------
+dataPackage_dir = "../../../";
+markerFolder = "inst/import";
+
+run.batch()

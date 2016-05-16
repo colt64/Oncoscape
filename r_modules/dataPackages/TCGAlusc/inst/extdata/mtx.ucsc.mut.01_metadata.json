@@ -1,0 +1,18 @@
+{
+  "directory": ["../../../../../dataPackages/Raw_UCSC/"],
+  "file": ["mtx.ucsc.mut.01"],
+  "data": {
+    "file": ["mtx.ucsc.mut.01.RData"],
+    "variable": ["mtx.ucsc.mut.01"],
+    "class": ["matrix"],
+    "category": ["mutations"],
+    "subcategory": ["indicator"],
+    "entity.count": [40208],
+    "feature.count": [178],
+    "entity.type": ["gene"],
+    "feature.type": ["patient"],
+    "minValue": [0],
+    "maxValue": [1],
+    "provenance": ["TCGA_LUSC_mutation_broad_gene-2015-02-24/genomicMatrix"]
+  }
+}

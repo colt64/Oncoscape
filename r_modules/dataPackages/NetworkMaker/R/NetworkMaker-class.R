@@ -12,11 +12,12 @@ options(stringsAsFactors = FALSE)
                          )
 
 #----------------------------------------------------------------------------------------------------
-setGeneric('calculateSampleSimilarityMatrix',  signature='obj', function(obj, samples=NA, genes=NA, copyNumberValues=c(-2, 2))
+setGeneric('calculateSampleSimilarityMatrix',  signature='obj', function(obj, samples=NA, genes=NA, copyNumberValues=c(-2, 2), threshold = NA)
                                                                 standardGeneric('calculateSampleSimilarityMatrix'))
 setGeneric('usePrecalculatedSampleSimilarityMatrix',  signature='obj', function(obj, filename)
                                                                 standardGeneric('usePrecalculatedSampleSimilarityMatrix'))
 setGeneric('getSimilarityMatrix',        signature='obj', function(obj) standardGeneric('getSimilarityMatrix'))
+setGeneric('get.filtered.sampleIDs',     signature='obj', function(obj, regex) standardGeneric('get.filtered.sampleIDs'))
 setGeneric('buildChromosomalTable',      signature='obj', function(obj, genes) standardGeneric('buildChromosomalTable'))
 setGeneric('getAlteredGeneNames',        signature='obj', function(obj) standardGeneric('getAlteredGeneNames'))
 setGeneric('getChromosomalInfo',         signature='obj', function(obj) standardGeneric('getChromosomalInfo'))
@@ -76,12 +77,12 @@ NetworkMaker <- function(dataPackage, samples=NA, genes=NA, verbose=FALSE)
 
 } # NetworkMaker constructor
 #----------------------------------------------------------------------------------------------------
-setMethod("get.filtered.sampleIDs ", "NetworkMaker",
+setMethod("get.filtered.sampleIDs", "NetworkMaker",
   function (obj, regex)
 {		
 		# keep only primary tumors
-		mut.samples <- grep(regex, colnames(mutTbl), value=TRUE)
-		cnv.samples <- grep(regex, colnames(cnTbl),  value=TRUE)
+		mut.samples <- grep(regex, rownames(obj@mtx.mut), value=TRUE)
+		cnv.samples <- grep(regex, rownames(obj@mtx.cn),  value=TRUE)
 
 		return (unique(c(mut.samples, cnv.samples)))			
 })
@@ -147,10 +148,10 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
         # until this is standardized and enforced check for each
 
 		#remove any genes with NA in mutation
-		tmp <- apply(mut, 1, function(x) any(is.na(x)))
-		mut <- mut[-which(tmp), ]
+		tmp <- apply(mut, 2, function(x) any(is.na(x)))
+		mut <- mut[,-which(tmp)]
 
-	  mut.01 <- mut
+	  mut.01 <- t(mut)
 #     mut.01 <- .createIndicatorMatrix(mut)
 		# returns transposed matrix with genes as rows and patients as columns 
 		
@@ -168,6 +169,7 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
         }
 
     cn[!cn %in% copyNumberValues] <- 0
+    cn <- t(cn)
 
 	similaritySNV <- calcSimilarity(as.matrix(mut.01))
 	similarityCNV <- calcSimilarity(as.matrix(cn))
@@ -331,7 +333,7 @@ setMethod("getMutationGraph", "NetworkMaker",
 
        # standardize the matrix to zeroes and ones, providing painless search
        # for non-null (not missing) values
-    mut.01 <- .mutationMatrixTo01Matrix(mut)
+    mut.01 <- mut
     indices <- which(mut.01 == 1)
     
     rows <- 1 + (indices - 1) %% nrow(mut.01)

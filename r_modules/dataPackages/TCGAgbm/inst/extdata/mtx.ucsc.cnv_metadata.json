@@ -1,0 +1,18 @@
+{
+  "directory": ["../../../../../dataPackages/Raw_UCSC/"],
+  "file": ["mtx.ucsc.cnv"],
+  "data": {
+    "file": ["mtx.ucsc.cnv.RData"],
+    "variable": ["mtx.ucsc.cnv"],
+    "class": ["matrix"],
+    "category": ["copy number"],
+    "subcategory": ["gistic scores"],
+    "entity.count": [24776],
+    "feature.count": [577],
+    "entity.type": ["gene"],
+    "feature.type": ["patient"],
+    "minValue": [-2],
+    "maxValue": [2],
+    "provenance": ["TCGA_GBM_gistic2thd-2015-02-24/genomicMatrix"]
+  }
+}

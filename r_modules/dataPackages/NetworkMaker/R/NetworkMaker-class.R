@@ -149,7 +149,8 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
 
 		#remove any genes with NA in mutation
 		tmp <- apply(mut, 2, function(x) any(is.na(x)))
-		mut <- mut[,-which(tmp)]
+		if(length(which(tmp))>0)
+			mut <- mut[,-which(tmp)]
 
 	  mut.01 <- t(mut)
 #     mut.01 <- .createIndicatorMatrix(mut)
@@ -187,7 +188,7 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
 	tbl.pos <- as.data.frame(tbl.pos)
 
 	if(!is.na(threshold)){
-    	outliers <- names(which(MDS.SNV.CNV[,1]<threshold))
+    	outliers <- names(which(tbl.pos[,1]<threshold))
 		tbl.pos <- tbl.pos[setdiff(rownames(tbl.pos), outliers), ]
 	}
 
@@ -323,7 +324,10 @@ setMethod("getMutationGraph", "NetworkMaker",
 
     mut <- obj@mtx.mut
     samples <- rownames(mut)
-    if(!is.na(patients)){ samples <- samples[match(patients, canonicalizePatientIDs(obj@pkg, samples))]; samples <- samples[!is.na(samples)] }
+    if(!is.na(patients)){ 
+    	samples <- samples[match(patients, canonicalizePatientIDs(obj@pkg, samples))]; 
+    	samples <- samples[!is.na(samples)] 	
+    }
     stopifnot(samples > 0)
 
     if(is.na(genes)) genes <- colnames(mut)
@@ -369,7 +373,10 @@ setMethod("getCopyNumberGraph", "NetworkMaker",
 
     cn <- obj@mtx.cn
     samples <- rownames(cn)
-    if(!is.na(patients)){ samples <- samples[match(patients, canonicalizePatientIDs(obj@pkg, samples))]; samples <- samples[!is.na(samples)] }
+    if(!is.na(patients)){ 
+    	samples <- samples[match(patients, canonicalizePatientIDs(obj@pkg, samples))]; 
+    	samples <- samples[!is.na(samples)]
+    }
     stopifnot(samples > 0)
 
     if(is.na(genes)) genes <- colnames(cn)
@@ -399,7 +406,7 @@ setMethod("getCopyNumberGraph", "NetworkMaker",
     nodeDataDefaults(g, attr="nodeType")  <- "unassigned"
     
     edgeDataDefaults(g, attr="edgeType") <- "unassigned"
-    edgeDataDefaults(g, attr="subType") <- "unassigned"
+#    edgeDataDefaults(g, attr="subType") <- "unassigned"
 
     nodeData(g, all.nodes, "id") <- all.nodes
 
@@ -436,12 +443,12 @@ setMethod("getSimilarityScreenCoordinates", "NetworkMaker",
      ySpan <- yMax - yOrigin
 
      tbl.pos <- getSimilarityMatrix(obj)
-     #browser()
-     x.range <- range(tbl.pos$x)  # [1] -0.6168073  2.8896624
-     y.range <- range(tbl.pos$y)  # [1] -3.036395  1.003921
+
+#     x.range <- range(tbl.pos$x)  
+#     y.range <- range(tbl.pos$y)  
 
      x <- tbl.pos$x
-     x <- x - min(x)  #
+     x <- x - min(x)  
      x <- x/max(x)
      x <- (x * xSpan) - (xSpan/2)
      x <- x + xOrigin

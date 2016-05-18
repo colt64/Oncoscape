@@ -1,0 +1,18 @@
+{
+  "directory": ["../../../../../dataPackages/Raw_UCSC/"],
+  "file": ["mtx.ucsc.mut.01"],
+  "data": {
+    "file": ["mtx.ucsc.mut.01.RData"],
+    "variable": ["mtx.ucsc.mut.01"],
+    "class": ["matrix"],
+    "category": ["mutations"],
+    "subcategory": ["indicator"],
+    "entity.count": [39740],
+    "feature.count": [982],
+    "entity.type": ["gene"],
+    "feature.type": ["patient"],
+    "minValue": [0],
+    "maxValue": [1],
+    "provenance": ["TCGA_BRCA_mutation_curated_wustl_gene-2015-02-24/genomicMatrix"]
+  }
+}

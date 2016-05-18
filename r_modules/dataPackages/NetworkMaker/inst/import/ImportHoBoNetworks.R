@@ -27,29 +27,31 @@ create.and.display <- function(netMaker, includeUnpositionedSamples=TRUE, thresh
 #	goi <- getAlteredGeneNames(netMaker)
 
 
-   gistic.scores <-c(-2,-1,0,1, 2)
+   gistic.scores <-c(-2,-1,1, 2)
   
    goi = oncoVogel274
    if(is.na(regex)){ samples <- NA
    } else{           samples <- get.filtered.sampleIDs(netMaker, regex) }
    
-   calculateSampleSimilarityMatrix(netMaker, copyNumberValues=gistic.scores, genes = goi, samples=samples)
+   calculateSampleSimilarityMatrix(netMaker, copyNumberValues=gistic.scores, genes = goi, samples=samples, threshold=threshold)
    #filename <- "MDS.SNV.CNV.tsv"
    #usePrecalculatedSampleSimilarityMatrix(netMaker, filename)
 
    g <- getSamplesGraph(netMaker, includeUnpositionedSamples)
    rcy <- RCyjs(portRange=6047:6100, quiet=TRUE, graph=g, hideEdges=TRUE)
-   httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js"))
+ #  httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js"))
+
    tbl.pos <- getSimilarityScreenCoordinates(netMaker, xOrigin=0, yOrigin=0, xMax=6000, yMax=6000)
    setPosition(rcy, tbl.pos)    
-   fit(rcy, 100)
+   fit(rcy, 30)
 
    g.chrom <- getChromosomeGraph(netMaker, goi)
    httpAddGraph(rcy, g.chrom)
-   httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js"))
+#   httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js"))
+
    tbl.pos <- getChromosomeScreenCoordinates(netMaker, xOrigin=3400, yOrigin=0, yMax=3000, chromDelta=200)
    setPosition(rcy, tbl.pos)
-   fit(rcy, 100)
+   fit(rcy, 30)
 
    poi <- names(which(noa(g, "positioned")))
    g.mut <- getMutationGraph(netMaker, goi, poi)
@@ -66,7 +68,7 @@ create.and.display <- function(netMaker, includeUnpositionedSamples=TRUE, thresh
    showEdges(rcy, "chromosome")
    fit(rcy)
 
-   httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js")) 
+#   httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js")) 
    # temporary fix, accomodating orphan genes (not mapped to chromosomes):
    
    unpositioned.nodes <- names(which(!noa(g, "positioned")))

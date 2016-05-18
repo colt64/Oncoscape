@@ -15,3 +15,5 @@
 *.png   binary
 *.gif   binary
 *.jpg   binary
+
+g.json filter=lfs diff=lfs merge=lfs -text

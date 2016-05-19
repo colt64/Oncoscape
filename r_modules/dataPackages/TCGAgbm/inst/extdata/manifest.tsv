@@ -13,4 +13,5 @@ genesets.RData	genesets	list	geneset	NA	2	NA	gene	NA	NA	NA	marker.genes.545, tcg
 gbmPathways.json.RData	g.gbmPathways.json	character	network	GBM-related Pathways	156	203	nodes	edges	NA	NA	manual curation by Hamid Bolouri
 verhaakGbmClustersAugmented.RData	tbl.verhaakPlus1	data.frame	categorized samples	tumors	548	2	patient	cluster & color	NA	NA	5 clusters; Verhaak 2010 + G-CIMP
 ericsEightGliomaClusters.RData	tbl.glioma8	data.frame	categorized samples	tumors	704	2	patient	cluster & color	NA	NA	8 clusters; manual curation by Eric Holland
-
+mtx.ucsc.cnv.RData	mtx.ucsc.cnv	matrix	copy number	gistic scores	24776	577	gene	patient	-2	2	TCGA_GBM_gistic2thd-2015-02-24/genomicMatrix
+mtx.ucsc.mut.01.RData	mtx.ucsc.mut.01	matrix	mutations	indicator	39855	291	gene	patient	0	1	TCGA_GBM_mutation_broad_gene-2015-02-24/genomicMatrix

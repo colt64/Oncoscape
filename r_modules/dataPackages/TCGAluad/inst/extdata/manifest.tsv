@@ -13,4 +13,3 @@ egfr.json.RData	g.egfr.json	character	network	egfr signaling	32	14	nodes	edges	N
 markers.json.RData	g.markers.json	character	network	markers & samples	828	6738	nodes	edges	NA	NA	TCGA
 mtx.ucsc.cnv.RData	mtx.ucsc.cnv	matrix	copy number	gistic scores	24776	515	gene	patient	-2	2	TCGA_LUAD_gistic2thd-2015-02-24/genomicMatrix
 mtx.ucsc.mut.01.RData	mtx.ucsc.mut.01	matrix	mutations	indicator	42006	543	gene	patient	0	1	TCGA_LUAD_mutation_broad_gene-2015-02-24/genomicMatrix
-

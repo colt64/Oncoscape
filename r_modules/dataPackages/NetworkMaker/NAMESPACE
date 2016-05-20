@@ -12,7 +12,8 @@ exportMethods(
   getMutationGraph,
   getCopyNumberGraph,
   getSimilarityScreenCoordinates,
-  getChromosomeScreenCoordinates
+  getChromosomeScreenCoordinates,
+  get.filtered.sampleIDs
   )
 
 export(

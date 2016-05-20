@@ -10,8 +10,8 @@ options(stringsAsFactors=FALSE)
 #http://oncoscape-static.s3-website-us-west-2.amazonaws.com/
 
 #--------------------------------- make plot data -----------------------------#
-diseaseAbbr <-c("BRCA", "LUNG", "LUAD","PRAD","LGG","GBM","LGG.GBM", "PAAD", "COADREAD")
-diseaseDataP <- c("TCGAbrca", "TCGAlung","TCGAluad","TCGAprad","TCGAlgg","TCGAgbm","TCGAbrain", "TCGApaad", "TCGAcoadread")
+diseaseAbbr <-c("BRCA", "LUAD","PRAD","LGG","GBM", "PAAD", "COADREAD")
+diseaseDataP <- c("TCGAbrca", "TCGAluad","TCGAprad","TCGAlgg","TCGAgbm", "TCGApaad", "TCGAcoadread")
 
 oncoVogel274 <- get(load(paste("../extdata/oncoVogel274.RData", sep="/")))
 
@@ -41,32 +41,14 @@ create.and.display <- function(netMaker, includeUnpositionedSamples=TRUE, thresh
    rcy <- RCyjs(portRange=6047:6100, quiet=TRUE, graph=g, hideEdges=TRUE)
  #  httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js"))
 
-<<<<<<< HEAD
-   tbl.pos <- getSimilarityScreenCoordinates(netMaker, xOrigin=0, yOrigin=0, xMax=6000, yMax=6000)
-   setPosition(rcy, tbl.pos)    
-   fit(rcy, 30)
-=======
    tbl.pos <- getSimilarityScreenCoordinates(netMaker, xOrigin=0, yOrigin=0, xMax=12000, yMax=12000)
    setPosition(rcy, tbl.pos)    
 #   fit(rcy, 30)
->>>>>>> eccc8c93e236081517d476673b2f572e016eda00
 
    g.chrom <- getChromosomeGraph(netMaker, goi)
    httpAddGraph(rcy, g.chrom)
 #   httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js"))
 
-<<<<<<< HEAD
-   tbl.pos <- getChromosomeScreenCoordinates(netMaker, xOrigin=3400, yOrigin=0, yMax=3000, chromDelta=200)
-   setPosition(rcy, tbl.pos)
-   fit(rcy, 30)
-
-   poi <- names(which(noa(g, "positioned")))
-   g.mut <- getMutationGraph(netMaker, goi, poi)
-   httpAddGraph(rcy, g.mut)
-   hideAllEdges(rcy)
-
-   g.cn <- getCopyNumberGraph(netMaker, goi, poi, gistic.scores)
-=======
    tbl.pos <- getChromosomeScreenCoordinates(netMaker, xOrigin=6600, yOrigin=0, yMax=6000, chromDelta=200)
    setPosition(rcy, tbl.pos)
 #   fit(rcy, 30)
@@ -79,7 +61,6 @@ create.and.display <- function(netMaker, includeUnpositionedSamples=TRUE, thresh
    hideAllEdges(rcy)
 
    g.cn <- getCopyNumberGraph(netMaker, goi.positioned, poi, included.scores=c(-2, 2))
->>>>>>> eccc8c93e236081517d476673b2f572e016eda00
    httpAddGraph(rcy, g.cn)
    hideAllEdges(rcy)
 
@@ -88,22 +69,11 @@ create.and.display <- function(netMaker, includeUnpositionedSamples=TRUE, thresh
 #   hideAllEdges(rcy)
    showEdges(rcy, "chromosome")
    fit(rcy)
-<<<<<<< HEAD
-
-#   httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js")) 
-   # temporary fix, accomodating orphan genes (not mapped to chromosomes):
-   
-   unpositioned.nodes <- names(which(!noa(g, "positioned")))
-#   selectNodes(rcy, unpositioned.nodes)
-   layoutSelectionInGrid(rcy, x=-2000, y=3300, w=1400, h=400)
-   fit(rcy)
-=======
    
    unpositioned.nodes <- names(which(!noa(g, "positioned")))
 #   selectNodes(rcy, unpositioned.nodes)
 #   layoutSelectionInGrid(rcy, x=-2000, y=3300, w=1400, h=400)
 #   fit(rcy)
->>>>>>> eccc8c93e236081517d476673b2f572e016eda00
 
    return(list(rcy=rcy, g=g, g.mut=g.mut, g.cn=g.cn, unpositioned=unpositioned.nodes))
 
@@ -112,11 +82,7 @@ create.and.display <- function(netMaker, includeUnpositionedSamples=TRUE, thresh
 saveGraph <- function(rcy)
 {
    g.markers.json <- getJSON(rcy)   # about 1M
-<<<<<<< HEAD
-   filename <- "../../../extdata/markers.json.RData"
-=======
    filename <- "../extdata/markers.json.RData"
->>>>>>> eccc8c93e236081517d476673b2f572e016eda00
    printf("saving as %s, %d nodes, %d edges", filename, getNodeCount(rcy), getEdgeCount(rcy))
    save(g.markers.json, file=filename)
 

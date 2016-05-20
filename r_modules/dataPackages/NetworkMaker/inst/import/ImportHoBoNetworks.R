@@ -13,6 +13,19 @@ options(stringsAsFactors=FALSE)
 diseaseAbbr <-c("BRCA", "LUAD","PRAD","LGG","GBM", "PAAD", "COADREAD")
 diseaseDataP <- c("TCGAbrca", "TCGAluad","TCGAprad","TCGAlgg","TCGAgbm", "TCGApaad", "TCGAcoadread")
 
+## need to check/combine datasets
+# lung, brain
+
+## need data package
+# acc, blca, hnsc, laml
+
+## need to just run
+# lusc
+
+## missing data
+# mut -  sarc, stad (stomach), esca (esophogeal), dlbc (bcell lymph), 
+#        chol (cholangiocarcinoma), cesc (cervical), acc (adrenocortical)
+
 oncoVogel274 <- get(load(paste("../extdata/oncoVogel274.RData", sep="/")))
 
 #----------------------------------------------------------------------------------------------------

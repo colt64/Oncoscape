@@ -6,10 +6,6 @@
 ###
 
 # Library Imports ---------------------------------------------------------
-library(RUnit)
-library(R.utils)
-library(stringr)
-library(plyr)
 library(jsonlite)
 
 # Configuration -----------------------------------------------------------
@@ -21,33 +17,10 @@ os.data.batch.inputFile    <- "os.tcga.ucsc.filename.manifest.json"
 # IO Utility Functions :: [Batch, Load, Save]  -------------------------------------------------------
 
 ### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
-os.data.save <- function(df, variable, directory, file, format = c("tsv", "csv", "RData", "manifest"), metaData=NA){
+os.json.save <- function(df, directory, file){
   
   outFile = paste(directory, file, sep="")
-  
-  # Write Tab Delimited
-  if("tsv" %in% format)
-    write.table(df, file=paste(outFile,".tsv", sep = ""), quote=F, sep="\t")
-  
-  # Write CSV Delimited
-  if("csv" %in% format)
-    write.csv(df, file=paste(outFile,".csv",sep = ""), quote = F)
-  
-  # Write RData File
-  if("RData" %in% format){
-  	assign(variable, df)
-    save(list=variable, file=paste(outFile,".RData", sep = "") )
-  }
-
-  # Update Manifest File
-  if("manifest" %in% format)
-    write.table(as.data.frame(metaData$data), file=paste(directory, "manifest.tsv", sep = ""),
-                append=TRUE, quote=F, col.names=F, row.names=F, sep="\t")
-#    cat("\n", file=paste(directory, "manifest.tsv", sep = ""), append=TRUE)  
-  
-  # Write JSON File
-  if(!missing(metaData))
-    write(toJSON(metaData, pretty=TRUE), file=paste(outFile,"_metadata.json", sep = "") )
+  write(toJSON(df, pretty=TRUE), file=paste(outFile,".json", sep = "") )
   
   # Return DataFrame For Chaining
   return(df)
@@ -85,41 +58,40 @@ os.data.load <- function(inputFile, variable, provenance){
 os.data.batch <- function(inputFile){
         
     # Load Input File 
+	#   - an array of objects each specifying an input file with metadata
     dataFiles <- fromJSON(inputFile)
+
                         
 		# Loop for each disease type
-		for (diseaseName in names(dataFiles))
+		for (i in 1:length(dataFiles))
 		{
-		  currentDirectory <- dataFiles[[diseaseName]][["directory"]]
-		  currentFiles <- dataFiles[[diseaseName]][["files"]]
-		  outputDirectory <- dataFiles[[diseaseName]][["output.directory"]]
-		  
-		    # Loop Column Wise: for each file type
-				for (currentTable in names(currentFiles))
-				{
-				  cat(diseaseName, currentTable,"\n")
-					inputFile <- paste(currentDirectory, currentFiles[[currentTable]], sep = "")
-					outputFile <- paste(outputDirectory, currentTable, sep="")
-					provenance <- currentFiles[[currentTable]]
-					
-					# Load Data Frame - map and filter by named columns
-					result <- os.data.load( inputFile = inputFile, variable = currentTable, provenance = provenance )
+			dataObj <- dataFiles[[i]]
+		  currentDirectory <- dataFiles[[i]][["directory"]]
+		  currentFile <- dataFiles[[i]][["input_file"]]
+		  outputDirectory <- dataFiles[[i]][["output_dir"]]
+  
+		  cat(diseaseName, currentTable,"\n")
+			inputFile <- paste(currentDirectory, currentFiles[[currentTable]], sep = "")
+			outputFile <- paste(outputDirectory, currentTable, sep="")
+			provenance <- currentFiles[[currentTable]]
+			
+			# Load Data Frame - map and filter by named columns
+			result <- os.data.load( inputFile = inputFile, variable = currentTable, provenance = provenance )
 
-  				    df <- result$df
-  				    metaData <- list("directory"=currentDirectory, "file"=currentTable, "data"=result$metaData)
-            
-					# Save Data Frame
-					os.data.save(
-							df = df,
-							variable = currentTable,
-							directory = outputDirectory,
-							file = currentTable,
-							format = c("RData", "manifest"),
-							metaData = metaData)
-					
-					# Remove Df From Memory
-					rm(df)
-                }
+			df <- result$df
+			metaData <- list("directory"=currentDirectory, "file"=currentTable, "data"=result$metaData)
+	
+			# Save Data Frame
+			os.data.save(
+					df = df,
+					variable = currentTable,
+					directory = outputDirectory,
+					file = currentTable,
+					format = c("RData", "manifest"),
+					metaData = metaData)
+			
+			# Remove Df From Memory
+			rm(df)
         }
 }
 

@@ -9,7 +9,8 @@ options(stringsAsFactors=FALSE)
 mol_dir<- "../molecular_data/"
 hg19_dir <- "../molecular_data/hg19"
 ucsc_dir <- "../molecular_data/UCSC"
-network_dir <- "../networks/"
+mds_orig_dir <- "../networks/mds/original"
+mds_scaled_dir <- "../networks/mds/scaled"
 
 chromosome_file <- "chromosome_lengths_hg19.json"
 centromere_file <- "centromere_position_hg19.json"
@@ -41,8 +42,11 @@ save.json <- function(dataObj, directory, file)
 } # saveGraph
 
 #--------------------------------------------------------------#
-getChromosomeOffsets <- function(chromosomes, chrLengths, pLength){
+getChromosomeOffsets <- function(chromosomes, chrLengths, pLength, scaleFactor=1000){
 	
+  pLength = pLength/scaleFactor
+  chrLengths = chrLengths/scaleFactor
+  
 	yCent <- max(pLength)
 	yOffset <- sapply(chromosomes, function(chr) {  yCent - pLength[chr] })
 	names(yOffset) <- chromosomes
@@ -84,7 +88,7 @@ scaleSamplesToChromosomes <- function(mtx.xy, chrDim){
 	
 	r2Chr <- sum(chrDim*chrDim)
 	r2Mtx <- sum(mtxDim*mtxDim)	
-	scale <- r2Chr/r2Mtx
+	scale <- sqrt(r2Chr/r2Mtx)
 		# make diagonal of drawing regions equal
 		
 	mtx.xy <- mtx.xy * scale
@@ -92,11 +96,11 @@ scaleSamplesToChromosomes <- function(mtx.xy, chrDim){
 	return(mtx.xy)
 }
 #--------------------------------------------------------------#
-scaleGenesToChromosomes <- function(genePos, chrCoordinates){
+scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
 	
 	genePos_xy <- lapply(genePos, function(gene){
 		x <- chrCoordinates[gene[1], "xOffset"]
-		y <- chrCoordinates[gene[1], "yOffset"] + as.numeric(gene[2])
+		y <- chrCoordinates[gene[1], "yOffset"] + as.numeric(gene[2])/scaleFactor
 		c(x,y)
 	})
 
@@ -120,16 +124,16 @@ run.batch <- function(){
 	genePos_scaled <- scaleGenesToChromosomes(genePos, chrSpecs$chrCoordinates)
 	save.json(genePos_scaled, hg19_dir, paste(genepos_file, "scaled", sep="_"))
 
-	networkFiles<- list.files(network_dir)
-	mdsFiles <- networkFiles[grep("^mds_", networkFiles)]
+	mds_Files<- list.files(mds_orig_dir)
+#	mdsFiles <- networkFiles[grep("^mds_", networkFiles)]
 	
-	for(mdsFile in mdsFiles){
-		mtx <- get.json(network_dir, mdsFile)
+	for(mdsFile in mds_Files){
+		mtx <- get.json(mds_orig_dir, mdsFile)
 		mtx <- t(as.data.frame(mtx)); 
 		colnames(mtx) <- c("x", "y")
 		mtx_scaled <- scaleSamplesToChromosomes(mtx, chrSpecs$dim)
 		file= paste(gsub(".json", "", mdsFile), "scaled", sep="_")
-		save.json(mtx_scaled, network_dir, file)
+		save.json(mtx_scaled, mds_scaled_dir, file)
 	}
 	
 	for (genesetName in names(genesets)){	

@@ -9,6 +9,7 @@ options(stringsAsFactors=FALSE)
 mol_dir<- "../molecular_data/"
 hg19_dir <- "../molecular_data/hg19"
 ucsc_dir <- "../molecular_data/UCSC"
+network_dir <- "../networks/"
 
 chromosome_file <- "chromosome_lengths_hg19.json"
 centromere_file <- "centromere_position_hg19.json"
@@ -79,7 +80,7 @@ scaleSamplesToChromosomes <- function(mtx.xy, chrDim){
 	mtx.xy[,"x"] = mtx.xy[,"x"] + xOffset; mtx.xy[,"y"] = mtx.xy[,"y"] + yOffset
 		# offset mtx so min val is 0,0
 	
-	mtxDim(max(mtx.xy[,"x"]), max(mtx.xy[,"y"]))
+	mtxDim <- c(max(mtx.xy[,"x"]), max(mtx.xy[,"y"]))
 	
 	r2Chr <- sum(chrDim*chrDim)
 	r2Mtx <- sum(mtxDim*mtxDim)	
@@ -109,6 +110,7 @@ run.batch <- function(){
 	chrLengths <- get.json(hg19_dir,chromosome_file)
 	pLength <- get.json(hg19_dir,centromere_file)
 	genePos <- get.json(hg19_dir, genepos_file)
+	genesets <- get.json(hg19_dir, geneset_file)
 	chromosomes <- c(seq(1:22), "X", "Y")
 
 	chrSpecs <- getChromosomeOffsets(chromosomes, chrLengths, pLength)
@@ -118,16 +120,22 @@ run.batch <- function(){
 	genePos_scaled <- scaleGenesToChromosomes(genePos, chrSpecs$chrCoordinates)
 	save.json(genePos_scaled, hg19_dir, paste(genepos_file, "scaled", sep="_"))
 
+	networkFiles<- list.files(network_dir)
+	mdsFiles <- networkFiles[grep("^mds_", networkFiles)]
+	
 	for(mdsFile in mdsFiles){
-		mtx <- fromJSON(mdsFile)
-		mtx_scaled <- scaleSamplesToChromosomes(mtx$data, chrSpecs$dim)
-		file= paste(mdsFile, "scaled", sep="_")
-		save.json(mtx_scaled, ucsc_dir, file)
+		mtx <- get.json(network_dir, mdsFile)
+		mtx <- t(as.data.frame(mtx)); 
+		colnames(mtx) <- c("x", "y")
+		mtx_scaled <- scaleSamplesToChromosomes(mtx, chrSpecs$dim)
+		file= paste(gsub(".json", "", mdsFile), "scaled", sep="_")
+		save.json(mtx_scaled, network_dir, file)
 	}
 	
 	for (genesetName in names(genesets)){	
 		genes <- genesets[[genesetName]]
-		genesetPos <- genePos_scaled[genes]
+		map_genes <- intersect(genes, names(genePos_scaled))
+		genesetPos <- genePos_scaled[map_genes]
 		file= paste("network_chrPos_", genesetName, sep="")
 		save.json(genesetPos, hg19_dir, file)
 	}	

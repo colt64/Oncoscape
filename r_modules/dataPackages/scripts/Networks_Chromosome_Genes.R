@@ -49,7 +49,7 @@ getGenePositions_Symbol <- function(){
 	EntrezGenePos <- getGenePositions_Entrez()
 	  # list of gene start positions, with entrez ID as name.  
 	  # Multiple positions reported as named integer vector (name=chromosome)
-	  # Locations measured as the number of base pairs from the p (5??? end of the sense strand) to q (3??? end of the sense strand) arms. 
+	  # Locations measured as the number of base pairs from the p (5' end of the sense strand) to q (3' end of the sense strand) arms. 
 	  # Locations on antisense strand have a leading "-" sign (e. g. -1234567)
 	
 	EntrezSymbolMap <- getEntrezSymbolMap()

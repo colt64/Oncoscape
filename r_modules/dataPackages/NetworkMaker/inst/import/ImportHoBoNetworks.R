@@ -10,8 +10,8 @@ options(stringsAsFactors=FALSE)
 #http://oncoscape-static.s3-website-us-west-2.amazonaws.com/
 
 #--------------------------------- make plot data -----------------------------#
-diseaseAbbr <-c("BRCA", "LUAD","PRAD","LGG","GBM", "PAAD", "COADREAD")
-diseaseDataP <- c("TCGAbrca", "TCGAluad","TCGAprad","TCGAlgg","TCGAgbm", "TCGApaad", "TCGAcoadread")
+diseaseAbbr <-c("LGG.GBM", "BRCA", "LUAD","PRAD","LGG","GBM", "PAAD", "COADREAD")
+diseaseDataP <- c("TCGAbrain", "TCGAbrca", "TCGAluad","TCGAprad","TCGAlgg","TCGAgbm", "TCGApaad", "TCGAcoadread")
 
 ## need to check/combine datasets
 # lung, brain
@@ -52,19 +52,19 @@ create.and.display <- function(netMaker, includeUnpositionedSamples=TRUE, thresh
 
    g <- getSamplesGraph(netMaker, includeUnpositionedSamples)
    rcy <- RCyjs(portRange=6047:6100, quiet=TRUE, graph=g, hideEdges=TRUE)
- #  httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js"))
+   httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js"))
 
    tbl.pos <- getSimilarityScreenCoordinates(netMaker, xOrigin=0, yOrigin=0, xMax=12000, yMax=12000)
    setPosition(rcy, tbl.pos)    
-#   fit(rcy, 30)
+   fit(rcy, 30)
 
    g.chrom <- getChromosomeGraph(netMaker, goi)
    httpAddGraph(rcy, g.chrom)
-#   httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js"))
+   httpSetStyle(rcy, system.file(package="NetworkMaker", "extdata", "style.js"))
 
    tbl.pos <- getChromosomeScreenCoordinates(netMaker, xOrigin=6600, yOrigin=0, yMax=6000, chromDelta=200)
    setPosition(rcy, tbl.pos)
-#   fit(rcy, 30)
+   fit(rcy, 30)
 
    poi <- names(which(noa(g, "positioned")))
    goi.positioned <- intersect(names(which(noa(g.chrom, "positioned"))), goi)

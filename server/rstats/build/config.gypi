@@ -20,8 +20,9 @@
     "icu_ver_major": "56",
     "llvm_version": 0,
     "node_byteorder": "little",
+    "node_enable_v8_vtunejit": "false",
     "node_install_npm": "true",
-    "node_prefix": "/usr/local",
+    "node_prefix": "/",
     "node_release_urlbase": "https://nodejs.org/download/release/",
     "node_shared_http_parser": "false",
     "node_shared_libuv": "false",
@@ -35,7 +36,6 @@
     "node_use_perfctr": "false",
     "openssl_fips": "",
     "openssl_no_asm": 0,
-    "python": "/usr/bin/python",
     "target_arch": "x64",
     "uv_parent_path": "/deps/uv/",
     "uv_use_dtrace": "true",
@@ -46,7 +46,8 @@
     "v8_random_seed": 0,
     "v8_use_snapshot": "true",
     "want_separate_host_toolset": 0,
-    "nodedir": "/Users/Lisa/.node-gyp/4.3.2",
+    "xcode_version": "7.0",
+    "nodedir": "/Users/lmcferri/.node-gyp/5.8.0",
     "copy_dev_lib": "true",
     "standalone_static_library": 1
   }

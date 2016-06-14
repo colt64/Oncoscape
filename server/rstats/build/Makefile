@@ -326,8 +326,8 @@ ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
 endif
 
 quiet_cmd_regen_makefile = ACTION Regenerating $@
-cmd_regen_makefile = cd $(srcdir); /usr/local/lib/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "--toplevel-dir=." -I/Users/Lisa/Desktop/OncoGit/Oncoscape/server/rstats/build/config.gypi -I/usr/local/lib/node_modules/node-gyp/addon.gypi -I/Users/Lisa/.node-gyp/4.3.2/include/node/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/Users/Lisa/.node-gyp/4.3.2" "-Dnode_gyp_dir=/usr/local/lib/node_modules/node-gyp" "-Dnode_lib_file=node.lib" "-Dmodule_root_dir=/Users/Lisa/Desktop/OncoGit/Oncoscape/server/rstats" binding.gyp
-Makefile: $(srcdir)/../../../../../../../usr/local/lib/node_modules/node-gyp/addon.gypi $(srcdir)/../../../../../.node-gyp/4.3.2/include/node/common.gypi $(srcdir)/build/config.gypi $(srcdir)/binding.gyp
+cmd_regen_makefile = cd $(srcdir); /usr/local/lib/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "--toplevel-dir=." -I/Users/lmcferri/Desktop/OncoGit/Oncoscape/server/rstats/build/config.gypi -I/usr/local/lib/node_modules/node-gyp/addon.gypi -I/Users/lmcferri/.node-gyp/5.8.0/include/node/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/Users/lmcferri/.node-gyp/5.8.0" "-Dnode_gyp_dir=/usr/local/lib/node_modules/node-gyp" "-Dnode_lib_file=node.lib" "-Dmodule_root_dir=/Users/lmcferri/Desktop/OncoGit/Oncoscape/server/rstats" binding.gyp
+Makefile: $(srcdir)/../../../../../.node-gyp/5.8.0/include/node/common.gypi $(srcdir)/../../../../../../../usr/local/lib/node_modules/node-gyp/addon.gypi $(srcdir)/build/config.gypi $(srcdir)/binding.gyp
 	$(call do_cmd,regen_makefile)
 
 # "all" is a concatenation of the "all" targets from all the included

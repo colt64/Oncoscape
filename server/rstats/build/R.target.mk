@@ -39,13 +39,13 @@ CFLAGS_OBJC_Debug :=
 CFLAGS_OBJCC_Debug :=
 
 INCS_Debug := \
-	-I/Users/Lisa/.node-gyp/4.3.2/include/node \
-	-I/Users/Lisa/.node-gyp/4.3.2/src \
-	-I/Users/Lisa/.node-gyp/4.3.2/deps/uv/include \
-	-I/Users/Lisa/.node-gyp/4.3.2/deps/v8/include \
-	-I$(srcdir)/../node_modules/nan \
-	-I/Library/Frameworks/R.framework/Versions/3.2/Resources/library/RInside/include \
-	-I/Library/Frameworks/R.framework/Versions/3.2/Resources/library/Rcpp/include \
+	-I/Users/lmcferri/.node-gyp/5.8.0/include/node \
+	-I/Users/lmcferri/.node-gyp/5.8.0/src \
+	-I/Users/lmcferri/.node-gyp/5.8.0/deps/uv/include \
+	-I/Users/lmcferri/.node-gyp/5.8.0/deps/v8/include \
+	-I$(srcdir)/node_modules/nan \
+	-I/Library/Frameworks/R.framework/Versions/3.3/Resources/library/RInside/include \
+	-I/Library/Frameworks/R.framework/Versions/3.3/Resources/library/Rcpp/include \
 	-I/Library/Frameworks/R.framework/Resources/include
 
 DEFS_Release := \
@@ -83,13 +83,13 @@ CFLAGS_OBJC_Release :=
 CFLAGS_OBJCC_Release :=
 
 INCS_Release := \
-	-I/Users/Lisa/.node-gyp/4.3.2/include/node \
-	-I/Users/Lisa/.node-gyp/4.3.2/src \
-	-I/Users/Lisa/.node-gyp/4.3.2/deps/uv/include \
-	-I/Users/Lisa/.node-gyp/4.3.2/deps/v8/include \
-	-I$(srcdir)/../node_modules/nan \
-	-I/Library/Frameworks/R.framework/Versions/3.2/Resources/library/RInside/include \
-	-I/Library/Frameworks/R.framework/Versions/3.2/Resources/library/Rcpp/include \
+	-I/Users/lmcferri/.node-gyp/5.8.0/include/node \
+	-I/Users/lmcferri/.node-gyp/5.8.0/src \
+	-I/Users/lmcferri/.node-gyp/5.8.0/deps/uv/include \
+	-I/Users/lmcferri/.node-gyp/5.8.0/deps/v8/include \
+	-I$(srcdir)/node_modules/nan \
+	-I/Library/Frameworks/R.framework/Versions/3.3/Resources/library/RInside/include \
+	-I/Library/Frameworks/R.framework/Versions/3.3/Resources/library/Rcpp/include \
 	-I/Library/Frameworks/R.framework/Resources/include
 
 OBJS := \
@@ -146,7 +146,7 @@ LIBTOOLFLAGS_Release := \
 
 LIBS := \
 	  -F/Library/Frameworks/R.framework/.. -framework R -lpcre -llzma -lbz2 -lz -licucore -lm -liconv \
-	/Library/Frameworks/R.framework/Versions/3.2/Resources/library/RInside/lib/libRInside.a \
+	/Library/Frameworks/R.framework/Versions/3.3/Resources/library/RInside/lib/libRInside.a \
 	 \
 	-L/Library/Frameworks/R.framework/Resources/lib -lRblas \
 	-L/Library/Frameworks/R.framework/Resources/lib -lRlapack

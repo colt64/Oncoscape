@@ -109,7 +109,7 @@ scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
 }
 
 #--------------------------------------------------------------#
-run.batch <- function(){
+run.batch <- function(scaleFactor=10000){
 
 	chrLengths <- get.json(hg19_dir,chromosome_file)
 	pLength <- get.json(hg19_dir,centromere_file)
@@ -117,15 +117,14 @@ run.batch <- function(){
 	genesets <- get.json(hg19_dir, geneset_file)
 	chromosomes <- c(seq(1:22), "X", "Y")
 
-	chrSpecs <- getChromosomeOffsets(chromosomes, chrLengths, pLength)
+	chrSpecs <- getChromosomeOffsets(chromosomes, chrLengths, pLength, scaleFactor=scaleFactor)
 	chrPos <- getChromosomePositions(chromosomes, chrSpecs$chrCoordinates)
 	save.json(chrPos, hg19_dir, "chromosome_coordinates_scaled")
 	
-	genePos_scaled <- scaleGenesToChromosomes(genePos, chrSpecs$chrCoordinates)
+	genePos_scaled <- scaleGenesToChromosomes(genePos, chrSpecs$chrCoordinates, scaleFactor=scaleFactor)
 	save.json(genePos_scaled, hg19_dir, paste(genepos_file, "scaled", sep="_"))
 
 	mds_Files<- list.files(mds_orig_dir)
-#	mdsFiles <- networkFiles[grep("^mds_", networkFiles)]
 	
 	for(mdsFile in mds_Files){
 		mtx <- get.json(mds_orig_dir, mdsFile)

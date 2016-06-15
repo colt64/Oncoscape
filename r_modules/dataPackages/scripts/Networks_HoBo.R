@@ -182,6 +182,7 @@ run.batch.network_edges <- function(input_directory, collection_metadata_file, g
 
 		mol_metatable <- read.table(collection_metadata_file, sep="\t", header=T)
 		
+		EdgeSets <- list()		
 
 		diseases <- unique(mol_metatable$disease)
 		for(diseaseName in diseases){
@@ -234,11 +235,19 @@ run.batch.network_edges <- function(input_directory, collection_metadata_file, g
 
 
 #----------------------------------------------------------------------------------------------------
-run.batch.network_collections <- function(input_directory, collection_metadata_file, genesets, output_directory="./"){
+run.batch.network_collections <- function(input_directory, mds_metadata_file, genesets, output_directory="./"){
 
-		mol_metatable <- read.table(collection_metadata_file, sep="\t", header=T)
-		EdgeSets <- list()
+		mds_metatable <- read.table(mds_metadata_file, sep="\t", header=T)
+		EdgeSets <- list()		
+
+		diseases <- unique(mol_metatable$disease)
+		for(diseaseName in diseases){
+			cat(diseaseName)
 			EdgeSets[[diseaseName]]
+			
+			cnvTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="cnv")
+			mutTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="mutation_01")
+
 				# merge cnv/mut
 				# get.node.degree(poi, goi, edgePairs)
 				#

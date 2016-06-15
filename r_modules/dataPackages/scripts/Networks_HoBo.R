@@ -93,12 +93,14 @@ run.batch.patient_similarity <- function(input_directory, collection_metadata_fi
 		# table listing source, disease, process, date, molecular_type for each table (rowname=file)
 		mol_metatable <- read.table(collection_metadata_file, sep="\t", header=T)
 
+		PtLayouts <- list()
 		gistic.scores <-c(-2,-1,1, 2)
   		goi = getGeneSet(geneset_name)
 
 		diseases <- unique(mol_metatable$disease)
 		for(diseaseName in diseases){
 		  cat(diseaseName)
+		  	PtLayouts[[diseaseName]] <- c()
 			cnvTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="cnv")
 			mutTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="mutation_01")
 			
@@ -144,11 +146,12 @@ run.batch.patient_similarity <- function(input_directory, collection_metadata_fi
    					names(tempList) <- rownames(sample_similarity)
    					save.json(tempList, output_directory, outputFile)
 
-					
+					PtLayouts[[diseaseName]] <- c(PtLayouts[[diseaseName]], outputFile)
 				} # mut files
 			} #cnv files
 		} # for diseaseName	
 
+		save.json(PtLayouts, output_directory, "mds_collections")
 }
 
 #----------------------------------------------------------------------------------------------------
@@ -178,12 +181,14 @@ get.network_edges <- function(mtx,samples, genes, edgeTypes){
 run.batch.network_edges <- function(input_directory, collection_metadata_file, genesets, output_directory="./"){
 
 		mol_metatable <- read.table(collection_metadata_file, sep="\t", header=T)
+		
 
 		diseases <- unique(mol_metatable$disease)
 		for(diseaseName in diseases){
 		  cat(diseaseName)
 			cnvTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="cnv")
 			mutTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="mutation_01")
+			
 			
 			if(nrow(cnvTables)==0 & nrow(mutTables) ==0) next;
 			for(genesetName in names(genesets)){			
@@ -220,10 +225,24 @@ run.batch.network_edges <- function(input_directory, collection_metadata_file, g
 					
 				}
 				
+
+				
 			} # for genesetName
  		} # for diseaseName	
 
 }
+
+
+#----------------------------------------------------------------------------------------------------
+run.batch.network_collections <- function(input_directory, collection_metadata_file, genesets, output_directory="./"){
+
+		mol_metatable <- read.table(collection_metadata_file, sep="\t", header=T)
+		EdgeSets <- list()
+			EdgeSets[[diseaseName]]
+				# merge cnv/mut
+				# get.node.degree(poi, goi, edgePairs)
+				#
+
 
 #----------------------------------------------------------------------------------------------------
 # reads all files in a directory: assumes files follow json schema {disease, molecular_type, source, process, date}

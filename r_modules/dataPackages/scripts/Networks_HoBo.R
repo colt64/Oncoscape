@@ -178,14 +178,28 @@ get.network_edges <- function(mtx,samples, genes, edgeTypes){
   return(allEdges)
 }
 #----------------------------------------------------------------------------------------------------
+save_node_degrees <- function(EdgePairs,directory node1_file, node2_file){
+
+	node1 <- unique(EdgePairs[,2])
+	node2 <- unique(EdgePairs[,3])
+	
+	node1_counts <- sapply(node1, function(node){ length(matches(node, EdgePairs[,2] })
+	node2_counts <- sapply(node2, function(node){ length(matches(node, EdgePairs[,3] })
+	
+	save.json(node1_counts, directory, node1_file)
+	save.json(node2_counts, directory, node2_file)
+}
+#----------------------------------------------------------------------------------------------------
 run.batch.network_edges <- function(input_directory, collection_metadata_file, genesets, output_directory="./"){
 
 		mol_metatable <- read.table(collection_metadata_file, sep="\t", header=T)
 		
+		EdgeList <- list()
 
 		diseases <- unique(mol_metatable$disease)
 		for(diseaseName in diseases){
 		  cat(diseaseName)
+		  
 			cnvTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="cnv")
 			mutTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="mutation_01")
 			
@@ -197,20 +211,27 @@ run.batch.network_edges <- function(input_directory, collection_metadata_file, g
 				edgeTypes <- list("-2"="-2", "-1"="-1", "1"="1", "2"="2")
 				
 				if(nrow(cnvTables) >0){
-				for(i in 1:nrow(cnvTables)){
-				  cnvFile <- cnvTables[i,"file"]
-					cnv.json <- fromJSON(paste(input_directory, cnvFile, sep="/")) 
-					mtx.cnv <- cnv.json$data[[1]]
-					rownames(mtx.cnv) <- cnv.json$rows[[1]]
-					colnames(mtx.cnv) <- cnv.json$cols[[1]]
-					cnv.index <- cnvTables[i,"index"]
+					cnv_edges <- list()
+					for(i in 1:nrow(cnvTables)){
+					  cnvFile <- cnvTables[i,"file"]
+						cnv.json <- fromJSON(paste(input_directory, cnvFile, sep="/")) 
+						mtx.cnv <- cnv.json$data[[1]]
+						rownames(mtx.cnv) <- cnv.json$rows[[1]]
+						colnames(mtx.cnv) <- cnv.json$cols[[1]]
+						cnv.index <- cnvTables[i,"index"]
 					
-					edgePairs <- get.network_edges(mtx.cnv, samples=NA, genes = goi, edgeTypes)
-					outputFile <- paste("edges",diseaseName, cnvTables$molecular_type, cnv.index, genesetName, sep="_")
-					save.json(edgePairs, output_directory, outputFile)
-				}}
+						edgePairs_cnv <- get.network_edges(mtx.cnv, samples=NA, genes = goi, edgeTypes)
+						outputFile <- paste("edges",diseaseName, cnvTables$molecular_type, cnv.index, genesetName, sep="_")
+						save.json(edgePairs_cnv, output_directory, outputFile)
+					
+						cnv_edges[[cnv.index]] <-  edgePairs_cnv
+					}
+					EdgeList$cnv <- cnv_edges
+				}
 				
 				if(nrow(mutTables)==0)next;
+
+				mut_edges <- list()
 				for(j in 1:nrow(mutTables)){
 					mutFile <- mutTables[j,"file"]
 					mut.json <- fromJSON(paste(input_directory, mutFile, sep="/")) 
@@ -219,13 +240,32 @@ run.batch.network_edges <- function(input_directory, collection_metadata_file, g
 					colnames(mtx.mut) <- mut.json$cols[[1]]
 					mut.index <- mutTables[j,"index"]
 					
-					edgePairs <- get.network_edges(mtx.mut, samples=NA, genes = goi, edgeTypes=list("0"="1"))
+					edgePairs_mut <- get.network_edges(mtx.mut, samples=NA, genes = goi, edgeTypes=list("0"="1"))
 					outputFile <- paste("edges",diseaseName, mutTables$molecular_type, mut.index, genesetName, sep="_")
-					save.json(edgePairs, output_directory, outputFile)
+					save.json(edgePairs_mut, output_directory, outputFile)
 					
+					mut_edges[[mut.index]] <- edgePairs_mut
 				}
 				
-
+				EdgeList$mut <- mut_edges
+				
+				for(k in 1:length(EdgeList$cnv)){
+					cnvEdges <- EdgeList$cnv[[k]]
+					cnv.index <- names(EdgeList$cnv)[k]
+					
+					for(m in 1:length(EdgeList$mut)){
+						mutEdges <- EdgeList$mut[[m]]
+						mut.index <- names(EdgeList$mut)[m]
+											
+						allEdges <- c(cnvEdges, mutEdges)
+						outputFile <- paste("edges",diseaseName, "cnv",cnv.index,"mut", mut.index, genesetName, sep="_")
+						save.json(allEdges, output_directory, outputFile)
+						
+						ptFile <- paste("ptDegree",diseaseName, "cnv",cnv.index,"mut", mut.index, genesetName, sep="_")
+						geneFile <- paste("geneDegree",diseaseName, "cnv",cnv.index,"mut", mut.index, genesetName, sep="_")
+						save_node_degrees(allEdges, ptFile=ptFile, geneFile=geneFile)
+					}
+				}
 				
 			} # for genesetName
  		} # for diseaseName	

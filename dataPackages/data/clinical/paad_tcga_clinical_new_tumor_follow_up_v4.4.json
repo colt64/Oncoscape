@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "new_tumor_follow_up_v4.4",
+    "inputFile": "nationwidechildrens.org_clinical_follow_up_v4.4_nte_paad.txt",
+    "disease": "paad",
+    "source": "tcga",
+    "data": {}
+  }
+]

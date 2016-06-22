@@ -1,7 +1,7 @@
 ###
 #
-#       This Script Executes Basic Processing On TCGA Files
-#       Specifically It Types, Uppercases and In Cases Enforces Enumeration Types
+#       This Script Executes Basic Processing On TCGA molecular Files downloaded from UCSC
+#       Specifically it takes 
 #       
 ###
 
@@ -16,7 +16,7 @@ os.data.batch.inputFile    <- "os.tcga.ucsc.filename.manifest.json"
 
 # IO Utility Functions :: [Batch, Load, Save]  -------------------------------------------------------
 
-### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
+### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk in JSON
 os.json.save <- function(df, directory, file){
   
   if(!dir.exists(directory))
@@ -95,7 +95,7 @@ os.data.batch <- function(inputFile){
 			# Load Data Frame - map and filter by named columns
 			result <- os.data.load( inputFile = inputFile )
 
-			if(dataObj$molecular_type %in%  c("cnv", "mutation_01"))
+			if(dataObj$molecular_type %in%  c("cnv", "mutation01"))
 			    result$data <- apply(result$data, 2, as.integer)
 			dataObj$directory <- NULL
 			dataObj$row_type <- result$row_type; dataObj$col_type <- result$col_type;

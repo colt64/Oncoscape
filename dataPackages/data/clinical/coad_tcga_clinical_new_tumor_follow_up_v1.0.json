@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "new_tumor_follow_up_v1.0",
+    "inputFile": "nationwidechildrens.org_clinical_follow_up_v1.0_nte_coad.txt",
+    "disease": "coad",
+    "source": "tcga",
+    "data": {}
+  }
+]

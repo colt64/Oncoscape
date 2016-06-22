@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "follow_up_v2.1",
+    "inputFile": "nationwidechildrens.org_clinical_follow_up_v2.1_brca.txt",
+    "disease": "brca",
+    "source": "tcga",
+    "data": {}
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "patient",
+    "inputFile": "nationwidechildrens.org_clinical_patient_lusc.txt",
+    "disease": "lusc",
+    "source": "tcga",
+    "data": {}
+  }
+]

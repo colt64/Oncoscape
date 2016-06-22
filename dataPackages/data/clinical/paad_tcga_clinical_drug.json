@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "drug",
+    "inputFile": "nationwidechildrens.org_clinical_drug_paad.txt",
+    "disease": "paad",
+    "source": "tcga",
+    "data": {}
+  }
+]

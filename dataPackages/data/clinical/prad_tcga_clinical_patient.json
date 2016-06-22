@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "patient",
+    "inputFile": "nationwidechildrens.org_clinical_patient_prad.txt",
+    "disease": "prad",
+    "source": "tcga",
+    "data": {}
+  }
+]

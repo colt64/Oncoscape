@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "new_tumor",
+    "inputFile": "nationwidechildrens.org_clinical_nte_blca.txt",
+    "disease": "blca",
+    "source": "tcga",
+    "data": {}
+  }
+]

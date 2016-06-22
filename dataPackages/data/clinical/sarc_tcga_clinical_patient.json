@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "patient",
+    "inputFile": "nationwidechildrens.org_clinical_patient_sarc.txt",
+    "disease": "sarc",
+    "source": "tcga",
+    "data": {}
+  }
+]

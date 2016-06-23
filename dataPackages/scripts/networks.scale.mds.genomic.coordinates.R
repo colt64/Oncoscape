@@ -4,6 +4,11 @@ library(jsonlite)
 printf = function (...) print (noquote (sprintf (...)))
 options(stringsAsFactors=FALSE)
 
+commands >- c("mdsScaled", "geneScaled")
+args = commandArgs(trailingOnly=TRUE)
+if(length(args) != 0)
+	commands <- args
+
 #--------------------------------------------------------------#
 
 mol_dir<- "../molecular_data/"
@@ -125,23 +130,27 @@ run.batch <- function(scaleFactor=10000){
 	save.json(genePos_scaled, hg19_dir, paste(genepos_file, "scaled", sep="_"))
 
 	mds_Files<- list.files(mds_orig_dir)
-	
-	for(mdsFile in mds_Files){
-		mtx <- get.json(mds_orig_dir, mdsFile)
-		mtx <- t(as.data.frame(mtx)); 
-		colnames(mtx) <- c("x", "y")
-		mtx_scaled <- scaleSamplesToChromosomes(mtx, chrSpecs$dim)
-		file= paste(gsub(".json", "", mdsFile), "scaled", sep="_")
-		save.json(mtx_scaled, mds_scaled_dir, file)
+
+	if("mdsScaled" %in% commands) {
+		for(mdsFile in mds_Files){
+			mtx <- get.json(mds_orig_dir, mdsFile)
+			mtx <- t(as.data.frame(mtx)); 
+			colnames(mtx) <- c("x", "y")
+			mtx_scaled <- scaleSamplesToChromosomes(mtx, chrSpecs$dim)
+			file= paste(gsub(".json", "", mdsFile), "scaled", sep="_")
+			save.json(mtx_scaled, mds_scaled_dir, file)
+		}
 	}
-	
-	for (genesetName in names(genesets)){	
-		genes <- genesets[[genesetName]]
-		map_genes <- intersect(genes, names(genePos_scaled))
-		genesetPos <- genePos_scaled[map_genes]
-		file= paste("network_chrPos_", genesetName, sep="")
-		save.json(genesetPos, hg19_dir, file)
-	}	
+	if("geneScaled" %in% commands) {
+
+		for (genesetName in names(genesets)){	
+			genes <- genesets[[genesetName]]
+			map_genes <- intersect(genes, names(genePos_scaled))
+			genesetPos <- genePos_scaled[map_genes]
+			file= paste("network_chrPos_", genesetName, sep="")
+			save.json(genesetPos, hg19_dir, file)
+		}	
+	}
 }
 
 #--------------------------------------------------------------#

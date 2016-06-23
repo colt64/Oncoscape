@@ -4,10 +4,21 @@ library(jsonlite)
 printf = function (...) print (noquote (sprintf (...)))
 options(stringsAsFactors=FALSE)
 
-#--------------------------------- make plot data -----------------------------#
+commands >- c("mds", "edges")
+args = commandArgs(trailingOnly=TRUE)
+if(length(args) != 0)
+	commands <- args
+
+#--------------------------------- Configuration -----------------------------#
+
+molecular_manifest <- "../manifests/os.ucsc.molecular.manifest.json"
+
+network_output_directory <- "../data/molecular/edges"
+mds_output_directory <- "../data/molecular/mds"
 
 geneset_file <- "../molecular_data/hg19/genesets_by_symbol.json"
 genesets <- fromJSON(geneset_file)
+
 #----------------------------------------------------------------------------------------------------
 getGeneSet <- function(geneset_name){
 	stopifnot(geneset_name %in% names(genesets))
@@ -15,17 +26,35 @@ getGeneSet <- function(geneset_name){
 }
 
 #----------------------------------------------------------------------------------------------------
-save.json <- function(dataObj, directory, file)
-{
+### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
+os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", "JSON")){
+
   if(!dir.exists(directory))
     dir.create(file.path(directory), recursive=TRUE)
   
   if(!grepl("/$", directory)) directory <- paste(directory, "/", sep="")
- 
   outFile = paste(directory, file, sep="")
+
+  
+  # Write Tab Delimited
+  if("tsv" %in% format)
+    write.table(df, file=paste(outFile,".tsv", sep = ""), quote=F, sep="\t")
+  
+  # Write CSV Delimited
+  if("csv" %in% format)
+    write.csv(df, file=paste(outFile,".csv",sep = ""), quote = F)
+  
+  # Write RData File
+  if("RData" %in% format)
+    save(df, file=paste(outFile,".RData", sep = "") )
+  
+  # Write JSON File
+  if("JSON" %in% format)
   write(toJSON(dataObj, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
   
-} # saveGraph
+  # Return DataFrame For Chaining
+  return(df)
+}
 
 #----------------------------------------------------------------------------------------------------
 calcSimilarity <- function(indicatorMatrix) {
@@ -85,73 +114,84 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA, copy
 }
 
 #----------------------------------------------------------------------------------------------------
-run.batch.patient_similarity <- function(input_directory, collection_metadata_file, update_collection_table=F,geneset_name=NA, output_directory="./"){
+run.batch.patient_similarity <- function(input_directory, manifest_file, geneset_name=NA, output_directory="./"){
 
-		if(update_collection_table)
-			write_collections_table(input_directory, outputFile=collection_metadata_file)
 
-		# table listing source, disease, process, date, molecular_type for each table (rowname=file)
-		mol_metatable <- read.table(collection_metadata_file, sep="\t", header=T)
+    # Load Input File 
+    dataFiles <- fromJSON(inputFile)
+ 
+ 	PtLayouts <- list()
+	gistic.scores <-c(-2,-1,1, 2)
+  	goi = getGeneSet(geneset_name)
 
-		PtLayouts <- list()
-		gistic.scores <-c(-2,-1,1, 2)
-  		goi = getGeneSet(geneset_name)
+     
+		# Loop for each disease/source combo
+		for (i in 1:nrow(dataFiles))
+		{
+ 			# Necessary Fields
+			sourceObj <- dataFiles[i,]
+			stopifnot(all(c("disease", "source", "collections") %in% names(sourceObj)))
 
-		diseases <- unique(mol_metatable$disease)
-		for(diseaseName in diseases){
-		  cat(diseaseName)
-		  	PtLayouts[[diseaseName]] <- c()
-			cnvTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="cnv")
-			mutTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="mutation01")
-			
-			if(nrow(cnvTables)==0 | nrow(mutTables) ==0) next;
-			
+			collections <- sourceObj$collections[[1]]
+			diseaseName <- sourceObj$disease
+			inputDirectory <- sourceObj$inputDirectory
+			if(!grepl("/$", inputDirectory)) inputDirectory <- paste(inputDirectory, "/", sep="")
+			cat(diseaseName, sourceObj$source,"\n")
+
+#			outputDirectory <- sourceObj$outputDirectory
+
+			## ----- Configuration ------
 			regex = ".01$"; threshold = NA;
-			if(diseaseName == "laml"){       regex = "-03$|-09$";
+			if(diseaseName == "laml"){        regex = "-03$|-09$";
 			} else if(diseaseName == "luad"){ regex = "TCGA-(17)^-\\d{4}-01$" }
 
 			if(diseaseName == "brca" | diseaseName == "brain")  threshold = -1e-04
+
+		  	PtLayouts[[diseaseName]] <- c()
+			cnvTables <- subset(collections, molecular_type=="cnv")
+			mutTables <- subset(collections, molecular_type=="mutation01")
+
+			if(nrow(cnvTables)==0 | nrow(mutTables) ==0) next;
 			
+			## ----- MDS on All Combinations of CNV and MUT Tables ------
 			for(i in 1:nrow(cnvTables)){
-			  cnvFile <- cnvTables[i,"file"]
-				cnv.json <- fromJSON(paste(input_directory, cnvFile, sep="/")) 
+				cnv.json <- fromJSON(paste(inputDirectory, cnvTables[i,"inputFile"], sep="/")) 
 				mtx.cnv <- cnv.json$data[[1]]
-				rownames(mtx.cnv) <- cnv.json$rows[[1]]
-				colnames(mtx.cnv) <- cnv.json$cols[[1]]
+				rownames(mtx.cnv) <- cnv.json$rows[[1]]; colnames(mtx.cnv) <- cnv.json$cols[[1]]
 				cnv.samples <- grep(regex, cnv.json$cols[[1]],  value=TRUE)
 				cnv.index <- cnvTables[i,"index"]
 
 				for(j in 1:nrow(mutTables)){
-				  mutFile <- mutTables[j,"file"]
-					mut.json <- fromJSON(paste(input_directory, mutFile, sep="/")) 
+					mut.json <- fromJSON(paste(inputDirectory,mutTables[j,"inputFile"], sep="/")) 
 					mtx.mut <- mut.json$data[[1]]
-					rownames(mtx.mut) <- mut.json$rows[[1]]
-					colnames(mtx.mut) <- mut.json$cols[[1]]
+					rownames(mtx.mut) <- mut.json$rows[[1]]; colnames(mtx.mut) <- mut.json$cols[[1]]
+   					mut.samples <- grep(regex, mut.json$cols[[1]],  value=TRUE)
 					mut.index <- mutTables[j,"index"]
-   	
-   				mut.samples <- grep(regex, mut.json$cols[[1]],  value=TRUE)
    					
-   				samples <- unique(cnv.samples, mut.samples)
-   
-   				sample_similarity <- calculateSampleSimilarityMatrix(mtx.mut, mtx.cnv, copyNumberValues=gistic.scores,
-   													 genes = goi, samples=samples)
+   					samples <- unique(cnv.samples, mut.samples)
+	   				sample_similarity <- calculateSampleSimilarityMatrix(
+	   										mtx.mut, mtx.cnv,
+	   										copyNumberValues=gistic.scores,
+   											genes = goi, samples=samples)
    													 
 					if(!is.na(threshold)){
 						outliers <- names(which(sample_similarity[,1]<threshold))
 						sample_similarity <- sample_similarity[setdiff(rownames(sample_similarity), outliers), ]
 					}
    					
-   					outputFile <- paste("mds",diseaseName, cnvTables$molecular_type, cnv.index, mutTables$molecular_type, mut.index, geneset_name, sep="_")
-   					tempList<- lapply(rownames(sample_similarity), function(name) c(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
-   					names(tempList) <- rownames(sample_similarity)
-   					save.json(tempList, output_directory, outputFile)
+					## ----- Save  ------
+					outputFile <- paste("mds",diseaseName, cnvTables$dataType, cnv.index, mutTables$dataType, mut.index, geneset_name, sep="_")
+					mds.list<- lapply(rownames(sample_similarity), function(name) c(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
+					names(mds.list) <- rownames(sample_similarity)
+					os.data.save(mds.list, outputDirectory, outputFile, format="JSON")
 
 					PtLayouts[[diseaseName]] <- c(PtLayouts[[diseaseName]], outputFile)
+					
 				} # mut files
 			} #cnv files
 		} # for diseaseName	
 
-		save.json(PtLayouts, output_directory, "mds_collections")
+		os.data.save(PtLayouts, output_directory, "mds_collections", format="JSON")
 }
 
 #----------------------------------------------------------------------------------------------------
@@ -174,167 +214,147 @@ get.network_edges <- function(mtx,samples, genes, edgeTypes){
 	  })
 	  allEdges <- rbind(allEdges, t(edgeMap))
   }
+  colnames(allEdges) <- c("m", "g", "p")
   
   return(allEdges)
 }
 #----------------------------------------------------------------------------------------------------
-save_node_degrees <- function(EdgePairs,directory="./", node1_file, node2_file){
+save.edge.files(edgePairs, outputDirectory, diseaseName, dataType, index, genesetName)
 
-#	node1 <- unique(EdgePairs[,2])
-#	node2 <- unique(EdgePairs[,3])
+	## get and save node degrees
+	node1_counts <- as.data.frame(table(edgePairs[,2]))  
+	colnames(node1_counts) <- NULL
+
+	node2_counts <- as.data.frame(table(edgePairs[,3]))  
+	colnames(node2_counts) <- NULL
 	
-#	node1_counts <- sapply(node1, function(node){ length(intersect(node, EdgePairs[,2])) })
-#	node2_counts <- sapply(node2, function(node){ length(intersect(node, EdgePairs[,3])) })
+	edgeFile <- paste("edges"     ,diseaseName, dataType, index, genesetName, sep="_")
+	geneDegreeFile <- paste("geneDegree",diseaseName, dataType, index, genesetName, sep="_")
+	ptDegreeFile <- paste("ptDegree"  ,diseaseName, dataType, index, genesetName, sep="_")
 
-  node1_counts <- as.data.frame(table(EdgePairs[,2]))
-  node2_counts <- as.data.frame(table(EdgePairs[,3]))
-  
-  colnames(node1_counts) <- NULL
-  colnames(node2_counts) <- NULL
-  
-	save.json(node1_counts, directory, node1_file)
-	save.json(node2_counts, directory, node2_file)
+	os.data.save(edgePairs,    outputDirectory, edgeFile , format="JSON")
+	os.data.save(node1_counts, outputDirectory, geneDegreeFile , format="JSON")
+	os.data.save(node2_counts, outputDirectory, ptDegreeFile, format="JSON")
+		
+	return( c(edgeFile, geneDegreeFile, ptDegreeFile) )
+
 }
 #----------------------------------------------------------------------------------------------------
-run.batch.network_edges <- function(input_directory, collection_metadata_file, genesets, output_directory="./"){
+get.edges.batch <- function(sourceObj, collections, genesetName, startIndex=1, ...){				
 
-		mol_metatable <- read.table(collection_metadata_file, sep="\t", header=T)
+		inputDirectory  <- sourceObj$inputDirectory
+		outputDirectory <- sourceObj$outputDirectory
+		goi <- genesets[[genesetName]]
+
+		edges <- list()
+		newCollections <- list()
 		
+		for(i in 1:nrow(collections)){
+		  	File <- collections[i,"inputFile"]
+			dataObj <- fromJSON(paste(inputDirectory, File, sep="/")) 
+			mtx <- dataObj$data[[1]]
+			rownames(mtx) <- dataObj$rows[[1]]
+			colnames(mtx) <- dataObj$cols[[1]]
+			index <- startIndex+i-1
+	
+			## get and save edge pairs
+			edgePairs <- get.network_edges(mtx, samples=NA, ...)
+			edgeFiles <- save.edge.files(edgePairs, outputDirectory, sourceObj$diseaseName, collections$dataType, index, genesetName)
+			newCollections <- c(newCollections, data.frame(_id=index, process=process, date=date, inputFile=cFile, outputFile=edgeFiles))
 
-		diseases <- unique(mol_metatable$disease)
-		for(diseaseName in diseases){
-		  cat(diseaseName); cat("\n")
-		  
-			cnvTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="cnv")
-			mutTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="mutation01")
+			edges[[as.character(index)]] <-  edgePairs
+		}
+		
+		return(list(edges=edges, collections=newCollections))
+}
+
+#----------------------------------------------------------------------------------------------------
+run.batch.network_edges <- function(manifest_file, output_directory="./"){
+
+    # Load Input File 
+    dataFiles <- fromJSON(manifest_file)
+    dataType <- "network"
+    date <- System.Date(format="%Y-%m-%d")
+    
+    newManifest <- list()
+     
+		# Loop for each disease/source combo
+		for (i in 1:nrow(dataFiles))
+		{
+			sourceObj <- dataFiles[i,]
+			stopifnot(all(c("disease", "source","dataType", "collections") %in% names(sourceObj)))
+
+			collections <- sourceObj$collections[[1]]
+			diseaseName <- sourceObj$disease
+			source      <- sourceObj$source
 			
+			sourceTokens <- c(diseaseName, source)
+			cat(diseaseName, source,"\n")
+		  
+			cnvTables <- subset(collections, molecular_type=="cnv")
+			mutTables <- subset(collections, molecular_type=="mutation01")
 			
 			if(nrow(cnvTables)==0 & nrow(mutTables) ==0) next;
-			for(genesetName in names(genesets)){			
 
-			  EdgeList <- list()
-			  
-			  goi <- genesets[[genesetName]]
-				edgeTypes <- list("-2"="-2", "-1"="-1", "1"="1", "2"="2")
-				
+			newCollections <- list()
+
+			# save Edge sets for each Gene set
+			for(index in 1:length(genesets)){			
+	
+				genesetName <- names(genesets)[index]
+
+				EdgeList <- list()
+			  	process <- c("cnv;mut01", genesetName)
+			  	processName <- paste(process, collapse=";")
+			  	 
+				# save individual CNV edges
 				if(nrow(cnvTables) >0){
-					cnv_edges <- list()
-					for(i in 1:nrow(cnvTables)){
-					  cnvFile <- cnvTables[i,"file"]
-						cnv.json <- fromJSON(paste(input_directory, cnvFile, sep="/")) 
-						mtx.cnv <- cnv.json$data[[1]]
-						rownames(mtx.cnv) <- cnv.json$rows[[1]]
-						colnames(mtx.cnv) <- cnv.json$cols[[1]]
-						cnv.index <- cnvTables[i,"index"]
-					
-						edgePairs_cnv <- get.network_edges(mtx.cnv, samples=NA, genes = goi, edgeTypes)
-						outputFile <- paste("edges",diseaseName, cnvTables$molecular_type, cnv.index, genesetName, sep="_")
-						save.json(edgePairs_cnv, output_directory, outputFile)
-		
-						ptFile <- paste("ptDegree",diseaseName, "cnv",cnv.index, genesetName, sep="_")
-						geneFile <- paste("geneDegree",diseaseName, "cnv",cnv.index, genesetName, sep="_")
-						save_node_degrees(edgePairs_cnv,output_directory, geneFile, ptFile)
-						
-						cnv_edges[[as.character(cnv.index)]] <-  edgePairs_cnv
-					}
-					EdgeList$cnv <- cnv_edges
+					newEdges <- get.edges.batch(sourceObj, cnvTables, genesetName, edgeTypes=list("-2"="-2", "-1"="-1", "1"="1", "2"="2"))
+					EdgeList$cnv <- newEdges$edges
+					newCollections <- c(newCollections, newEdges$collections)
 				}
-				
+				# save individual MUT edges				
 				if(nrow(mutTables)==0)next;
+				newEdges <- get.edges.batch(sourceObj, mutTables, genesetName, edgeTypes=list("0"="1"), startIndex=nrow(cnvTables)+1)
+				EdgeList$mut <- newEdges$edges
+				newCollections <- c(newCollections, newEdges$collections)
 
-				mut_edges <- list()
-				for(j in 1:nrow(mutTables)){
-					mutFile <- mutTables[j,"file"]
-					mut.json <- fromJSON(paste(input_directory, mutFile, sep="/")) 
-					mtx.mut <- mut.json$data[[1]]
-					rownames(mtx.mut) <- mut.json$rows[[1]]
-					colnames(mtx.mut) <- mut.json$cols[[1]]
-					mut.index <- mutTables[j,"index"]
-					
-					edgePairs_mut <- get.network_edges(mtx.mut, samples=NA, genes = goi, edgeTypes=list("0"="1"))
-					outputFile <- paste("edges",diseaseName, mutTables$molecular_type, mut.index, genesetName, sep="_")
-					save.json(edgePairs_mut, output_directory, outputFile)
-					
-					ptFile <- paste("ptDegree",diseaseName, "mut", mut.index, genesetName, sep="_")
-					geneFile <- paste("geneDegree",diseaseName, "mut", mut.index, genesetName, sep="_")
-					save_node_degrees(edgePairs_mut,output_directory, geneFile, ptFile)
-					
-					mut_edges[[as.character(mut.index)]] <- edgePairs_mut
-				}
-				
-				EdgeList$mut <- mut_edges
-				
-				for(k in 1:length(EdgeList$cnv)){
+				# save all combinations of MUT & CNV edges
+				numCNV = length(EdgeList$cnv)
+				numMut = length(EdgeList$mut)
+				for(k in 1:numCNV){
 					cnvEdges <- EdgeList$cnv[[k]]
-					cnv.index <- names(EdgeList$cnv)[k]
 					
-					for(m in 1:length(EdgeList$mut)){
+					for(m in 1:numMut){
 						mutEdges <- EdgeList$mut[[m]]
-						mut.index <- names(EdgeList$mut)[m]
-											
+																	
 						allEdges <- rbind(cnvEdges, mutEdges)
-						outputFile <- paste("edges",diseaseName, "cnv",cnv.index,"mut", mut.index, genesetName, sep="_")
-						save.json(allEdges, output_directory, outputFile)
-						
-						ptFile <- paste("ptDegree",diseaseName, "cnv",cnv.index,"mut", mut.index, genesetName, sep="_")
-						geneFile <- paste("geneDegree",diseaseName, "cnv",cnv.index,"mut", mut.index, genesetName, sep="_")
-						save_node_degrees(allEdges,output_directory, geneFile, ptFile)
+						compIndex = (k+m)+((k-1)*numCNV)+m
+						edgeFiles <- save.edge.files(allEdges, outputDirectory, diseaseName, dataType, index=compIndex, processName)
+						file1 <- newCollections[[k]]$inputFile; file2 <- newCollections[[m]]$inputFile;
+						newCollections <- c(newCollections, data.frame(_id=compIndex, process=process, date=date, inputFile=c(file1,file2), outputFile=edgeFiles))
 					}
 				}
+				
 				
 			} # for genesetName
+			
+			newManifest <- c(newManifest, 
+				data.frame(disease=diseaseName, source=sourceObj$source, dataType=dataType, inputDirectory=sourceObj$outputDirectory, 
+							collections = newCollections) )
+
  		} # for diseaseName	
 
 }
 
 
 #----------------------------------------------------------------------------------------------------
-run.batch.network_collections <- function(input_directory, mds_metadata_file, genesets, output_directory="./"){
 
-		mds_metatable <- read.table(mds_metadata_file, sep="\t", header=T)
-		EdgeSets <- list()		
-
-		diseases <- unique(mol_metatable$disease)
-		for(diseaseName in diseases){
-			cat(diseaseName)
-			EdgeSets[[diseaseName]]
-			
-			cnvTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="cnv")
-			mutTables <- subset(mol_metatable, disease==diseaseName & molecular_type=="mutation01")
-
-				# merge cnv/mut
-				# get.node.degree(poi, goi, edgePairs)
-				#
-		}
-	}
-
-#----------------------------------------------------------------------------------------------------
-# reads all files in a directory: assumes files follow json schema {disease, molecular_type, source, process, date}
-# saves table with rownames = file names
-write_collections_table <- function(directory,outputFile){
-		
-		jsonFiles<- list.files(directory)
-		mol_metatable<- sapply(1:length(jsonFiles), function(i){
-			jFile <- fromJSON(paste(directory,jsonFiles[i], sep="/"))
-			c(index=i,disease=jFile$disease, molecular_type=jFile$molecular_type, source=jFile$source,
-			  process=jFile$process,date=jFile$date, file=jsonFiles[i])
-		})
-		mol_metatable <- t(mol_metatable)
-		
-		write.table(mol_metatable, file=outputFile, sep="\t", quote=F, col.names=T, row.names=F )
-}
-
-
-#----------------------------------------------------------------------------------------------------
-directory <- "../molecular_data/UCSC"
-collection_metadata_file <- "molecular_collections_metadata.txt"
-network_output_directory <- "../networks/edges"
-mds_output_directory <- "../networks/mds"
-
-	
-#run.batch.patient_similarity(directory, collection_metadata_file, update_collection_table=F,geneset_name="oncoVogel274", output_directory=mds_output_directory)
+if("mds" %in% commands)
+	run.batch.patient_similarity(molecular_manifest,geneset_name="oncoVogel274", outputDirectory = mds_output_directory)
 		# calculate patient similarity
 		# save json
 
-run.batch.network_edges(directory, collection_metadata_file, genesets, output_directory=network_output_directory)
+if("edges" %in% commands) 
+	run.batch.network_edges(molecular_manifest, outputDirectory=network_output_directory)
 		# map edges for all patients between CNV/Mut and Geneset tables

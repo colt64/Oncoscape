@@ -32,15 +32,18 @@ saveGenomicCoordinates:
 
 #----- Calculate Values
 
-calculateMDS:
-	Rscript networks.calculate.mds.edges.R
+mds:
+	Rscript networks.calculate.mds.edges.R mds
 		# hobo MDS
+edges:
+	Rscript networks.calculate.mds.edges.R mds edges
 		# edges
 
-scaleNetworkPlots:
-	Rscript < networks.scale.mds.genomic.coordinates.R
-		# genomic coordinates scaled
+scale10k:
+	Rscript networks.scale.mds.genomic.coordinates.R mdsScaled
 		# MDS values scaled
+	Rscript networks.scale.mds.genomic.coordinates.R geneScaled
+		# genomic coordinates scaled
 		
 #----- Import into MongoDB
 

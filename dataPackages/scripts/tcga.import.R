@@ -213,7 +213,7 @@ get.processed.mtx <- function(mtx, dimension){
 # IO Utility Functions :: [Batch, Load, Save]  -------------------------------------------------------
 
 ### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
-os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", "JSON"), metaData=NA){
+os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", "JSON")){
 
   if(!dir.exists(directory))
     dir.create(file.path(directory), recursive=TRUE)
@@ -236,7 +236,7 @@ os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", 
   
   # Write JSON File
   if("JSON" %in% format)
-    write(toJSON(df, pretty=TRUE), file=paste(outFile,".json", sep = "") )
+  write(toJSON(dataObj, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
   
   # Return DataFrame For Chaining
   return(df)
@@ -361,6 +361,8 @@ os.data.batch <- function(inputFile, ...){
            
     # Load Input File 
     dataFiles <- fromJSON(inputFile)
+     
+     
                         
 		# Loop for each file to load
 		for (i in 1:nrow(dataFiles))
@@ -421,7 +423,7 @@ os.data.batch <- function(inputFile, ...){
 						directory = outputDirectory,
 						file = outputFile,
 						format = "JSON") 
-	#					, metaData = metaData)
+
 			
 				# Remove Df From Memory
 				rm(df)

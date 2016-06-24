@@ -10,8 +10,8 @@ options(stringsAsFactors=FALSE)
 #http://oncoscape-static.s3-website-us-west-2.amazonaws.com/
 
 #--------------------------------- make plot data -----------------------------#
-diseaseAbbr <-c("LGG.GBM", "BRCA", "LUAD","PRAD","LGG","GBM", "PAAD", "COADREAD")
-diseaseDataP <- c("TCGAbrain", "TCGAbrca", "TCGAluad","TCGAprad","TCGAlgg","TCGAgbm", "TCGApaad", "TCGAcoadread")
+diseaseAbbr <-c("LGG.GBM") #, "BRCA", "LUAD","PRAD","LGG","GBM", "PAAD", "COADREAD")
+diseaseDataP <- c("TCGAbrain") #, "TCGAbrca", "TCGAluad","TCGAprad","TCGAlgg","TCGAgbm", "TCGApaad", "TCGAcoadread")
 
 ## need to check/combine datasets
 # lung, brain

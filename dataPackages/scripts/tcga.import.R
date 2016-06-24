@@ -19,9 +19,17 @@ options(stringsAsFactors = FALSE)
 os.molecular.ucsc.batch.inputFile    <- "os.tcga.ucsc.filename.manifest.json"
 os.clinical.tcga.batch.inputFile    <- "os.tcga.clinical.filename.manifest.json"
 
-os.tcga.field.enumerations  <- fromJSON(paste("../manifests","os.tcga.field.enumerations.json", sep="/"))
-os.tcga.column.enumerations <- fromJSON(paste("../manifests","os.tcga.column.enumerations.json", sep="/"))
+outputDir_molecular <- "../data/molecular/clean/"
+outputDir_clinical  <- "../data/clinical/clean/"
 
+os.tcga.field.enumerations  <- fromJSON(paste("../manifests","os.tcga.field.enumerations.json" , sep="/"))
+os.tcga.column.enumerations <- fromJSON(paste("../manifests","os.tcga.column.enumerations.json", sep="/"))
+os.dataset.enumerations     <- fromJSON(paste("../manifests","os.dataset.enumerations.json"    , sep="/"))
+
+date <- System.Date(format="%Y-%m-%d")
+process <- "import"
+
+Manifest <- data.frame()
 
 # Class Definitions :: Enumerations -------------------------------------------------------
 os.enum.na <- c("", "NA", "[NOTAVAILABLE]","[UNKNOWN]","[NOT AVAILABLE]","[NOT EVALUATED]","UKNOWN","[DISCREPANCY]",
@@ -215,31 +223,33 @@ get.processed.mtx <- function(mtx, dimension){
 ### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
 os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", "JSON")){
 
-  if(!dir.exists(directory))
-    dir.create(file.path(directory), recursive=TRUE)
-  
-  if(!grepl("/$", directory)) directory <- paste(directory, "/", sep="")
-  outFile = paste(directory, file, sep="")
+	if(!dir.exists(directory))
+		dir.create(file.path(directory), recursive=TRUE)
 
-  
-  # Write Tab Delimited
-  if("tsv" %in% format)
-    write.table(df, file=paste(outFile,".tsv", sep = ""), quote=F, sep="\t")
-  
-  # Write CSV Delimited
-  if("csv" %in% format)
-    write.csv(df, file=paste(outFile,".csv",sep = ""), quote = F)
-  
-  # Write RData File
-  if("RData" %in% format)
-    save(df, file=paste(outFile,".RData", sep = "") )
-  
-  # Write JSON File
-  if("JSON" %in% format)
-  write(toJSON(dataObj, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
-  
-  # Return DataFrame For Chaining
-  return(df)
+	if(!grepl("/$", directory)) directory <- paste(directory, "/", sep="")
+		outFile = paste(directory, file, sep="")
+
+
+	# Write Tab Delimited
+	if("tsv" %in% format)
+		write.table(df, file=paste(outFile,".tsv", sep = ""), quote=F, sep="\t")
+
+	# Write CSV Delimited
+	if("csv" %in% format)
+		write.csv(df, file=paste(outFile,".csv",sep = ""), quote = F)
+
+	# Write RData File
+	if("RData" %in% format)
+		save(df, file=paste(outFile,".RData", sep = "") )
+
+	# Write JSON File
+	if("JSON" %in% format)
+		write(toJSON(dataObj, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
+
+	
+
+	# Return DataFrame For Chaining
+	return(df)
 }
 
 ### Load Function Takes An Import File + Column List & Returns A DataFrame
@@ -342,7 +352,8 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
   return(list("mapped"=mappedTable, "unmapped" = unMappedData, "cde"=cbind(tcga_columns,columns,cde_ids, column_type)))
 }
 
-# Aggregate unmapped column names and classes into a single list  ------------------
+#---------------------------------------------------------
+# Aggregate unmapped column names and classes into a single list  
 appendList <- function (x, val) 
 {
     if(!is.list(x) && !is.list(val)) return(x)
@@ -354,50 +365,70 @@ appendList <- function (x, val)
     }
     x
 }
+#---------------------------------------------------------
+get.new.collection.index(dataset, dataType){
 
+	if(length(Manifest) == 0) return 1
 
+	dataObj <- subset(Manifest, dataset == dataset & dataType == dataType)
+	if(length(dataObj) == 0) return 1
+	
+	return (nrow(dataObj$collection) +1)
+
+}
+#---------------------------------------------------------
+add.new.collection(dataset, dataType, collection){
+
+	#TO DO: check that index doesnt already exist for compound key
+
+	dataObj <- subset(Manifest, dataset == dataset & dataType == dataType)
+	if(length(dataObj) == 1)	
+		Manifest[Manifest$dataset==dataset & Manifest$dataType ==dataType,"collection"] <- c(dataObj$collection, collection)
+	if(length(dataObj) == 0)	
+	Manifest <- rbind(Manifest, c(dataset, dataType, collection)
+	
+	stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), dataset, dataType))
+	
+}
+#---------------------------------------------------------
+mapProcess <- function(process){
+
+	processFound <-	sapply(os.dataset.enumerations$datatype, function(typeMap){ process %in% typeMap })
+	numMatches <- length(which(processFound))
+	if(numMatches==1)
+		return names(os.dataset.enumerations$datatype)[which(processFound)]
+
+	stop(printf("mapProcess found %d matches for process %s", numMatches, process))
+	return(NA)
+}
+#---------------------------------------------------------
 ### Batch Is Used To Process Multiple TCGA Files Defined 
-os.data.batch <- function(inputFile, ...){
+os.data.batch <- function(manifest, outputDirectory, ...){
            
     # Load Input File 
-    dataFiles <- fromJSON(inputFile)
-     
-     
-                        
+    datasets <- fromJSON(manifest)
+      
 		# Loop for each file to load
-		for (i in 1:nrow(dataFiles))
+		for (i in 1:nrow(datasets))
 		{
-			sourceObj <- dataFiles[i,]
-			stopifnot(all(c("disease", "source", "collections") %in% names(sourceObj)))
+			sourceObj <- datasets[i,]
+			stopifnot(all(c("dataset", "dataType", "collections") %in% names(sourceObj)))
+			cat(sourceObj$dataset, sourceObj$dataType,"\n")
 
-			currentDirectory <- sourceObj$inputDirectory
-			if(!grepl("/$", currentDirectory)) currentDirectory <- paste(currentDirectory, "/", sep="")
-
-			outputDirectory <- sourceObj$outputDirectory
 			collections <- sourceObj$collections[[1]]
-			sourceTokens <- c(sourceObj$disease, sourceObj$source)
-			
-			cat(sourceObj$disease, sourceObj$source,"\n")
 			
 			for(j in 1:nrow(collections)){
 
 				dataObj <- collections[j,]
-#				resultObj <- c(disease=sourceObj$disease, source=sourceObj$source, dataObj)
 
-				dataObj$disease <- sourceObj$disease;
-				dataObj$source <- sourceObj$source;
-				stopifnot(all(c("dataType", "inputFile") %in% names(dataObj)))
+				stopifnot(all(c("_id", "process", "directory", "file") %in% names(dataObj)))
 
-				currentFile <- dataObj$inputFile
-			
-				inputFile <- paste(currentDirectory, currentFile, sep = "")
+				inputDirectory <- dataObj$directory
+				if(!grepl("/$", inputDirectory)) inputDirectory <- paste(inputDirectory, "/", sep="")	
+				inputFile <- paste(inputDirectory, dataObj$file, sep = "")
 
-				tokens <- intersect(c("dataType", "process", "date"), names(dataObj))
-				dataTokens <- dataObj[tokens]
-				metaTokens <- c(sourceTokens, dataTokens)
-				outputFile <- paste(metaTokens, collapse="_")  
-
-				if(dataObj$dataType %in%  c("cnv", "mutation01")){
+				dataType <- mapProcess(dataObj$process)
+				if(dataType %in%  c("cnv","mut01")){
 					# Load Data Frame - map and filter by named columns
 					result <- os.data.load.molecular( inputFile = inputFile, ...)
 
@@ -407,36 +438,45 @@ os.data.batch <- function(inputFile, ...){
 					dataObj$rows <- list(result$rows); dataObj$cols <- list(result$cols);
 					dataObj$data <- list(result$data)
 				}
-				if(dataObj$dataType %in%  c("clinical")){
+				if(dataType %in%  c("clinical")){
 					# Load Data Frame - map and filter by named columns
 					result <- os.data.load.clinical( inputFile = inputFile, ...)
 
 					dataObj$data <- list(result$data)
 				}
 
+				index <- get.new.collection.index(dataset, dataType)
+				outputFile <- paste(dataset, dataType, index, process , sep="_")
+				parent <- c(sourceObj$dataset, sourceObj$dataType, dataObj$_id)
 
-	#          	metaData <- list("directory"=currentDirectory, "file"=currentTable, "data"=result$metaData)
+	          	newCollection <- data.frame(_id=index,
+	          								process=process,
+	          								date = date,
+	          								parent = parent,
+	          								directory= outputDirectory,
+	          								file=outputFile)
 
+				add.new.collection(dataset, dataType, newCollection)
+				
 				# Save Data Frame
 				os.data.save(
 						df = dataObj,
-						directory = outputDirectory,
-						file = outputFile,
+						directory=directory,
+						file= outputFile,
 						format = "JSON") 
-
-			
-				# Remove Df From Memory
-				rm(df)
 			}
 		}    
 }
 
 
 # Run Block  -------------------------------------------------------
-#os.data.batch(  inputFile = paste("../manifests",os.molecular.ucsc.batch.inputFile, sep="/"))
+os.data.batch(  manifest = paste("../manifests",os.molecular.ucsc.batch.inputFile, sep="/"), 
+				outputDirectory = outputDir_molecular
+			 )
 
-os.data.batch(
-  inputFile = paste("../manifests",os.clinical.tcga.batch.inputFile, sep="/"),
+#os.data.batch(
+  manifest = paste("../manifests",os.clinical.tcga.batch.inputFile, sep="/"),
+  outputDirectory = outputDir_clinical
   checkEnumerations = FALSE,
   checkClassType = "os.class.tcgaCharacter")
 

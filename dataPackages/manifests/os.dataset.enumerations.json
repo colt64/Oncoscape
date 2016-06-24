@@ -1,0 +1,8 @@
+{
+	"dataset": ["lgg", "gbm", "luad"],
+	"datatype": [
+		{"cnv": ["gistic2thd"]},
+		{"mut01": ["mutation", "mutationBroadGene", "mutationCuratedWustlGene", "mutationBcmGene"]},
+		{"clinical": ["patient", "drug", "radiation", "other_malignancy"]}
+	]
+}

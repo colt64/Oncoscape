@@ -16,8 +16,10 @@ library(jsonlite)
 rm(list = ls(all = TRUE))
 options(stringsAsFactors = FALSE)
 
-os.molecular.ucsc.batch.inputFile    <- "os.tcga.ucsc.filename.manifest.json"
-os.clinical.tcga.batch.inputFile    <- "os.tcga.clinical.filename.manifest.json"
+os.molecular.ucsc.batch   <- fromJSON("../manifests/os.ucsc.molecular.manifest.json")
+os.clinical.tcga.batch    <- fromJSON("../manifests/os.tcga.clinical.manifest.json")
+#Manifest <- rbind(os.molecular.ucsc.batch, os.clinical.tcga.batch)
+Manifest <- data.frame()
 
 outputDir_molecular <- "../data/molecular/clean/"
 outputDir_clinical  <- "../data/clinical/clean/"
@@ -26,10 +28,8 @@ os.tcga.field.enumerations  <- fromJSON(paste("../manifests","os.tcga.field.enum
 os.tcga.column.enumerations <- fromJSON(paste("../manifests","os.tcga.column.enumerations.json", sep="/"))
 os.dataset.enumerations     <- fromJSON(paste("../manifests","os.dataset.enumerations.json"    , sep="/"))
 
-date <- System.Date(format="%Y-%m-%d")
+date <- Sys.Date()
 process <- "import"
-
-Manifest <- data.frame()
 
 # Class Definitions :: Enumerations -------------------------------------------------------
 os.enum.na <- c("", "NA", "[NOTAVAILABLE]","[UNKNOWN]","[NOT AVAILABLE]","[NOT EVALUATED]","UKNOWN","[DISCREPANCY]",
@@ -227,8 +227,8 @@ os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", 
 		dir.create(file.path(directory), recursive=TRUE)
 
 	if(!grepl("/$", directory)) directory <- paste(directory, "/", sep="")
-		outFile = paste(directory, file, sep="")
-
+	
+	outFile = paste(directory, file, sep="")
 
 	# Write Tab Delimited
 	if("tsv" %in% format)
@@ -244,7 +244,7 @@ os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", 
 
 	# Write JSON File
 	if("JSON" %in% format)
-		write(toJSON(dataObj, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
+		write(toJSON(df, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
 
 	
 
@@ -366,37 +366,46 @@ appendList <- function (x, val)
     x
 }
 #---------------------------------------------------------
-get.new.collection.index(dataset, dataType){
+get.new.collection.index <- function(datasetName, dataTypeName){
 
-	if(length(Manifest) == 0) return 1
+	if(nrow(Manifest) == 0) return(1)
 
-	dataObj <- subset(Manifest, dataset == dataset & dataType == dataType)
-	if(length(dataObj) == 0) return 1
+	dataObj <- subset(Manifest, dataset == datasetName && dataType == dataTypeName)
+	if(nrow(dataObj) == 0) return(1)
 	
-	return (nrow(dataObj$collection) +1)
-
+	return(nrow(dataObj$collection) +1)
 }
 #---------------------------------------------------------
-add.new.collection(dataset, dataType, collection){
+add.new.collection <- function(Manifest, datasetName, dataTypeName, collection){
 
-	#TO DO: check that index doesnt already exist for compound key
+  if(nrow(Manifest) == 0){	
+    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
+    newCollection$collections <- list(collection)
+    Manifest <- newCollection
+    return(Manifest)
+  }
 
-	dataObj <- subset(Manifest, dataset == dataset & dataType == dataType)
-	if(length(dataObj) == 1)	
-		Manifest[Manifest$dataset==dataset & Manifest$dataType ==dataType,"collection"] <- c(dataObj$collection, collection)
-	if(length(dataObj) == 0)	
-	Manifest <- rbind(Manifest, c(dataset, dataType, collection)
-	
-	stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), dataset, dataType))
+  dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
+	if(nrow(dataObj) == 1){
+		Manifest[Manifest$dataset==datasetName & Manifest$dataType ==dataTypeName,"collection"] <- c(dataObj$collection, collection)
+	  return(Manifest) 
+	}
+	if(nrow(dataObj) == 0){	
+	   newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
+	   newCollection$collections <- list(collection)
+	   Manifest <- rbind(Manifest, newCollection)
+	   return(Manifest)
+	}
+	stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), datasetName, dataTypeName))
 	
 }
 #---------------------------------------------------------
 mapProcess <- function(process){
-
-	processFound <-	sapply(os.dataset.enumerations$datatype, function(typeMap){ process %in% typeMap })
+  
+	processFound <-	sapply(os.dataset.enumerations$dataType, function(typeMap){ process %in% unlist(typeMap) })
 	numMatches <- length(which(processFound))
 	if(numMatches==1)
-		return names(os.dataset.enumerations$datatype)[which(processFound)]
+		return (names(os.dataset.enumerations$dataType)[which(processFound)])
 
 	stop(printf("mapProcess found %d matches for process %s", numMatches, process))
 	return(NA)
@@ -405,8 +414,8 @@ mapProcess <- function(process){
 ### Batch Is Used To Process Multiple TCGA Files Defined 
 os.data.batch <- function(manifest, outputDirectory, ...){
            
-    # Load Input File 
-    datasets <- fromJSON(manifest)
+    # From Input File: dataframe of datasets, datatypes and list of collections
+    datasets <- manifest
       
 		# Loop for each file to load
 		for (i in 1:nrow(datasets))
@@ -415,69 +424,78 @@ os.data.batch <- function(manifest, outputDirectory, ...){
 			stopifnot(all(c("dataset", "dataType", "collections") %in% names(sourceObj)))
 			cat(sourceObj$dataset, sourceObj$dataType,"\n")
 
+			dataset <- sourceObj$dataset
 			collections <- sourceObj$collections[[1]]
 			
 			for(j in 1:nrow(collections)){
 
 				dataObj <- collections[j,]
-
-				stopifnot(all(c("_id", "process", "directory", "file") %in% names(dataObj)))
-
+				stopifnot(all(c("id", "process", "directory", "file") %in% names(dataObj)))
+				
 				inputDirectory <- dataObj$directory
 				if(!grepl("/$", inputDirectory)) inputDirectory <- paste(inputDirectory, "/", sep="")	
 				inputFile <- paste(inputDirectory, dataObj$file, sep = "")
 
 				dataType <- mapProcess(dataObj$process)
+				resultObj <- data.frame(dataset = sourceObj$dataset, dataType = dataType)
+				
 				if(dataType %in%  c("cnv","mut01")){
 					# Load Data Frame - map and filter by named columns
 					result <- os.data.load.molecular( inputFile = inputFile, ...)
 
 					result$data <- apply(result$data, 2, as.integer)
 
-					dataObj$rowType <- result$rowType; dataObj$colType <- result$colType;
-					dataObj$rows <- list(result$rows); dataObj$cols <- list(result$cols);
-					dataObj$data <- list(result$data)
+					resultObj$rowType <- result$rowType; resultObj$colType <- result$colType;
+					resultObj$rows <- list(result$rows); resultObj$cols <- list(result$cols);
+					resultObj$data <- list(result$data)
 				}
 				if(dataType %in%  c("clinical")){
 					# Load Data Frame - map and filter by named columns
 					result <- os.data.load.clinical( inputFile = inputFile, ...)
 
-					dataObj$data <- list(result$data)
+					resultObj$data <- list(result$data)
 				}
 
 				index <- get.new.collection.index(dataset, dataType)
+				resultObj$id <- index
 				outputFile <- paste(dataset, dataType, index, process , sep="_")
-				parent <- c(sourceObj$dataset, sourceObj$dataType, dataObj$_id)
+				parent <- list(c(sourceObj$dataset, sourceObj$dataType, dataObj$id))
 
-	          	newCollection <- data.frame(_id=index,
+	      newCollection <- data.frame(id=index,
 	          								process=process,
 	          								date = date,
-	          								parent = parent,
 	          								directory= outputDirectory,
 	          								file=outputFile)
-
-				add.new.collection(dataset, dataType, newCollection)
+        newCollection$parent <- parent
+				Manifest <- add.new.collection(Manifest, dataset, dataType, newCollection)
 				
 				# Save Data Frame
 				os.data.save(
-						df = dataObj,
-						directory=directory,
+						df = resultObj,
+						directory=outputDirectory,
 						file= outputFile,
 						format = "JSON") 
-			}
-		}    
+
+		   }  # collection
+		}  # dataset
+    return(Manifest)
 }
 
 
 # Run Block  -------------------------------------------------------
-os.data.batch(  manifest = paste("../manifests",os.molecular.ucsc.batch.inputFile, sep="/"), 
-				outputDirectory = outputDir_molecular
+Manifest <- os.data.batch(  manifest = os.molecular.ucsc.batch, 
+				        outputDirectory = outputDir_molecular
 			 )
 
 #os.data.batch(
-  manifest = paste("../manifests",os.clinical.tcga.batch.inputFile, sep="/"),
-  outputDirectory = outputDir_clinical
-  checkEnumerations = FALSE,
-  checkClassType = "os.class.tcgaCharacter")
+#  manifest = os.clinical.tcga.batch,
+#  outputDirectory = outputDir_clinical,
+#  checkEnumerations = FALSE,
+#  checkClassType = "os.class.tcgaCharacter")
 
 
+os.data.save(
+  df = Manifest,
+  directory="../manifests",
+  file= paste("unified_manifest_", process, date, sep="_"),
+  format = "JSON") 

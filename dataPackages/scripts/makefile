@@ -17,7 +17,7 @@
 
 #-----  Create Files
 
-writeTCGAfiles:
+import:
 	Rscript tcga.import.R
 		# - reads ucsc.filename.manifest
 		# - writes mol collections metatable
@@ -33,7 +33,7 @@ saveGenomicCoordinates:
 #----- Calculate Values
 
 mds:
-	Rscript networks.calculate.mds.edges.R mds
+	Rscript networks.calculate.mds.edges.R cnvsnv
 		# hobo MDS
 edges:
 	Rscript networks.calculate.mds.edges.R mds edges

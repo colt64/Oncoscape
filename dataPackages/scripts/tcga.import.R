@@ -367,37 +367,37 @@ appendList <- function (x, val)
 }
 #---------------------------------------------------------
 get.new.collection.index <- function(datasetName, dataTypeName){
-
-	if(nrow(Manifest) == 0) return(1)
-
-	dataObj <- subset(Manifest, dataset == datasetName && dataType == dataTypeName)
-	if(nrow(dataObj) == 0) return(1)
-	
-	return(nrow(dataObj$collection) +1)
+  
+  if(nrow(Manifest) == 0) return(1)
+  
+  dataObj <- subset(Manifest, dataset == datasetName && dataType == dataTypeName)
+  if(nrow(dataObj) == 0) return(1)
+  
+  return(nrow(dataObj$collections[[1]]) +1)
 }
 #---------------------------------------------------------
-add.new.collection <- function(Manifest, datasetName, dataTypeName, collection){
-
+add.new.collection <- function(datasetName, dataTypeName, collection){
+  
   if(nrow(Manifest) == 0){	
     newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
     newCollection$collections <- list(collection)
-    Manifest <- newCollection
-    return(Manifest)
+    Manifest <<- newCollection
+    return()
   }
-
+  
   dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
-	if(nrow(dataObj) == 1){
-		Manifest[Manifest$dataset==datasetName & Manifest$dataType ==dataTypeName,"collection"] <- c(dataObj$collection, collection)
-	  return(Manifest) 
-	}
-	if(nrow(dataObj) == 0){	
-	   newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
-	   newCollection$collections <- list(collection)
-	   Manifest <- rbind(Manifest, newCollection)
-	   return(Manifest)
-	}
-	stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), datasetName, dataTypeName))
-	
+  if(nrow(dataObj) == 1){
+    Manifest[Manifest$dataset==datasetName & Manifest$dataType ==dataTypeName,"collections"] <<- list(rbind(dataObj$collections[[1]],collection))
+    return()
+  }
+  if(nrow(dataObj) == 0){	
+    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
+    newCollection$collections <- list(collection)
+    Manifest <<- rbind(Manifest, newCollection)
+    return()
+  }
+  stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), datasetName, dataTypeName))
+  
 }
 #---------------------------------------------------------
 mapProcess <- function(process){
@@ -467,7 +467,7 @@ os.data.batch <- function(manifest, outputDirectory, ...){
 	          								directory= outputDirectory,
 	          								file=outputFile)
         newCollection$parent <- parent
-				Manifest <- add.new.collection(Manifest, dataset, dataType, newCollection)
+				Manifest <- add.new.collection(dataset, dataType, newCollection)
 				
 				# Save Data Frame
 				os.data.save(
@@ -497,5 +497,5 @@ Manifest <- os.data.batch(  manifest = os.molecular.ucsc.batch,
 os.data.save(
   df = Manifest,
   directory="../manifests",
-  file= paste("unified_manifest_", process, date, sep="_"),
+  file= paste("os", process, date,"manifest", sep="."),
   format = "JSON") 

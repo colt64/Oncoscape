@@ -24,7 +24,7 @@ import:
 		# - writes UCSC molecular data json
 		# - TO DO: cbio
 
-saveGenomicCoordinates:
+mapCoordinates:
 	Rscript hg19.save.genomic.coordinates.R
 		# genomic coordinates
 

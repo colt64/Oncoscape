@@ -1,4 +1,3 @@
-
 [
   {
     "dataset": "hg19",
@@ -10,45 +9,24 @@
         "date": "2016-06-24",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_1_position-min-abs-start",
-        "parent": "NA"
-      },{
-        "id": 2,
-        "process": ["scaled10k"],
-        "date": "2016-06-24",
-        "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_1_scaled10k",
-        "parent": ["hg19", "genes", "1"]
-      },
-      {
-        "id": 5,
-        "process": ["scaled10k", "oncoVogel274"],
-        "date": "2016-06-24",
-        "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_1_scaled10k-oncoVogel274",
-        "parent": ["hg19", "genes", "1"]
-      }
-    ]
-  },{
+        "parent": [null]
+      }    ]
+  },
+  {
     "dataset": "hg19",
     "dataType": "chromosome",
     "collections": [
       {
         "id": 1,
-        "process": "length",
+        "process": ["length"],
         "date": "2016-06-24",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_chromosome_1_length",
-        "parent": "NA"
-      },{
-        "id": 2,
-        "process": "scaled10k",
-        "date": "2016-06-24",
-        "directory": "../data/molecular/hg19/",
-        "file": "hg19_chromosome_2_scaled10k",
-        "parent": [["hg19", "chromosome", 1], ["hg19", "centromere", 1]]
+        "parent": [null]
       }
     ]
-  },{
+  },
+  {
     "dataset": "hg19",
     "dataType": "centromere",
     "collections": [
@@ -57,11 +35,11 @@
         "process": "position",
         "date": "2016-06-24",
         "directory": "../data/molecular/hg19/",
-        "file": "hg19_centromere_1_position",
-        "parent": "NA"
+        "file": "hg19_centromere_1_position"
       }
     ]
-  },{
+  },
+  {
     "dataset": "hg19",
     "dataType": "genesets",
     "collections": [
@@ -70,10 +48,8 @@
         "process": "hgnc",
         "date": "2016-06-24",
         "directory": "../data/molecular/hg19/",
-        "file": "hg19_genesets_1_hgnc",
-        "parent": "NA"
+        "file": "hg19_genesets_1_hgnc"
       }
     ]
   }
 ]
-

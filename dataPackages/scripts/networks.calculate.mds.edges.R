@@ -1,11 +1,14 @@
 library(org.Hs.eg.db)
 library(jsonlite)
 
+rm(list = ls(all = TRUE))
+options(stringsAsFactors = FALSE)
+
 printf = function (...) print (noquote (sprintf (...)))
 options(stringsAsFactors=FALSE)
 
-#commands <- c("mds", "edges")
-commands <- c("edges")
+commands <- c("mds", "edges")
+#commands <- c("edges")
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0)
 	commands <- args
@@ -14,13 +17,12 @@ if(length(args) != 0)
 
 molecular_manifest <- "../manifests/os.import.2016-06-24.manifest.json"
 
-network_output_directory <- "../data/molecular/edges"
-mds_output_directory <- "../data/molecular/mds"
+network_output_directory <- "../data/molecular/edges/"
+mds_output_directory <- "../data/molecular/mds/"
 
-geneset_file <- "../data/molecular/hg19/genesets_by_symbol.json"
+geneset_file <- "../data/molecular/hg19/hg19_genesets_1_hgnc.json"
 genesets <- fromJSON(geneset_file)
 
-Manifest <- data.frame()
 date <- Sys.Date()
 
 #----------------------------------------------------------------------------------------------------
@@ -56,8 +58,6 @@ os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", 
   if("JSON" %in% format)
   write(toJSON(df, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
   
-  # Return DataFrame For Chaining
-  return(df)
 }
 
 #----------------------------------------------------------------------------------------------------
@@ -120,10 +120,13 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA, copy
 #----------------------------------------------------------------------------------------------------
 run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_directory="./"){
 
+  Manifest <- data.frame()
+  
   # Load Input File 
   datasets <- fromJSON(manifest_file)
   dataType <- "mds"
-  process <- c("mds", "cnv", "mut01")
+  process <- list("calculation"="mds", "input"=c( "cnv", "mut01"), "geneset"= geneset_name)
+  processName <- paste(unlist(process), collapse="-")
 
   gistic.scores <-c(-2,-1,1, 2)
   goi = getGeneSet(geneset_name)
@@ -145,6 +148,8 @@ run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_
 			} else if(datasetName == "luad"){ regex = "TCGA-(17)^-\\d{4}-01$" }
 
 			if(datasetName == "brca" | datasetName == "brain")  threshold = -1e-04
+      
+      process$regex=regex; process$threshold=threshold
 
 			## ----- MDS on All Combinations of CNV and MUT Tables ------
 			for(i in 1:nrow(cnvTables)){
@@ -175,14 +180,13 @@ run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_
 					}
    					
 					## ----- Save  ------
-	   			index <- get.new.collection.index(datasetName, dataType)
-	   			processName <- paste(c(process,geneset_name),collapse="-")
+	   			index <- get.new.collection.index(Manifest, datasetName, dataType)
 	   			outputFile <- paste(datasetName, dataType, index, processName, sep="_")
 	   			parent <- list(c(datasetName, "cnv", cnv.index),c(datasetName, "mut01", mut.index))
 	   			collection <- data.frame(id=index, date=date, directory=output_directory, file=outputFile)
-	   			collection$process <- list(c(process,geneset_name))
+	   			collection$process <- list(process)
 	   			collection$parent <- list(parent)
-	   			add.new.collection(datasetName, dataType, collection)
+	   			Manifest <- add.new.collection(Manifest, datasetName, dataType, collection)
 	   			
 					mds.list<- lapply(rownames(sample_similarity), function(name) data.frame(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
 					names(mds.list) <- rownames(sample_similarity)
@@ -191,38 +195,40 @@ run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_
 				} # mut files
 			} #cnv files
 		} # for diseaseName	
+  
+  return(Manifest)
 }
 #---------------------------------------------------------
-get.new.collection.index <- function(datasetName, dataTypeName){
+get.new.collection.index <- function(Manifest, datasetName, dataTypeName){
   
   if(nrow(Manifest) == 0) return(1)
   
-  dataObj <- subset(Manifest, dataset == datasetName && dataType == dataTypeName)
+  dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
   if(nrow(dataObj) == 0) return(1)
   
   return(nrow(dataObj$collections[[1]]) +1)
 }
 #---------------------------------------------------------
-add.new.collection <- function(datasetName, dataTypeName, collection){
+add.new.collection <- function(Manifest, datasetName, dataTypeName, collection){
   
   if(nrow(Manifest) == 0){	
     newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
     newCollection$collections <- list(collection)
-    Manifest <<- newCollection
-    return()
+    Manifest <- newCollection
+    return(Manifest)
   }
   
   dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
   if(nrow(dataObj) == 1){
     newCollection <- list(rbind(dataObj$collections[[1]],collection))
-    Manifest[Manifest$dataset==datasetName & Manifest$dataType ==dataTypeName,"collections"] <<- list(newCollection)
-    return()
+    Manifest[Manifest$dataset==datasetName & Manifest$dataType ==dataTypeName,"collections"] <- list(newCollection)
+    return(Manifest)
   }
   if(nrow(dataObj) == 0){	
     newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
     newCollection$collections <- list(collection)
-    Manifest <<- rbind(Manifest, newCollection)
-    return()
+    Manifest <- rbind(Manifest, newCollection)
+    return(Manifest)
   }
   stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), datasetName, dataTypeName))
   
@@ -296,7 +302,7 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
     datasets <- fromJSON(manifest_file)
     dataType <- "network"
 
-    newManifest <-data.frame()
+    Manifest <-data.frame()
 
     # Loop for each dataset
     datasetNames <- unique(datasets$dataset)
@@ -321,13 +327,15 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 				    collection <- cnvTables[i,"collections"][[1]]
 					  newEdges <- get.edgePairs(collection, genesetName, edgeTypes=list("-2"="-2", "-1"="-1", "1"="1", "2"="2"))
 
-					  index <- get.new.collection.index(datasetName, dataType)
+					  index <- get.new.collection.index(Manifest, datasetName, dataType)
 					  edgeFiles <- save.edge.files(newEdges,output_directory, datasetName, dataType,index, genesetName)
-					  parent <- list(c(datasetName, "cnv", index))
-					  newCollection <- data.frame(id=index, process="cnv", date=date,directory=output_directory)
+					  parent <- list(c(datasetName, "cnv", collection$id))
+					  process <- list(edgeType="cnv", geneset= genesetName); processName=paste(process, collapse="-")
+					  newCollection <- data.frame(id=index,date=date,directory=output_directory)
 					  newCollection$parent <- parent
+					  newCollection$process <- list(process)
 					  newCollection$file <- list(edgeFiles)
-					  add.new.collection(datasetName, dataType, newCollection)
+					  Manifest <- add.new.collection(Manifest, datasetName, dataType, newCollection)
 					  
 					  EdgeList$cnv[[as.character(index)]] <- newEdges
 				  }
@@ -339,13 +347,15 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 				  collection <- mutTables[i, "collections"][[1]]
 				  newEdges <- get.edgePairs(collection, genesetName, edgeTypes=list("0"="1"))
 				  
-				  index <- get.new.collection.index(datasetName, dataType)
+				  index <- get.new.collection.index(Manifest, datasetName, dataType)
 				  edgeFiles <- save.edge.files(newEdges,output_directory, datasetName, dataType,index, genesetName)
-				  parent <- list(c(datasetName, "mut", index))
-				  newCollection <- data.frame(id=index, process="mut01", date=date,directory=output_directory)
+				  parent <- list(c(datasetName, "mut", collection$id))
+				  process <- list(edgeType="mut01", geneset= genesetName); processName=paste(process, collapse="-")
+				  newCollection <- data.frame(id=index, date=date,directory=output_directory)
 				  newCollection$parent <- parent
+				  newCollection$process <- list(process)
 				  newCollection$file <- list(edgeFiles)
-				  add.new.collection(datasetName, dataType, newCollection)
+				  Manifest <- add.new.collection(Manifest, datasetName, dataType, newCollection)
 				  
 				  EdgeList$mut[[as.character(index)]] <- newEdges
 				}
@@ -353,8 +363,8 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 				# save all combinations of MUT & CNV edges
 				numCNV = length(EdgeList$cnv)
 				numMut = length(EdgeList$mut)
-				process <- c("cnv", "mut01", genesetName)
-				processName <- paste(process, collapse="-")
+				process <- list(edgeType=c("cnv", "mut01"), geneset= genesetName)
+				processName <- paste(unlist(process), collapse="-")
 				
 				for(k in 1:numCNV){
 					cnvEdges <- EdgeList$cnv[[k]]
@@ -364,14 +374,14 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 																	
 						allEdges <- rbind(cnvEdges, mutEdges)
 						#compIndex = (k+m)+((k-1)*numCNV)+m
-						index <- get.new.collection.index(datasetName, dataType)
+						index <- get.new.collection.index(Manifest, datasetName, dataType)
 						edgeFiles <- save.edge.files(allEdges, output_directory, datasetName, dataType, index=index, processName)
-						parent <- list(c(datasetName, "cnv", names(EdgeList$cnv)[k]),c(datasetName, "mut01", names(EdgeList$mut)[m]) )
+						parent <- list(c(datasetName, "network", names(EdgeList$cnv)[k]),c(datasetName, "network", names(EdgeList$mut)[m]) )
 						collection <- data.frame(id=index, date=date,directory=output_directory)
 						collection$parent <- list(parent)
 						collection$process <- list(process)
 						collection$file <- list(edgeFiles)
-						add.new.collection(datasetName, dataType, collection)
+						Manifest <- add.new.collection(Manifest, datasetName, dataType, collection)
 					}
 				}
 				
@@ -380,23 +390,32 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 			
  		} # for diseaseName	
 
+      return(Manifest)
 }
 
 
 #----------------------------------------------------------------------------------------------------
 
-if("mds" %in% commands)
-	run.batch.patient_similarity(molecular_manifest,geneset_name="oncoVogel274", output_directory = mds_output_directory)
+if("mds" %in% commands){
+	Manifest_mds <- run.batch.patient_similarity(molecular_manifest,geneset_name="oncoVogel274", output_directory = mds_output_directory)
 		# calculate patient similarity
 		# save json
+	os.data.save(
+	  df = Manifest_mds,
+	  directory="../manifests",
+	  file= paste("os","mds", date,"manifest", sep="."),
+	  format = "JSON") 
+}
 
-if("edges" %in% commands) 
-	run.batch.network_edges(molecular_manifest, output_directory=network_output_directory)
+if("edges" %in% commands){
+	Manifest_edges <- run.batch.network_edges(molecular_manifest, output_directory=network_output_directory)
 		# map edges for all patients between CNV/Mut and Geneset tables
+	os.data.save(
+	  df = Manifest_edges,
+	  directory="../manifests",
+	  file= paste("os","edges", date,"manifest", sep="."),
+	  format = "JSON") 
+	
+}
 
-os.data.save(
-  df = Manifest,
-  directory="../manifests",
-  file= paste("os","mds", "network", date,"manifest", sep="."),
-  format = "JSON") 
 

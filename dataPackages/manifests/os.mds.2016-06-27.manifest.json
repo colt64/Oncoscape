@@ -1,0 +1,278 @@
+[
+  {
+    "dataset": "brca",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": [".01$"],
+          "threshold": [-0.0001]
+        },
+        "parent": [
+          ["brca", "cnv", "1"],
+          ["brca", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "coadread",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "coadread_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": [".01$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["coadread", "cnv", "1"],
+          ["coadread", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "gbm",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "gbm_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": [".01$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["gbm", "cnv", "1"],
+          ["gbm", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "hnsc",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "hnsc_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": [".01$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["hnsc", "cnv", "1"],
+          ["hnsc", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "lgg",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "lgg_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": [".01$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["lgg", "cnv", "1"],
+          ["lgg", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "luad",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "luad_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": ["TCGA-(17)^-\\d{4}-01$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["luad", "cnv", "1"],
+          ["luad", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "lusc",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "lusc_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": [".01$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["lusc", "cnv", "1"],
+          ["lusc", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "prad",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "prad_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": [".01$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["prad", "cnv", "1"],
+          ["prad", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "paad",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "paad_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": [".01$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["paad", "cnv", "1"],
+          ["paad", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "blca",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "blca_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": [".01$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["blca", "cnv", "1"],
+          ["blca", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "laml",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "laml_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": ["-03$|-09$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["laml", "cnv", "1"],
+          ["laml", "mut01", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "lung",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-27",
+        "directory": "../data/molecular/mds/",
+        "file": "lung_mds_1_mds-cnv-mut01-oncoVogel274",
+        "process": {
+          "calculation": ["mds"],
+          "input": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"],
+          "regex": [".01$"],
+          "threshold": [null]
+        },
+        "parent": [
+          ["lung", "cnv", "1"],
+          ["lung", "mut01", "1"]
+        ]
+      }
+    ]
+  }
+]

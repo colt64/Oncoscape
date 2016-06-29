@@ -141,6 +141,7 @@ scaleSamplesToChromosomes <- function(mtx.xy, chrDim){
 		# make diagonal of drawing regions equal
 		
 	mtx.xy <- mtx.xy * scale
+	mtx.xy <- round(mtx.xy)
 
 	return(mtx.xy)
 }
@@ -238,6 +239,7 @@ run.batch.mds <- function(manifest,chrDim, scaleFactor=10000){
 				mtx <- t(sapply(ptList, function(id){ return(c(id$x, id$y))}))
 				colnames(mtx) <- c("x", "y")
 				mtx_scaled <- scaleSamplesToChromosomes(mtx, chrDim)
+				colnames(mtx_scaled) <- c("x", "y")
 				
 				index <- get.new.collection.index(manifest, datasetName, dataType)
 				process= c("scaled", scaleFactor);				processName <- paste(process, collapse="-")
@@ -303,5 +305,5 @@ if("mdsScaled" %in% commands){
 if("geneScaled" %in% commands) 
   Manifest_hg19<- run.batch.genesets(Manifest_hg19, scaleFactor)
 
-os.data.save(Manifest_hg19,"../manifests", "os.hg19.manifest", format="JSON")
-os.data.save(Manifest_mds,"../manifests", paste("os.mds.network", date, "manifest", sep="."), format="JSON")
+os.data.save(Manifest_hg19,"../manifests/", "os.hg19.manifest", format="JSON")
+os.data.save(Manifest_mds,"../manifests/", paste("os.mds.network", date, "manifest", sep="."), format="JSON")

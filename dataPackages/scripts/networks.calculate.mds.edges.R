@@ -7,8 +7,8 @@ options(stringsAsFactors = FALSE)
 printf = function (...) print (noquote (sprintf (...)))
 options(stringsAsFactors=FALSE)
 
-commands <- c("mds", "edges")
-#commands <- c("edges")
+#commands <- c("mds", "edges")
+commands <- c("edges")
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0)
 	commands <- args
@@ -258,7 +258,7 @@ get.network_edges <- function(mtx,samples, genes, edgeTypes){
   return(allEdges)
 }
 #----------------------------------------------------------------------------------------------------
-save.edge.files <- function(edgePairs, outputDirectory, datasetName, dataType, index, genesetName){
+save.edge.files <- function(edgePairs, outputDirectory, datasetName, dataType, index, process){
 
 	## get and save node degrees
 	node1_counts <- as.data.frame(table(edgePairs[,2]))  
@@ -267,9 +267,9 @@ save.edge.files <- function(edgePairs, outputDirectory, datasetName, dataType, i
 	node2_counts <- as.data.frame(table(edgePairs[,3]))  
 	colnames(node2_counts) <- NULL
 	
-	edgeFile <- paste("edges"     ,datasetName, dataType, index, genesetName, sep="_")
-	geneDegreeFile <- paste("geneDegree",datasetName, dataType, index, genesetName, sep="_")
-	ptDegreeFile <- paste("ptDegree"  ,datasetName, dataType, index, genesetName, sep="_")
+	edgeFile <- paste("edges"     ,datasetName, dataType, index, process, sep="_")
+	geneDegreeFile <- paste("geneDegree",datasetName, dataType, index, process, sep="_")
+	ptDegreeFile <- paste("ptDegree"  ,datasetName, dataType, index, process, sep="_")
 
 	os.data.save(edgePairs,    outputDirectory, edgeFile , format="JSON")
 	os.data.save(node1_counts, outputDirectory, geneDegreeFile , format="JSON")
@@ -328,9 +328,9 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 					  newEdges <- get.edgePairs(collection, genesetName, edgeTypes=list("-2"="-2", "-1"="-1", "1"="1", "2"="2"))
 
 					  index <- get.new.collection.index(Manifest, datasetName, dataType)
-					  edgeFiles <- save.edge.files(newEdges,output_directory, datasetName, dataType,index, genesetName)
 					  parent <- list(c(datasetName, "cnv", collection$id))
 					  process <- list(edgeType="cnv", geneset= genesetName); processName=paste(process, collapse="-")
+					  edgeFiles <- save.edge.files(newEdges,output_directory, datasetName, dataType,index, processName)
 					  newCollection <- data.frame(id=index,date=date,directory=output_directory)
 					  newCollection$parent <- parent
 					  newCollection$process <- list(process)
@@ -348,9 +348,9 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 				  newEdges <- get.edgePairs(collection, genesetName, edgeTypes=list("0"="1"))
 				  
 				  index <- get.new.collection.index(Manifest, datasetName, dataType)
-				  edgeFiles <- save.edge.files(newEdges,output_directory, datasetName, dataType,index, genesetName)
 				  parent <- list(c(datasetName, "mut", collection$id))
 				  process <- list(edgeType="mut01", geneset= genesetName); processName=paste(process, collapse="-")
+				  edgeFiles <- save.edge.files(newEdges,output_directory, datasetName, dataType,index, processName)
 				  newCollection <- data.frame(id=index, date=date,directory=output_directory)
 				  newCollection$parent <- parent
 				  newCollection$process <- list(process)

@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "drug",
+    "inputFile": "nationwidechildrens.org_clinical_drug_gbm.txt",
+    "disease": "gbm",
+    "source": "tcga",
+    "data": {}
+  }
+]

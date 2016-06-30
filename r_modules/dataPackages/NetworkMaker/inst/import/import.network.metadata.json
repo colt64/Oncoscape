@@ -1,0 +1,32 @@
+
+Abbreviation: "BRCA"
+PackageName: "TCGAbrca"
+sampleCalculation:
+	matrices: {type:cnv, source:ucsc, filter:-2,-1,1,2}, {type:mut, source:ucsc}
+	goi: OncoVogel
+	poi: NA
+connections:
+	cnv: -2,2
+	goi: OncoVogel
+networkFile: g.markers
+	
+
+
+Abbreviation: "LUAD"
+PackageName: "TCGAluad"
+
+Abbreviation: "PRAD"
+PackageName: "TCGAprad"
+
+Abbreviation: "LGG"
+PackageName: "TCGAlgg"
+
+Abbreviation: "GBM"
+PackageName: "TCGAgbm"
+
+Abbreviation: "PAAD"
+PackageName: "TCGApaad"
+
+Abbreviation: "COADREAD"
+PackageName: "TCGAcoadread"
+

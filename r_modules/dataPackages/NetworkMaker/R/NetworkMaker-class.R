@@ -12,11 +12,12 @@ options(stringsAsFactors = FALSE)
                          )
 
 #----------------------------------------------------------------------------------------------------
-setGeneric('calculateSampleSimilarityMatrix',  signature='obj', function(obj, samples=NA, genes=NA, copyNumberValues=c(-2, 2))
+setGeneric('calculateSampleSimilarityMatrix',  signature='obj', function(obj, samples=NA, genes=NA, copyNumberValues=c(-2, 2), threshold = NA)
                                                                 standardGeneric('calculateSampleSimilarityMatrix'))
 setGeneric('usePrecalculatedSampleSimilarityMatrix',  signature='obj', function(obj, filename)
                                                                 standardGeneric('usePrecalculatedSampleSimilarityMatrix'))
 setGeneric('getSimilarityMatrix',        signature='obj', function(obj) standardGeneric('getSimilarityMatrix'))
+setGeneric('get.filtered.sampleIDs',     signature='obj', function(obj, regex) standardGeneric('get.filtered.sampleIDs'))
 setGeneric('buildChromosomalTable',      signature='obj', function(obj, genes) standardGeneric('buildChromosomalTable'))
 setGeneric('getAlteredGeneNames',        signature='obj', function(obj) standardGeneric('getAlteredGeneNames'))
 setGeneric('getChromosomalInfo',         signature='obj', function(obj) standardGeneric('getChromosomalInfo'))
@@ -34,30 +35,30 @@ setGeneric('getChromosomeScreenCoordinates',  signature='obj', function(obj, xOr
 # constructor
 NetworkMaker <- function(dataPackage, samples=NA, genes=NA, verbose=FALSE)
 {
-  stopifnot("mtx.mut" %in% names(matrices(dataPackage)))
-  stopifnot("mtx.cn"  %in% names(matrices(dataPackage)))
-  mtx.mut <- matrices(dataPackage)[["mtx.mut"]]
-  mtx.cn <- matrices(dataPackage)[["mtx.cn"]]
+  stopifnot("mtx.ucsc.mut.01" %in% names(matrices(dataPackage)))
+  stopifnot("mtx.ucsc.cnv"  %in% names(matrices(dataPackage)))
+  mtx.mut <- t(matrices(dataPackage)[["mtx.ucsc.mut.01"]])
+  mtx.cn <- t(matrices(dataPackage)[["mtx.ucsc.cnv"]])
 #  mtx.splice <- matrices(dataPackage)[["mtx.splice"]]
   all.known.samples <- .allKnownSampleIDsCanonicalized(dataPackage)
 
   if(!all(is.na(samples))){
       recognized.samples <- intersect(samples, all.known.samples)
+      stopifnot(length(recognized.samples) > 2)
       if(verbose)
           warning(sprintf("%d of %d samples found in both mut and cn matrices",
                           length(recognized.samples), length(samples)))
       
          # allow for incoming samples like "TCGA.FG.A6J3" and matrices with rownames "TCGA.FG.A6J3.01"
-      mut.sample.indices <- as.integer(lapply(recognized.samples, function(s) grep(s, rownames(mtx.mut))))
-      mut.sample.indices <- mut.sample.indices[which(!is.na(mut.sample.indices))]
-      stopifnot(length(mut.sample.indices) >= 2)   # a bare minimum
-      mtx.mut <- mtx.mut[mut.sample.indices,]
+      mut.sample.rownames <- sapply(recognized.samples, function(s) grep(s, rownames(mtx.mut), value =T))
+      stopifnot(length(mut.sample.rownames) >= 2)   # a bare minimum
+      mtx.mut <- mtx.mut[mut.sample.rownames,]
 
-      cn.sample.indices <- as.integer(lapply(recognized.samples, function(s) grep(s, rownames(mtx.cn))))
-      cn.sample.indices <- cn.sample.indices[which(!is.na(cn.sample.indices))]
-      stopifnot(length(cn.sample.indices) >= 2)   # a bare minimum
-      mtx.cn <- mtx.cn[cn.sample.indices,]
-      } # samples specfied in constructor call
+      cn.sample.rownames <- as.integer(lapply(recognized.samples, function(s) grep(s, rownames(mtx.cn), value=T)))
+#      cn.sample.indices <- cn.sample.indices[which(!is.na(cn.sample.indices))]
+      stopifnot(length(cn.sample.rownames) >= 2)   # a bare minimum
+      mtx.cn <- mtx.cn[cn.sample.rownames,]
+  } # samples specfied in constructor call
 
   if(!all(is.na(genes))){
       recognized.genes <- intersect(genes, intersect(colnames(mtx.mut), colnames(mtx.cn)))
@@ -69,12 +70,24 @@ NetworkMaker <- function(dataPackage, samples=NA, genes=NA, verbose=FALSE)
       mtx.cn  <- mtx.cn[,recognized.genes]
       } # genes specfied in constructor call
 
-  #browser()
+  # original? only use samples with .01 extension (or .03 | .09 for AML)
   obj <- .NetworkMaker(pkg=dataPackage, mtx.mut=mtx.mut, mtx.cn=mtx.cn, state=new.env(parent=emptyenv()))
 
   obj
 
 } # NetworkMaker constructor
+#----------------------------------------------------------------------------------------------------
+setMethod("get.filtered.sampleIDs", "NetworkMaker",
+  function (obj, regex)
+{		
+		# keep only primary tumors
+		mut.samples <- grep(regex, rownames(obj@mtx.mut), value=TRUE)
+		cnv.samples <- grep(regex, rownames(obj@mtx.cn),  value=TRUE)
+
+		return (unique(c(mut.samples, cnv.samples)))			
+})
+
+#----------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------
 .allKnownSampleIDsCanonicalized <- function(pkg)
 {
@@ -102,28 +115,21 @@ setMethod("usePrecalculatedSampleSimilarityMatrix", "NetworkMaker",
 
 #----------------------------------------------------------------------------------------------------
 # samples and genes args are only for testing; in normal operation the full lists from
-setMethod("calcSimilarity", "NetworkMaker",
- function(obj, indicatorMatrix) {
+calcSimilarity <- function(indicatorMatrix) {
 	similarity=NULL
-	maxI <- dim(indicatorMatrix)[2]
-	for (i in 1:maxI) {
-		innerProd <- indicatorMatrix[,i] %*% indicatorMatrix[,-i]
-		innerProd[maxI] <- NA
-		if (i<maxI) {
-			innerProd[(i+1):maxI] <- innerProd[i:(maxI-1)]
-		}
-		innerProd[i] <- 1
-		similarity <- cbind(similarity, innerProd)
-	}
+	similarity <- apply(indicatorMatrix,2, function(ptCol){
+		ptCol %*% indicatorMatrix
+	})
+	diag(similarity) <- 1
 	rownames(similarity) <- colnames(indicatorMatrix)
 	colnames(similarity) <- colnames(indicatorMatrix)
 	return(similarity)
 }
 
-
+#----------------------------------------------------------------------------------------------------
 setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
 
-  function (obj, samples=NA, genes=NA, copyNumberValues=c(-2, 2)) {
+  function (obj, samples=NA, genes=NA, copyNumberValues=c(-2, 2), threshold=NA) {
 
      mut <- obj@mtx.mut
 
@@ -141,8 +147,15 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
         # mutation matrices indicate wildtype by what token?  "" or NA or "NA"?
         # until this is standardized and enforced check for each
 
-     mut.01 <- .mutationMatrixTo01Matrix(mut)
+		#remove any genes with NA in mutation
+		tmp <- apply(mut, 2, function(x) any(is.na(x)))
+		if(length(which(tmp))>0)
+			mut <- mut[,-which(tmp)]
 
+	  mut.01 <- t(mut)
+#     mut.01 <- .createIndicatorMatrix(mut)
+		# returns transposed matrix with genes as rows and patients as columns 
+		
      stopifnot(all(sort(unique(as.integer(mut.01))) == c(0,1)))
 
      cn <- obj@mtx.cn
@@ -157,23 +170,31 @@ setMethod("calculateSampleSimilarityMatrix", "NetworkMaker",
         }
 
     cn[!cn %in% copyNumberValues] <- 0
+    cn <- t(cn)
 
-        # we distinguish between copy number genes, and mutated genes:
-     colnames(cn) <-     paste(colnames(cn),     ".cn", sep="");
-     colnames(mut.01) <- paste(colnames(mut.01), ".mut", sep="");
+	similaritySNV <- calcSimilarity(as.matrix(mut.01))
+	similarityCNV <- calcSimilarity(as.matrix(cn))
 
-     all.genes   <- sort(unique(c(colnames(cn), colnames(mut.01))))
-     all.samples <- sort(unique(c(rownames(cn), rownames(mut.01))))
-     
-     mtx <- matrix(0, nrow=length(all.samples), ncol=length(all.genes), byrow=FALSE,
-                   dimnames<-list(all.samples, all.genes))
-     mtx[rownames(cn), colnames(cn)] <- cn
-     mtx[rownames(mut.01), colnames(mut.01)] <- mut.01
+	sharedSnvCnv <- intersect(rownames(similaritySNV), rownames(similarityCNV))
+	simSNV <- similaritySNV[sharedSnvCnv, sharedSnvCnv]
+	simCNV <- similarityCNV[sharedSnvCnv, sharedSnvCnv]
 
-     dmtx <- as.matrix(dist(mtx))
-     tbl.pos <- as.data.frame(cmdscale(dmtx, k=3))
-     colnames(tbl.pos) <- c("x", "y", "z")
-     rownames(tbl.pos) <- canonicalizePatientIDs(obj@pkg, rownames(tbl.pos))
+	SNV.CNV <- ((simSNV)/sum(simSNV)) + 
+			   ((simCNV)/sum(simCNV))
+
+	D <- as.dist(max(SNV.CNV) - SNV.CNV)
+	tbl.pos <- cmdscale(D, k=2) #MDS.SNV.CNV
+	colnames(tbl.pos) <- c("x", "y")
+	tbl.pos <- as.data.frame(tbl.pos)
+
+	if(!is.na(threshold)){
+    	outliers <- names(which(tbl.pos[,1]<threshold))
+		tbl.pos <- tbl.pos[setdiff(rownames(tbl.pos), outliers), ]
+	}
+
+#	 ptIDs <- canonicalizePatientIDs(obj@pkg, rownames(tbl.pos))
+#	 tbl.pos <- tbl.pos[!duplicated(ptIDs),]
+#     rownames(tbl.pos) <- ptIDs[!duplicated(ptIDs)]
      obj@state[["similarityMatrix"]] <- tbl.pos
      })
 
@@ -303,7 +324,10 @@ setMethod("getMutationGraph", "NetworkMaker",
 
     mut <- obj@mtx.mut
     samples <- rownames(mut)
-    if(!is.na(patients)){ samples <- samples[match(patients, canonicalizePatientIDs(obj@pkg, samples))]; samples <- samples[!is.na(samples)] }
+    if(!is.na(patients)){ 
+    	samples <- samples[match(patients, canonicalizePatientIDs(obj@pkg, samples))]; 
+    	samples <- samples[!is.na(samples)] 	
+    }
     stopifnot(samples > 0)
 
     if(is.na(genes)) genes <- colnames(mut)
@@ -313,7 +337,7 @@ setMethod("getMutationGraph", "NetworkMaker",
 
        # standardize the matrix to zeroes and ones, providing painless search
        # for non-null (not missing) values
-    mut.01 <- .mutationMatrixTo01Matrix(mut)
+    mut.01 <- mut
     indices <- which(mut.01 == 1)
     
     rows <- 1 + (indices - 1) %% nrow(mut.01)
@@ -349,7 +373,10 @@ setMethod("getCopyNumberGraph", "NetworkMaker",
 
     cn <- obj@mtx.cn
     samples <- rownames(cn)
-    if(!is.na(patients)){ samples <- samples[match(patients, canonicalizePatientIDs(obj@pkg, samples))]; samples <- samples[!is.na(samples)] }
+    if(!is.na(patients)){ 
+    	samples <- samples[match(patients, canonicalizePatientIDs(obj@pkg, samples))]; 
+    	samples <- samples[!is.na(samples)]
+    }
     stopifnot(samples > 0)
 
     if(is.na(genes)) genes <- colnames(cn)
@@ -379,7 +406,7 @@ setMethod("getCopyNumberGraph", "NetworkMaker",
     nodeDataDefaults(g, attr="nodeType")  <- "unassigned"
     
     edgeDataDefaults(g, attr="edgeType") <- "unassigned"
-    edgeDataDefaults(g, attr="subType") <- "unassigned"
+#    edgeDataDefaults(g, attr="subType") <- "unassigned"
 
     nodeData(g, all.nodes, "id") <- all.nodes
 
@@ -416,12 +443,12 @@ setMethod("getSimilarityScreenCoordinates", "NetworkMaker",
      ySpan <- yMax - yOrigin
 
      tbl.pos <- getSimilarityMatrix(obj)
-     #browser()
-     x.range <- range(tbl.pos$x)  # [1] -0.6168073  2.8896624
-     y.range <- range(tbl.pos$y)  # [1] -3.036395  1.003921
+
+#     x.range <- range(tbl.pos$x)  
+#     y.range <- range(tbl.pos$y)  
 
      x <- tbl.pos$x
-     x <- x - min(x)  #
+     x <- x - min(x)  
      x <- x/max(x)
      x <- (x * xSpan) - (xSpan/2)
      x <- x + xOrigin
@@ -633,6 +660,22 @@ chromosomeLocToCanvas <- function(tbl, yOrigin, yMax, spaceAroundCentromere=100)
    screen.x
 
 } # .calculate.screen.X
+#----------------------------------------------------------------------------------------------------
+# converts NA and blank strings "" to 0 and any other value to 1, returning a transposed matrix with genes in rows and patients in columns
+.createIndicatorMatrix <- function(mtx.mut)
+{
+     mtx.01 <- mtx.mut
+     
+     mtx.01[is.na(mtx.01)] <- 0
+     mtx.01[mtx.01 == ""] <- 0
+     mtx.01[nchar(mtx.01) >1] <- 1
+     
+     mtx.01 <- apply(mtx.01, 1, as.integer)
+     rownames(mtx.01) <- colnames(mtx.mut)
+
+	mtx.01
+	
+} # .createIndicatorMatrix
 #----------------------------------------------------------------------------------------------------
 .mutationMatrixTo01Matrix <- function(mtx.mut)
 {

@@ -21,7 +21,7 @@
         /** @ngInject */
         function HelpController() {
             var vm = this;
-        /*   vm.videos = [
+           vm.videos = [
                {
                     name: 'Oncoscape + Github',
                     desc: 'Description Lorum Ipsum eos et sid al accusamus et iusto odio',
@@ -43,7 +43,6 @@
                     img: ''
                }
            ]
-        */
         }
     }
 

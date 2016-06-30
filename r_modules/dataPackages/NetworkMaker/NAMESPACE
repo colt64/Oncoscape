@@ -6,12 +6,14 @@ exportMethods(
   getSimilarityMatrix,
   buildChromosomalTable,
   getChromosomalInfo,
+  get.filtered.sampleIDs,
   getSamplesGraph,
   getChromosomeGraph,
   getMutationGraph,
   getCopyNumberGraph,
   getSimilarityScreenCoordinates,
-  getChromosomeScreenCoordinates
+  getChromosomeScreenCoordinates,
+  get.filtered.sampleIDs
   )
 
 export(

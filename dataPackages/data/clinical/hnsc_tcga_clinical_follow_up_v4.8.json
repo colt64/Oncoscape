@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "follow_up_v4.8",
+    "inputFile": "nationwidechildrens.org_clinical_follow_up_v4.8_hnsc.txt",
+    "disease": "hnsc",
+    "source": "tcga",
+    "data": {}
+  }
+]

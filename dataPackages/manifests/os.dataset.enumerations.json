@@ -1,0 +1,8 @@
+{
+	"dataset": ["brca", "coadread", "hnsc", "lgg", "gbm", "luad", "lusc", "prad", "acc", "blca", "cesc", "chol", "dlbc", "esca", "laml","lung", "sarc", "stad"],
+	"dataType": [
+		{"cnv": ["gistic2thd"]},
+		{"mut01": ["mutation", "mutationBroadGene", "mutationCuratedWustlGene", "mutationBcmGene"]},
+		{"clinical": ["patient", "drug", "radiation", "other_malignancy"]}
+	]
+}

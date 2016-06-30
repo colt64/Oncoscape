@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "new_tumor",
+    "inputFile": "nationwidechildrens.org_clinical_nte_paad.txt",
+    "disease": "paad",
+    "source": "tcga",
+    "data": {}
+  }
+]

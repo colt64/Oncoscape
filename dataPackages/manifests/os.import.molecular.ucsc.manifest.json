@@ -1,0 +1,30 @@
+[
+  {
+    "dataset": "brca",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-30",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_cnv_1_import",
+        "parent": ["brca", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-30",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_mut01_1_import",
+        "parent": ["brca", "ucsc", "2"]
+      }
+    ]
+  }
+]

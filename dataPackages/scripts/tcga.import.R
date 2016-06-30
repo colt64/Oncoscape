@@ -16,6 +16,12 @@ library(jsonlite)
 rm(list = ls(all = TRUE))
 options(stringsAsFactors = FALSE)
 
+#commands <- c("molecular", "clinical")
+commands <- c("molecular")
+args = commandArgs(trailingOnly=TRUE)
+if(length(args) != 0)
+	commands <- args
+
 os.molecular.ucsc.batch   <- fromJSON("../manifests/os.ucsc.molecular.manifest.json")
 os.clinical.tcga.batch    <- fromJSON("../manifests/os.tcga.clinical.manifest.json")
 #Manifest <- rbind(os.molecular.ucsc.batch, os.clinical.tcga.batch)
@@ -483,19 +489,27 @@ os.data.batch <- function(manifest, outputDirectory, ...){
 
 
 # Run Block  -------------------------------------------------------
-Manifest <- os.data.batch(  manifest = os.molecular.ucsc.batch, 
-				        outputDirectory = outputDir_molecular
-			 )
 
-#os.data.batch(
-#  manifest = os.clinical.tcga.batch,
-#  outputDirectory = outputDir_clinical,
-#  checkEnumerations = FALSE,
-#  checkClassType = "os.class.tcgaCharacter")
+if("molecular" %in% commands){
+	Manifest <- os.data.batch(  manifest = os.molecular.ucsc.batch, 
+							outputDirectory = outputDir_molecular		 )
+	os.data.save(
+	  df = Manifest,
+	  directory="../manifests",
+	  file= "os.import.molecular.ucsc.manifest",
+	  format = "JSON") 
+}
+if("clinical" %in% commands){
+	Manifest <- os.data.batch(
+	  manifest = os.clinical.tcga.batch,
+	  outputDirectory = outputDir_clinical,
+	  checkEnumerations = FALSE,
+	  checkClassType = "os.class.tcgaCharacter")
 
+	os.data.save(
+	  df = Manifest,
+	  directory="../manifests",
+	  file= "os.import.clinical.tcga.manifest",
+	  format = "JSON") 
 
-os.data.save(
-  df = Manifest,
-  directory="../manifests",
-  file= paste("unified_manifest_", process, date, sep="_"),
-  format = "JSON") 
+}

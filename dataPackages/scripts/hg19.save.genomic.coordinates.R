@@ -2,10 +2,10 @@ library(org.Hs.eg.db)
 library(jsonlite)
 
 #--------------------------------- make plot data -----------------------------#
-directory <- "../molecular_data/hg19"
-chr_file <- "chromosome_lengths_hg19"
-gene_file <- "gene_symbol_min_abs_start_hg19"
-cent_file <- "centromere_position_hg19"
+directory <- "../data/molecular/hg19"
+chr_file <- "hg19_chromosome_1_length"
+gene_file <- "hg19_genes_1_position-min-abs-start"
+cent_file <- "hg19_centromere_1_position"
 cytoband_url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz"
 
 chromosomes <- c(seq(1:22), "X", "Y")

@@ -15,7 +15,7 @@ if(length(args) != 0)
 
 #--------------------------------- Configuration -----------------------------#
 
-molecular_manifest <- "../manifests/os.import.2016-06-24.manifest.json"
+molecular_manifest <- "../manifests/os.import.molecular.ucsc.manifest.json"
 
 network_output_directory <- "../data/molecular/edges/"
 mds_output_directory <- "../data/molecular/mds/"
@@ -403,7 +403,7 @@ if("mds" %in% commands){
 	os.data.save(
 	  df = Manifest_mds,
 	  directory="../manifests",
-	  file= paste("os","mds", date,"manifest", sep="."),
+	  file= paste("os","mds","manifest", sep="."),
 	  format = "JSON") 
 }
 
@@ -413,7 +413,7 @@ if("edges" %in% commands){
 	os.data.save(
 	  df = Manifest_edges,
 	  directory="../manifests",
-	  file= paste("os","edges", date,"manifest", sep="."),
+	  file= paste("os","edges","manifest", sep="."),
 	  format = "JSON") 
 	
 }

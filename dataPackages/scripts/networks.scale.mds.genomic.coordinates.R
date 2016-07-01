@@ -14,7 +14,7 @@ if(length(args) != 0)
 
 #--------------------------------------------------------------#
 
-mds_manifest_file <- "../manifests/os.mds.network.2016-06-27.manifest.json"
+mds_manifest_file <- "../manifests/os.mds.manifest.json"
 hg19_manifest_file <- "../manifests/os.hg19.manifest.json"
 
 mds_scaled_dir <- "../data/molecular/mds/scaled/"
@@ -305,5 +305,5 @@ if("mdsScaled" %in% commands){
 if("geneScaled" %in% commands) 
   Manifest_hg19<- run.batch.genesets(Manifest_hg19, scaleFactor)
 
-os.data.save(Manifest_hg19,"../manifests/", "os.hg19.manifest", format="JSON")
-os.data.save(Manifest_mds,"../manifests/", paste("os.mds.network", date, "manifest", sep="."), format="JSON")
+os.data.save(Manifest_hg19,"../manifests/", "os.hg19.scaled.manifest", format="JSON")
+os.data.save(Manifest_mds,"../manifests/", "os.mds.network.manifest", format="JSON")

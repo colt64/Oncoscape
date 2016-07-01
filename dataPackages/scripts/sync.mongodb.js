@@ -396,7 +396,7 @@ function calculate_metadata(){
 
 	insert_clinical_files(folder) 
 */
-	insert_molecular_files(comongo, folder = "/molecular/UCSC/")
+	insert_molecular_files( folder = "/molecular/UCSC/")
 
 /* 	pull_online_metadata()
 	build_collection_tree() 

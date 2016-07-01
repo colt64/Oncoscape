@@ -1,0 +1,152 @@
+[
+  {
+    "dataset": "brca",
+    "dataType": "network",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": ["brca", "cnv", "1"],
+        "process": {
+          "edgeType": ["cnv"],
+          "geneset": ["tcga.GBM.classifiers"]
+        },
+        "file": ["edges_brca_network_1_cnv-tcga.GBM.classifiers", "geneDegree_brca_network_1_cnv-tcga.GBM.classifiers", "ptDegree_brca_network_1_cnv-tcga.GBM.classifiers"]
+      },
+      {
+        "id": 2,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": ["brca", "mut", "1"],
+        "process": {
+          "edgeType": ["mut01"],
+          "geneset": ["tcga.GBM.classifiers"]
+        },
+        "file": ["edges_brca_network_2_mut01-tcga.GBM.classifiers", "geneDegree_brca_network_2_mut01-tcga.GBM.classifiers", "ptDegree_brca_network_2_mut01-tcga.GBM.classifiers"]
+      },
+      {
+        "id": 3,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": [
+          ["brca", "network", "1"],
+          ["brca", "network", "2"]
+        ],
+        "process": {
+          "edgeType": ["cnv", "mut01"],
+          "geneset": ["tcga.GBM.classifiers"]
+        },
+        "file": ["edges_brca_network_3_cnv-mut01-tcga.GBM.classifiers", "geneDegree_brca_network_3_cnv-mut01-tcga.GBM.classifiers", "ptDegree_brca_network_3_cnv-mut01-tcga.GBM.classifiers"]
+      },
+      {
+        "id": 4,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": ["brca", "cnv", "1"],
+        "process": {
+          "edgeType": ["cnv"],
+          "geneset": ["marker.genes.545"]
+        },
+        "file": ["edges_brca_network_4_cnv-marker.genes.545", "geneDegree_brca_network_4_cnv-marker.genes.545", "ptDegree_brca_network_4_cnv-marker.genes.545"]
+      },
+      {
+        "id": 5,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": ["brca", "mut", "1"],
+        "process": {
+          "edgeType": ["mut01"],
+          "geneset": ["marker.genes.545"]
+        },
+        "file": ["edges_brca_network_5_mut01-marker.genes.545", "geneDegree_brca_network_5_mut01-marker.genes.545", "ptDegree_brca_network_5_mut01-marker.genes.545"]
+      },
+      {
+        "id": 6,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": [
+          ["brca", "network", "4"],
+          ["brca", "network", "5"]
+        ],
+        "process": {
+          "edgeType": ["cnv", "mut01"],
+          "geneset": ["marker.genes.545"]
+        },
+        "file": ["edges_brca_network_6_cnv-mut01-marker.genes.545", "geneDegree_brca_network_6_cnv-mut01-marker.genes.545", "ptDegree_brca_network_6_cnv-mut01-marker.genes.545"]
+      },
+      {
+        "id": 7,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": ["brca", "cnv", "1"],
+        "process": {
+          "edgeType": ["cnv"],
+          "geneset": ["tcga.pancan.mutated"]
+        },
+        "file": ["edges_brca_network_7_cnv-tcga.pancan.mutated", "geneDegree_brca_network_7_cnv-tcga.pancan.mutated", "ptDegree_brca_network_7_cnv-tcga.pancan.mutated"]
+      },
+      {
+        "id": 8,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": ["brca", "mut", "1"],
+        "process": {
+          "edgeType": ["mut01"],
+          "geneset": ["tcga.pancan.mutated"]
+        },
+        "file": ["edges_brca_network_8_mut01-tcga.pancan.mutated", "geneDegree_brca_network_8_mut01-tcga.pancan.mutated", "ptDegree_brca_network_8_mut01-tcga.pancan.mutated"]
+      },
+      {
+        "id": 9,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": [
+          ["brca", "network", "7"],
+          ["brca", "network", "8"]
+        ],
+        "process": {
+          "edgeType": ["cnv", "mut01"],
+          "geneset": ["tcga.pancan.mutated"]
+        },
+        "file": ["edges_brca_network_9_cnv-mut01-tcga.pancan.mutated", "geneDegree_brca_network_9_cnv-mut01-tcga.pancan.mutated", "ptDegree_brca_network_9_cnv-mut01-tcga.pancan.mutated"]
+      },
+      {
+        "id": 10,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": ["brca", "cnv", "1"],
+        "process": {
+          "edgeType": ["cnv"],
+          "geneset": ["oncoVogel274"]
+        },
+        "file": ["edges_brca_network_10_cnv-oncoVogel274", "geneDegree_brca_network_10_cnv-oncoVogel274", "ptDegree_brca_network_10_cnv-oncoVogel274"]
+      },
+      {
+        "id": 11,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": ["brca", "mut", "1"],
+        "process": {
+          "edgeType": ["mut01"],
+          "geneset": ["oncoVogel274"]
+        },
+        "file": ["edges_brca_network_11_mut01-oncoVogel274", "geneDegree_brca_network_11_mut01-oncoVogel274", "ptDegree_brca_network_11_mut01-oncoVogel274"]
+      },
+      {
+        "id": 12,
+        "date": "2016-06-30",
+        "directory": "../data/molecular/edges/",
+        "parent": [
+          ["brca", "network", "10"],
+          ["brca", "network", "11"]
+        ],
+        "process": {
+          "edgeType": ["cnv", "mut01"],
+          "geneset": ["oncoVogel274"]
+        },
+        "file": ["edges_brca_network_12_cnv-mut01-oncoVogel274", "geneDegree_brca_network_12_cnv-mut01-oncoVogel274", "ptDegree_brca_network_12_cnv-mut01-oncoVogel274"]
+      }
+    ]
+  }
+]

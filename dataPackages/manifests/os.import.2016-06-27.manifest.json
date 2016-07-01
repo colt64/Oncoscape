@@ -1,0 +1,436 @@
+[
+  {
+    "dataset": "brca",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_cnv_1_import",
+        "parent": ["brca", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_mut01_1_import",
+        "parent": ["brca", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "coadread",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "coadread_cnv_1_import",
+        "parent": ["coadread", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "coadread",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "coadread_mut01_1_import",
+        "parent": ["coadread", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "gbm",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "gbm_cnv_1_import",
+        "parent": ["gbm", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "gbm",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "gbm_mut01_1_import",
+        "parent": ["gbm", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "hnsc",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "hnsc_cnv_1_import",
+        "parent": ["hnsc", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "hnsc",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "hnsc_mut01_1_import",
+        "parent": ["hnsc", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "lgg",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "lgg_cnv_1_import",
+        "parent": ["lgg", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "lgg",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "lgg_mut01_1_import",
+        "parent": ["lgg", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "luad",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "luad_cnv_1_import",
+        "parent": ["luad", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "luad",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "luad_mut01_1_import",
+        "parent": ["luad", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "lusc",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "lusc_cnv_1_import",
+        "parent": ["lusc", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "lusc",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "lusc_mut01_1_import",
+        "parent": ["lusc", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "prad",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "prad_cnv_1_import",
+        "parent": ["prad", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "prad",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "prad_mut01_1_import",
+        "parent": ["prad", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "paad",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "paad_cnv_1_import",
+        "parent": ["paad", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "paad",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "paad_mut01_1_import",
+        "parent": ["paad", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "acc",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "acc_cnv_1_import",
+        "parent": ["acc", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "blca",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "blca_cnv_1_import",
+        "parent": ["blca", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "blca",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "blca_mut01_1_import",
+        "parent": ["blca", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "cesc",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "cesc_cnv_1_import",
+        "parent": ["cesc", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "chol",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "chol_cnv_1_import",
+        "parent": ["chol", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "dlbc",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "dlbc_cnv_1_import",
+        "parent": ["dlbc", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "esca",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "esca_cnv_1_import",
+        "parent": ["esca", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "laml",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "laml_cnv_1_import",
+        "parent": ["laml", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "laml",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "laml_mut01_1_import",
+        "parent": ["laml", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "lung",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "lung_cnv_1_import",
+        "parent": ["lung", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "lung",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "lung_mut01_1_import",
+        "parent": ["lung", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "sarc",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "sarc_cnv_1_import",
+        "parent": ["sarc", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "stad",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "process": "import",
+        "date": "2016-06-27",
+        "directory": "../data/molecular/clean/",
+        "file": "stad_mut01_1_import",
+        "parent": ["stad", "ucsc", "1"]
+      }
+    ]
+  }
+]

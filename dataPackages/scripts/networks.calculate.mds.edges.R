@@ -7,13 +7,14 @@ options(stringsAsFactors = FALSE)
 printf = function (...) print (noquote (sprintf (...)))
 options(stringsAsFactors=FALSE)
 
-#commands <- c("mds", "edges")
-commands <- c("edges")
+commands <- c("mds", "edges")
+#commands <- c("edges")
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0)
 	commands <- args
 
 #--------------------------------- Configuration -----------------------------#
+
 
 molecular_manifest <- "../manifests/os.import.molecular.ucsc.manifest.json"
 
@@ -351,6 +352,7 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 				  parent <- list(c(datasetName, "mut", collection$id))
 				  process <- list(edgeType="mut01", geneset= genesetName); processName=paste(process, collapse="-")
 				  edgeFiles <- save.edge.files(newEdges,output_directory, datasetName, dataType,index, processName)
+
 				  newCollection <- data.frame(id=index, date=date,directory=output_directory)
 				  newCollection$parent <- parent
 				  newCollection$process <- list(process)

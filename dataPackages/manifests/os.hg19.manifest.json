@@ -10,8 +10,7 @@
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_1_position-min-abs-start",
         "parent": [null]
-      }
-    ]
+      }    ]
   },
   {
     "dataset": "hg19",

@@ -10,61 +10,6 @@
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_1_position-min-abs-start",
         "parent": [null]
-      },
-      {
-        "id": 2,
-        "process": ["scaled", "10000"],
-        "date": "2016-06-24",
-        "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_2_scaled-10000",
-        "parent": [
-          ["hg19", "genes", "1"],
-          [1]
-        ]
-      },
-      {
-        "id": 3,
-        "process": ["scaled", "10000", "tcga.GBM.classifiers"],
-        "date": "2016-06-24",
-        "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_3_scaled-10000-tcga.GBM.classifiers",
-        "parent": [
-          ["hg19", "genes", "2"],
-          ["hg19", "genesets", "1"]
-        ]
-      },
-      {
-        "id": 4,
-        "process": ["scaled", "10000", "marker.genes.545"],
-        "date": "2016-06-24",
-        "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_4_scaled-10000-marker.genes.545",
-        "parent": [
-          ["hg19", "genes", "2"],
-          ["hg19", "genesets", "1"]
-        ]
-      },
-      {
-        "id": 5,
-        "process": ["scaled", "10000", "tcga.pancan.mutated"],
-        "date": "2016-06-24",
-        "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_5_scaled-10000-tcga.pancan.mutated",
-        "parent": [
-          ["hg19", "genes", "2"],
-          ["hg19", "genesets", "1"]
-        ]
-      },
-      {
-        "id": 6,
-        "process": ["scaled", "10000", "oncoVogel274"],
-        "date": "2016-06-24",
-        "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_6_scaled-10000-oncoVogel274",
-        "parent": [
-          ["hg19", "genes", "2"],
-          ["hg19", "genesets", "1"]
-        ]
       }
     ]
   },
@@ -79,17 +24,6 @@
         "directory": "../data/molecular/hg19/",
         "file": "hg19_chromosome_1_length",
         "parent": [null]
-      },
-      {
-        "id": 2,
-        "process": ["scaled", "10000"],
-        "date": "2016-06-24",
-        "directory": "../data/molecular/hg19/",
-        "file": "hg19_chromosome_2_scaled-10000",
-        "parent": [
-          ["hg19", "chromosome", "1"],
-          ["hg19", "centromere", "1"]
-        ]
       }
     ]
   },

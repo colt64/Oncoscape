@@ -33,16 +33,16 @@ mapCoordinates:
 #----- Calculate Values
 
 mds:
-	Rscript networks.calculate.mds.edges.R cnvsnv
+	Rscript networks.calculate.mds.edges.R mds cnvsnv
 		# hobo MDS
 edges:
-	Rscript networks.calculate.mds.edges.R mds edges
+	Rscript networks.calculate.mds.edges.R edges
 		# edges
 
 scale10k:
-	Rscript networks.scale.mds.genomic.coordinates.R mdsScaled
+	Rscript networks.scale.mds.genomic.coordinates.R mdsScaled geneScaled chromosomeScaled
 		# MDS values scaled
-	Rscript networks.scale.mds.genomic.coordinates.R geneScaled
+		# geneset coordinates scaled
 		# genomic coordinates scaled
 		
 #----- Import into MongoDB

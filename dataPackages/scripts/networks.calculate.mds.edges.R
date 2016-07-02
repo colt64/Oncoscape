@@ -7,7 +7,8 @@ options(stringsAsFactors = FALSE)
 printf = function (...) print (noquote (sprintf (...)))
 options(stringsAsFactors=FALSE)
 
-commands <- c("mds", "edges")
+#commands <- c("mds", "edges")
+commands <- c("mds")
 #commands <- c("edges")
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0)
@@ -119,18 +120,152 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA, copy
 }
 
 #----------------------------------------------------------------------------------------------------
+save.pca<- function(Manifest, tbl, datasetName, dataType, geneset=NA, output_directory=output_directory, ...){
+
+#   mtx[is.na(mtx)] <- 0.0
+  	## ----- Configuration ------
+	process <- data.frame(calculation="prcomp", geneset= geneset)
+	process$input=dataType
+	processName <- paste(unlist(process), collapse="-")
+	process$center="TRUE"; process$scale="TRUE"
+
+	for(i in 1:nrow(tbl)){
+	  	collection <- tbl[i, "collections"][[1]]
+		tbl.json <- fromJSON(paste(collection$directory, collection$file,".json", sep="")) 
+		mtx <- tbl.json$data[[1]]
+		dimnames(mtx) <- list(tbl.json$rows[[1]], tbl.json$cols[[1]])
+		tbl.index <- tbl.json$id
+   
+		if(tbl.json$rowType == "gene")
+		  mtx <- t(mtx)
+		
+		column.sums <- colSums(mtx, na.rm=TRUE)
+		removers <- as.integer(which(column.sums == 0))
+		if(length(removers) > 0) {
+		   printf("removing %d columns", length(removers))
+		   mtx <- mtx[, -removers]
+		} # if removers
+
+		if(!is.na(geneset)){
+			genes <- getGeneSet(geneset)
+			mtx <- mtx[, intersect(colnames(mtx), genes)]
+		}
+   
+	   PCs <- tryCatch(
+		  prcomp(mtx,center=T,scale=T),
+		  error=function(error.message){
+			 print(error.message)
+			 stop("error with PCA calculation.  See R log");
+			 })
+   
+	   if(all(is.na(PCs)))
+		   stop("error with PCA calculation.  See R log");
+	
+	   parent <- list(c(datasetName, dataType, tbl.index))
+	   
+	   scores <- PCs$x
+     result <- list(dataset=datasetName, dataType="pcaScores", rowType="samples", colType="PC", rows=rownames(scores), cols=colnames(scores), data=scores)
+	   ## ----- Save  ------
+	   index <- get.new.collection.index(Manifest, datasetName, "pcaScores")
+	   outputFile <- paste(datasetName, "pcaScores", index, processName, sep="_")
+	   collection <- data.frame(id=index, date=as.character(date), directory=output_directory, file=outputFile)
+	   collection$process <- list(process)
+	   collection$parent <- list(parent)
+
+	   Manifest <- add.new.collection(Manifest, datasetName, "pcaScores", collection)
+	   os.data.save(result, output_directory, outputFile, format="JSON")
+	   
+	   loadings <- PCs$rotation
+	   result <- list(dataset=datasetName, dataType="pcaLoadings", rowType="genes", colType="PC", rows=rownames(loadings), cols=colnames(loadings), data=loadings)
+	   	## ----- Save  ------
+	   	index <- get.new.collection.index(Manifest, datasetName, "pcaLoadings")
+	   	outputFile <- paste(datasetName, "pcaLoadings", index, processName, sep="_")
+	   	collection <- data.frame(id=index, date=as.character(date), directory=output_directory, file=outputFile)
+	   	collection$process <- list(process)
+	   	collection$parent <- list(parent)
+	   
+	   	Manifest <- add.new.collection(Manifest, datasetName, "pcaLoadings", collection)
+	   	os.data.save(result, output_directory, outputFile, format="JSON")
+	   	
+	   	#importance <- summary(PCs)$importance   
+	   	
+	}# for each collection
+
+	return(Manifest)
+}
+
+
+#----------------------------------------------------------------------------------------------------
+save.mds.innerProduct <- function(Manifest,datasetName, tbl1, tbl2, tbl1Type, tbl2Type, geneset, output_directory=output_directory, ...){
+    ## ----- MDS on All Combinations of CNV and MUT Tables ------
+
+  	## ----- Configuration ------
+	genes = getGeneSet(geneset)
+  	dataType <- "mds"
+
+	regex = ".01$"; threshold = NA;
+	if(datasetName == "laml"){        regex = "-03$|-09$";
+	} else if(datasetName == "luad"){ regex = "TCGA-(17)^-\\d{4}-01$" }
+
+	if(datasetName == "brca" | datasetName == "brain")  threshold = -1e-04
+  
+  	process <- data.frame(calculation="mds", geneset= geneset)
+  	process$input=list( c(tbl1Type, tbl2Type))
+  	processName <- paste(unlist(process), collapse="-")
+  	process$regex=regex; process$threshold=threshold
+
+	for(i in 1:nrow(tbl1)){
+	  collection <- tbl1[i, "collections"][[1]]
+		cnv.json <- fromJSON(paste(collection$directory, collection$file,".json", sep="")) 
+		mtx.cnv <- cnv.json$data[[1]]
+		rownames(mtx.cnv) <- cnv.json$rows[[1]]; colnames(mtx.cnv) <- cnv.json$cols[[1]]
+		cnv.samples <- grep(regex, cnv.json$cols[[1]],  value=TRUE)
+		cnv.index <- collection$id
+
+		for(j in 1:nrow(tbl2)){
+		  collection <- tbl2[i, "collections"][[1]]
+		  mut.json <- fromJSON(paste(collection$directory, collection$file,".json", sep="")) 
+		  mtx.mut <- mut.json$data[[1]]
+			rownames(mtx.mut) <- mut.json$rows[[1]]; colnames(mtx.mut) <- mut.json$cols[[1]]
+			mut.samples <- grep(regex, mut.json$cols[[1]],  value=TRUE)
+			mut.index <-collection$id
+			
+			samples <- unique(cnv.samples, mut.samples)
+			sample_similarity <- calculateSampleSimilarityMatrix(
+									mtx.mut, mtx.cnv,samples=samples, ...)
+											 
+			if(!is.na(threshold)){
+				outliers <- names(which(sample_similarity[,1]<threshold))
+				sample_similarity <- sample_similarity[setdiff(rownames(sample_similarity), outliers), ]
+			}
+			
+			## ----- Save  ------
+		index <- get.new.collection.index(Manifest, datasetName, dataType)
+		outputFile <- paste(datasetName, dataType, index, processName, sep="_")
+		parent <- list(c(datasetName, tbl1Type, cnv.index),c(datasetName, tbl2Type, mut.index))
+		collection <- data.frame(id=index, date=date, directory=output_directory, file=outputFile)
+		collection$process <- list(process)
+		collection$parent <- list(parent)
+		Manifest <- add.new.collection(Manifest, datasetName, dataType, collection)
+		
+		mds.list<- lapply(rownames(sample_similarity), function(name) data.frame(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
+		names(mds.list) <- rownames(sample_similarity)
+		os.data.save(mds.list, output_directory, outputFile, format="JSON")
+
+		} # mut files
+	} #cnv files
+
+	return(Manifest)
+}
+
+
+#----------------------------------------------------------------------------------------------------
 run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_directory="./"){
 
   Manifest <- data.frame()
   
-  # Load Input File 
   datasets <- fromJSON(manifest_file)
-  dataType <- "mds"
-  process <- list("calculation"="mds", "input"=c( "cnv", "mut01"), "geneset"= geneset_name)
-  processName <- paste(unlist(process), collapse="-")
-
   gistic.scores <-c(-2,-1,1, 2)
-  goi = getGeneSet(geneset_name)
   
   # Loop for each dataset
   datasetNames <- unique(datasets$dataset)
@@ -143,59 +278,11 @@ run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_
       if(nrow(cnvTables)==0 | nrow(mutTables) ==0) next;
       cat(datasetName, "\n")		  
     
-			## ----- Configuration ------
-			regex = ".01$"; threshold = NA;
-			if(datasetName == "laml"){        regex = "-03$|-09$";
-			} else if(datasetName == "luad"){ regex = "TCGA-(17)^-\\d{4}-01$" }
+#	  Manifest <- save.mds.innerProduct(Manifest=Manifest, datasetName=datasetName, tbl1=cnvTables, tbl2=mutTables, tbl1Type="cnv", tbl2Type="mut01", 
+#	                                    copyNumberValues=gistic.scores, geneset = geneset_name, output_directory=output_directory)
+	  Manifest <- save.pca(Manifest=Manifest, tbl=cnvTables,datasetName=datasetName, dataType="cnv", geneset = geneset_name, output_directory=output_directory)
 
-			if(datasetName == "brca" | datasetName == "brain")  threshold = -1e-04
-      
-      process$regex=regex; process$threshold=threshold
-
-			## ----- MDS on All Combinations of CNV and MUT Tables ------
-			for(i in 1:nrow(cnvTables)){
-			  collection <- cnvTables[i, "collections"][[1]]
-				cnv.json <- fromJSON(paste(collection$directory, collection$file,".json", sep="")) 
-				mtx.cnv <- cnv.json$data[[1]]
-				rownames(mtx.cnv) <- cnv.json$rows[[1]]; colnames(mtx.cnv) <- cnv.json$cols[[1]]
-				cnv.samples <- grep(regex, cnv.json$cols[[1]],  value=TRUE)
-				cnv.index <- collection$id
-
-				for(j in 1:nrow(mutTables)){
-				  collection <- mutTables[i, "collections"][[1]]
-				  mut.json <- fromJSON(paste(collection$directory, collection$file,".json", sep="")) 
-				  mtx.mut <- mut.json$data[[1]]
-					rownames(mtx.mut) <- mut.json$rows[[1]]; colnames(mtx.mut) <- mut.json$cols[[1]]
-   				mut.samples <- grep(regex, mut.json$cols[[1]],  value=TRUE)
-					mut.index <-collection$id
-   					
-   				samples <- unique(cnv.samples, mut.samples)
-	   			sample_similarity <- calculateSampleSimilarityMatrix(
-	   										mtx.mut, mtx.cnv,
-	   										copyNumberValues=gistic.scores,
-   											genes = goi, samples=samples)
-   													 
-					if(!is.na(threshold)){
-						outliers <- names(which(sample_similarity[,1]<threshold))
-						sample_similarity <- sample_similarity[setdiff(rownames(sample_similarity), outliers), ]
-					}
-   					
-					## ----- Save  ------
-	   			index <- get.new.collection.index(Manifest, datasetName, dataType)
-	   			outputFile <- paste(datasetName, dataType, index, processName, sep="_")
-	   			parent <- list(c(datasetName, "cnv", cnv.index),c(datasetName, "mut01", mut.index))
-	   			collection <- data.frame(id=index, date=date, directory=output_directory, file=outputFile)
-	   			collection$process <- list(process)
-	   			collection$parent <- list(parent)
-	   			Manifest <- add.new.collection(Manifest, datasetName, dataType, collection)
-	   			
-					mds.list<- lapply(rownames(sample_similarity), function(name) data.frame(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
-					names(mds.list) <- rownames(sample_similarity)
-					os.data.save(mds.list, output_directory, outputFile, format="JSON")
-
-				} # mut files
-			} #cnv files
-		} # for diseaseName	
+	} # for diseaseName	
   
   return(Manifest)
 }

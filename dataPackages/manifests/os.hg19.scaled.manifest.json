@@ -1,0 +1,84 @@
+[
+  {
+    "dataset": "hg19",
+    "dataType": "genes",
+    "collections": [
+      {
+        "id": 1,
+        "process": ["position", "min", "abs", "start"],
+        "date": "2016-06-24",
+        "directory": "../data/molecular/hg19/",
+        "file": "hg19_genes_1_position-min-abs-start",
+        "parent": [null]
+      },
+      {
+        "id": 2,
+        "process": {
+          "calculation": ["scaled"],
+          "scaleFactor": [10000]
+        },
+        "date": "2016-07-01",
+        "directory": "../data/molecular/hg19/",
+        "file": "hg19_genes_2_scaled-10000",
+        "parent": [
+          ["hg19", "genes", "1"],
+          [1]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "hg19",
+    "dataType": "chromosome",
+    "collections": [
+      {
+        "id": 1,
+        "process": ["length"],
+        "date": "2016-06-24",
+        "directory": "../data/molecular/hg19/",
+        "file": "hg19_chromosome_1_length",
+        "parent": [null]
+      },
+      {
+        "id": 2,
+        "process": {
+          "calculation": ["scaled"],
+          "scaleFactor": [10000]
+        },
+        "date": "2016-07-01",
+        "directory": "../data/molecular/hg19/",
+        "file": "hg19_chromosome_2_scaled-10000",
+        "parent": [
+          ["hg19", "chromosome", "1"],
+          ["hg19", "centromere", "1"]
+        ]
+      }
+    ]
+  },
+  {
+    "dataset": "hg19",
+    "dataType": "centromere",
+    "collections": [
+      {
+        "id": 1,
+        "process": "position",
+        "date": "2016-06-24",
+        "directory": "../data/molecular/hg19/",
+        "file": "hg19_centromere_1_position"
+      }
+    ]
+  },
+  {
+    "dataset": "hg19",
+    "dataType": "genesets",
+    "collections": [
+      {
+        "id": 1,
+        "process": "hgnc",
+        "date": "2016-06-24",
+        "directory": "../data/molecular/hg19/",
+        "file": "hg19_genesets_1_hgnc"
+      }
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "dataset": "brca",
+    "dataType": "mds",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-01",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_mds_1_mds-oncoVogel274-cnv-mut01",
+        "process": [
+          {
+            "calculation": "mds",
+            "geneset": "oncoVogel274",
+            "input": ["cnv", "mut01"],
+            "regex": ".01$",
+            "threshold": -0.0001
+          }
+        ],
+        "parent": [
+          ["brca", "cnv", "1"],
+          ["brca", "mut01", "1"]
+        ]
+      },
+      {
+        "id": 2,
+        "date": "2016-07-01",
+        "directory": "../data/molecular/mds/scaled/",
+        "file": "brca_mds_2_scaled-10000-oncoVogel274",
+        "process": [
+          {
+            "calculation": "scaled",
+            "scaleFactor": 10000,
+            "geneset": "oncoVogel274"
+          }
+        ],
+        "parent": [
+          ["brca", "mds", "1"]
+        ]
+      }
+    ]
+  }
+]

@@ -151,6 +151,7 @@ run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_
 			if(datasetName == "brca" | datasetName == "brain")  threshold = -1e-04
       
       process$regex=regex; process$threshold=threshold
+      process <- list(process)
 
 			## ----- MDS on All Combinations of CNV and MUT Tables ------
 			for(i in 1:nrow(cnvTables)){

@@ -8,13 +8,13 @@
         "date": "2016-06-30",
         "directory": "../data/molecular/mds/",
         "file": "brca_mds_1_mds-cnv-mut01-oncoVogel274",
-        "process": {
+        "process": [{
           "calculation": ["mds"],
           "input": ["cnv", "mut01"],
           "geneset": ["oncoVogel274"],
           "regex": [".01$"],
           "threshold": [-0.0001]
-        },
+        }],
         "parent": [
           ["brca", "cnv", "1"],
           ["brca", "mut01", "1"]

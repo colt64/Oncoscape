@@ -199,7 +199,7 @@ run.scale.chr.genes <- function(manifest, scaleFactor=10000){
 	index_chr <- get.new.collection.index(manifest, chromObj$dataset, chromObj$dataType)
 	outfile_chr <- paste(chromObj$dataset, chromObj$dataType, index_chr, processName, sep="_")
 	parent <- list(c(chromObj$dataset, chromObj$dataType, chrLenObj$id), c(centObj$dataset, centObj$dataType, centPosObj$id))
-	collection_chr <- data.frame(id=index_chr, date=date, directory=hg19_dir, file=outfile_chr)
+	collection_chr <- data.frame(id=index_chr, date=as.character(date), directory=hg19_dir, file=outfile_chr)
 	collection_chr$parent <- list(parent)
 	collection_chr$process <- list(process)
 	## Gene Positions
@@ -230,7 +230,7 @@ run.batch.mds <- function(manifest,chrDim, scaleFactor=10000){
 			dataType <- mdsFile$dataType
 			collections <- mdsFile$collections[[1]]
 			
-			orig_mds <- collections[sapply(collections$process, function(proc){"mds" %in% proc }),]
+			orig_mds <- collections[sapply(collections$process, function(proc){"mds" %in% proc$calculation }),]
 			
 			for(j in 1:nrow(orig_mds)){
 				dataObj <- orig_mds[j,]
@@ -242,7 +242,7 @@ run.batch.mds <- function(manifest,chrDim, scaleFactor=10000){
 				colnames(mtx_scaled) <- c("x", "y")
 				
 				index <- get.new.collection.index(manifest, datasetName, dataType)
-				process= c("scaled", scaleFactor);				processName <- paste(process, collapse="-")
+				process= c("scaled", scaleFactor); processName <- paste(process, collapse="-")
 				file= paste(datasetName, dataType, index, processName, sep="_")
 				parent <- list(c(datasetName, dataType, dataObj$id))
 				

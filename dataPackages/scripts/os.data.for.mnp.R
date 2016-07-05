@@ -4,13 +4,25 @@
 
 # Library Imports ---------------------------------------------------------
 library(jsonlite)
+source("common.R")
 
 # Configuration -----------------------------------------------------------
 rm(list = ls(all = TRUE))
 options(stringsAsFactors = FALSE)
 
-os.mds.manifest   <- fromJSON("../manifests/os.mds.2016-06-27.manifest.json")
-os.edges.manifest   <- fromJSON("../manifests/os.edges.2016-06-27.manifest.json")
+date <- as.character(Sys.Date())
+#commands <- c("categories", "layouts", "edges")
+commands <- "chromosome"
+
+args = commandArgs(trailingOnly=TRUE)
+if(length(args) != 0)
+	commands <- args
+
+
+os.mds.manifest   <- fromJSON("../manifests/os.mds.scaled.manifest.json")
+os.edges.manifest   <- fromJSON("../manifests/os.edges.manifest.json")
+os.hg19.scaled.manifest   <- fromJSON("../manifests/os.hg19.scaled.manifest.json")
+os.categories.data.filename <-"os.categories.color.data"
 
 geneset_file <- "../data/molecular/hg19/hg19_genesets_1_hgnc.json"
 genesets <- fromJSON(geneset_file)
@@ -18,104 +30,8 @@ genesets <- fromJSON(geneset_file)
 output.dir <- "../data/tools/markerPatient/"
 
 #----------------------------------------------------------------------------------------------------
-### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
-os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", "JSON")){
-  
-  if(!dir.exists(directory))
-    dir.create(file.path(directory), recursive=TRUE)
-  
-  if(!grepl("/$", directory)) directory <- paste(directory, "/", sep="")
-  outFile = paste(directory, file, sep="")
-  
-  
-  # Write Tab Delimited
-  if("tsv" %in% format)
-    write.table(df, file=paste(outFile,".tsv", sep = ""), quote=F, sep="\t")
-  
-  # Write CSV Delimited
-  if("csv" %in% format)
-    write.csv(df, file=paste(outFile,".csv",sep = ""), quote = F)
-  
-  # Write RData File
-  if("RData" %in% format)
-    save(df, file=paste(outFile,".RData", sep = "") )
-  
-  # Write JSON File
-  if("JSON" %in% format)
-    write(toJSON(df, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
-  
-}
+os.save.ptLayouts <- function(manifest, datasetNames){
 
-#----------------------------------------------------------------------------------------------------
-get.category.data<- function(name, table, cat.col.name, color.col.name){
-  
-  catNames <- unique(table[,cat.col.name])
-  categories.type.list <- lapply(catNames, function(cat.name){
-    matches <- table[table[,cat.col.name]==cat.name,]
-    data <- data.frame(	name=cat.name, 
-                        color=unique(matches$color))
-    data$values = list(rownames(matches))
-    return(data)
-  })
-  return (categories.type.list)
-}
-
-
-#----------------------------------------------------------------------------------------------------
-os.save.categories <- function(){
-
-	dataset = "gbm"
-	datatype= "colorCategory"
-	MnP.categories <- list()
-	# 
-	## Patient Colors by Diagnosis
-	load('~/Desktop/OncoGit/Oncoscape/r_modules/dataPackages/TCGAbrain/inst/extdata/tumorDiagnosis.RData')
-	name="diagnosis"
-	categories.list <- get.category.data(name=name, table=diagnosis, cat.col.name="diagnosis", color.col.name="color")
-	MnP.categories[[1]] <- data.frame(dataset=dataset, datatype=datatype, name=name)
-	MnP.categories[[1]]$data=list(categories.list)
-	rm(categories.list)
-	
-	## Patient Colors by Glioma8
-	load('~/Desktop/OncoGit/Oncoscape/r_modules/dataPackages/TCGAbrain/inst/extdata/ericsEightGliomaClusters.RData')
-	name="glioma8"
-	categories.list <- get.category.data(name=name, table=tbl.glioma8, cat.col.name="cluster", color.col.name="color")
-	MnP.categories[[2]] <- data.frame(dataset=dataset, datatype=datatype, name=name)
-	MnP.categories[[2]]$data=list(categories.list)
-	rm(categories.list)
-	
-	## Patient Colors by Glioma8
-	load('~/Desktop/OncoGit/Oncoscape/r_modules/dataPackages/TCGAbrain/inst/extdata/metabolicExpressionStemness.RData')
-	name="metabolicExpressionStemness"
-	categories.list <- get.category.data(name=name, table=tbl.expression, cat.col.name="cluster", color.col.name="color")
-	MnP.categories[[3]] <- data.frame(dataset=dataset, datatype=datatype, name=name)
-	MnP.categories[[3]]$data=list(categories.list)
-  rm(categories.list)
-	
-	## Patient Colors by Glioma8
-	load('~/Desktop/OncoGit/Oncoscape/r_modules/dataPackages/TCGAbrain/inst/extdata/tumorGrade.RData')
-	name="tumorGrade"
-	categories.list <- get.category.data(name=name, table=tbl.grade, cat.col.name="cluster", color.col.name="color")
-	MnP.categories[[4]] <- data.frame(dataset=dataset, datatype=datatype, name=name)
-	MnP.categories[[4]]$data=list(categories.list)
-	rm(categories.list)
-	
-	## Patient Colors by Glioma8
-	load('~/Desktop/OncoGit/Oncoscape/r_modules/dataPackages/TCGAbrain/inst/extdata/verhaakGbmClustersAugmented.RData')
-	name="verhaakPlus1"
-	categories.list <- get.category.data(name=name, table=tbl.glioma8, cat.col.name="cluster", color.col.name="color")
-	MnP.categories[[5]] <- data.frame(dataset=dataset, datatype=datatype, name=name)
-	MnP.categories[[5]]$data=list(categories.list)
-	rm(categories.list)
-	
-	os.data.save(MnP.categories, output.dir, "os.MnP.categories.data", format="JSON")
-	
-}
-
-#----------------------------------------------------------------------------------------------------
-os.save.ptLayouts <- function(manifest){
-
-	datasetNames = c("gbm", "brca")
 	datatypeName= "ptLayout"
 	MnP.ptLayouts <- list()
 	# 
@@ -123,25 +39,22 @@ os.save.ptLayouts <- function(manifest){
 	name = "MDS-CNV;SNV-OV"
 	
 	for(i in 1:length(datasetNames)){
-	  datasetName = datasetNames[i]
-  	mdsCollections <- subset(manifest, dataset==datasetName & dataType=="mds")$collections[[1]]
-	  ptLayoutObj <- subset(mdsCollections, 
-  		process$calculation=="mds" & 
-	  	process$geneset =="oncoVogel274" &
-		  all(c("cnv", "mut01") %in% unlist(process$input)))
-		
-	  ptLayout.data <- fromJSON(paste(ptLayoutObj$directory, ptLayoutObj$file,".json", sep=""))
-	  MnP.ptLayouts[[i]] <- data.frame(dataset=datasetName, datatype=datatypeName, name=name)
-	  MnP.ptLayouts[[i]]$data=list(ptLayout.data)
+	  	datasetName = datasetNames[i]
+  		mdsCollections <- subset(manifest, dataset==datasetName & dataType=="mds")$collections[[1]]
+	  	matchColl <- apply(mdsCollections,1, function(coll){ coll$process$calculation == "scaled" & coll$process$geneset=="oncoVogel274"})
+  		ptLayoutObj <- mdsCollections[matchColl,]
+  		
+	    ptLayout.data <- fromJSON(paste(ptLayoutObj$directory, ptLayoutObj$file,".json", sep=""))
+	    MnP.ptLayouts[[i]] <- data.frame(dataset=datasetName, datatype=datatypeName, name=name)
+	    MnP.ptLayouts[[i]]$data=list(ptLayout.data)
   }
 	os.data.save(MnP.ptLayouts, output.dir, "os.MnP.ptLayouts.data", format="JSON")
 		
 }
 
 #----------------------------------------------------------------------------------------------------
-os.save.network.edges <- function(manifest){
+os.save.network.edges <- function(manifest, datasetNames){
   
-  datasetNames = c("brca")
   datatypeName= "networkEdges"
   MnP.edges <- list()
   # 
@@ -172,7 +85,45 @@ os.save.network.edges <- function(manifest){
 }
 
 ##----------------------------
+os.copy.chromosome.layout <- function(manifest, outputDir= "./"){
+  
+  datasetName="hg19"
+  scaleFactor = 10000
+  
+  chr_collections <- subset(manifest, dataset==datasetName & dataType=="chromosome")$collections[[1]]
+  process <- data.frame(field=c("calculation", "scaleFactor"), value=c("scaled", scaleFactor))
+  chr_collections <- subset.collections(chr_collections, process)
+ 
+  cc <- apply(chr_collections,1, function(coll){
+    data <- fromJSON(paste(coll$directory, coll$file,".json", sep=""))
+    output <- data.frame(dataset=datasetName, datatype="chromosome", 
+                         name=paste(coll$process$calculation, coll$process$scaleFactor, sep="-"))
+    output$data <- list(data)
+    
+    os.data.save(output, outputDir, coll$file, format= "JSON")
+  });
+  
+  gene_collections <- subset(manifest, dataset==datasetName & dataType=="genes")$collections[[1]]
+  process <- data.frame(field=c("calculation", "scaleFactor"), value=c("scaled", scaleFactor))
+  gene_collections <- subset.collections(gene_collections, process)
+  
+  gc <- apply(gene_collections,1, function(coll){
+    data <- fromJSON(paste(coll$directory, coll$file,".json", sep=""))
+    geneset <- coll$process$geneset; if(is.null(geneset)) geneset <- ""
+    output <- data.frame(dataset=datasetName, datatype="genes", name=geneset)
+    output$data <- list(data)
+      
+    os.data.save(output, outputDir,coll$file,  format= "JSON")
+  });
+  
+}
 
-# os.save.categories()
-# os.save.ptLayouts(os.mds.manifest)
-  os.save.network.edges(os.edges.manifest)
+##----------------------------
+if("layouts" %in% commands) 
+ os.save.ptLayouts(os.mds.manifest, datasetNames = c("brca"))
+if("edges" %in% commands) 
+ os.save.network.edges(os.edges.manifest, datasetNames = c("brca"))
+if("categories" %in% commands) 
+  os.copy.file(inputDir ="../data/categories/", filename=os.categories.data.filename, outputDir="../data/tools/MarkerPatient/")
+if("chromosome" %in% commands) 
+  os.copy.chromosome.layout(os.hg19.scaled.manifest, outputDir="../data/tools/MarkerPatient/")

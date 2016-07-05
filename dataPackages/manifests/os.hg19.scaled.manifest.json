@@ -13,8 +13,11 @@
       },
       {
         "id": 2,
-        "process": ["scaled", "10000"],
-        "date": "16982",
+        "process": {
+          "calculation": ["scaled"],
+          "scaleFactor": [10000]
+        },
+        "date": "2016-07-03",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_2_scaled-10000",
         "parent": [
@@ -24,8 +27,12 @@
       },
       {
         "id": 3,
-        "process": ["scaled", "10000", "tcga.GBM.classifiers"],
-        "date": "16982",
+        "process": {
+          "calculation": ["scaled"],
+          "scaleFactor": [10000],
+          "geneset": ["tcga.GBM.classifiers"]
+        },
+        "date": "2016-07-03",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_3_scaled-10000-tcga.GBM.classifiers",
         "parent": [
@@ -35,8 +42,12 @@
       },
       {
         "id": 4,
-        "process": ["scaled", "10000", "marker.genes.545"],
-        "date": "16982",
+        "process": {
+          "calculation": ["scaled"],
+          "scaleFactor": [10000],
+          "geneset": ["marker.genes.545"]
+        },
+        "date": "2016-07-03",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_4_scaled-10000-marker.genes.545",
         "parent": [
@@ -46,8 +57,12 @@
       },
       {
         "id": 5,
-        "process": ["scaled", "10000", "tcga.pancan.mutated"],
-        "date": "16982",
+        "process": {
+          "calculation": ["scaled"],
+          "scaleFactor": [10000],
+          "geneset": ["tcga.pancan.mutated"]
+        },
+        "date": "2016-07-03",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_5_scaled-10000-tcga.pancan.mutated",
         "parent": [
@@ -57,8 +72,12 @@
       },
       {
         "id": 6,
-        "process": ["scaled", "10000", "oncoVogel274"],
-        "date": "16982",
+        "process": {
+          "calculation": ["scaled"],
+          "scaleFactor": [10000],
+          "geneset": ["oncoVogel274"]
+        },
+        "date": "2016-07-03",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_6_scaled-10000-oncoVogel274",
         "parent": [
@@ -82,8 +101,11 @@
       },
       {
         "id": 2,
-        "process": ["scaled", "10000"],
-        "date": "2016-06-30",
+        "process": {
+          "calculation": ["scaled"],
+          "scaleFactor": [10000]
+        },
+        "date": "2016-07-03",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_chromosome_2_scaled-10000",
         "parent": [

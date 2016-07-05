@@ -15,6 +15,12 @@
 
 #----------------------------------------------------
 
+default: setup run
+
+setup: mapCoordinates setupMongo
+
+run: import mds edges scale10k tools syncMongo
+
 #-----  Create Files
 
 import:
@@ -44,6 +50,15 @@ scale10k:
 		# MDS values scaled
 		# geneset coordinates scaled
 		# genomic coordinates scaled
+
+#----- Create Tool Specific Views
+
+tools: MnP
+
+MnP:
+	Rscript os.data.for.mnp.R
+		# hobo MDS
+
 		
 #----- Import into MongoDB
 

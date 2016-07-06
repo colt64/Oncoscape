@@ -1,4 +1,8 @@
 # Class Definitions :: Enumerations -------------------------------------------------------
+
+os.tcga.field.enumerations  <- fromJSON(paste("../manifests","os.tcga.field.enumerations.json" , sep="/"))
+os.tcga.column.enumerations <- fromJSON(paste("../manifests","os.tcga.column.enumerations.json", sep="/"))
+
 os.enum.na <- c("", "NA", "[NOTAVAILABLE]","[UNKNOWN]","[NOT AVAILABLE]","[NOT EVALUATED]","UKNOWN","[DISCREPANCY]",
                 "NOT LISTED IN MEDICAL RECORD","[NOT APPLICABLE]","[PENDING]","PENDING", "[NOT AVAILABLE]","[PENDING]",
                 "[NOTAVAILABLE]","NOT SPECIFIED","[NOT AVAILABLE]|[NOT AVAILABLE]",

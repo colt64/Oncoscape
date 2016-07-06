@@ -12,6 +12,30 @@ mapProcess <- function(process){
 	return(NA)
 }
 #---------------------------------------------------------
+### For any mutation file, create and save an indicator mut01 file
+save.mut01.from.mut <- function(Manifest, result, dataset, dataType){
+  
+  resultObj <- data.frame(dataset = dataset, dataType = "mut01",
+                          rowType= result$rowType, colType = result$colType)
+  resultObj$rows <-  list(result$rows)
+  resultObj$cols <-  list(result$cols);
+  
+  mtx.01 <- result$data
+  mtx.01[is.na(mtx.01)] <- 0
+  mtx.01[mtx.01 == ""] <- 0
+  mtx.01[nchar(mtx.01) >1] <- 1
+  mtx.01 <- apply(mtx.01, 2, as.integer)
+  
+  resultObj$data <- list(mtx.01)
+  
+  parent <- list(c(dataset, dataType, result$id))
+  
+  Manifest <- save.collection(Manifest=Manifest, dataset=dataset, dataType="mut01", result=resultObj,
+                              parent=parent, process=process,processName=process, outputDirectory=outputDirectory)
+  return(Manifest)
+}
+
+#---------------------------------------------------------
 get.new.collection.index <- function(Manifest, datasetName, dataTypeName){
   
   if(nrow(Manifest) == 0) return(1)
@@ -50,6 +74,8 @@ add.new.collection <- function(Manifest, datasetName, dataTypeName, collection){
 save.collection <- function(Manifest, dataset, dataType,result, parent, 
 							process,processName, outputDirectory){
 
+	cat("-save collection\n")
+
   index <- get.new.collection.index(Manifest, dataset, dataType)
   result$id <- index
   outputFile <- paste(dataset, dataType, index, processName , sep="_")
@@ -67,6 +93,9 @@ save.collection <- function(Manifest, dataset, dataType,result, parent,
     directory=outputDirectory,
     file= outputFile,
     format = "JSON") 
+    
+  if(dataType == "mut")
+  	Manifest <- save.mut01.from.mut(Manifest, result, dataset, dataType)
     
 	return(Manifest)
 }

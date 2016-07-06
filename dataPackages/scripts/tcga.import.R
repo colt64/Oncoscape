@@ -19,13 +19,16 @@ options(stringsAsFactors = FALSE)
 source("common.R")
 source("os.tcga.mappings.R")
 
-#commands <- c("molecular", "clinical", "categories")
-commands <- c("molecular")
+commands <- c("molecular", "clinical", "categories")
+#commands <- c("molecular")
+#commands <- c("clinical")
+
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0)
 	commands <- args
 
 os.molecular.ucsc.batch   <- fromJSON("../manifests/os.ucsc.molecular.manifest.json")
+os.molecular.cBio.batch   <- fromJSON("../manifests/os.cBio.molecular.manifest.json")
 os.clinical.tcga.batch    <- fromJSON("../manifests/os.tcga.clinical.manifest.json")
 
 output.molecular.dir   <- "../data/molecular/clean/"
@@ -36,8 +39,6 @@ output.manifest.dir    <- "../manifests/"
 output.molecular.manifest <- "os.import.molecular.ucsc.manifest"
 output.clinical.manifest <- "os.import.clinical.tcga.manifest"
 
-os.tcga.field.enumerations  <- fromJSON(paste("../manifests","os.tcga.field.enumerations.json" , sep="/"))
-os.tcga.column.enumerations <- fromJSON(paste("../manifests","os.tcga.column.enumerations.json", sep="/"))
 
 date <- as.character(Sys.Date())
 process <- "import"
@@ -74,16 +75,33 @@ get.processed.mtx <- function(mtx, dimension){
 ### Load Function Takes An Import File + Column List & Returns A DataFrame
 os.data.load.molecular <- function(inputFile){
   
-  mtx<- read.delim(inputFile, header=F)
+  mtx <- matrix();
   
-  #orient mtx so row: gene, col: patient/sample
-  if(all(grepl("^TCGA", mtx[-1,1]))) { mtx <- t(mtx)}
-  colType <- "patient"; rowType <- "gene"
+  if(grepl("\\.RData$",inputFile)){
+    mtx <- get(load(inputFile))
+    if(all(grepl("^TCGA", rownames(mtx)))) { mtx <- t(mtx)}
+    colType <- "patient"; rowType <- "gene"
 
-  if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", mtx[1,-1])))
-    colType <- "sample"
+    if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", colnames(mtx))))
+      colType <- "sample"
+    
+    rownames <- rownames(mtx); colnames <- colnames(mtx)
+    dimnames(mtx) <- NULL
+    mtx.Data<- list(rownames=rownames, colnames=colnames, data=mtx)
+    
+        
+  } else{ 
+    mtx<- read.delim(inputFile, header=F) 
+    #orient mtx so row: gene, col: patient/sample
+    if(all(grepl("^TCGA", mtx[-1,1]))) { mtx <- t(mtx)}
+    colType <- "patient"; rowType <- "gene"
 
-  mtx.Data<- get.processed.mtx(mtx, dimension= c("row", "col"))
+    if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", mtx[1,-1])))
+      colType <- "sample"
+    
+    mtx.Data<- get.processed.mtx(mtx, dimension= c("row", "col"))
+    
+  }
  
   return(list(rowType=rowType, colType=colType, rows=mtx.Data$rownames, cols=mtx.Data$colnames, data=mtx.Data$data))
 }
@@ -100,17 +118,17 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
   unMappedData <- list();
   tcga_columns <- columns
   
-  if(grepl("clinical_patient_skcm.txt",inputFile)){
+  if(grepl("../archive/clinical/nationwidechildrens.org_clinical_patient_skcm.txt",inputFile)){
   	columns[match("submitted_tumor_site", columns)] = "skcm_tissue_site"
   	columns[match("submitted_tumor_site", columns)] = "skcm_tumor_type"
   }
-  if(grepl("follow_up_v2.0_skcm.txt",inputFile)){
+  if(grepl("../archive/clinical/nationwidechildrens.org_follow_up_v2.0_skcm.txt",inputFile)){
   	columns[match("new_tumor_event_type", columns)] = "skcm_tumor_event_type"
   }
-  if(grepl("clinical_patient_thca.txt",inputFile)){
+  if(grepl("../archive/clinical/nationwidechildrens.org_clinical_patient_thca.txt",inputFile)){
     columns[columns=="metastatic_dx_confirmed_by_other"] = "thca_metastatic_dx_confirmed_by_other"
   }
-  if(grepl("clinical_patient_kirp.txt",inputFile)){
+  if(grepl("../archive/clinical/nationwidechildrens.org_clinical_patient_kirp.txt",inputFile)){
     columns[columns=="tumor_type"] = "disease_subtype"
   }
   
@@ -168,7 +186,6 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
   }
   return(list("mapped"=mappedTable, "unmapped" = unMappedData, "cde"=cbind(tcga_columns,columns,cde_ids, column_type)))
 }
-
 #---------------------------------------------------------
 ### Batch Is Used To Process Multiple TCGA Files Defined 
 os.data.batch <- function(manifest, outputDirectory, ...){
@@ -197,20 +214,24 @@ os.data.batch <- function(manifest, outputDirectory, ...){
 				dataType <- mapProcess(dataObj$process)
 				resultObj <- data.frame(dataset = sourceObj$dataset, dataType = dataType)
 				
-				if(dataType %in%  c("cnv","mut01")){
+				if(dataType %in%  c("cnv","mut01", "mut", "rna", "protein")){
 					# Load Data Frame - map and filter by named columns
 					result <- os.data.load.molecular( inputFile = inputFile)
-
-					result$data <- apply(result$data, 2, as.integer)
+        
+					if(dataType != "mut"){
+					  result$data <- apply(result$data, 2, as.numeric)
+					}
 					resultObj$rowType <- result$rowType; resultObj$colType <- result$colType;
 					resultObj$rows <- list(result$rows); resultObj$cols <- list(result$cols);
 					resultObj$data <- list(result$data)
 				}
-				if(dataType %in%  c("clinical")){
+				if(dataType %in%  c("patient", "drug", "radiation", "otherMalignancy", "followUp", "newTumor")){
 					# Load Data Frame - map and filter by named columns
 					result <- os.data.load.clinical( inputFile = inputFile, ...)
-					resultObj$data <- list(result$data)
-				}
+					resultObj$data <- list(result$mapped)
+					resultObj$cde <- list(result$cde)
+					
+					}
 
 				parent <- list(c(sourceObj$dataset, sourceObj$dataType, dataObj$id))
 				
@@ -236,7 +257,7 @@ get.category.data<- function(name, table, cat.col.name, color.col.name){
   return (categories.type.list)
 }
 #----------------------------------------------------------------------------------------------------
-add.category.fromFile <- function(file, name, col.name){
+add.category.fromFile <- function(file, name, col.name, dataset, datatype){
   
   tbl <- get(load(file))
   categories.list <- get.category.data(name=name, table=tbl, cat.col.name=col.name, color.col.name="color")
@@ -249,23 +270,21 @@ add.category.fromFile <- function(file, name, col.name){
 os.save.categories <- function(output.dir, datasets = c("gbm")){
   
   color.categories <- list()
+  datatype= "colorCategory"
   
   if("gbm" %in% datasets){  
-  dataset = "gbm"
-  datatype= "colorCategory"
-  # 
-  
-  ## Patient Colors by Diagnosis
+
+  ## Patient Colors by Diagnosis, glioma8, tumorGrade, verhaak
   color.categories <- list(
-    add.category.fromFile(file='../archive/brain/tumorDiagnosis.RData', name="diagnosis", col.name="diagnosis") ,
-    add.category.fromFile(file='../archive/brain/ericsEightGliomaClusters.RData', name="glioma8", col.name="cluster") ,
-    add.category.fromFile(file='../archive/brain/metabolicExpressionStemness.RData', name="metabolicExpressionStemness", col.name="cluster") ,
-    add.category.fromFile(file='../archive/brain/tumorGrade.RData', name="tumorGrade", col.name="cluster") ,
-    add.category.fromFile(file='../archive/brain/verhaakGbmClustersAugmented.RData', name="verhaakPlus1", col.name="cluster") 
+    add.category.fromFile(file='../archive/categories/brain/tumorDiagnosis.RData', name="diagnosis", col.name="diagnosis", dataset="gbm", datatype=datatype) ,
+    add.category.fromFile(file='../archive/categories/brain/ericsEightGliomaClusters.RData', name="glioma8", col.name="cluster", dataset="gbm", datatype=datatype) ,
+    add.category.fromFile(file='../archive/categories/brain/metabolicExpressionStemness.RData', name="metabolicExpressionStemness", col.name="cluster", dataset="gbm", datatype=datatype) ,
+    add.category.fromFile(file='../archive/categories/brain/tumorGrade.RData', name="tumorGrade", col.name="cluster", dataset="gbm", datatype=datatype) ,
+    add.category.fromFile(file='../archive/categories/brain/verhaakGbmClustersAugmented.RData', name="verhaakPlus1", col.name="cluster", dataset="gbm", datatype=datatype) 
     )
   }
   if("brca" %in% datasets){
-    categories.list <- fromJSON("../archive/brca/colorCategories.json")
+    categories.list <- fromJSON("../archive/categories/brca/colorCategories.json")
     color.categories <- c(color.categories, list(categories.list))
   }
   os.data.save(color.categories, output.dir, "os.categories.color.data", format="JSON")
@@ -279,7 +298,9 @@ if("categories" %in% commands)
 if("molecular" %in% commands){
 	Manifest <- os.data.batch(  manifest = os.molecular.ucsc.batch, 
 							outputDirectory = output.molecular.dir		 )
-	os.data.save(
+	Manifest <- os.data.batch(  manifest = os.molecular.cBio.batch, 
+	                            outputDirectory = output.molecular.dir		 )
+		os.data.save(
 	  df = Manifest,
 	  directory=output.manifest.dir,
 	  file= output.molecular.manifest,

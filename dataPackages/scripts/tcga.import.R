@@ -27,8 +27,7 @@ args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0)
 	commands <- args
 
-os.molecular.ucsc.batch   <- fromJSON("../manifests/os.ucsc.molecular.manifest.json")
-os.molecular.cBio.batch   <- fromJSON("../manifests/os.cBio.molecular.manifest.json")
+os.molecular.batch   <- fromJSON("../manifests/os.molecular.manifest.json")
 os.clinical.tcga.batch    <- fromJSON("../manifests/os.tcga.clinical.manifest.json")
 
 output.molecular.dir   <- "../data/molecular/clean/"
@@ -86,6 +85,7 @@ os.data.load.molecular <- function(inputFile){
       colType <- "sample"
     
     rownames <- rownames(mtx); colnames <- colnames(mtx)
+    colnames <- gsub(".", "-", colnames); 
     dimnames(mtx) <- NULL
     mtx.Data<- list(rownames=rownames, colnames=colnames, data=mtx)
     
@@ -296,10 +296,8 @@ if("categories" %in% commands)
   os.save.categories(output.dir=output.categories.dir, datasets=c("gbm", "brca"))
 
 if("molecular" %in% commands){
-	Manifest <- os.data.batch(  manifest = os.molecular.ucsc.batch, 
+	Manifest <- os.data.batch(  manifest = os.molecular.batch, 
 							outputDirectory = output.molecular.dir		 )
-	Manifest <- os.data.batch(  manifest = os.molecular.cBio.batch, 
-	                            outputDirectory = output.molecular.dir		 )
 		os.data.save(
 	  df = Manifest,
 	  directory=output.manifest.dir,

@@ -5,10 +5,10 @@
     "collections": [
       {
         "id": 1,
-        "process": "import",
-        "date": "2016-06-30",
+        "date": "2016-07-05",
         "directory": "../data/molecular/clean/",
         "file": "brca_cnv_1_import",
+        "process": "import",
         "parent": ["brca", "ucsc", "1"]
       }
     ]
@@ -19,10 +19,10 @@
     "collections": [
       {
         "id": 1,
-        "process": "import",
-        "date": "2016-06-30",
+        "date": "2016-07-05",
         "directory": "../data/molecular/clean/",
         "file": "brca_mut01_1_import",
+        "process": "import",
         "parent": ["brca", "ucsc", "2"]
       }
     ]

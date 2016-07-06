@@ -24,7 +24,7 @@ run: import mds edges scale10k tools syncMongo
 #-----  Create Files
 
 import:
-	Rscript tcga.import.R
+	Rscript tcga.import.R categories molecular clinical
 		# - reads ucsc.filename.manifest
 		# - writes mol collections metatable
 		# - writes UCSC molecular data json
@@ -39,7 +39,7 @@ mapCoordinates:
 #----- Calculate Values
 
 mds:
-	Rscript networks.calculate.mds.edges.R mds cnvsnv
+	Rscript networks.calculate.mds.edges.R mds
 		# hobo MDS
 edges:
 	Rscript networks.calculate.mds.edges.R edges

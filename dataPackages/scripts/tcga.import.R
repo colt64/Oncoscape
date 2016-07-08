@@ -5,12 +5,6 @@
 #       
 ###
 
-# Library Imports ---------------------------------------------------------
-library(RUnit)
-library(R.utils)
-library(stringr)
-library(plyr)
-library(jsonlite)
 
 # Configuration -----------------------------------------------------------
 rm(list = ls(all = TRUE))
@@ -19,8 +13,8 @@ options(stringsAsFactors = FALSE)
 source("common.R")
 source("os.tcga.mappings.R")
 
-commands <- c("molecular", "clinical", "categories")
-#commands <- c("molecular")
+#commands <- c("molecular", "clinical", "categories")
+commands <- c("molecular")
 #commands <- c("clinical")
 
 args = commandArgs(trailingOnly=TRUE)
@@ -85,7 +79,7 @@ os.data.load.molecular <- function(inputFile){
       colType <- "sample"
     
     rownames <- rownames(mtx); colnames <- colnames(mtx)
-    colnames <- gsub(".", "-", colnames); 
+    colnames <- gsub("\\.", "-", colnames); 
     dimnames(mtx) <- NULL
     mtx.Data<- list(rownames=rownames, colnames=colnames, data=mtx)
     
@@ -214,7 +208,7 @@ os.data.batch <- function(manifest, outputDirectory, ...){
 				dataType <- mapProcess(dataObj$process)
 				resultObj <- data.frame(dataset = sourceObj$dataset, dataType = dataType)
 				
-				if(dataType %in%  c("cnv","mut01", "mut", "rna", "protein")){
+				if(dataType %in%  c("cnv","mut01", "mut", "rna", "protein", "methyl")){
 					# Load Data Frame - map and filter by named columns
 					result <- os.data.load.molecular( inputFile = inputFile)
         

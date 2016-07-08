@@ -1,3 +1,11 @@
+# Library Imports ---------------------------------------------------------
+library(RUnit)
+library(R.utils)
+library(stringr)
+library(plyr)
+library(jsonlite)
+
+
 os.dataset.enumerations     <- fromJSON("../manifests/os.dataset.enumerations.json" )
 
 #---------------------------------------------------------

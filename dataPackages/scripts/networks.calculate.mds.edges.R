@@ -19,7 +19,7 @@ if(length(args) != 0)
 #--------------------------------- Configuration -----------------------------#
 
 
-molecular_manifest <- "../manifests/os.import.molecular.ucsc.manifest.json"
+molecular_manifest <- "../manifests/os.import.molecular.manifest.json"
 
 network_output_directory <- "../data/molecular/edges/"
 mds_output_directory <- "../data/molecular/mds/"
@@ -171,23 +171,24 @@ save.mds.innerProduct <- function(Manifest,datasetName, tbl1, tbl2, tbl1Type, tb
   	processName <- paste(unlist(process), collapse="-")
   	process$regex=regex; process$threshold=threshold
 
-	for(i in 1:nrow(tbl1)){
-	  coll1 <- tbl1[i, "collections"][[1]]
-	  tbl1.json <- fromJSON(paste(coll1$directory, coll1$file,".json", sep="")) 
+  	coll1 <- tbl1$collections[[1]]
+  	coll2 <- tbl2$collections[[1]]
+  	
+	for(i in 1:nrow(coll1)){
+	  tbl1.json <- fromJSON(paste(coll1[i,"directory"], coll1[i,"file"],".json", sep="")) 
 		mtx.tbl1 <- tbl1.json$data[[1]]
 		rownames(mtx.tbl1) <- tbl1.json$rows[[1]]; colnames(mtx.tbl1) <- tbl1.json$cols[[1]]
 		tbl1.samples <- grep(regex, tbl1.json$cols[[1]],  value=TRUE)
-		tbl1.index <- coll1$id
+		tbl1.index <- coll1[i, "id"]
 
 		cat("--- tbl1: ", coll1$process, "\n")
 		
-		for(j in 1:nrow(tbl2)){
-		  coll2 <- tbl2[i, "collections"][[1]]
-		  tbl2.json <- fromJSON(paste(coll2$directory, coll2$file,".json", sep="")) 
+		for(j in 1:nrow(coll2)){
+		  tbl2.json <- fromJSON(paste(coll2[j , "directory"], coll2[j, "file"],".json", sep="")) 
 		  mtx.tbl2 <- tbl2.json$data[[1]]
 			rownames(mtx.tbl2) <- tbl2.json$rows[[1]]; colnames(mtx.tbl2) <- tbl2.json$cols[[1]]
 			tbl2.samples <- grep(regex, tbl2.json$cols[[1]],  value=TRUE)
-			tbl2.index <-coll2$id
+			tbl2.index <-coll2[j,"id"]
 
 			cat("--- tbl2: ", coll2$process, "\n")
 			
@@ -227,14 +228,20 @@ run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_
     
       cnvTables <- subset(molTables, dataType == "cnv")
       mutTables <- subset(molTables, dataType == "mut01")
-    
-      if(nrow(cnvTables)==0 | nrow(mutTables) ==0) next;
+      rnaTables <- subset(molTables, dataType == "rna")
+      protTables <- subset(molTables, dataType == "protein")
+      
+            if(nrow(cnvTables)==0 | nrow(mutTables) ==0) next;
       cat(datasetName, "\n")		  
     
 	  Manifest <- save.mds.innerProduct(Manifest=Manifest, datasetName=datasetName, tbl1=cnvTables, tbl2=mutTables, tbl1Type="cnv", tbl2Type="mut01", 
 	                                    copyNumberValues=gistic.scores, geneset = geneset_name, output_directory=output_directory)
 	  Manifest <- save.pca(Manifest=Manifest, tbl=cnvTables,datasetName=datasetName, dataType="cnv", geneset = geneset_name, output_directory=output_directory)
 	  Manifest <- save.pca(Manifest=Manifest, tbl=mutTables,datasetName=datasetName, dataType="mut01", geneset = geneset_name, output_directory=output_directory)
+	  Manifest <- save.pca(Manifest=Manifest, tbl=rnaTables,datasetName=datasetName, dataType="rna", geneset = geneset_name, output_directory=output_directory)
+	  Manifest <- save.pca(Manifest=Manifest, tbl=rnaTables,datasetName=datasetName, dataType="rna", geneset = NA, output_directory=output_directory)
+	  Manifest <- save.pca(Manifest=Manifest, tbl=protTables,datasetName=datasetName, dataType="protein", geneset = geneset_name, output_directory=output_directory)
+	  Manifest <- save.pca(Manifest=Manifest, tbl=protTables,datasetName=datasetName, dataType="protein", geneset = NA, output_directory=output_directory)
 	  
 	} # for diseaseName	
   

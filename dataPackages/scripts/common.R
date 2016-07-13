@@ -21,14 +21,14 @@ mapProcess <- function(process){
 }
 #---------------------------------------------------------
 ### For any mutation file, create and save an indicator mut01 file
-save.mut01.from.mut <- function(Manifest, result, dataset, dataType){
+save.mut01.from.mut <- function(Manifest, result, dataset, dataType, outputDirectory){
   
   resultObj <- data.frame(dataset = dataset, dataType = "mut01",
                           rowType= result$rowType, colType = result$colType)
   resultObj$rows <-  list(result$rows)
   resultObj$cols <-  list(result$cols);
   
-  mtx.01 <- result$data
+  mtx.01 <- result$data[[1]]
   mtx.01[is.na(mtx.01)] <- 0
   mtx.01[mtx.01 == ""] <- 0
   mtx.01[nchar(mtx.01) >1] <- 1
@@ -103,7 +103,7 @@ save.collection <- function(Manifest, dataset, dataType,result, parent,
     format = "JSON") 
     
   if(dataType == "mut")
-  	Manifest <- save.mut01.from.mut(Manifest, result, dataset, dataType)
+  	Manifest <- save.mut01.from.mut(Manifest, result, dataset, dataType, outputDirectory)
     
 	return(Manifest)
 }
@@ -138,6 +138,7 @@ os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", 
 }
 
 ##----------------------------
+## get all collections with a specific key:value pair within the process
 subset.collections <- function(collections, process=NA){
 
     coll.subset <- collections

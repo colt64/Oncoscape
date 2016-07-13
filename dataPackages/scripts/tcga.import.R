@@ -29,7 +29,7 @@ output.clinical.dir    <- "../data/clinical/clean/"
 output.categories.dir  <- "../data/categories/"
 output.manifest.dir    <- "../manifests/"
 
-output.molecular.manifest <- "os.import.molecular.ucsc.manifest"
+output.molecular.manifest <- "os.import.molecular.manifest"
 output.clinical.manifest <- "os.import.clinical.tcga.manifest"
 
 

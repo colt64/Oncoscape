@@ -13,13 +13,15 @@
       },
       {
         "id": 2,
-        "process": {
-          "calculation": ["scaled"],
-          "scaleFactor": [10000]
-        },
-        "date": "2016-07-03",
+        "process": [
+          {
+            "calculation": "scaled",
+            "input": 100000
+          }
+        ],
+        "date": "2016-07-13",
         "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_2_scaled-10000",
+        "file": "hg19_genes_2_scaled-1e+05",
         "parent": [
           ["hg19", "genes", "1"],
           [1]
@@ -27,14 +29,16 @@
       },
       {
         "id": 3,
-        "process": {
-          "calculation": ["scaled"],
-          "scaleFactor": [10000],
-          "geneset": ["tcga.GBM.classifiers"]
-        },
-        "date": "2016-07-03",
+        "process": [
+          {
+            "calculation": "scaled",
+            "scaleFactor": 100000,
+            "geneset": "tcga.GBM.classifiers"
+          }
+        ],
+        "date": "2016-07-13",
         "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_3_scaled-10000-tcga.GBM.classifiers",
+        "file": "hg19_genes_3_scaled-1e+05-tcga.GBM.classifiers",
         "parent": [
           ["hg19", "genes", "2"],
           ["hg19", "genesets", "1"]
@@ -42,14 +46,16 @@
       },
       {
         "id": 4,
-        "process": {
-          "calculation": ["scaled"],
-          "scaleFactor": [10000],
-          "geneset": ["marker.genes.545"]
-        },
-        "date": "2016-07-03",
+        "process": [
+          {
+            "calculation": "scaled",
+            "scaleFactor": 100000,
+            "geneset": "marker.genes.545"
+          }
+        ],
+        "date": "2016-07-13",
         "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_4_scaled-10000-marker.genes.545",
+        "file": "hg19_genes_4_scaled-1e+05-marker.genes.545",
         "parent": [
           ["hg19", "genes", "2"],
           ["hg19", "genesets", "1"]
@@ -57,14 +63,16 @@
       },
       {
         "id": 5,
-        "process": {
-          "calculation": ["scaled"],
-          "scaleFactor": [10000],
-          "geneset": ["tcga.pancan.mutated"]
-        },
-        "date": "2016-07-03",
+        "process": [
+          {
+            "calculation": "scaled",
+            "scaleFactor": 100000,
+            "geneset": "tcga.pancan.mutated"
+          }
+        ],
+        "date": "2016-07-13",
         "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_5_scaled-10000-tcga.pancan.mutated",
+        "file": "hg19_genes_5_scaled-1e+05-tcga.pancan.mutated",
         "parent": [
           ["hg19", "genes", "2"],
           ["hg19", "genesets", "1"]
@@ -72,14 +80,16 @@
       },
       {
         "id": 6,
-        "process": {
-          "calculation": ["scaled"],
-          "scaleFactor": [10000],
-          "geneset": ["oncoVogel274"]
-        },
-        "date": "2016-07-03",
+        "process": [
+          {
+            "calculation": "scaled",
+            "scaleFactor": 100000,
+            "geneset": "oncoVogel274"
+          }
+        ],
+        "date": "2016-07-13",
         "directory": "../data/molecular/hg19/",
-        "file": "hg19_genes_6_scaled-10000-oncoVogel274",
+        "file": "hg19_genes_6_scaled-1e+05-oncoVogel274",
         "parent": [
           ["hg19", "genes", "2"],
           ["hg19", "genesets", "1"]
@@ -101,13 +111,15 @@
       },
       {
         "id": 2,
-        "process": {
-          "calculation": ["scaled"],
-          "scaleFactor": [10000]
-        },
-        "date": "2016-07-03",
+        "process": [
+          {
+            "calculation": "scaled",
+            "input": 100000
+          }
+        ],
+        "date": "2016-07-13",
         "directory": "../data/molecular/hg19/",
-        "file": "hg19_chromosome_2_scaled-10000",
+        "file": "hg19_chromosome_2_scaled-1e+05",
         "parent": [
           ["hg19", "chromosome", "1"],
           ["hg19", "centromere", "1"]

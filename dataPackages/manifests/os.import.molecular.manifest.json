@@ -5,7 +5,7 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-07",
+        "date": "2016-07-13",
         "directory": "../data/molecular/clean/",
         "file": "brca_cnv_1_import",
         "process": "import",
@@ -13,7 +13,7 @@
       },
       {
         "id": 2,
-        "date": "2016-07-07",
+        "date": "2016-07-13",
         "directory": "../data/molecular/clean/",
         "file": "brca_cnv_2_import",
         "process": "import",
@@ -27,7 +27,7 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-07",
+        "date": "2016-07-13",
         "directory": "../data/molecular/clean/",
         "file": "brca_mut_1_import",
         "process": "import",
@@ -41,7 +41,7 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-07",
+        "date": "2016-07-13",
         "directory": "../data/molecular/clean/",
         "file": "brca_mut01_1_import",
         "process": "import",
@@ -49,7 +49,7 @@
       },
       {
         "id": 2,
-        "date": "2016-07-07",
+        "date": "2016-07-13",
         "directory": "../data/molecular/clean/",
         "file": "brca_mut01_2_import",
         "process": "import",
@@ -63,7 +63,7 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-07",
+        "date": "2016-07-13",
         "directory": "../data/molecular/clean/",
         "file": "brca_methyl_1_import",
         "process": "import",
@@ -71,7 +71,7 @@
       },
       {
         "id": 2,
-        "date": "2016-07-07",
+        "date": "2016-07-13",
         "directory": "../data/molecular/clean/",
         "file": "brca_methyl_2_import",
         "process": "import",
@@ -85,7 +85,7 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-07",
+        "date": "2016-07-13",
         "directory": "../data/molecular/clean/",
         "file": "brca_rna_1_import",
         "process": "import",
@@ -93,7 +93,7 @@
       },
       {
         "id": 2,
-        "date": "2016-07-07",
+        "date": "2016-07-13",
         "directory": "../data/molecular/clean/",
         "file": "brca_rna_2_import",
         "process": "import",
@@ -107,7 +107,7 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-07",
+        "date": "2016-07-13",
         "directory": "../data/molecular/clean/",
         "file": "brca_protein_1_import",
         "process": "import",

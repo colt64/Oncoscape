@@ -5,19 +5,78 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-05",
+        "date": "2016-07-13",
         "directory": "../data/molecular/mds/",
         "file": "brca_mds_1_mds-oncoVogel274-cnv-mut01",
-        "process": {
-          "calculation": "mds",
-          "geneset": "oncoVogel274",
-          "input": ["cnv", "mut01"],
-          "regex": ".01$",
-          "threshold": -0.0001
-        },
+        "process": [
+          {
+            "calculation": "mds",
+            "geneset": "oncoVogel274",
+            "input": ["cnv", "mut01"],
+            "regex": ".01$",
+            "threshold": -0.0001
+          }
+        ],
         "parent": [
           ["brca", "cnv", "1"],
           ["brca", "mut01", "1"]
+        ]
+      },
+      {
+        "id": 2,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_mds_2_mds-oncoVogel274-cnv-mut01",
+        "process": [
+          {
+            "calculation": "mds",
+            "geneset": "oncoVogel274",
+            "input": ["cnv", "mut01"],
+            "regex": ".01$",
+            "threshold": -0.0001
+          }
+        ],
+        "parent": [
+          ["brca", "cnv", "1"],
+          ["brca", "mut01", "2"]
+        ]
+      },
+      {
+        "id": 3,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_mds_3_mds-oncoVogel274-cnv-mut01",
+        "process": [
+          {
+            "calculation": "mds",
+            "geneset": "oncoVogel274",
+            "input": ["cnv", "mut01"],
+            "regex": ".01$",
+            "threshold": -0.0001
+          }
+        ],
+        "parent": [
+          ["brca", "cnv", "2"],
+          ["brca", "mut01", "1"]
+        ]
+      },
+      {
+        "id": 4,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_mds_4_mds-oncoVogel274-cnv-mut01",
+        "process": [
+          {
+            "calculation": "mds",
+            "geneset": "oncoVogel274",
+            "input": ["cnv", "mut01"],
+            "regex": ".01$",
+            "threshold": -0.0001
+          }
+        ],
+        "parent": [
+          ["brca", "cnv", "2"],
+          ["brca", "mut01", "2"]
         ]
       }
     ]
@@ -28,17 +87,160 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-05",
+        "date": "2016-07-13",
         "directory": "../data/molecular/mds/",
         "file": "brca_pcaScores_1_prcomp-oncoVogel274-cnv",
-        "process": {
-          "calculation": "prcomp",
-          "geneset": "oncoVogel274",
-          "input": "cnv",
-          "center": "TRUE",
-          "scale": "TRUE"
-        },
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "cnv",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
         "parent": ["brca", "cnv", "1"]
+      },
+      {
+        "id": 2,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaScores_2_prcomp-oncoVogel274-cnv",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "cnv",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "cnv", "2"]
+      },
+      {
+        "id": 3,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaScores_3_prcomp-oncoVogel274-mut01",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "mut01",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "mut01", "1"]
+      },
+      {
+        "id": 4,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaScores_4_prcomp-oncoVogel274-mut01",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "mut01",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "mut01", "2"]
+      },
+      {
+        "id": 5,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaScores_5_prcomp-oncoVogel274-rna",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "rna",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "rna", "1"]
+      },
+      {
+        "id": 6,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaScores_6_prcomp-oncoVogel274-rna",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "rna",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "rna", "2"]
+      },
+      {
+        "id": 7,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaScores_7_prcomp-NA-rna",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "input": "rna",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "rna", "1"]
+      },
+      {
+        "id": 8,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaScores_8_prcomp-NA-rna",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "input": "rna",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "rna", "2"]
+      },
+      {
+        "id": 9,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaScores_9_prcomp-oncoVogel274-protein",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "protein",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "protein", "1"]
+      },
+      {
+        "id": 10,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaScores_10_prcomp-NA-protein",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "input": "protein",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "protein", "1"]
       }
     ]
   },
@@ -48,17 +250,160 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-05",
+        "date": "2016-07-13",
         "directory": "../data/molecular/mds/",
         "file": "brca_pcaLoadings_1_prcomp-oncoVogel274-cnv",
-        "process": {
-          "calculation": "prcomp",
-          "geneset": "oncoVogel274",
-          "input": "cnv",
-          "center": "TRUE",
-          "scale": "TRUE"
-        },
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "cnv",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
         "parent": ["brca", "cnv", "1"]
+      },
+      {
+        "id": 2,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaLoadings_2_prcomp-oncoVogel274-cnv",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "cnv",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "cnv", "2"]
+      },
+      {
+        "id": 3,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaLoadings_3_prcomp-oncoVogel274-mut01",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "mut01",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "mut01", "1"]
+      },
+      {
+        "id": 4,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaLoadings_4_prcomp-oncoVogel274-mut01",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "mut01",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "mut01", "2"]
+      },
+      {
+        "id": 5,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaLoadings_5_prcomp-oncoVogel274-rna",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "rna",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "rna", "1"]
+      },
+      {
+        "id": 6,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaLoadings_6_prcomp-oncoVogel274-rna",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "rna",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "rna", "2"]
+      },
+      {
+        "id": 7,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaLoadings_7_prcomp-NA-rna",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "input": "rna",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "rna", "1"]
+      },
+      {
+        "id": 8,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaLoadings_8_prcomp-NA-rna",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "input": "rna",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "rna", "2"]
+      },
+      {
+        "id": 9,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaLoadings_9_prcomp-oncoVogel274-protein",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "geneset": "oncoVogel274",
+            "input": "protein",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "protein", "1"]
+      },
+      {
+        "id": 10,
+        "date": "2016-07-13",
+        "directory": "../data/molecular/mds/",
+        "file": "brca_pcaLoadings_10_prcomp-NA-protein",
+        "process": [
+          {
+            "calculation": "prcomp",
+            "input": "protein",
+            "center": "TRUE",
+            "scale": "TRUE"
+          }
+        ],
+        "parent": ["brca", "protein", "1"]
       }
     ]
   }

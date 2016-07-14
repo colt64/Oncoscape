@@ -85,7 +85,7 @@ save.collection <- function(Manifest, dataset, dataType,result, parent,
 	cat("-save collection\n")
 
   index <- get.new.collection.index(Manifest, dataset, dataType)
-  result$id <- index
+#  result$id <- index
   outputFile <- paste(dataset, dataType, index, processName , sep="_")
   newCollection <- data.frame(id=index,
                               date = date,

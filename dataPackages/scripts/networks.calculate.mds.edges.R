@@ -96,13 +96,17 @@ save.pca<- function(Manifest, tbl, datasetName, dataType, geneset=NA, output_dir
 	process$input=dataType
 	processName <- paste(unlist(process), collapse="-")
 	process$center="TRUE"; process$scale="TRUE"
+	process <- list(process)
 
-	for(i in 1:nrow(tbl)){
-	  	collection <- tbl[i, "collections"][[1]]
+	coll <- tbl$collections[[1]]
+	
+	
+	for(i in 1:nrow(coll)){
+	  collection <- coll[i,]
 		tbl.json <- fromJSON(paste(collection$directory, collection$file,".json", sep="")) 
 		mtx <- tbl.json$data[[1]]
 		dimnames(mtx) <- list(tbl.json$rows[[1]], tbl.json$cols[[1]])
-		tbl.index <- tbl.json$id
+		tbl.index <- collection$id
    
 		if(tbl.json$rowType == "gene")
 		  mtx <- t(mtx)
@@ -170,6 +174,7 @@ save.mds.innerProduct <- function(Manifest,datasetName, tbl1, tbl2, tbl1Type, tb
   	process$input=list( c(tbl1Type, tbl2Type))
   	processName <- paste(unlist(process), collapse="-")
   	process$regex=regex; process$threshold=threshold
+  	process <- list(process)
 
   	coll1 <- tbl1$collections[[1]]
   	coll2 <- tbl2$collections[[1]]
@@ -181,7 +186,7 @@ save.mds.innerProduct <- function(Manifest,datasetName, tbl1, tbl2, tbl1Type, tb
 		tbl1.samples <- grep(regex, tbl1.json$cols[[1]],  value=TRUE)
 		tbl1.index <- coll1[i, "id"]
 
-		cat("--- tbl1: ", coll1$process, "\n")
+		cat("--- tbl1: ", coll1[i, "file"], "\n")
 		
 		for(j in 1:nrow(coll2)){
 		  tbl2.json <- fromJSON(paste(coll2[j , "directory"], coll2[j, "file"],".json", sep="")) 
@@ -190,7 +195,7 @@ save.mds.innerProduct <- function(Manifest,datasetName, tbl1, tbl2, tbl1Type, tb
 			tbl2.samples <- grep(regex, tbl2.json$cols[[1]],  value=TRUE)
 			tbl2.index <-coll2[j,"id"]
 
-			cat("--- tbl2: ", coll2$process, "\n")
+			cat("--- tbl2: ", coll2[j, "file"], "\n")
 			
 			samples <- unique(tbl1.samples, tbl2.samples)
 			sample_similarity <- calculateSampleSimilarityMatrix(mtx.tbl1, mtx.tbl2,samples=samples, genes=genes)
@@ -275,18 +280,18 @@ get.network_edges <- function(mtx,samples, genes, edgeTypes){
 save.edge.files <- function(Manifest, dataset, result,
                             parent, process,processName, outputDirectory="./"){
 
-  Manifest <- save.collection(Manifest=Manifest, dataset=datasetName, dataType="edges", result=result,
-                              parent=parent, process=process,processName=processName, outputDirectory=output_directory)
+  Manifest <- save.collection(Manifest=Manifest, dataset=dataset, dataType="edges", result=result,
+                              parent=parent, process=process,processName=processName, outputDirectory=outputDirectory)
   
   node1_counts <- as.data.frame(table(result[,2]))  
   colnames(node1_counts) <- NULL
-  Manifest <- save.collection(Manifest=Manifest, dataset=datasetName, dataType="geneDegree", result=node1_counts,
-                              parent=parent, process=process,processName=processName, outputDirectory=output_directory)
+  Manifest <- save.collection(Manifest=Manifest, dataset=dataset, dataType="geneDegree", result=node1_counts,
+                              parent=parent, process=process,processName=processName, outputDirectory=outputDirectory)
   
   node2_counts <- as.data.frame(table(result[,3]))  
   colnames(node2_counts) <- NULL
-  Manifest <- save.collection(Manifest=Manifest, dataset=datasetName, dataType="ptDegree", result=node2_counts,
-                              parent=parent, process=process,processName=processName, outputDirectory=output_directory)
+  Manifest <- save.collection(Manifest=Manifest, dataset=dataset, dataType="ptDegree", result=node2_counts,
+                              parent=parent, process=process,processName=processName, outputDirectory=outputDirectory)
 
 	return( Manifest )
 
@@ -324,8 +329,8 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 		for (datasetName in datasetNames){
 		  molTables <- subset(datasets, dataset==datasetName)
 
-		  cnvTables <- subset(molTables, dataType == "cnv")
-		  mutTables <- subset(molTables, dataType == "mut01")
+		  cnvTables <- subset(molTables, dataType == "cnv")$collections[[1]]
+		  mutTables <- subset(molTables, dataType == "mut01")$collections[[1]]
 
 		  if(nrow(cnvTables)==0 & nrow(mutTables) ==0) next;
 		  cat(datasetName, "\n")		  
@@ -339,31 +344,31 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 				if(nrow(cnvTables) >0){
 				  
 				  for(i in 1:nrow(cnvTables)){
-				    collection <- cnvTables[i,"collections"][[1]]
+				    collection <- cnvTables[i,]
 					  newEdges <- get.edgePairs(collection, genesetName, edgeTypes=list("-2"="-2", "-1"="-1", "1"="1", "2"="2"))
 
 					  parent <- list(c(datasetName, "cnv", collection$id))
 					  process <- list(edgeType="cnv", geneset= genesetName); processName=paste(process, collapse="-")
-					  Manifest <- save.edge.files(Manifest=Manifest, dataset=datasetName, result=result,
-					                              parent=parent, process=process,processName=processName, outputDirectory=output_directory)				  
+					  Manifest <- save.edge.files(Manifest=Manifest, dataset=datasetName, result=newEdges,
+					                              parent=parent, process=list(process),processName=processName, outputDirectory=output_directory)				  
 					  
-					  EdgeList$cnv[[as.character(index)]] <- newEdges
+					  EdgeList$cnv[[as.character(collection$id)]] <- newEdges
 				  }
 				}
 				# save individual MUT edges				
 				if(nrow(mutTables)==0)next;
 
 				for(i in 1:nrow(mutTables)){
-				  collection <- mutTables[i, "collections"][[1]]
+				  collection <- mutTables[i,]
 				  newEdges <- get.edgePairs(collection, genesetName, edgeTypes=list("0"="1"))
 				  
 				  parent <- list(c(datasetName, "mut", collection$id))
 				  process <- list(edgeType="mut01", geneset= genesetName); processName=paste(process, collapse="-")
 				  
-          Manifest <- save.edge.files(Manifest=Manifest, dataset=datasetName, result=result,
-                                      parent=parent, process=process,processName=processName, outputDirectory=output_directory)				  
+          Manifest <- save.edge.files(Manifest=Manifest, dataset=datasetName, result=newEdges,
+                                      parent=parent, process=list(process),processName=processName, outputDirectory=output_directory)				  
 
-				  EdgeList$mut[[as.character(index)]] <- newEdges
+				  EdgeList$mut[[as.character(collection$id)]] <- newEdges
 				}
 
 				# save all combinations of MUT & CNV edges
@@ -380,9 +385,9 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 																	
 						allEdges <- rbind(cnvEdges, mutEdges)
 
-						parent <- list(c(datasetName, "network", names(EdgeList$cnv)[k]),c(datasetName, "network", names(EdgeList$mut)[m]) )
-						Manifest <- save.edge.files(Manifest=Manifest, dataset=datasetName, result=result,
-						                            parent=parent, process=process,processName=processName, outputDirectory=output_directory)				  
+						parent <- list(c(datasetName, "cnv", names(EdgeList$cnv)[k]),c(datasetName, "mut01", names(EdgeList$mut)[m]) )
+						Manifest <- save.edge.files(Manifest=Manifest, dataset=datasetName, result=allEdges,
+						                            parent=list(parent), process=list(process),processName=processName, outputDirectory=output_directory)				  
 						
 					}
 				}

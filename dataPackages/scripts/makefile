@@ -17,6 +17,8 @@
 
 default: setup run
 
+data: mapCoordinates import mds edges scale tools
+
 setup: mapCoordinates setupMongo
 
 run: import mds edges scale10k tools syncMongo
@@ -45,7 +47,7 @@ edges:
 	Rscript networks.calculate.mds.edges.R edges
 		# edges
 
-scale10k:
+scale:
 	Rscript networks.scale.mds.genomic.coordinates.R mdsScaled geneScaled chromosomeScaled
 		# MDS values scaled
 		# geneset coordinates scaled

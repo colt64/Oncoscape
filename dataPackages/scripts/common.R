@@ -21,7 +21,7 @@ mapProcess <- function(process){
 }
 #---------------------------------------------------------
 ### For any mutation file, create and save an indicator mut01 file
-save.mut01.from.mut <- function(Manifest, result, dataset, dataType, outputDirectory){
+save.mut01.from.mut <- function(Manifest, result, dataset, dataType,source, outputDirectory){
   
   resultObj <- data.frame(dataset = dataset, dataType = "mut01",
                           rowType= result$rowType, colType = result$colType)
@@ -38,7 +38,7 @@ save.mut01.from.mut <- function(Manifest, result, dataset, dataType, outputDirec
   
   parent <- list(c(dataset, dataType, result$id))
   
-  Manifest <- save.collection(Manifest=Manifest, dataset=dataset, dataType="mut01", result=resultObj,
+  Manifest <- save.collection(Manifest=Manifest, dataset=dataset, dataType="mut01",source=source, result=resultObj,
                               parent=parent, process=process,processName=process, outputDirectory=outputDirectory)
   return(Manifest)
 }
@@ -53,6 +53,7 @@ get.new.collection.index <- function(Manifest, datasetName, dataTypeName){
   
   return(nrow(dataObj$collections[[1]]) +1)
 }
+
 #---------------------------------------------------------
 add.new.collection <- function(Manifest, datasetName, dataTypeName, collection){
   
@@ -79,7 +80,7 @@ add.new.collection <- function(Manifest, datasetName, dataTypeName, collection){
   
 }
 #---------------------------------------------------------
-save.collection <- function(Manifest, dataset, dataType,result, parent, 
+save.collection <- function(Manifest, dataset, dataType,source,result, parent, 
 							process,processName, outputDirectory){
 
 	cat("-save collection\n")
@@ -87,10 +88,15 @@ save.collection <- function(Manifest, dataset, dataType,result, parent,
   index <- get.new.collection.index(Manifest, dataset, dataType)
 #  result$id <- index
   outputFile <- paste(dataset, dataType, index, processName , sep="_")
+  
+  source <- unique(source)
+  if(length(source)>1) source <- list(source)
+  
   newCollection <- data.frame(id=index,
                               date = date,
                               directory= outputDirectory,
                               file=outputFile)
+  newCollection$source <- source
   newCollection$process <- process
   newCollection$parent <- parent
   Manifest <- add.new.collection(Manifest, dataset, dataType, newCollection)
@@ -103,7 +109,7 @@ save.collection <- function(Manifest, dataset, dataType,result, parent,
     format = "JSON") 
     
   if(dataType == "mut")
-  	Manifest <- save.mut01.from.mut(Manifest, result, dataset, dataType, outputDirectory)
+  	Manifest <- save.mut01.from.mut(Manifest, result, dataset, dataType,source, outputDirectory)
     
 	return(Manifest)
 }
@@ -136,16 +142,40 @@ os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", 
     write(toJSON(df, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
   
 }
-
+##----------------------------
+## get parent collection given the parentID: [dataset, dataType, collection$id]
+get.parent.collection <- function(manifest, parentID){
+  
+  
+  if(is.list(parentID)){
+    if(length(parentID)>1){
+      collection <- lapply(parentID, function(parent){
+        get.parent.collection(manifest, parent)
+        #        subset(manifest, dataset==parent[1] & dataType==parent[2] & collections$id==parent[3])
+      })
+      return(collection)
+    }
+    if(length(parentID)==1)
+      parentID <- unlist(parentID)
+  }
+  if(is.data.frame(parentID)){
+    collection <- apply(parentID, 1, function(parent){ get.parent.collection(manifest, parent)})
+  }
+  if(is.null(parentID))return(NA)
+  Obj <- subset(manifest, dataset==parentID[1] & dataType==parentID[2])$collections[[1]]
+  collection <- subset(Obj, id==parentID[3])
+  return(collection)
+}
 ##----------------------------
 ## get all collections with a specific key:value pair within the process
 subset.collections <- function(collections, process=NA){
 
     coll.subset <- collections
     if(!all(is.na(process))){
-      matchColl <- apply(coll.subset,1, function(coll){ 
-        all( apply(process,1, function(param){
-          coll$process[param["field"]] == param["value"] }) )
+      matchColl <- sapply(coll.subset$process, function(coll){ 
+        all(names(process) %in% names(coll)) &&
+        all(unlist(sapply(names(process),function(param){
+          length(intersect(unlist(coll[[param]]),process[[param]])) == length(process[[param]]) }) ) )
       })
       matchColl[is.na(matchColl)] <- FALSE
       coll.subset <- coll.subset[matchColl,]

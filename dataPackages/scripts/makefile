@@ -21,7 +21,7 @@ data: mapCoordinates import mds edges scale tools
 
 setup: mapCoordinates setupMongo
 
-run: import mds edges scale10k tools syncMongo
+run: import mds edges scale tools syncMongo
 
 #-----  Create Files
 

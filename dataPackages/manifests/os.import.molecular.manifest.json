@@ -5,17 +5,19 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-13",
+        "date": "2016-07-14",
         "directory": "../data/molecular/clean/",
         "file": "brca_cnv_1_import",
+        "source": "cBio",
         "process": "import",
         "parent": ["brca", "cBio", "1"]
       },
       {
         "id": 2,
-        "date": "2016-07-13",
+        "date": "2016-07-14",
         "directory": "../data/molecular/clean/",
         "file": "brca_cnv_2_import",
+        "source": "ucsc",
         "process": "import",
         "parent": ["brca", "ucsc", "1"]
       }
@@ -27,9 +29,10 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-13",
+        "date": "2016-07-14",
         "directory": "../data/molecular/clean/",
         "file": "brca_mut_1_import",
+        "source": "cBio",
         "process": "import",
         "parent": ["brca", "cBio", "2"]
       }
@@ -41,17 +44,19 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-13",
+        "date": "2016-07-14",
         "directory": "../data/molecular/clean/",
         "file": "brca_mut01_1_import",
+        "source": "cBio",
         "process": "import",
-        "parent": ["brca", "mut", "1"]
+        "parent": ["brca", "mut"]
       },
       {
         "id": 2,
-        "date": "2016-07-13",
+        "date": "2016-07-14",
         "directory": "../data/molecular/clean/",
         "file": "brca_mut01_2_import",
+        "source": "ucsc",
         "process": "import",
         "parent": ["brca", "ucsc", "2"]
       }
@@ -63,17 +68,19 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-13",
+        "date": "2016-07-14",
         "directory": "../data/molecular/clean/",
         "file": "brca_methyl_1_import",
+        "source": "cBio",
         "process": "import",
         "parent": ["brca", "cBio", "3"]
       },
       {
         "id": 2,
-        "date": "2016-07-13",
+        "date": "2016-07-14",
         "directory": "../data/molecular/clean/",
         "file": "brca_methyl_2_import",
+        "source": "cBio",
         "process": "import",
         "parent": ["brca", "cBio", "4"]
       }
@@ -85,17 +92,19 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-13",
+        "date": "2016-07-14",
         "directory": "../data/molecular/clean/",
         "file": "brca_rna_1_import",
+        "source": "cBio",
         "process": "import",
         "parent": ["brca", "cBio", "5"]
       },
       {
         "id": 2,
-        "date": "2016-07-13",
+        "date": "2016-07-14",
         "directory": "../data/molecular/clean/",
         "file": "brca_rna_2_import",
+        "source": "cBio",
         "process": "import",
         "parent": ["brca", "cBio", "6"]
       }
@@ -107,9 +116,10 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-13",
+        "date": "2016-07-14",
         "directory": "../data/molecular/clean/",
         "file": "brca_protein_1_import",
+        "source": "cBio",
         "process": "import",
         "parent": ["brca", "cBio", "7"]
       }

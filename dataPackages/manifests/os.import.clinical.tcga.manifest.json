@@ -5,9 +5,10 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-05",
+        "date": "2016-07-14",
         "directory": "../data/clinical/clean/",
         "file": "brca_patient_1_import",
+        "source": "tcga",
         "process": "import",
         "parent": ["brca", "tcga", "1"]
       }
@@ -19,9 +20,10 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-05",
+        "date": "2016-07-14",
         "directory": "../data/clinical/clean/",
         "file": "brca_drug_1_import",
+        "source": "tcga",
         "process": "import",
         "parent": ["brca", "tcga", "2"]
       }
@@ -33,9 +35,10 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-05",
+        "date": "2016-07-14",
         "directory": "../data/clinical/clean/",
         "file": "brca_radiation_1_import",
+        "source": "tcga",
         "process": "import",
         "parent": ["brca", "tcga", "3"]
       }
@@ -47,25 +50,28 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-05",
+        "date": "2016-07-14",
         "directory": "../data/clinical/clean/",
         "file": "brca_followUp_1_import",
+        "source": "tcga",
         "process": "import",
         "parent": ["brca", "tcga", "4"]
       },
       {
         "id": 2,
-        "date": "2016-07-05",
+        "date": "2016-07-14",
         "directory": "../data/clinical/clean/",
         "file": "brca_followUp_2_import",
+        "source": "tcga",
         "process": "import",
         "parent": ["brca", "tcga", "5"]
       },
       {
         "id": 3,
-        "date": "2016-07-05",
+        "date": "2016-07-14",
         "directory": "../data/clinical/clean/",
         "file": "brca_followUp_3_import",
+        "source": "tcga",
         "process": "import",
         "parent": ["brca", "tcga", "6"]
       }
@@ -77,17 +83,19 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-05",
+        "date": "2016-07-14",
         "directory": "../data/clinical/clean/",
         "file": "brca_newTumor_1_import",
+        "source": "tcga",
         "process": "import",
         "parent": ["brca", "tcga", "7"]
       },
       {
         "id": 2,
-        "date": "2016-07-05",
+        "date": "2016-07-14",
         "directory": "../data/clinical/clean/",
         "file": "brca_newTumor_2_import",
+        "source": "tcga",
         "process": "import",
         "parent": ["brca", "tcga", "8"]
       }
@@ -99,9 +107,10 @@
     "collections": [
       {
         "id": 1,
-        "date": "2016-07-05",
+        "date": "2016-07-14",
         "directory": "../data/clinical/clean/",
         "file": "brca_otherMalignancy_1_import",
+        "source": "tcga",
         "process": "import",
         "parent": ["brca", "tcga", "9"]
       }

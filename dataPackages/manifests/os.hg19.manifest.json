@@ -7,6 +7,7 @@
         "id": 1,
         "process": ["position", "min", "abs", "start"],
         "date": "2016-06-24",
+        "source": "hg19",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_1_position-min-abs-start",
         "parent": [null]
@@ -20,6 +21,7 @@
         "id": 1,
         "process": ["length"],
         "date": "2016-06-24",
+        "source": "hg19",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_chromosome_1_length",
         "parent": [null]
@@ -34,6 +36,7 @@
         "id": 1,
         "process": "position",
         "date": "2016-06-24",
+        "source": "hg19",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_centromere_1_position"
       }
@@ -47,6 +50,7 @@
         "id": 1,
         "process": "hgnc",
         "date": "2016-06-24",
+        "source": "hg19",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genesets_1_hgnc"
       }

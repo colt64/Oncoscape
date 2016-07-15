@@ -229,8 +229,8 @@ os.data.batch <- function(manifest, outputDirectory, ...){
 
 				parent <- list(c(sourceObj$dataset, sourceObj$dataType, dataObj$id))
 				
-				Manifest <- save.collection(Manifest=Manifest, dataset=sourceObj$dataset, dataType=dataType, result=resultObj,
-				                parent=parent, process=process,processName=process, outputDirectory=outputDirectory)
+				Manifest <- save.collection(Manifest=Manifest, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$dataType,
+				                result=resultObj,parent=parent, process=process,processName=process, outputDirectory=outputDirectory)
 				
 		   }  # collection
 		}  # dataset

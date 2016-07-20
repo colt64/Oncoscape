@@ -13,25 +13,6 @@ options(stringsAsFactors = FALSE)
 source("common.R")
 source("os.tcga.mappings.R")
 
-#commands <- c("molecular", "clinical", "categories")
-commands <- c("molecular")
-#commands <- c("clinical")
-
-args = commandArgs(trailingOnly=TRUE)
-if(length(args) != 0)
-	commands <- args
-
-os.molecular.batch   <- fromJSON("../manifests/os.molecular.manifest.json")
-os.clinical.tcga.batch    <- fromJSON("../manifests/os.tcga.clinical.manifest.json")
-
-output.molecular.dir   <- "../data/molecular/clean/"
-output.clinical.dir    <- "../data/clinical/clean/"
-output.categories.dir  <- "../data/categories/"
-output.manifest.dir    <- "../manifests/"
-
-output.molecular.manifest <- "os.import.molecular.manifest"
-output.clinical.manifest <- "os.import.clinical.tcga.manifest"
-
 
 date <- as.character(Sys.Date())
 process <- "import"
@@ -182,12 +163,11 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
 }
 #---------------------------------------------------------
 ### Batch Is Used To Process Multiple TCGA Files Defined 
-os.data.batch <- function(manifest, outputDirectory, ...){
+os.data.batch <- function(manifest, ...){
            
     # From Input File: dataframe of datasets, datatypes and list of collections
-    datasets <- manifest
-    Manifest <- data.frame()
-      
+    datasets <- fromJSON(manifest)
+
 		# Loop for each file to load
 		for (i in 1:nrow(datasets)){
 			sourceObj <- datasets[i,]
@@ -229,16 +209,16 @@ os.data.batch <- function(manifest, outputDirectory, ...){
 
 				parent <- list(c(sourceObj$dataset, sourceObj$dataType, dataObj$id))
 				
-				Manifest <- save.collection(Manifest=Manifest, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$dataType,
-				                result=resultObj,parent=parent, process=process,processName=process, outputDirectory=outputDirectory)
+				save.collection(mongo, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$dataType,
+				                result=resultObj,parent=parent, process=process,processName=process)
 				
 		   }  # collection
 		}  # dataset
-    return(Manifest)
+    return()
 }
 
 #----------------------------------------------------------------------------------------------------
-get.category.data<- function(name, table, cat.col.name, color.col.name){
+get.category.data<- function(name, table, cat.col.name, color.col.name= "color"){
   
   catNames <- unique(table[,cat.col.name])
   categories.type.list <- lapply(catNames, function(cat.name){
@@ -254,14 +234,14 @@ get.category.data<- function(name, table, cat.col.name, color.col.name){
 add.category.fromFile <- function(file, name, col.name, dataset, datatype){
   
   tbl <- get(load(file))
-  categories.list <- get.category.data(name=name, table=tbl, cat.col.name=col.name, color.col.name="color")
+  categories.list <- get.category.data(table=tbl, cat.col.name=col.name)
   df <- data.frame(dataset=dataset, datatype=datatype, name=name)
   df$data=list(categories.list)
   return(df)
 }
 
 #----------------------------------------------------------------------------------------------------
-os.save.categories <- function(output.dir, datasets = c("gbm")){
+os.save.categories <- function(datasets = c("gbm")){
   
   color.categories <- list()
   datatype= "colorCategory"
@@ -281,34 +261,25 @@ os.save.categories <- function(output.dir, datasets = c("gbm")){
     categories.list <- fromJSON("../archive/categories/brca/colorCategories.json")
     color.categories <- c(color.categories, list(categories.list))
   }
-  os.data.save(color.categories, output.dir, "os.categories.color.data", format="JSON")
+  write.to.mongo.(mongo, "os.categories.color.data",color.categories)
   
 }
 
 # Run Block  -------------------------------------------------------
-if("categories" %in% commands) 
-  os.save.categories(output.dir=output.categories.dir, datasets=c("gbm", "brca"))
 
-if("molecular" %in% commands){
-	Manifest <- os.data.batch(  manifest = os.molecular.batch, 
-							outputDirectory = output.molecular.dir		 )
-		os.data.save(
-	  df = Manifest,
-	  directory=output.manifest.dir,
-	  file= output.molecular.manifest,
-	  format = "JSON") 
-}
-if("clinical" %in% commands){
-	Manifest <- os.data.batch(
-	  manifest = os.clinical.tcga.batch,
-	  outputDirectory = output.clinical.dir,
-	  checkEnumerations = FALSE,
-	  checkClassType = "os.class.tcgaCharacter")
+## must first initialize server (through shell >mongod)
+mongo <- connect.to.mongo()
 
-	os.data.save(
-	  df = Manifest,
-	  directory=output.manifest.dir,
-	  file= output.clinical.manifest,
-	  format = "JSON") 
+manifest <- "../manifests/os.molecular.manifest.json"
+args = commandArgs(trailingOnly=TRUE)
+if(length(args) != 0 )
+  manifest <- args
 
-}
+#if("categories" %in% commands) 
+#  os.save.categories( datasets=c("gbm", "brca"))
+
+os.data.batch(manifest,
+              checkEnumerations = FALSE,
+              checkClassType = "os.class.tcgaCharacter")
+
+close.mongo(mongo)

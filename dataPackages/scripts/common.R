@@ -4,10 +4,60 @@ library(R.utils)
 library(stringr)
 library(plyr)
 library(jsonlite)
+library(rmongodb)
 
 
 os.dataset.enumerations     <- fromJSON("../manifests/os.dataset.enumerations.json" )
 
+#---------------------------------------------------------
+connect.to.mongo <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
+	mongo <- mongo.create(host = host, name = name, username = username,
+  							password = password, db = db, timeout = 0L)
+	
+	stopifnot(mongo.is.connected(mongo))
+	return(mongo)
+}
+
+#---------------------------------------------------------
+close.mongo <- function(mongo){
+
+	if(mongo.is.connected(mongo) == TRUE) {
+	  mongo.drop(mongo, icoll)
+	  #mongo.drop.database(mongo, db)
+	  res <- mongo.get.database.collections(mongo, db)
+	  print(res)
+
+	  # close connection
+	  mongo.destroy(mongo)
+	}
+}
+
+#---------------------------------------------------------
+get.mongo.table <- function(mongo, db, table){
+
+	if(mongo.is.connected(mongo)){
+		collections <- mongo.get.database.collections(mongo, db)
+		pop <- mongo.distinct(mongo, coll, "pop")
+		pops1 <- mongo.find.all(mongo, coll, query = list('pop' = list('$lte' = 2), 'pop' = list('$gte' = 1)))
+	}
+}
+
+#---------------------------------------------------------
+write.to.mongo <- function(mongo, db, dataObj){
+
+	bson.data <- mongo.bson.from.JSON(toJSON(dataObj))
+
+#a <- mongo.bson.from.JSON( '{"ident":"a", "name":"Markus", "age":33}' )
+#b <- mongo.bson.from.JSON( '{"ident":"b", "name":"MongoSoup", "age":1}' )
+#c <- mongo.bson.from.JSON( '{"ident":"c", "name":"UseR", "age":18}' )
+
+#	icoll <- paste(db, "test", sep=".")
+	mongo.insert.batch(mongo, db, bson.data )
+
+#mongo.update(mongo, icoll, list('ident' = 'b'), list('$inc' = list('age' = 3)))
+# mongo.index.create(mongo, icoll, list('ident' = 1))
+ 
+}
 #---------------------------------------------------------
 mapProcess <- function(process){
   
@@ -55,63 +105,74 @@ get.new.collection.index <- function(Manifest, datasetName, dataTypeName){
 }
 
 #---------------------------------------------------------
-add.new.collection <- function(Manifest, datasetName, dataTypeName, collection){
+add.new.collection <- function(mongo, datasetName, dataTypeName, collection){
+  
+  db <- mongo.get.database.collections(mongo, "oncoscape")
+  
+  if(length(db) == 0){	
+    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
+    newCollection$collections <- list(collection)
+    mongo.insert(mongo, "Manifest", newCollection)
+  }
+  
+  Manifest <- mongo.find.all(mongo, "Manifest", query = list('dataset' = datasetName, 'dataType' = dataTypeName))
+  mongo.insert.batch(mongo, Manifest, newCollection)
   
   if(nrow(Manifest) == 0){	
     newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
     newCollection$collections <- list(collection)
     Manifest <- newCollection
-    return(Manifest)
+    return()
   }
   
   dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
   if(nrow(dataObj) == 1){
     newCollection <- list(rbind(dataObj$collections[[1]],collection))
     Manifest[Manifest$dataset==datasetName & Manifest$dataType ==dataTypeName,"collections"] <- list(newCollection)
-    return(Manifest)
+    return()
   }
   if(nrow(dataObj) == 0){	
     newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
     newCollection$collections <- list(collection)
     Manifest <- rbind(Manifest, newCollection)
-    return(Manifest)
+    return()
   }
   stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), datasetName, dataTypeName))
   
 }
 #---------------------------------------------------------
-save.collection <- function(Manifest, dataset, dataType,source,result, parent, 
-							process,processName, outputDirectory){
+save.collection <- function(mongo, dataset, dataType,source,result, parent, 
+							process,processName){
 
 	cat("-save collection\n")
 
-  index <- get.new.collection.index(Manifest, dataset, dataType)
+#  index <- get.new.collection.index(Manifest, dataset, dataType)
 #  result$id <- index
-  outputFile <- paste(dataset, dataType, index, processName , sep="_")
+#  outputFile <- paste(dataset, dataType, index, processName , sep="_")
   
   source <- unique(source)
   if(length(source)>1) source <- list(source)
-  
-  newCollection <- data.frame(id=index,
-                              date = date,
-                              directory= outputDirectory,
-                              file=outputFile)
+ 
+  newCollection <- data.frame(date=date) 
+#  newCollection <- data.frame(id=index,
+#                              date = date,
+ #                             directory= outputDirectory,
+#                              file=outputFile)
   newCollection$source <- source
   newCollection$process <- process
   newCollection$parent <- parent
-  Manifest <- add.new.collection(Manifest, dataset, dataType, newCollection)
+  add.new.collection(mongo, dataset, dataType, newCollection)
   
   # Save Data Frame
-  os.data.save(
-    df = result,
-    directory=outputDirectory,
-    file= outputFile,
-    format = "JSON") 
+#  os.data.save( mongo,
+#    df = result,
+#    file= outputFile,
+#    ) 
     
   if(dataType == "mut")
-  	Manifest <- save.mut01.from.mut(Manifest, result, dataset, dataType,source, outputDirectory)
+  	save.mut01.from.mut(result, dataset, dataType,source)
     
-	return(Manifest)
+	return()
 }
 
 #----------------------------------------------------------------------------------------------------

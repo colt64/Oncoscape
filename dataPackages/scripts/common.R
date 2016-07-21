@@ -112,7 +112,7 @@ add.new.collection <- function(mongo, datasetName, dataTypeName, collection){
   if(length(db) == 0){	
     newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
     newCollection$collections <- list(collection)
-    mongo.insert(mongo, "Manifest", newCollection)
+    mongo.insert(mongo, "Manifest",  mongo.bson.from.JSON(newCollection))
   }
   
   Manifest <- mongo.find.all(mongo, "Manifest", query = list('dataset' = datasetName, 'dataType' = dataTypeName))

@@ -105,14 +105,12 @@ get.new.collection.index <- function(Manifest, datasetName, dataTypeName){
 }
 
 #---------------------------------------------------------
-add.new.collection <- function(mongo, datasetName, dataTypeName, collection){
+add.new.collection <- function(mongo, collection){
   
   db <- mongo.get.database.collections(mongo, "oncoscape")
   
   if(length(db) == 0){	
-    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
-    newCollection$collections <- list(collection)
-    mongo.insert(mongo, "Manifest", newCollection)
+    mongo.insert(mongo, "oncoscape.manifest", newCollection)
   }
   
   Manifest <- mongo.find.all(mongo, "Manifest", query = list('dataset' = datasetName, 'dataType' = dataTypeName))
@@ -146,29 +144,19 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
 
 	cat("-save collection\n")
 
-#  index <- get.new.collection.index(Manifest, dataset, dataType)
-#  result$id <- index
-#  outputFile <- paste(dataset, dataType, index, processName , sep="_")
-  
   source <- unique(source)
   if(length(source)>1) source <- list(source)
  
-  newCollection <- data.frame(date=date) 
-#  newCollection <- data.frame(id=index,
-#                              date = date,
- #                             directory= outputDirectory,
-#                              file=outputFile)
+  newCollection <- list(dataset=dataset, dataType=dataType, date=date) 
   newCollection$source <- source
   newCollection$process <- process
   newCollection$parent <- parent
-  add.new.collection(mongo, dataset, dataType, newCollection)
+  mongo.insert(mongo, "oncoscape.manifest", newCollection)
   
-  # Save Data Frame
-#  os.data.save( mongo,
-#    df = result,
-#    file= outputFile,
-#    ) 
-    
+  collection.uniqueName <- paste(dataset, dataType, procesName, sep="_")
+  collection.ns <- paste("oncoscape", collection.uniqueName)
+  mongo.insert(mongo, collection.ns, result)
+ 
   if(dataType == "mut")
   	save.mut01.from.mut(result, dataset, dataType,source)
     

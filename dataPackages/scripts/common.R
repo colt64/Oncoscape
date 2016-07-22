@@ -71,9 +71,9 @@ mapProcess <- function(process){
 }
 #---------------------------------------------------------
 ### For any mutation file, create and save an indicator mut01 file
-save.mut01.from.mut <- function(Manifest, result, dataset, dataType,source, outputDirectory){
+save.mut01.from.mut <- function(mongo, result, dataset, dataType,source){
   
-  resultObj <- data.frame(dataset = dataset, dataType = "mut01",
+  resultObj <- list(dataset = dataset, dataType = "mut01",
                           rowType= result$rowType, colType = result$colType)
   resultObj$rows <-  list(result$rows)
   resultObj$cols <-  list(result$cols);
@@ -86,93 +86,60 @@ save.mut01.from.mut <- function(Manifest, result, dataset, dataType,source, outp
   
   resultObj$data <- list(mtx.01)
   
-  parent <- list(c(dataset, dataType, result$id))
+  parent <- list(c(dataset, dataType, result$_id))
   
-  Manifest <- save.collection(Manifest=Manifest, dataset=dataset, dataType="mut01",source=source, result=resultObj,
-                              parent=parent, process=process,processName=process, outputDirectory=outputDirectory)
-  return(Manifest)
+  save.collection(mongo, dataset=dataset, dataType="mut01",source=source, result=resultObj,
+                              parent=parent, process=process,processName=process)
+
 }
 
-#---------------------------------------------------------
-get.new.collection.index <- function(Manifest, datasetName, dataTypeName){
-  
-  if(nrow(Manifest) == 0) return(1)
-  
-  dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
-  if(nrow(dataObj) == 0) return(1)
-  
-  return(nrow(dataObj$collections[[1]]) +1)
-}
-
-#---------------------------------------------------------
-add.new.collection <- function(mongo, datasetName, dataTypeName, collection){
-  
-  db <- mongo.get.database.collections(mongo, "oncoscape")
-  
-  if(length(db) == 0){	
-    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
-    newCollection$collections <- list(collection)
-    mongo.insert(mongo, "Manifest",  mongo.bson.from.JSON(newCollection))
-  }
-  
-  Manifest <- mongo.find.all(mongo, "Manifest", query = list('dataset' = datasetName, 'dataType' = dataTypeName))
-  mongo.insert.batch(mongo, Manifest, newCollection)
-  
-  if(nrow(Manifest) == 0){	
-    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
-    newCollection$collections <- list(collection)
-    Manifest <- newCollection
-    return()
-  }
-  
-  dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
-  if(nrow(dataObj) == 1){
-    newCollection <- list(rbind(dataObj$collections[[1]],collection))
-    Manifest[Manifest$dataset==datasetName & Manifest$dataType ==dataTypeName,"collections"] <- list(newCollection)
-    return()
-  }
-  if(nrow(dataObj) == 0){	
-    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
-    newCollection$collections <- list(collection)
-    Manifest <- rbind(Manifest, newCollection)
-    return()
-  }
-  stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), datasetName, dataTypeName))
-  
-}
 #---------------------------------------------------------
 save.collection <- function(mongo, dataset, dataType,source,result, parent, 
 							process,processName){
 
 	cat("-save collection\n")
 
-#  index <- get.new.collection.index(Manifest, dataset, dataType)
-#  result$id <- index
-#  outputFile <- paste(dataset, dataType, index, processName , sep="_")
-  
   source <- unique(source)
   if(length(source)>1) source <- list(source)
- 
-  newCollection <- data.frame(date=date) 
-#  newCollection <- data.frame(id=index,
-#                              date = date,
- #                             directory= outputDirectory,
-#                              file=outputFile)
+  
+  collection.uniqueName <- paste(dataset, dataType, source, processName, sep="_")
+  collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
+  if(mongo.count(mongo, collection.ns) != 0)
+    stop(paste(collection.uniqueName, " already exists", sep=""))
+  
+  newCollection <- list(dataset=dataset, dataType=dataType, date=date) 
   newCollection$source <- source
   newCollection$process <- process
   newCollection$parent <- parent
-  add.new.collection(mongo, dataset, dataType, newCollection)
+
+  mongo.insert(mongo, "oncoscape.manifest", newCollection)
+ 
+  bson.conversion <- function(result){
+    switch(class(result),
+        "data.frame" = mongo.bson.from.df(result),
+        "list" = mongo.bson.from.list(result),
+        "character" = mongo.bson.from.JSON(result)
+    ) 
+  }
+  mongo.insert(mongo, collection.ns, bson.conversion(result))
   
-  # Save Data Frame
-#  os.data.save( mongo,
-#    df = result,
-#    file= outputFile,
-#    ) 
-    
+  if(dataType %in% c("cnv","mut01", "mut", "rna", "protein", "methyl"){
+  	# update molecular
+	  mongo.update(mongo, "oncoscape.lookup_oncoscape_datasources", list(dataset=dataset, source )
+	  
+  }else if(dataType %in% c("mds", "pca")){
+  	#update calculated
+	  mongo.update(mongo, "oncoscape.lookup_oncoscape_datasources", list(dataset=dataset, source )
+	  
+  }else if(dataType %in% c("edges", "geneDegree", "ptDegree")){
+  	#update edges
+  	  mongo.update(mongo, "oncoscape.lookup_oncoscape_datasources", list(dataset=dataset, source )
+
+  }
+ 
   if(dataType == "mut")
-  	save.mut01.from.mut(result, dataset, dataType,source)
-    
-	return()
+  	save.mut01.from.mut(mongo, result, dataset, dataType,source)
+
 }
 
 #----------------------------------------------------------------------------------------------------

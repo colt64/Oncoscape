@@ -165,54 +165,49 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
 ### Batch Is Used To Process Multiple TCGA Files Defined 
 os.data.batch <- function(manifest, ...){
            
-    # From Input File: dataframe of datasets, datatypes and list of collections
+    # From Input File: dataframe of datasets, types and list of collections
     datasets <- fromJSON(manifest)
 
 		# Loop for each file to load
-		for (i in 1:nrow(datasets)){
-			sourceObj <- datasets[i,]
-			stopifnot(all(c("dataset", "dataType", "collections") %in% names(sourceObj)))
-			cat(sourceObj$dataset, sourceObj$dataType,"\n")
+		for (i in 1:length(datasets)){
+			sourceObj <- datasets[[i]]
+			stopifnot(all(c("dataset","source", "type","process") %in% names(sourceObj)))
+			cat(sourceObj$dataset,sourceObj$source, sourceObj$type,"\n")
 
-			collections <- sourceObj$collections[[1]]
+			#specific for raw data import
+			stopifnot(all(c("directory", "file") %in% names(sourceObj)))
+				
+			inputDirectory <- sourceObj$directory
+			if(!grepl("/$", inputDirectory)) inputDirectory <- paste(inputDirectory, "/", sep="")	
+			inputFile <- paste(inputDirectory, sourceObj$file, sep = "")
+
+			dataType <- sourceObj$type
+			resultObj <- list(dataset = sourceObj$dataset, type = dataType)
 			
-			for(j in 1:nrow(collections)){
-
-				dataObj <- collections[j,]
-				stopifnot(all(c("id", "process", "directory", "file") %in% names(dataObj)))
-				
-				inputDirectory <- dataObj$directory
-				if(!grepl("/$", inputDirectory)) inputDirectory <- paste(inputDirectory, "/", sep="")	
-				inputFile <- paste(inputDirectory, dataObj$file, sep = "")
-
-				dataType <- mapProcess(dataObj$process)
-				resultObj <- data.frame(dataset = sourceObj$dataset, dataType = dataType)
-				
-				if(dataType %in%  c("cnv","mut01", "mut", "rna", "protein", "methyl")){
-					# Load Data Frame - map and filter by named columns
-					result <- os.data.load.molecular( inputFile = inputFile)
-        
-					if(dataType != "mut"){
-					  result$data <- apply(result$data, 2, as.numeric)
-					}
-					resultObj$rowType <- result$rowType; resultObj$colType <- result$colType;
-					resultObj$rows <- list(result$rows); resultObj$cols <- list(result$cols);
-					resultObj$data <- list(result$data)
+			if(dataType %in%  c("cnv","mut01", "mut", "rna", "protein", "methyl")){
+				# Load Data Frame - map and filter by named columns
+				result <- os.data.load.molecular( inputFile = inputFile)
+	
+				if(dataType != "mut"){
+				  result$data <- apply(result$data, 2, as.numeric)
 				}
-				if(dataType %in%  c("patient", "drug", "radiation", "otherMalignancy", "followUp", "newTumor")){
-					# Load Data Frame - map and filter by named columns
-					result <- os.data.load.clinical( inputFile = inputFile, ...)
-					resultObj$data <- list(result$mapped)
-					resultObj$cde <- list(result$cde)
-					
-					}
+				resultObj$rowType <- result$rowType; resultObj$colType <- result$colType;
+				resultObj$rows <- list(result$rows); resultObj$cols <- list(result$cols);
+				resultObj$data <- list(result$data)
+			}
+			if(dataType %in%  c("patient", "drug", "radiation", "otherMalignancy", "followUp", "newTumor")){
+				# Load Data Frame - map and filter by named columns
+				result <- os.data.load.clinical( inputFile = inputFile, ...)
+				resultObj$data <- list(result$mapped)
+				resultObj$cde <- list(result$cde)
+				
+				}
 
-				parent <- list(c(sourceObj$dataset, sourceObj$dataType, dataObj$id))
-				
-				save.collection(mongo, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$dataType,
-				                result=resultObj,parent=parent, process=process,processName=process)
-				
-		   }  # collection
+			parent <- list(c(sourceObj$dataset, sourceObj$type, NA))
+			
+			save.collection(mongo, dataset=sourceObj$dataset, type=dataType, source=sourceObj$source,
+							result=resultObj,parent=parent, process=process,processName=process)
+			
 		}  # dataset
     return()
 }
@@ -231,11 +226,11 @@ get.category.data<- function(name, table, cat.col.name, color.col.name= "color")
   return (categories.type.list)
 }
 #----------------------------------------------------------------------------------------------------
-add.category.fromFile <- function(file, name, col.name, dataset, datatype){
+add.category.fromFile <- function(file, name, col.name, dataset, type){
   
   tbl <- get(load(file))
   categories.list <- get.category.data(table=tbl, cat.col.name=col.name)
-  df <- data.frame(dataset=dataset, datatype=datatype, name=name)
+  df <- data.frame(dataset=dataset, type=type, name=name)
   df$data=list(categories.list)
   return(df)
 }
@@ -244,17 +239,17 @@ add.category.fromFile <- function(file, name, col.name, dataset, datatype){
 os.save.categories <- function(datasets = c("gbm")){
   
   color.categories <- list()
-  datatype= "colorCategory"
+  type= "colorCategory"
   
   if("gbm" %in% datasets){  
 
   ## Patient Colors by Diagnosis, glioma8, tumorGrade, verhaak
   color.categories <- list(
-    add.category.fromFile(file='../archive/categories/brain/tumorDiagnosis.RData', name="diagnosis", col.name="diagnosis", dataset="gbm", datatype=datatype) ,
-    add.category.fromFile(file='../archive/categories/brain/ericsEightGliomaClusters.RData', name="glioma8", col.name="cluster", dataset="gbm", datatype=datatype) ,
-    add.category.fromFile(file='../archive/categories/brain/metabolicExpressionStemness.RData', name="metabolicExpressionStemness", col.name="cluster", dataset="gbm", datatype=datatype) ,
-    add.category.fromFile(file='../archive/categories/brain/tumorGrade.RData', name="tumorGrade", col.name="cluster", dataset="gbm", datatype=datatype) ,
-    add.category.fromFile(file='../archive/categories/brain/verhaakGbmClustersAugmented.RData', name="verhaakPlus1", col.name="cluster", dataset="gbm", datatype=datatype) 
+    add.category.fromFile(file='../archive/categories/brain/tumorDiagnosis.RData', name="diagnosis", col.name="diagnosis", dataset="gbm", type=type) ,
+    add.category.fromFile(file='../archive/categories/brain/ericsEightGliomaClusters.RData', name="glioma8", col.name="cluster", dataset="gbm", type=type) ,
+    add.category.fromFile(file='../archive/categories/brain/metabolicExpressionStemness.RData', name="metabolicExpressionStemness", col.name="cluster", dataset="gbm", type=type) ,
+    add.category.fromFile(file='../archive/categories/brain/tumorGrade.RData', name="tumorGrade", col.name="cluster", dataset="gbm", type=type) ,
+    add.category.fromFile(file='../archive/categories/brain/verhaakGbmClustersAugmented.RData', name="verhaakPlus1", col.name="cluster", dataset="gbm", type=type) 
     )
   }
   if("brca" %in% datasets){

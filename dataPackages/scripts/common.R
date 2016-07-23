@@ -86,7 +86,7 @@ save.mut01.from.mut <- function(mongo, result, dataset, dataType,source){
   
   resultObj$data <- list(mtx.01)
   
-  parent <- list(c(dataset, dataType, result$_id))
+  parent <- list(c(dataset, dataType, result$`_id`))
   
   save.collection(mongo, dataset=dataset, dataType="mut01",source=source, result=resultObj,
                               parent=parent, process=process,processName=process)
@@ -112,6 +112,8 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   newCollection$process <- process
   newCollection$parent <- parent
 
+
+	## add to manifest file
   mongo.insert(mongo, "oncoscape.manifest", newCollection)
  
   bson.conversion <- function(result){
@@ -121,22 +123,49 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
         "character" = mongo.bson.from.JSON(result)
     ) 
   }
+	## save result
   mongo.insert(mongo, collection.ns, bson.conversion(result))
+
+	## add to lookup table  
+  lookup.ns <-  "oncoscape.lookup_oncoscape_datasources"
+  query <- list(disease=dataset )
+  datasource <- mongo.find.all(mongo,lookup.ns, query)
   
-  if(dataType %in% c("cnv","mut01", "mut", "rna", "protein", "methyl"){
+  if(dataType %in% c("cnv","mut01", "mut", "rna", "protein", "methyl")){
   	# update molecular
-	  mongo.update(mongo, "oncoscape.lookup_oncoscape_datasources", list(dataset=dataset, source )
-	  
+  		
+      add.collection <- data.frame(source=source, type=dataType, collection=collection.uniqueName)
+      if("molecular" %in% names(datasource)){
+  		  datasource$molecular	<- rbind(datasource$molecular, add.collection)
+      } else {datasource$molecular <- add.collection }
+  		
   }else if(dataType %in% c("mds", "pca")){
   	#update calculated
-	  mongo.update(mongo, "oncoscape.lookup_oncoscape_datasources", list(dataset=dataset, source )
-	  
+    add.collection <- data.frame(source=source, type=dataType, collection=collection.uniqueName)
+    if("calculated" %in% names(datasource)){
+      datasource$calculated	<- rbind(datasource$calculated, add.collection)
+    } else {datasource$calculated <- add.collection }
+    
   }else if(dataType %in% c("edges", "geneDegree", "ptDegree")){
   	#update edges
-  	  mongo.update(mongo, "oncoscape.lookup_oncoscape_datasources", list(dataset=dataset, source )
-
+    add.collection <- data.frame(name=name,edges=collection.uniqueName, patientWeights=collection.uniqueName, genesWeights=collection.uniqueName)
+    if("edges" %in% names(datasource)){
+      datasource$edges	<- rbind(datasource$edges, add.collection)
+    } else {datasource$edges <- add.collection }
+    
+  }else if(dataType %in% c("drug", "f1","f2", "f3", "nte", "nte_f1", "omf", "pt", "rad")){
+  	#update patient
+    add.collection <- data.frame()
+    add.collection[dataType] <- collection.uniqueName
+    if("clinical" %in% names(datasource)){
+      datasource$clinical	<- rbind(datasource$clinical, add.collection)
+    } else {datasource$clinical <- add.collection }
+    
   }
  
+  mongo.update(mongo, lookup.ns, query, datasource)
+  
+  
   if(dataType == "mut")
   	save.mut01.from.mut(mongo, result, dataset, dataType,source)
 

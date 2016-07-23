@@ -170,7 +170,7 @@ os.data.batch <- function(manifest, ...){
 
 		# Loop for each file to load
 		for (i in 1:length(datasets)){
-			sourceObj <- datasets[[i]]
+			sourceObj <- datasets[i,]
 			stopifnot(all(c("dataset","source", "type","process") %in% names(sourceObj)))
 			cat(sourceObj$dataset,sourceObj$source, sourceObj$type,"\n")
 
@@ -205,7 +205,7 @@ os.data.batch <- function(manifest, ...){
 
 			parent <- list(c(sourceObj$dataset, sourceObj$type, NA))
 			
-			save.collection(mongo, dataset=sourceObj$dataset, type=dataType, source=sourceObj$source,
+			save.collection(mongo, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$source,
 							result=resultObj,parent=parent, process=process,processName=process)
 			
 		}  # dataset

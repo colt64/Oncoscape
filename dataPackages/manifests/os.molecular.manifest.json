@@ -10,7 +10,7 @@
 	{	"dataset": "brca",
 		"source": "cBio",
 		"type": "mut",		
-		"process": "mut",
+		"process": "wxs",
 		"date": "2015-02-24",
 		"directory": "../archive/cBio/brca/",
 		"file": "mtx.mut.RData"
@@ -18,7 +18,7 @@
 	{	"dataset": "brca",
 		"source": "cBio",
 		"type": "methylation",		
-		"process": "methylationHM27",
+		"process": "HM27",
 		"date": "2015-02-24",
 		"directory": "../archive/cBio/brca/",
 		"file": "mtx.methHM27.RData"
@@ -26,7 +26,7 @@
 	{	"dataset": "brca",
 		"source": "cBio",
 		"type": "methylation",		
-		"process": "methylationHM450",
+		"process": "HM450",
 		"date": "2015-02-24",
 		"directory": "../archive/cBio/brca/",
 		"file": "mtx.methHM450.RData"
@@ -34,7 +34,7 @@
 	{	"dataset": "brca",
 		"source": "cBio",
 		"type": "rna",		
-		"process": "microarray-Agilent",
+		"process": "microarray-Agilent-median-zscore",
 		"date": "2015-02-24",
 		"directory": "../archive/cBio/brca/",
 		"file": "mtx.mrna_Agi.RData"
@@ -42,7 +42,7 @@
 	{	"dataset": "brca",
 		"source": "cBio",
 		"type": "rna",		
-		"process": "RNAseq",
+		"process": "RNAseq-median-zscore",
 		"date": "2015-02-24",
 		"directory": "../archive/cBio/brca/",
 		"file": "mtx.mrna.RData"
@@ -50,7 +50,7 @@
 	{	"dataset": "brca",
 		"source": "cBio",
 		"type": "protein",
-		"process": "RPPA",
+		"process": "RPPA-zscore",
 		"date": "2015-02-24",
 		"directory": "../archive/cBio/brca/",
 		"file": "mtx.prot.RData"

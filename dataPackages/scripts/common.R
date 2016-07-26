@@ -71,7 +71,7 @@ mapProcess <- function(process){
 }
 #---------------------------------------------------------
 ### For any mutation file, create and save an indicator mut01 file
-save.mut01.from.mut <- function(mongo, result, dataset, dataType,source){
+save.mut01.from.mut <- function(mongo, result, dataset, dataType,source, parentID){
   
   resultObj <- list(dataset = dataset, dataType = "mut01",
                           rowType= result$rowType, colType = result$colType)
@@ -86,7 +86,7 @@ save.mut01.from.mut <- function(mongo, result, dataset, dataType,source){
   
   resultObj$data <- list(mtx.01)
   
-  parent <- list(c(dataset, dataType, result$`_id`))
+  parent <- list(c(dataset, dataType, as.character(parentID)))
   
   save.collection(mongo, dataset=dataset, dataType="mut01",source=source, result=resultObj,
                               parent=parent, process=process,processName=process)
@@ -104,8 +104,10 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   
   collection.uniqueName <- paste(dataset, dataType, source, processName, sep="_")
   collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
-  if(mongo.count(mongo, collection.ns) != 0)
-    stop(paste(collection.uniqueName, " already exists", sep=""))
+  if(mongo.count(mongo, collection.ns) != 0){
+    print(paste(collection.uniqueName, " already exists. Skipping.", sep=""))
+    return()
+  }
   
   newCollection <- list(dataset=dataset, dataType=dataType, date=date) 
   newCollection$source <- source

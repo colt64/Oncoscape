@@ -8,6 +8,7 @@ library(org.Hs.eg.db)
 
 cytoband_url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz"
 chromosomes <- c(seq(1:22), "X", "Y")
+date <- as.character(Sys.Date())
 
 #----------------------------------------------------------------------------------------------------
 getChromosomeLengths <- function(){
@@ -119,6 +120,7 @@ saveCentromere_Coordinates <- function(cytoband_url){
 	                result=list(result),parent=NA, process="position",processName="position")
 	
 }
+
 #----------------------------------------------------------------------------------------------------
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
@@ -128,4 +130,7 @@ mongo <- connect.to.mongo()
 	saveCentromere_Coordinates(cytoband_url)	
 
 close.mongo(mongo)
+
+
+
 	

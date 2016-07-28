@@ -181,7 +181,9 @@ os.data.load.genome <- function( inputFile = inputFile){
   
   genesets<- fromJSON(inputFile) 
   
-  return(genesets)
+  geneset.list <- apply(genesets, 1, function(row){ list(name=row[["name"]],genes=row[["genes"]])})
+  
+  return(geneset.list)
   
 }
 #---------------------------------------------------------
@@ -222,7 +224,7 @@ os.data.batch <- function(manifest, ...){
 #				resultObj$cde <- list(result$cde)
 				
 			}else if(dataType %in%  c("genes", "chromosome", "centromere", "genesets")){
-			  result <- os.data.load.genome( inputFile = inputFile, ...)
+			  resultObj <- os.data.load.genome( inputFile = inputFile)
 			}else {
 			  print(paste("WARNING: data type not recognized:", dataType, sep=" "))
 			  next;
@@ -291,9 +293,8 @@ os.save.categories <- function(datasets = c("gbm")){
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
-#manifest <- "../manifests/os.molecular.manifest.json"
+manifest <- "../manifests/os.molecular.manifest.json"
 #manifest <- "../manifests/os.tcga.clinical.manifest.json"
-manifest <- "../manifests/os.hg19.manifest.json"
 
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0 )

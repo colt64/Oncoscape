@@ -1,4 +1,14 @@
-[{
+[
+  {
+    "dataset": "hg19",
+    "type": "genesets",
+	"process": "hgnc",
+	"date": "2016-06-24",
+	"source": "hg19",
+	"directory": "../data/molecular/hg19/",
+	"file": "hg19_genesets_hgnc"
+  },
+{
 		"dataset": "brca",
 		"source": "cBio",
 		"type": "cnv",		

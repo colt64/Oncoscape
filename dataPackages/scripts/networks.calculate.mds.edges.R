@@ -148,7 +148,7 @@ save.pca<- function(Manifest, tbl, datasetName, dataType, geneset=NA, output_dir
 
 
 #----------------------------------------------------------------------------------------------------
-save.mds.innerProduct <- function(Manifest,datasetName, tbl1, tbl2, tbl1Type, tbl2Type, geneset, output_directory=output_directory, ...){
+save.mds.innerProduct <- function(datasetName, tbl1, tbl2, tbl1Type, tbl2Type, geneset, ...){
     ## ----- MDS on All Combinations of CNV and MUT Tables ------
 
   cat("-calculating mds\n")
@@ -201,22 +201,18 @@ save.mds.innerProduct <- function(Manifest,datasetName, tbl1, tbl2, tbl1Type, tb
 			parent <- list(list(c(datasetName, tbl1Type, tbl1.index),c(datasetName, tbl2Type, tbl2.index)))
 			mds.list<- lapply(rownames(sample_similarity), function(name) data.frame(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
 			names(mds.list) <- rownames(sample_similarity)
-			Manifest <- save.collection(Manifest=Manifest, dataset=datasetName, dataType=dataType,source=c(coll1[i,"source"], coll2[j,"source"]), result=mds.list,
-			                            parent=parent, process=process,processName=processName, outputDirectory=output_directory)
+			save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(coll1[i,"source"], coll2[j,"source"]), result=mds.list,
+			                            parent=parent, process=process,processName=processName)
 			
 		} # mut files
 	} #cnv files
 
-	return(Manifest)
 }
 
 
 #----------------------------------------------------------------------------------------------------
-run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_directory="./"){
+run.batch.patient_similarity <- function(datasets, geneset_name=NA, output_directory="./"){
 
-  Manifest <- data.frame()
-  
-  datasets <- fromJSON(manifest_file)
   gistic.scores <-c(-2,-1,1, 2)
   
   # Loop for each dataset
@@ -229,21 +225,21 @@ run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_
       rnaTables <- subset(molTables, dataType == "rna")
       protTables <- subset(molTables, dataType == "protein")
       
-            if(nrow(cnvTables)==0 | nrow(mutTables) ==0) next;
+      if(nrow(cnvTables)==0 | nrow(mutTables) ==0) next;
       cat(datasetName, "\n")		  
     
-	  Manifest <- save.mds.innerProduct(Manifest=Manifest, datasetName=datasetName, tbl1=cnvTables, tbl2=mutTables, tbl1Type="cnv", tbl2Type="mut01", 
-	                                    copyNumberValues=gistic.scores, geneset = geneset_name, output_directory=output_directory)
-	  Manifest <- save.pca(Manifest=Manifest, tbl=cnvTables,datasetName=datasetName, dataType="cnv", geneset = geneset_name, output_directory=output_directory)
-	  Manifest <- save.pca(Manifest=Manifest, tbl=mutTables,datasetName=datasetName, dataType="mut01", geneset = geneset_name, output_directory=output_directory)
-	  Manifest <- save.pca(Manifest=Manifest, tbl=rnaTables,datasetName=datasetName, dataType="rna", geneset = geneset_name, output_directory=output_directory)
-	  Manifest <- save.pca(Manifest=Manifest, tbl=rnaTables,datasetName=datasetName, dataType="rna", geneset = NA, output_directory=output_directory)
-	  Manifest <- save.pca(Manifest=Manifest, tbl=protTables,datasetName=datasetName, dataType="protein", geneset = geneset_name, output_directory=output_directory)
-	  Manifest <- save.pca(Manifest=Manifest, tbl=protTables,datasetName=datasetName, dataType="protein", geneset = NA, output_directory=output_directory)
+	  save.mds.innerProduct(datasetName=datasetName, tbl1=cnvTables, tbl2=mutTables, tbl1Type="cnv", tbl2Type="mut01", 
+	                                    copyNumberValues=gistic.scores, geneset = geneset_name)
+	  save.pca(tbl=cnvTables,datasetName=datasetName, dataType="cnv", geneset = geneset_name)
+	  save.pca(tbl=mutTables,datasetName=datasetName, dataType="mut01", geneset = geneset_name)
+	  save.pca(tbl=rnaTables,datasetName=datasetName, dataType="rna", geneset = geneset_name)
+	  save.pca(tbl=rnaTables,datasetName=datasetName, dataType="rna", geneset = NA)
+	  save.pca(tbl=protTables,datasetName=datasetName, dataType="protein", geneset = geneset_name)
+	  save.pca(tbl=protTables,datasetName=datasetName, dataType="protein", geneset = NA)
 	  
 	} # for diseaseName	
   
-  return(Manifest)
+  
 }
 #----------------------------------------------------------------------------------------------------
 get.network_edges <- function(mtx,samples, genes, edgeTypes){
@@ -270,24 +266,20 @@ get.network_edges <- function(mtx,samples, genes, edgeTypes){
   return(allEdges)
 }
 #----------------------------------------------------------------------------------------------------
-save.edge.files <- function(Manifest, dataset, result, source,
-                            parent, process,processName, outputDirectory="./"){
+save.edge.files <- function(dataset, result, source, parent, process,processName){
 
-  Manifest <- save.collection(Manifest=Manifest, dataset=dataset, dataType="edges",source=source, result=result,
-                              parent=parent, process=process,processName=processName, outputDirectory=outputDirectory)
+  save.collection(mongo, dataset=dataset, dataType="edges",source=source, result=result,
+                              parent=parent, process=process,processName=processName)
   
   node1_counts <- as.data.frame(table(result[,2]))  
   colnames(node1_counts) <- NULL
-  Manifest <- save.collection(Manifest=Manifest, dataset=dataset, dataType="geneDegree",source=source, result=node1_counts,
-                              parent=parent, process=process,processName=processName, outputDirectory=outputDirectory)
+  save.collection(mongo, dataset=dataset, dataType="geneDegree",source=source, result=node1_counts,
+                              parent=parent, process=process,processName=processName)
   
   node2_counts <- as.data.frame(table(result[,3]))  
   colnames(node2_counts) <- NULL
-  Manifest <- save.collection(Manifest=Manifest, dataset=dataset, dataType="ptDegree", source=source, result=node2_counts,
-                              parent=parent, process=process,processName=processName, outputDirectory=outputDirectory)
-
-	return( Manifest )
-
+  save.collection(mongo, dataset=dataset, dataType="ptDegree", source=source, result=node2_counts,
+                              parent=parent, process=process,processName=processName)
 }
 #----------------------------------------------------------------------------------------------------
 get.edgePairs <- function(collection, genesetName, ...){				
@@ -307,12 +299,12 @@ get.edgePairs <- function(collection, genesetName, ...){
 }
 
 #----------------------------------------------------------------------------------------------------
-run.batch.network_edges <- function(manifest_file, output_directory="./"){
+run.batch.network_edges <- function(datasets){
 
   cat("-calculating edges\n")
   
     # Load Input File 
-    datasets <- fromJSON(manifest_file)
+#    datasets <- fromJSON(manifest_file)
     dataType <- "network"
 
     Manifest <-data.frame()
@@ -342,8 +334,8 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 
 					  parent <- list(c(datasetName, "cnv", collection$id))
 					  process <- list(edgeType="cnv", geneset= genesetName); processName=paste(process, collapse="-")
-					  Manifest <- save.edge.files(Manifest=Manifest, dataset=datasetName, result=newEdges, source=collection$source,
-					                              parent=parent, process=list(process),processName=processName, outputDirectory=output_directory)				  
+					  save.edge.files(dataset=datasetName, result=newEdges, source=collection$source,
+					                              parent=parent, process=list(process),processName=processName)				  
 					  
 					  EdgeList$cnv[[as.character(collection$id)]] <- newEdges
 				  }
@@ -358,8 +350,8 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 				  parent <- list(c(datasetName, "mut", collection$id))
 				  process <- list(edgeType="mut01", geneset= genesetName); processName=paste(process, collapse="-")
 				  
-          Manifest <- save.edge.files(Manifest=Manifest, dataset=datasetName,source=collection$source, result=newEdges,
-                                      parent=parent, process=list(process),processName=processName, outputDirectory=output_directory)				  
+          save.edge.files(dataset=datasetName,source=collection$source, result=newEdges,
+                                      parent=parent, process=list(process),processName=processName)				  
 
 				  EdgeList$mut[[as.character(collection$id)]] <- newEdges
 				}
@@ -383,8 +375,8 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 						source1 <- source1[source1$id==as.integer(names(EdgeList$cnv)[k]),"source"]
 						source2 <- subset(datasets, dataset==datasetName & dataType=="mut")$collections[[1]]
 						source2 <- source2[source2$id==as.integer(names(EdgeList$mut)[m]),"source"]
-						Manifest <- save.edge.files(Manifest=Manifest, dataset=datasetName,source =list(c(source1,source2)),  result=allEdges,
-						                            parent=list(parent), process=list(process),processName=processName, outputDirectory=output_directory)				  
+						save.edge.files(dataset=datasetName,source =list(c(source1,source2)),  result=allEdges,
+						                            parent=list(parent), process=list(process),processName=processName)				  
 						
 					}
 				}
@@ -402,19 +394,19 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
-genesets <-     mongo.find.all(mongo, "oncoscape.genesets", 
+genesets <-     mongo.find.all(mongo, "oncoscape.hg19_genesets_hgnc_import", 
                                        query=list())
 
 molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
                                     query='{"dataType":{"$in":["cnv","mut01", "mut", "rna", "protein", "methylation"]}}')
 
 if("mds" %in% commands){
-	run.batch.patient_similarity(molecular_manifest,geneset_name="oncoVogel274", output_directory = mds_output_directory)
+	run.batch.patient_similarity(molecular_manifest,geneset_name="oncoVogel274")
 		# calculate patient similarity
 }
 
 if("edges" %in% commands){
-	run.batch.network_edges(molecular_manifest, output_directory=network_output_directory)
+	run.batch.network_edges(molecular_manifest)
 		# map edges for all patients between CNV/Mut and Geneset tables
 
 }

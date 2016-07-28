@@ -22,11 +22,6 @@ connect.to.mongo <- function(host= "127.0.0.1", name = "", username = "", passwo
 close.mongo <- function(mongo){
 
 	if(mongo.is.connected(mongo) == TRUE) {
-	  mongo.drop(mongo, icoll)
-	  #mongo.drop.database(mongo, db)
-	  res <- mongo.get.database.collections(mongo, db)
-	  print(res)
-
 	  # close connection
 	  mongo.destroy(mongo)
 	}
@@ -42,22 +37,7 @@ get.mongo.table <- function(mongo, db, table){
 	}
 }
 
-#---------------------------------------------------------
-write.to.mongo <- function(mongo, db, dataObj){
 
-	bson.data <- mongo.bson.from.JSON(toJSON(dataObj))
-
-#a <- mongo.bson.from.JSON( '{"ident":"a", "name":"Markus", "age":33}' )
-#b <- mongo.bson.from.JSON( '{"ident":"b", "name":"MongoSoup", "age":1}' )
-#c <- mongo.bson.from.JSON( '{"ident":"c", "name":"UseR", "age":18}' )
-
-#	icoll <- paste(db, "test", sep=".")
-	mongo.insert.batch(mongo, db, bson.data )
-
-#mongo.update(mongo, icoll, list('ident' = 'b'), list('$inc' = list('age' = 3)))
-# mongo.index.create(mongo, icoll, list('ident' = 1))
- 
-}
 #---------------------------------------------------------
 mapProcess <- function(process){
   
@@ -73,32 +53,26 @@ mapProcess <- function(process){
 ### For any mutation file, create and save an indicator mut01 file
 save.mut01.from.mut <- function(mongo, result, dataset, dataType,source, parentID){
   
-  resultObj <- list(dataset = dataset, dataType = "mut01",
-                          rowType= result$rowType, colType = result$colType)
-  resultObj$rows <-  list(result$rows)
-  resultObj$cols <-  list(result$cols);
+  mut.list <- result
   
-  mtx.01 <- result$data[[1]]
-  mtx.01[is.na(mtx.01)] <- 0
-  mtx.01[mtx.01 == ""] <- 0
-  mtx.01[nchar(mtx.01) >1] <- 1
-  mtx.01 <- apply(mtx.01, 2, as.integer)
+  data.list <- lapply(result, function(geneSet){
+    patients <- lapply(geneSet$patients, function(pt){mut <- nchar(pt); mut01 <- ifelse(mut > 0, 1, 0 ); mut01 })
+    list(gene=geneSet$gene,min=min(unlist(patients)), max=max(unlist(patients)), patients = patients)
+  })    
   
-  resultObj$data <- list(mtx.01)
+  parent <- parentID
   
-  parent <- list(c(dataset, dataType, as.character(parentID)))
-  
-  save.collection(mongo, dataset=dataset, dataType="mut01",source=source, result=resultObj,
+  save.collection(mongo, dataset=dataset, dataType="mut01",source=source, result=data.list,
                               parent=parent, process=process,processName=process)
 
 }
 
 #---------------------------------------------------------
 save.collection <- function(mongo, dataset, dataType,source,result, parent, 
-							process,processName){
-
-	cat("-save collection\n")
-
+                            process,processName){
+  
+  cat("-save collection\n")
+  
   source <- unique(source)
   if(length(source)>1) source <- list(source)
   
@@ -107,72 +81,88 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   if(mongo.count(mongo, collection.ns) != 0){
     print(paste(collection.uniqueName, " already exists. Skipping.", sep=""))
     return()
-  }
+  }  
   
   newCollection <- list(dataset=dataset, dataType=dataType, date=date) 
+  newCollection$collection <- collection.uniqueName
   newCollection$source <- source
   newCollection$process <- process
   newCollection$parent <- parent
-
-
-	## add to manifest file
-  mongo.insert(mongo, "oncoscape.manifest", newCollection)
- 
-  bson.conversion <- function(result){
-    switch(class(result),
-        "data.frame" = mongo.bson.from.df(result),
-        "list" = mongo.bson.from.list(result),
-        "character" = mongo.bson.from.JSON(result)
-    ) 
-  }
-	## save result
-  mongo.insert(mongo, collection.ns, bson.conversion(result))
-
-	## add to lookup table  
-  lookup.ns <-  "oncoscape.lookup_oncoscape_datasources"
-  query <- list(disease=dataset )
-  datasource <- mongo.find.all(mongo,lookup.ns, query)
   
-  if(dataType %in% c("cnv","mut01", "mut", "rna", "protein", "methyl")){
-  	# update molecular
-  		
-      add.collection <- data.frame(source=source, type=dataType, collection=collection.uniqueName)
-      if("molecular" %in% names(datasource)){
-  		  datasource$molecular	<- rbind(datasource$molecular, add.collection)
-      } else {datasource$molecular <- add.collection }
-  		
+  ## add to manifest file
+  mongo.insert(mongo, "oncoscape.manifest", newCollection)
+  
+  pass <- lapply(result, function(el){mongo.insert(mongo, collection.ns, as.list(el))})
+  if(!all(unlist(pass))){
+    print("ERROR: result not inserted into mongodb.")
+    return()
+  }
+  
+  newID <-  mongo.find.one(mongo, "oncoscape.manifest", 
+                           query=newCollection, fields=list("_id"))
+  
+  ## add to lookup table  
+  lookup.ns <-  "oncoscape.lookup_oncoscape_datasources"
+  query <- list("disease"=dataset)
+  datasource <- mongo.find.one(mongo, lookup.ns, query)
+  
+  if(length(datasource)==0){
+    data.list <- list();
+    data.list$disease = dataset
+  }else{
+    data.list <- mongo.bson.to.list(datasource)
+  }
+  
+  if(dataType %in% c("cnv","mut01", "mut", "rna", "protein", "methylation")){
+    # update molecular
+    
+    add.collection <- list(data.frame(source=source, type=dataType, collection=collection.uniqueName))
+    if("molecular" %in% names(data.list)){
+      data.list$molecular <- c(data.list$molecular, add.collection)
+    }else{data.list$molecular <- add.collection}
+    
   }else if(dataType %in% c("mds", "pca")){
-  	#update calculated
-    add.collection <- data.frame(source=source, type=dataType, collection=collection.uniqueName)
-    if("calculated" %in% names(datasource)){
-      datasource$calculated	<- rbind(datasource$calculated, add.collection)
-    } else {datasource$calculated <- add.collection }
+    #update calculated
+    add.collection <- list(source=source, type=dataType, collection=collection.uniqueName)
+    if("calculated" %in% names(data.list)){
+      data.list$calculated	<-c(data.list$calculated, add.collection)
+    } else {data.list$calculated <- add.collection }
     
   }else if(dataType %in% c("edges", "geneDegree", "ptDegree")){
-  	#update edges
-    add.collection <- data.frame(name=name,edges=collection.uniqueName, patientWeights=collection.uniqueName, genesWeights=collection.uniqueName)
-    if("edges" %in% names(datasource)){
-      datasource$edges	<- rbind(datasource$edges, add.collection)
-    } else {datasource$edges <- add.collection }
+    #update edges
+    add.collection <- list(name=name,edges=collection.uniqueName, patientWeights=collection.uniqueName, genesWeights=collection.uniqueName)
+    if("edges" %in% names(data.list)){
+      data.list$edges	<- c(data.list$edges, add.collection)
+    } else {data.list$edges <- add.collection }
     
-  }else if(dataType %in% c("drug", "f1","f2", "f3", "nte", "nte_f1", "omf", "pt", "rad")){
-  	#update patient
-    add.collection <- data.frame()
+  }else if(dataType %in% c("patient", "drug", "radiation", "followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
+    #update patient
+    add.collection <- list()
     add.collection[dataType] <- collection.uniqueName
-    if("clinical" %in% names(datasource)){
-      datasource$clinical	<- rbind(datasource$clinical, add.collection)
-    } else {datasource$clinical <- add.collection }
+    if("clinical" %in% names(data.list)){
+      data.list$clinical	<- c(data.list$clinical, add.collection)
+    } else {data.list$clinical <- add.collection }
     
+  }else if(dataType %in% c("chromosome", "centromere", "genes", "geneset")){
+    #update patient
+    add.collection <- list()
+    add.collection[dataType] <- collection.uniqueName
+    if("clinical" %in% names(data.list)){
+      data.list$clinical	<- c(data.list$clinical, add.collection)
+    } else {data.list$clinical <- add.collection }
+    
+  }else{
+    print(paste("WARNING: data type not recognized:", dataType, sep=" "))
+    return()
   }
- 
-  mongo.update(mongo, lookup.ns, query, datasource)
   
+  ## insert lookup into mongo collection
+  mongo.update(mongo, lookup.ns, query, data.list, mongo.update.upsert)
   
   if(dataType == "mut")
-  	save.mut01.from.mut(mongo, result, dataset, dataType,source)
-
+    save.mut01.from.mut(mongo, result, dataset, dataType,source, parentID=newID)
+  
 }
-
 #----------------------------------------------------------------------------------------------------
 ### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
 os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", "JSON")){

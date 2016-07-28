@@ -17,15 +17,8 @@ if(length(args) != 0)
 	commands <- args
 
 #--------------------------------- Configuration -----------------------------#
+source("common.R")
 
-
-molecular_manifest <- "../manifests/os.import.molecular.manifest.json"
-
-network_output_directory <- "../data/molecular/edges/"
-mds_output_directory <- "../data/molecular/mds/"
-
-geneset_file <- "../data/molecular/hg19/hg19_genesets_1_hgnc.json"
-genesets <- fromJSON(geneset_file)
 
 date <- as.character(Sys.Date())
 
@@ -406,27 +399,24 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 
 
 #----------------------------------------------------------------------------------------------------
+## must first initialize server (through shell >mongod)
+mongo <- connect.to.mongo()
+
+genesets <-     mongo.find.all(mongo, "oncoscape.genesets", 
+                                       query=list())
+
+molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
+                                    query='{"dataType":{"$in":["cnv","mut01", "mut", "rna", "protein", "methylation"]}}')
 
 if("mds" %in% commands){
-	Manifest_mds <- run.batch.patient_similarity(molecular_manifest,geneset_name="oncoVogel274", output_directory = mds_output_directory)
+	run.batch.patient_similarity(molecular_manifest,geneset_name="oncoVogel274", output_directory = mds_output_directory)
 		# calculate patient similarity
-		# save json
-	os.data.save(
-	  df = Manifest_mds,
-	  directory="../manifests",
-	  file= paste("os","mds","manifest", sep="."),
-	  format = "JSON") 
 }
 
 if("edges" %in% commands){
-	Manifest_edges <- run.batch.network_edges(molecular_manifest, output_directory=network_output_directory)
+	run.batch.network_edges(molecular_manifest, output_directory=network_output_directory)
 		# map edges for all patients between CNV/Mut and Geneset tables
-	os.data.save(
-	  df = Manifest_edges,
-	  directory="../manifests",
-	  file= paste("os","edges","manifest", sep="."),
-	  format = "JSON") 
-	
+
 }
 
 

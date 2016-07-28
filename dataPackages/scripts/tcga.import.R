@@ -59,12 +59,15 @@ os.data.load.molecular <- function(inputFile){
     if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", colnames(mtx))))
       colType <- "sample"
     
-    rownames <- rownames(mtx); colnames <- colnames(mtx)
-    colnames <- gsub("\\.", "-", colnames); 
-    dimnames(mtx) <- NULL
-    mtx.Data<- list(rownames=rownames, colnames=colnames, data=mtx)
+    colnames(mtx) <- gsub("\\.", "-", colnames(mtx)); 
+ #   dimnames(mtx) <- NULL
+ #   mtx.Data<- list(rownames=rownames, colnames=colnames, data=mtx)
     
-        
+   data.list <- lapply(rownames(mtx), function(geneName){
+     list(gene=geneName, min=min(mtx[geneName,]), max=max(mtx[geneName,]), patients = as.list(mtx[geneName,]))
+   })    
+    
+     
   } else{ 
     mtx<- read.delim(inputFile, header=F) 
     #orient mtx so row: gene, col: patient/sample
@@ -73,12 +76,18 @@ os.data.load.molecular <- function(inputFile){
 
     if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", mtx[1,-1])))
       colType <- "sample"
-    
+
     mtx.Data<- get.processed.mtx(mtx, dimension= c("row", "col"))
+    mtx <- mtx.Data$data; 
+    dimnames(mtx) <- list(mtx.Data$rownames, mtx.Data$colnames)
+    
+    data.list <- lapply(rownames(mtx), function(geneName){
+      list(gene=geneName, min=min(mtx[geneName,]), max=max(mtx[geneName,]), patients = as.list(mtx[geneName,]))
+    })    
     
   }
- 
-  return(list(rowType=rowType, colType=colType, rows=mtx.Data$rownames, cols=mtx.Data$colnames, data=mtx.Data$data))
+ return(data.list)
+ # return(list(rowType=rowType, colType=colType, rows=mtx.Data$rownames, cols=mtx.Data$colnames, data=mtx.Data$data))
 }
 
 ### Load Function Takes An Import File + Column List & Returns A DataFrame
@@ -159,7 +168,21 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
     print(unMappedData)
 
   }
-  return(list("mapped"=mappedTable, "unmapped" = unMappedData, "cde"=cbind(tcga_columns,columns,cde_ids, column_type)))
+  
+  mappedTable$patient_ID <- gsub("\\.", "\\-", mappedTable$patient_ID)
+  
+  mappedList <- lapply(rownames(mappedTable), function(rowID){
+    mappedTable[rowID,]
+  })
+  
+  return(list("mapped"=mappedList, "unmapped" = unMappedData, "cde"=cbind(tcga_columns,columns,cde_ids, column_type)))
+}
+os.data.load.genome <- function( inputFile = inputFile){
+  
+  genesets<- fromJSON(inputFile) 
+  
+  return(genesets)
+  
 }
 #---------------------------------------------------------
 ### Batch Is Used To Process Multiple TCGA Files Defined 
@@ -167,6 +190,7 @@ os.data.batch <- function(manifest, ...){
            
     # From Input File: dataframe of datasets, types and list of collections
     datasets <- fromJSON(manifest)
+    resultObj <- list()
 
 		# Loop for each file to load
 		for (i in 1:length(datasets)){
@@ -182,41 +206,29 @@ os.data.batch <- function(manifest, ...){
 			inputFile <- paste(inputDirectory, sourceObj$file, sep = "")
 
 			dataType <- sourceObj$type
-			resultObj <- list(dataset = sourceObj$dataset, type = dataType)
+#			resultObj <- list(dataset = sourceObj$dataset, type = dataType)
 			
-			if(dataType %in%  c("cnv","mut01", "mut", "rna", "protein", "methyl")){
+			if(dataType %in%  c("cnv","mut01", "mut", "rna", "protein", "methylation")){
 				# Load Data Frame - map and filter by named columns
 				result <- os.data.load.molecular( inputFile = inputFile)
 	
-				if(dataType == "cnv"){
-				  result$data <- apply(result$data, 2, as.integer)
-				} else if(dataType != "mut"){
-				  result$data <- apply(result$data, 2, as.numeric)
-				}
-				resultObj$rowType <- result$rowType; resultObj$colType <- result$colType;
-				resultObj$rows <- list(result$rows); resultObj$cols <- list(result$cols);
-
-				## data can be inserted one line at a time
-				#all.inserted <- apply(result$data,1, function(row){mongo.insert(mongo, "oncoscape.test2",row )})
-				
-				## storing each row as individual bson object and using insert.batch still fails
-				#data.list <- list()
-				#data.list <- apply( result$data, 1, function(x) c( data.list, x ) )
-				#res <- lapply( data.list, function(x) mongo.bson.from.list(x) )
-				#resultObj$data <- res
-				
-				resultObj$data <- result$data
+				resultObj <- result
 				
 			}
-			if(dataType %in%  c("patient", "drug", "radiation", "otherMalignancy", "followUp", "newTumor")){
+			else if(dataType %in%  c("patient", "drug", "radiation", "followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
 				# Load Data Frame - map and filter by named columns
 				result <- os.data.load.clinical( inputFile = inputFile, ...)
-				resultObj$data <- list(result$mapped)
-				resultObj$cde <- list(result$cde)
+				resultObj <- result$mapped
+#				resultObj$cde <- list(result$cde)
 				
-				}
+			}else if(dataType %in%  c("genes", "chromosome", "centromere", "genesets")){
+			  result <- os.data.load.genome( inputFile = inputFile, ...)
+			}else {
+			  print(paste("WARNING: data type not recognized:", dataType, sep=" "))
+			  next;
+			}
 
-			parent <- list(c(sourceObj$dataset, sourceObj$type, NA))
+			parent <-  NA
 						
 			save.collection(mongo, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$source,
 							result=resultObj,parent=parent, process=process,processName=sourceObj$process)
@@ -273,145 +285,16 @@ os.save.categories <- function(datasets = c("gbm")){
   
 }
 
-#---------------------------------------------------------
-save.collection <- function(mongo, dataset, dataType,source,result, parent, 
-                            process,processName){
-  
-  cat("-save collection\n")
-  
-  source <- unique(source)
-  if(length(source)>1) source <- list(source)
-  
-  collection.uniqueName <- paste(dataset, dataType, source, processName, sep="_")
-  collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
-  if(mongo.count(mongo, collection.ns) != 0){
-    print(paste(collection.uniqueName, " already exists. Skipping.", sep=""))
-    return()
-  }  
-  
-  newCollection <- list(dataset=dataset, dataType=dataType, date=date) 
-  newCollection$source <- source
-  newCollection$process <- process
-  newCollection$parent <- parent
-  
-  ## add to manifest file
-  mongo.insert(mongo, "oncoscape.manifest", newCollection)
-  
-  bson.conversion <- function(result){
-    switch(class(result),
-           "data.frame" = mongo.bson.from.df(result),
-           "list" = mongo.bson.from.list(result),
-           "character" = mongo.bson.from.JSON(result)
-    ) 
-  }
-  ## save result
-  test <- mongo.insert(mongo, collection.ns, bson.conversion(result))
-  if(!test){
-    print(paste("ERROR:", collection.ns, "was not added.  Trying mongoimport.", sep=" "))
-    
-    ## #1
-    #write(toJSON(result, pretty=TRUE), file = collection.ns)
-    #system(paste("mongoimport --db oncoscape --file ", collection.ns, sep=""))
-    ## import fails due to size
-    
-    ## #2
-    #write(bson.conversion(result), file = collection.ns)
-    ## can't convert large result to bson object - fails with 0 bytes
-    
-    ## #3
-    #write(toJSON(result, pretty=TRUE), file = collection.ns)
-    #system(paste("mongofiles -d oncoscape put ", collection.ns, sep=""))
-    ## stores as fs.chunk and fs.files ???
-
-    ## #4
-    #write(toJSON(result, pretty=TRUE), file = collection.ns)
-    #system("node mongo.insert.js")
-    ## FAIL: 
-    #{ [MongoError: document is larger than the maximum size 16777216]
-    #name: 'MongoError',
-    #message: 'document is larger than the maximum size 16777216',
-    #driver: true }
-    
-    ## #5
-    criteria <- list()
-    
-    for(key in names(result)){
-      datasource <- mongo.find.one(mongo, collection.ns, criteria)
-      data.list <- list()
-      if(length(datasource)>0)
-        data.list <- mongo.bson.to.list(datasource)
-      
-      data.list[[key]] <- result[[key]]
-      mongo.update(mongo, collection.ns,criteria, data.list, mongo.update.upsert)
-     # buf <- mongo.bson.buffer.create()
-    #  mongo.bson.buffer.append(buf, key, result[[key]])
-    #  objNew <- mongo.bson.from.buffer(buf)
-    #  mongo.update(mongo, collection.ns,criteria, objNew, mongo.update.upsert)
-      }
-    
-    return()
-  }
-  newID <- unlist(mongo.bson.to.list( mongo.find.one(mongo, "oncoscape.manifest", 
-                          query=newCollection, fields=list("_id"))))
-  
-  ## add to lookup table  
-  lookup.ns <-  "oncoscape.lookup_oncoscape_datasources"
-  query <- list("disease"=dataset)
-  datasource <- mongo.find.one(mongo, lookup.ns, query)
-  
-  if(length(datasource)==0){
-    data.list <- list();
-    data.list$disease = dataset
-  }else{
-    data.list <- mongo.bson.to.list(datasource)
-  }
-  
-  if(dataType %in% c("cnv","mut01", "mut", "rna", "protein", "methyl")){
-    # update molecular
-    
-    add.collection <- list(data.frame(source=source, type=dataType, collection=collection.uniqueName))
-    if("molecular" %in% names(data.list)){
-      data.list$molecular <- c(data.list$molecular, add.collection)
-    }else{data.list$molecular <- add.collection}
-    
-  }else if(dataType %in% c("mds", "pca")){
-    #update calculated
-    add.collection <- data.frame(source=source, type=dataType, collection=collection.uniqueName)
-    if("calculated" %in% names(data.list)){
-      data.list$calculated	<- rbind(data.list$calculated, add.collection)
-    } else {data.list$calculated <- add.collection }
-    
-  }else if(dataType %in% c("edges", "geneDegree", "ptDegree")){
-    #update edges
-    add.collection <- data.frame(name=name,edges=collection.uniqueName, patientWeights=collection.uniqueName, genesWeights=collection.uniqueName)
-    if("edges" %in% names(data.list)){
-      data.list$edges	<- rbind(data.list$edges, add.collection)
-    } else {data.list$edges <- add.collection }
-    
-  }else if(dataType %in% c("drug", "f1","f2", "f3", "nte", "nte_f1", "omf", "pt", "rad")){
-    #update patient
-    add.collection <- data.frame()
-    add.collection[dataType] <- collection.uniqueName
-    if("clinical" %in% names(data.list)){
-      data.list$clinical	<- rbind(data.list$clinical, add.collection)
-    } else {data.list$clinical <- add.collection }
-    
-  }
-
-  ## insert into mongo
-  mongo.update(mongo, lookup.ns, query, data.list, mongo.update.upsert)
-  
-  if(dataType == "mut")
-    save.mut01.from.mut(mongo, result, dataset, dataType,source, parentID=newID)
-  
-}
 
 # Run Block  -------------------------------------------------------
 
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
-manifest <- "../manifests/os.molecular.manifest.json"
+#manifest <- "../manifests/os.molecular.manifest.json"
+#manifest <- "../manifests/os.tcga.clinical.manifest.json"
+manifest <- "../manifests/os.hg19.manifest.json"
+
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0 )
   manifest <- args

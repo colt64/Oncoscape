@@ -2,11 +2,11 @@
   {
     "dataset": "hg19",
     "type": "genesets",
-	"process": "hgnc",
+	"process": "import",
 	"date": "2016-06-24",
-	"source": "hg19",
-	"directory": "../data/molecular/hg19/",
-	"file": "hg19_genesets_hgnc"
+	"source": "hgnc",
+	"directory": "../archive/hg19/",
+	"file": "hg19_genesets_hgnc.json"
   },
 {
 		"dataset": "brca",

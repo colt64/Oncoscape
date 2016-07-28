@@ -8,6 +8,7 @@ library(rmongodb)
 
 
 os.dataset.enumerations     <- fromJSON("../manifests/os.dataset.enumerations.json" )
+date <- as.character(Sys.Date())
 
 #---------------------------------------------------------
 connect.to.mongo <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
@@ -143,13 +144,19 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
       data.list$clinical	<- c(data.list$clinical, add.collection)
     } else {data.list$clinical <- add.collection }
     
-  }else if(dataType %in% c("chromosome", "centromere", "genes", "geneset")){
+  }else if(dataType %in% c("chromosome", "centromere", "genes")){
     #update patient
     add.collection <- list()
     add.collection[dataType] <- collection.uniqueName
-    if("clinical" %in% names(data.list)){
-      data.list$clinical	<- c(data.list$clinical, add.collection)
-    } else {data.list$clinical <- add.collection }
+    if("location" %in% names(data.list)){
+      data.list$location	<- c(data.list$location, add.collection)
+    } else {data.list$location <- add.collection }
+    
+  }else if(dataType %in% c("genesets")){
+    add.collection <- list(data.frame(source=source, type=dataType, collection=collection.uniqueName))
+    if("category" %in% names(data.list)){
+      data.list$category <- c(data.list$category, add.collection)
+    }else{data.list$category <- add.collection}
     
   }else{
     print(paste("WARNING: data type not recognized:", dataType, sep=" "))
@@ -163,6 +170,8 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
     save.mut01.from.mut(mongo, result, dataset, dataType,source, parentID=newID)
   
 }
+
+
 #----------------------------------------------------------------------------------------------------
 ### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
 os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", "JSON")){

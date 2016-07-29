@@ -80,41 +80,31 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA) {
 }
 
 #----------------------------------------------------------------------------------------------------
-save.pca<- function(Manifest, tbl, datasetName, dataType, geneset=NA, output_directory=output_directory, ...){
+save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 
   cat("-calculating pca\n")
   
   ## ----- Configuration ------
 	process <- data.frame(calculation="prcomp", geneset= geneset)
-	process$input=dataType
+	process$input=collection$dataType
 	processName <- paste(unlist(process), collapse="-")
 	process$center="TRUE"; process$scale="TRUE"
 	process <- list(process)
 
-	coll <- tbl$collections[[1]]
+	coll <- mongo.find.all(mongo, collection$collection)
 	
-	
-	for(i in 1:nrow(coll)){
-	  collection <- coll[i,]
-		tbl.json <- fromJSON(paste(collection$directory, collection$file,".json", sep="")) 
-		mtx <- tbl.json$data[[1]]
-		dimnames(mtx) <- list(tbl.json$rows[[1]], tbl.json$cols[[1]])
-		tbl.index <- collection$id
-   
-		if(tbl.json$rowType == "gene")
-		  mtx <- t(mtx)
-		
-		column.sums <- colSums(mtx, na.rm=TRUE)
-		removers <- as.integer(which(column.sums == 0))
-		if(length(removers) > 0) {
+	mtx <- convert.to.mtx(coll);
+	column.sums <- colSums(mtx, na.rm=TRUE)
+	removers <- as.integer(which(column.sums == 0))
+	if(length(removers) > 0) {
 		   printf("removing %d columns", length(removers))
 		   mtx <- mtx[, -removers]
-		} # if removers
+	} # if removers
 
-		if(!is.na(geneset)){
+	if(!is.na(geneset)){
 			genes <- getGeneSet(geneset)
 			mtx <- mtx[, intersect(colnames(mtx), genes)]
-		}
+	}
    
 	   PCs <- tryCatch(
 		  prcomp(mtx,center=T,scale=T),
@@ -126,37 +116,42 @@ save.pca<- function(Manifest, tbl, datasetName, dataType, geneset=NA, output_dir
 	   if(all(is.na(PCs)))
 		   stop("error with PCA calculation.  See R log");
 	
-	   parent <- list(c(datasetName, dataType, tbl.index))
+	   parent <- collection$`_id`
 	   
 	   scores <- PCs$x
-     result <- list(rowType="samples", colType="PC", rows=rownames(scores), cols=colnames(scores), data=scores)
-	   ## ----- Save  ------
-     Manifest <- save.collection(Manifest=Manifest, dataset=datasetName, dataType="pcaScores",source=collection$source, result=result,
-                     parent=parent, process=process,processName=processName, outputDirectory=output_directory)
- 
-	   loadings <- PCs$rotation
-	   result <- list(rowType="genes", colType="PC", rows=rownames(loadings), cols=colnames(loadings), data=loadings)
-	   Manifest <- save.collection(Manifest=Manifest, dataset=datasetName, dataType="pcaLoadings", source=collection$source, result=result,
-	                               parent=parent, process=process,processName=processName, outputDirectory=output_directory)
+	   if(!is.na(scaleFactor)){
+	     chrDim <- get.chromosome.dimensions(scaleFactor) 
+	     scores.list <- scaleSamplesToChromosomes(scores, chrDim)
+	   }else{
+	      scores.list <- lapply(rownames(scores), function(name){ scores[name,1:3]})
+	   }
 	   
-	   	#importance <- summary(PCs)$importance   
-	   	
-	}# for each collection
+	   names(scores.list) <- rownames(scores)
+	   importance <- summary(PCs)$importance   
+	   propVar <- importance[2,] *100
+	   result <- list(disease=collection$dataset, geneset=geneset,scale=scaleFactor, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
+	   ## ----- Save  ------
+     save.collection(mongo, dataset=collection$dataset, dataType="pcaScores",source=collection$source, result=result,
+                     parent=parent, process=process,processName=processName)
 
-	return(Manifest)
+#	   loadings <- PCs$rotation
+#	   result <- list(rowType="genes", colType="PC", rows=rownames(loadings), cols=colnames(loadings), data=loadings)
+#	   Manifest <- save.collection(mongo, dataset=collection$dataset, dataType="pcaLoadings", source=collection$source, result=result,
+#	                               parent=parent, process=process,processName=processName)
+
 }
 
 
 #----------------------------------------------------------------------------------------------------
-save.mds.innerProduct <- function(datasetName, tbl1, tbl2, tbl1Type, tbl2Type, geneset, ...){
+save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
     ## ----- MDS on All Combinations of CNV and MUT Tables ------
 
   cat("-calculating mds\n")
   
   ## ----- Configuration ------
-	genes = getGeneSet(geneset)
-  	dataType <- "mds"
-
+  dataType <- "mds"
+  datasetName <- tbl1$dataset
+  
 	regex = ".01$"; threshold = NA;
 	if(datasetName == "laml"){        regex = "-03$|-09$";
 	} else if(datasetName == "luad"){ regex = "TCGA-(17)^-\\d{4}-01$" }
@@ -164,79 +159,81 @@ save.mds.innerProduct <- function(datasetName, tbl1, tbl2, tbl1Type, tbl2Type, g
 	if(datasetName == "brca" | datasetName == "brain")  threshold = -1e-04
   
   	process <- data.frame(calculation="mds", geneset= geneset)
-  	process$input=list( c(tbl1Type, tbl2Type))
+  	process$input=list( c(tbl1$dataType, tbl2$dataType))
   	processName <- paste(unlist(process), collapse="-")
   	process$regex=regex; process$threshold=threshold
   	process <- list(process)
 
-  	coll1 <- tbl1$collections[[1]]
-  	coll2 <- tbl2$collections[[1]]
+  	coll1 <- mongo.find.all(mongo, paste("oncoscape",tbl1$collection, sep="."))
+  	coll2 <- mongo.find.all(mongo, paste("oncoscape",tbl1$collection, sep="."))
   	
-	for(i in 1:nrow(coll1)){
-	  tbl1.json <- fromJSON(paste(coll1[i,"directory"], coll1[i,"file"],".json", sep="")) 
-		mtx.tbl1 <- tbl1.json$data[[1]]
-		rownames(mtx.tbl1) <- tbl1.json$rows[[1]]; colnames(mtx.tbl1) <- tbl1.json$cols[[1]]
-		tbl1.samples <- grep(regex, tbl1.json$cols[[1]],  value=TRUE)
-		tbl1.index <- coll1[i, "id"]
+		mtx.tbl1 <- convert.to.mtx(coll1);
+		mtx.tbl2 <- convert.to.mtx(coll2);
 
-		cat("--- tbl1: ", coll1[i, "file"], "\n")
+		tbl1.samples <- grep(regex, rownames(mtx.tbl1),  value=TRUE)
+		tbl2.samples <- grep(regex, rownames(mtx.tbl2),  value=TRUE)
+	
+		if(is.na(geneset)){
+		       genes <- intersect(colnames(mtx.tbl1), colnames(mtx.tbl2))
+		}else{ genes = getGeneSet(geneset) }
 		
-		for(j in 1:nrow(coll2)){
-		  tbl2.json <- fromJSON(paste(coll2[j , "directory"], coll2[j, "file"],".json", sep="")) 
-		  mtx.tbl2 <- tbl2.json$data[[1]]
-			rownames(mtx.tbl2) <- tbl2.json$rows[[1]]; colnames(mtx.tbl2) <- tbl2.json$cols[[1]]
-			tbl2.samples <- grep(regex, tbl2.json$cols[[1]],  value=TRUE)
-			tbl2.index <-coll2[j,"id"]
-
-			cat("--- tbl2: ", coll2[j, "file"], "\n")
 			
 			samples <- unique(tbl1.samples, tbl2.samples)
-			sample_similarity <- calculateSampleSimilarityMatrix(mtx.tbl1, mtx.tbl2,samples=samples, genes=genes)
-											 
+			sample_similarity <- calculateSampleSimilarityMatrix(t(mtx.tbl1), t(mtx.tbl2),samples=samples, genes=genes)
+											 #expects rows as genes and cols as samples
+			
 			if(!is.na(threshold)){
 				outliers <- names(which(sample_similarity[,1]<threshold))
 				sample_similarity <- sample_similarity[setdiff(rownames(sample_similarity), outliers), ]
 			}
 
-			parent <- list(list(c(datasetName, tbl1Type, tbl1.index),c(datasetName, tbl2Type, tbl2.index)))
-			mds.list<- lapply(rownames(sample_similarity), function(name) data.frame(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
-			names(mds.list) <- rownames(sample_similarity)
-			save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(coll1[i,"source"], coll2[j,"source"]), result=mds.list,
+			parent <- list(tbl1$`_id`, tbl2$`_id`)
+			
+			if(!is.na(scaleFactor)){
+			  chrDim <- get.chromosome.dimensions(scaleFactor) 
+			  mds.list <- scaleSamplesToChromosomes(sample_similarity, chrDim)
+			}else{
+			  mds.list<- lapply(rownames(sample_similarity), function(name) data.frame(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
+			  names(mds.list) <- rownames(sample_similarity)
+			}
+			
+			result <- list(type="cluster", dataset=tbl1$dataset, name=processName, scale=scaleFactor, data=mds.list)
+			save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source), result=result,
 			                            parent=parent, process=process,processName=processName)
 			
-		} # mut files
-	} #cnv files
-
 }
 
 
 #----------------------------------------------------------------------------------------------------
-run.batch.patient_similarity <- function(datasets, geneset_name=NA, output_directory="./"){
+run.batch.patient_similarity <- function(datasets){
 
   gistic.scores <-c(-2,-1,1, 2)
   
   # Loop for each dataset
-  datasetNames <- unique(datasets$dataset)
-  for (datasetName in datasetNames){
-      molTables <- subset(datasets, dataset==datasetName)
-    
-      cnvTables <- subset(molTables, dataType == "cnv")
-      mutTables <- subset(molTables, dataType == "mut01")
-      rnaTables <- subset(molTables, dataType == "rna")
-      protTables <- subset(molTables, dataType == "protein")
+  for (collection in datasets){
+
+    ## MDS
+    if(collection$dataType =="cnv"){
+      mut01_colls <- mongo.find.all(mongo, "oncoscape.manifest", 
+                     query=list(dataset=collection$dataset, dataType="mut01"))
+      for(mut01_coll in mut01_colls){
+        save.mds.innerProduct(collection, mut01_coll, copyNumberValues=gistic.scores, geneset = NA)
+      }
+    }
+    else if(collection$dataType =="mut01"){
+      cnv_colls <- mongo.find.all(mongo, "oncoscape.manifest", 
+                                    query=list(dataset=collection$dataset, dataType="cnv"))
+      for(cnv_coll in cnv_colls){
+        save.mds.innerProduct(cnv_coll, collection, copyNumberValues=gistic.scores, geneset = NA)
+      }
       
-      if(nrow(cnvTables)==0 | nrow(mutTables) ==0) next;
-      cat(datasetName, "\n")		  
+    }
     
-	  save.mds.innerProduct(datasetName=datasetName, tbl1=cnvTables, tbl2=mutTables, tbl1Type="cnv", tbl2Type="mut01", 
-	                                    copyNumberValues=gistic.scores, geneset = geneset_name)
-	  save.pca(tbl=cnvTables,datasetName=datasetName, dataType="cnv", geneset = geneset_name)
-	  save.pca(tbl=mutTables,datasetName=datasetName, dataType="mut01", geneset = geneset_name)
-	  save.pca(tbl=rnaTables,datasetName=datasetName, dataType="rna", geneset = geneset_name)
-	  save.pca(tbl=rnaTables,datasetName=datasetName, dataType="rna", geneset = NA)
-	  save.pca(tbl=protTables,datasetName=datasetName, dataType="protein", geneset = geneset_name)
-	  save.pca(tbl=protTables,datasetName=datasetName, dataType="protein", geneset = NA)
-	  
+    ## PCA
+      save.pca(collection, geneset = NA)
+      for(geneset_name in names(genesets))
+	      save.pca(collection, geneset = geneset_name)
+
 	} # for diseaseName	
   
   
@@ -386,7 +383,6 @@ run.batch.network_edges <- function(datasets){
 			
  		} # for diseaseName	
 
-      return(Manifest)
 }
 
 
@@ -394,14 +390,13 @@ run.batch.network_edges <- function(datasets){
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
-genesets <-     mongo.find.all(mongo, "oncoscape.hg19_genesets_hgnc_import", 
-                                       query=list())
+genesets <-     mongo.find.all(mongo, "oncoscape.hg19_genesets_hgnc_import", query=list())
 
 molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
-                                    query='{"dataType":{"$in":["cnv","mut01", "mut", "rna", "protein", "methylation"]}}')
+                                    query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
 
 if("mds" %in% commands){
-	run.batch.patient_similarity(molecular_manifest,geneset_name="oncoVogel274")
+	run.batch.patient_similarity(molecular_manifest)
 		# calculate patient similarity
 }
 

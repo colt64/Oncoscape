@@ -38,6 +38,17 @@ get.mongo.table <- function(mongo, db, table){
 	}
 }
 
+#---------------------------------------------------------
+convert.to.mtx <- function(data.list){
+  mtx <- sapply(data.list, function(geneRow){ 
+    val <-geneRow$patients; 
+    val <- unlist(val);
+    if(all(is.null(val))){ val <- rep(NA, length(geneRow$patients))} 
+    val})
+  colnames(mtx) <- sapply(data.list, function(geneRow){ geneRow$gene})
+  rownames(mtx) <- names(data.list[[1]]$patients)
+  return(mtx)  
+}
 
 #---------------------------------------------------------
 mapProcess <- function(process){
@@ -122,7 +133,7 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
       data.list$molecular <- c(data.list$molecular, add.collection)
     }else{data.list$molecular <- add.collection}
     
-  }else if(dataType %in% c("mds", "pca")){
+  }else if(dataType %in% c("mds", "pcaScores")){
     #update calculated
     add.collection <- list(source=source, type=dataType, collection=collection.uniqueName)
     if("calculated" %in% names(data.list)){
@@ -264,3 +275,74 @@ os.copy.file <- function(inputDir, filename, outputDir= "./"){
   #  os.data.save(data, outputDir, filename, format= "JSON")
 }
   
+
+#--------------------------------------------------------------#
+get.chromosome.dimensions <- function(scaleFactor=1000){
+  
+  chrPosScaledObj <- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19",dataType="chromosome", process=list(calculation="scaled", input=scaleFactor)))
+  
+  chrCoord <- mongo.find.all(mongo, paste("oncoscape",chrPosScaledObj$collection, sep="."))
+  chrPos_xy <-t(sapply(chrCoord, function(chr){ return(c(chr$x, chr$q))}))
+  chrDim <- c(max(chrPos_xy[,1]), max(chrPos_xy[,2]))
+  
+  return(chrDim)
+}
+#--------------------------------------------------------------#
+scaleSamplesToChromosomes <- function(mtx, chrDim, dim.names=c("x", "y", "z")){
+  
+  mtx <- apply(mtx, 2, function(col){ -1* min(col) + col})
+  # offset mtx so min val is 0,0
+  mtx.max <- apply(mtx, 2, max)
+  
+  r2Chr <- sum(chrDim*chrDim)
+  r2Mtx <- sum(mtx.max*mtx.max)	
+  scale <- sqrt(r2Chr/r2Mtx)
+  # make diagonal of drawing regions equal
+  
+  mtx <- mtx * scale
+  mtx <- round(mtx)
+  
+  list.coord <- lapply(rownames(mtx), function(name){
+    df <- data.frame(mtx[name,dim.names])
+    colnames(df) <- dim.names
+    df
+  })
+  names(list.coord) <- rownames(mtx)
+  return(list.coord)
+}
+#--------------------------------------------------------------#
+scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
+  
+  genePos_xy <- lapply(genePos, function(gene){
+    x <- chrCoordinates[gene[1], "xOffset"]
+    y <- chrCoordinates[gene[1], "yOffset"] + as.numeric(gene[2])/scaleFactor
+    data.frame(x=round(x),y=round(y))
+  })
+  
+  return(genePos_xy)	
+  
+}
+
+#--------------------------------------------------------------#
+save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
+  
+  geneObj<- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="genes", process=list(calculation="scaled", input=scaleFactor)))[[1]]
+  genePos_scaled <- mongo.find.all(mongo, paste("oncoscape",geneObj$collection, sep="."))[[1]]
+  
+  genesetObj <-  mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19",dataType="genesets"))[[1]]
+  genesets <- mongo.find.all(mongo, paste("oncoscape",genesetObj$collection, sep="."))
+  
+  process <- list(calculation="scaled", scaleFactor=scaleFactor); 
+  processName <- paste(process, collapse="-")
+  parent <- list(geneObj$`_id`,genesetObj$`_id`)
+  
+  result <- lapply(genesets, function(geneSet){	
+    genes <- geneSet$genes
+    map_genes <- intersect(genes, names(genePos_scaled))
+    genesetPos <- genePos_scaled[map_genes]
+    list(type="geneset", name=geneSet$name, scale=scaleFactor, data=genesetPos)
+  }	)
+  
+  save.collection(mongo, dataset=geneObj$dataset, dataType="genesets",source=geneObj$source, result=result,
+                  parent=parent, process=process,processName=processName)
+}

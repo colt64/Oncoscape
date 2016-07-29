@@ -9,6 +9,7 @@ library(org.Hs.eg.db)
 cytoband_url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz"
 chromosomes <- c(seq(1:22), "X", "Y")
 date <- as.character(Sys.Date())
+scaleFactor <- 100000 
 
 #----------------------------------------------------------------------------------------------------
 getChromosomeLengths <- function(){
@@ -121,6 +122,79 @@ saveCentromere_Coordinates <- function(cytoband_url){
 	
 }
 
+#--------------------------------------------------------------#
+getChromosomeOffsets <- function(chromosomes, chrLengths, pLength, scaleFactor=1000){
+  
+  pLength = unlist(pLength)/scaleFactor
+  chrLengths = unlist(chrLengths)/scaleFactor
+  
+  yCent <- max(pLength)
+  yOffset <- sapply(chromosomes, function(chr) {  yCent - pLength[chr] })
+  names(yOffset) <- chromosomes
+  yChrLengths <- sapply(chromosomes, function(chr) { yOffset[chr] + chrLengths[chr] })
+  names(yChrLengths) <- chromosomes
+  
+  yHeight <- max(unlist(yChrLengths))
+  xWidth <- yHeight * (4/3)  # 3x4 (y,x) ratio
+  numChrs <- length(chromosomes)
+  chrWidth <- xWidth/numChrs
+  xChrOffset <- sapply(1:numChrs, function(i) { chrWidth*i })
+  
+  chrCoordinates <- data.frame(name=chromosomes,length=unlist(chrLengths[chromosomes]),centromere=unlist(pLength), yOffset=unlist(yOffset), xOffset = unlist(xChrOffset))
+  rownames(chrCoordinates) <- chromosomes
+  
+  return(list(chrCoordinates =chrCoordinates, dim=c(xWidth, yHeight)))
+}
+#--------------------------------------------------------------#
+getChromosomePositions <- function(chromosomes, chrCoordinates){
+  
+  chrPos <- lapply(chromosomes, function(chr){
+    offset = chrCoordinates[chr,"yOffset"]
+    data.frame(x=chrCoordinates[chr, "xOffset"], p=offset, c=offset+chrCoordinates[chr,"centromere"], q=offset+chrCoordinates[chr,"length"])
+  })
+  names(chrPos) <- chromosomes
+  return(chrPos)
+  
+}
+
+
+#--------------------------------------------------------------#
+#creates 2 files: scaled positions of chromosomes and all genes with offsets to align centromeres
+run.scale.chr.genes <- function(scaleFactor=10000){
+  
+  # define data objects
+  chrLenObj <- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="chromosome", process="length"))[[1]]
+  genePosObj  <- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="genes", process=c("position", "min", "abs", "start")))[[1]]
+  centPosObj  <- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="centromere",process="position"))[[1]]
+  
+  chrLengths <- mongo.find.all(mongo, paste("oncoscape",chrLenObj$collection, sep="."), list())[[1]]
+  pLength    <- mongo.find.all(mongo, paste("oncoscape",centPosObj$collection, sep="."), list())[[1]]
+  genePos    <- mongo.find.all(mongo, paste("oncoscape",genePosObj$collection, sep="."), list())[[1]]
+  
+  chromosomes <- c(seq(1:22), "X", "Y")
+  
+  ## calculate Chromosome & Gene positions with scaling
+  chrSpecs <- getChromosomeOffsets(chromosomes, chrLengths$data, pLength$data, scaleFactor=scaleFactor)
+  chrPos <- getChromosomePositions(chromosomes, chrSpecs$chrCoordinates)
+  genePos_scaled <- scaleGenesToChromosomes(genePos$data, chrSpecs$chrCoordinates, scaleFactor=scaleFactor)
+  
+  ## create collections
+  process <- list(calculation="scaled", input=scaleFactor); processName <- paste(process, collapse="-")
+  ## Chr Positions
+  parent <- list(chrLenObj$`_id`, centPosObj$`_id`)
+  save.collection(mongo, dataset=chrLenObj$dataset, dataType=chrLenObj$dataType,source=chrLenObj$source, result=list(chrPos),
+                              parent=parent, process=list(process),processName=processName)
+  ## Gene Positions
+  parent <- list(genePosObj$`_id`, chrLenObj$`_id`)
+  save.collection(mongo, dataset=genePosObj$dataset, dataType=genePosObj$dataType,source=genePosObj$source, result=list(genePos_scaled),
+                              parent=parent, process=list(process),processName=processName)
+  
+}	
+
+
+
+
+
 #----------------------------------------------------------------------------------------------------
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
@@ -128,7 +202,10 @@ mongo <- connect.to.mongo()
 	saveChromosome_Coordinates()
 	saveGene_Coordinates()
 	saveCentromere_Coordinates(cytoband_url)	
-
+	
+	run.scale.chr.genes(scaleFactor)
+	save.batch.genesets.scaled.pos(scaleFactor)
+	
 close.mongo(mongo)
 
 

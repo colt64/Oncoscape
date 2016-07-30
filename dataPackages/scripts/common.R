@@ -42,8 +42,10 @@ get.mongo.table <- function(mongo, db, table){
 convert.to.mtx <- function(data.list){
   mtx <- sapply(data.list, function(geneRow){ 
     val <-geneRow$patients; 
+    null.val <- which(unlist(lapply(val, is.null)))
+    if(length(null.val)>0) val[null.val] <- NA
     val <- unlist(val);
-    if(all(is.null(val))){ val <- rep(NA, length(geneRow$patients))} 
+#    if(all(is.null(val))){ val <- rep(NA, length(geneRow$patients))} 
     val})
   colnames(mtx) <- sapply(data.list, function(geneRow){ geneRow$gene})
   rownames(mtx) <- names(data.list[[1]]$patients)
@@ -79,6 +81,18 @@ save.mut01.from.mut <- function(mongo, result, dataset, dataType,source, parentI
 
 }
 
+#---------------------------------------------------------
+collection.exists <- function(mongo, dataset, dataType,source,processName){
+  
+  collection.uniqueName <- paste(dataset, dataType, source, processName, sep="_")
+  collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
+  if(mongo.count(mongo, collection.ns) != 0){
+    print(paste(collection.uniqueName, " already exists.", sep=""))
+    return(TRUE)
+  }  
+  return(FALSE)
+
+}
 #---------------------------------------------------------
 save.collection <- function(mongo, dataset, dataType,source,result, parent, 
                             process,processName){

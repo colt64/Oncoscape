@@ -24,8 +24,11 @@ date <- as.character(Sys.Date())
 
 #----------------------------------------------------------------------------------------------------
 getGeneSet <- function(geneset_name){
-	stopifnot(geneset_name %in% names(genesets))
-	return(genesets[[geneset_name]])
+  match_name <- which(sapply(genesets, function(set){set$name ==geneset_name}))
+  if(length(match_name) == 0)
+    return(NA)
+  
+	return(genesets[[match_name]]$genes)
 }
 
 
@@ -91,9 +94,18 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	process$center="TRUE"; process$scale="TRUE"
 	process <- list(process)
 
-	coll <- mongo.find.all(mongo, collection$collection)
+	prev.run <- collection.exists(mongo, collection$dataset, dataType="pcaScores",
+	                              source=collection$source,processName=processName)
+	if(prev.run){
+	  print("Skipping.")
+	  return();
+	}
+	
+	coll <- mongo.find.all(mongo, paste("oncoscape",collection$collection, sep="."))
 	
 	mtx <- convert.to.mtx(coll);
+	rm(coll);
+	
 	column.sums <- colSums(mtx, na.rm=TRUE)
 	removers <- as.integer(which(column.sums == 0))
 	if(length(removers) > 0) {
@@ -107,7 +119,7 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	}
    
 	   PCs <- tryCatch(
-		  prcomp(mtx,center=T,scale=T),
+		  prcomp(na.omit(mtx),center=T,scale=T),
 		  error=function(error.message){
 			 print(error.message)
 			 stop("error with PCA calculation.  See R log");
@@ -123,15 +135,17 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	     chrDim <- get.chromosome.dimensions(scaleFactor) 
 	     scores.list <- scaleSamplesToChromosomes(scores, chrDim)
 	   }else{
+	      colnames(scores) <- NULL
 	      scores.list <- lapply(rownames(scores), function(name){ scores[name,1:3]})
 	   }
 	   
 	   names(scores.list) <- rownames(scores)
 	   importance <- summary(PCs)$importance   
 	   propVar <- importance[2,] *100
+	   names(propVar) <- NULL
 	   result <- list(disease=collection$dataset, geneset=geneset,scale=scaleFactor, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
 	   ## ----- Save  ------
-     save.collection(mongo, dataset=collection$dataset, dataType="pcaScores",source=collection$source, result=result,
+     save.collection(mongo, dataset=collection$dataset, dataType="pcaScores",source=collection$source, result=list(result),
                      parent=parent, process=process,processName=processName)
 
 #	   loadings <- PCs$rotation
@@ -151,25 +165,33 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
   ## ----- Configuration ------
   dataType <- "mds"
   datasetName <- tbl1$dataset
+  process <- data.frame(calculation="mds", geneset= geneset)
+  process$input=list( c(tbl1$dataType, tbl2$dataType))
+  processName <- paste(unlist(process), collapse="-")
+  
+  prev.run <- collection.exists(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source),processName=processName)
+  if(prev.run){
+    print("Skipping.")
+    return()
+  }
   
 	regex = ".01$"; threshold = NA;
 	if(datasetName == "laml"){        regex = "-03$|-09$";
 	} else if(datasetName == "luad"){ regex = "TCGA-(17)^-\\d{4}-01$" }
-
+	process$regex=regex; process$threshold=threshold
+	process <- list(process)
+	
 	if(datasetName == "brca" | datasetName == "brain")  threshold = -1e-04
   
-  	process <- data.frame(calculation="mds", geneset= geneset)
-  	process$input=list( c(tbl1$dataType, tbl2$dataType))
-  	processName <- paste(unlist(process), collapse="-")
-  	process$regex=regex; process$threshold=threshold
-  	process <- list(process)
-
+ 
   	coll1 <- mongo.find.all(mongo, paste("oncoscape",tbl1$collection, sep="."))
   	coll2 <- mongo.find.all(mongo, paste("oncoscape",tbl1$collection, sep="."))
   	
 		mtx.tbl1 <- convert.to.mtx(coll1);
 		mtx.tbl2 <- convert.to.mtx(coll2);
 
+		rm(coll1); rm(coll2);
+		
 		tbl1.samples <- grep(regex, rownames(mtx.tbl1),  value=TRUE)
 		tbl2.samples <- grep(regex, rownames(mtx.tbl2),  value=TRUE)
 	
@@ -198,7 +220,7 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
 			}
 			
 			result <- list(type="cluster", dataset=tbl1$dataset, name=processName, scale=scaleFactor, data=mds.list)
-			save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source), result=result,
+			save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source), result=list(result),
 			                            parent=parent, process=process,processName=processName)
 			
 }
@@ -218,6 +240,10 @@ run.batch.patient_similarity <- function(datasets){
                      query=list(dataset=collection$dataset, dataType="mut01"))
       for(mut01_coll in mut01_colls){
         save.mds.innerProduct(collection, mut01_coll, copyNumberValues=gistic.scores, geneset = NA)
+        for(geneset in genesets){
+          save.mds.innerProduct(collection, mut01_coll, copyNumberValues=gistic.scores, geneset = geneset$name)
+        }
+        
       }
     }
     else if(collection$dataType =="mut01"){
@@ -225,14 +251,20 @@ run.batch.patient_similarity <- function(datasets){
                                     query=list(dataset=collection$dataset, dataType="cnv"))
       for(cnv_coll in cnv_colls){
         save.mds.innerProduct(cnv_coll, collection, copyNumberValues=gistic.scores, geneset = NA)
+        for(geneset in genesets){
+          save.mds.innerProduct(cnv_coll, collection, copyNumberValues=gistic.scores, geneset = geneset$name)
+        }
+        
       }
       
     }
     
     ## PCA
       save.pca(collection, geneset = NA)
-      for(geneset_name in names(genesets))
-	      save.pca(collection, geneset = geneset_name)
+      for(geneset in genesets){
+        save.pca(collection, geneset = geneset$name)
+      }
+	      
 
 	} # for diseaseName	
   

@@ -56,10 +56,10 @@ os.data.load.molecular <- function(inputFile){
     if(all(grepl("^TCGA", rownames(mtx)))) { mtx <- t(mtx)}
     colType <- "patient"; rowType <- "gene"
 
+    colnames(mtx) <- gsub("\\.", "-", colnames(mtx)); 
     if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", colnames(mtx))))
       colType <- "sample"
     
-    colnames(mtx) <- gsub("\\.", "-", colnames(mtx)); 
  #   dimnames(mtx) <- NULL
  #   mtx.Data<- list(rownames=rownames, colnames=colnames, data=mtx)
     

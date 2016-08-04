@@ -81,6 +81,10 @@ os.data.load.molecular <- function(inputFile){
     mtx <- mtx.Data$data; 
     dimnames(mtx) <- list(mtx.Data$rownames, mtx.Data$colnames)
     
+    removers <- which(is.na(rownames(mtx)))
+    if(length(removers >0))
+      mtx <- mtx[-removers,]
+    
     data.list <- lapply(rownames(mtx), function(geneName){
       list(gene=geneName, min=min(mtx[geneName,]), max=max(mtx[geneName,]), patients = as.list(mtx[geneName,]))
     })    
@@ -90,6 +94,7 @@ os.data.load.molecular <- function(inputFile){
  # return(list(rowType=rowType, colType=colType, rows=mtx.Data$rownames, cols=mtx.Data$colnames, data=mtx.Data$data))
 }
 
+#---------------------------------------------------------
 ### Load Function Takes An Import File + Column List & Returns A DataFrame
 os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClassType = "character"){
   
@@ -177,6 +182,7 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
   
   return(list("mapped"=mappedList, "unmapped" = unMappedData, "cde"=cbind(tcga_columns,columns,cde_ids, column_type)))
 }
+#---------------------------------------------------------
 os.data.load.genome <- function( inputFile = inputFile){
   
   genesets<- fromJSON(inputFile) 
@@ -195,11 +201,18 @@ os.data.batch <- function(manifest, ...){
     resultObj <- list()
 
 		# Loop for each file to load
-		for (i in 1:length(datasets)){
+		for (i in 1:nrow(datasets)){
 			sourceObj <- datasets[i,]
 			stopifnot(all(c("dataset","source", "type","process") %in% names(sourceObj)))
 			cat(sourceObj$dataset,sourceObj$source, sourceObj$type,"\n")
 
+			prev.run <- collection.exists(mongo, dataset=sourceObj$dataset, dataType=sourceObj$type,
+			                              source=sourceObj$source,processName=sourceObj$process)
+			if(prev.run){
+			  print("Skipping.")
+			  next;
+			}
+			
 			#specific for raw data import
 			stopifnot(all(c("directory", "file") %in% names(sourceObj)))
 				
@@ -217,7 +230,7 @@ os.data.batch <- function(manifest, ...){
 				resultObj <- result
 				
 			}
-			else if(dataType %in%  c("patient", "drug", "radiation", "followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
+			else if(dataType %in%  c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
 				# Load Data Frame - map and filter by named columns
 				result <- os.data.load.clinical( inputFile = inputFile, ...)
 				resultObj <- result$mapped
@@ -293,9 +306,6 @@ os.save.categories <- function(datasets = c("gbm")){
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
-manifest <- "../manifests/os.molecular.manifest.json"
-#manifest <- "../manifests/os.tcga.clinical.manifest.json"
-
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0 )
   manifest <- args
@@ -303,8 +313,12 @@ if(length(args) != 0 )
 #if("categories" %in% commands) 
 #  os.save.categories( datasets=c("gbm", "brca"))
 
-os.data.batch(manifest,
+os.data.batch("../manifests/os.molecular.manifest.json",
               checkEnumerations = FALSE,
               checkClassType = "os.class.tcgaCharacter")
+
+os.data.batch("../manifests/os.tcga.clinical.manifest.json")
+
+save.batch.genesets.scaled.pos(scaleFactor=100000)
 
 close.mongo(mongo)

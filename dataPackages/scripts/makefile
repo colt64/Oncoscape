@@ -17,16 +17,17 @@
 
 default: setup run
 
+setup: mapCoordinates
+
+run: import cluster tools
+
 data: mapCoordinates import mds edges scale tools
 
-setup: mapCoordinates setupMongo
-
-run: import mds edges scale tools syncMongo
 
 #-----  Create Files
 
 import:
-	Rscript tcga.import.R categories molecular clinical
+	Rscript tcga.import.R
 		# - reads ucsc.filename.manifest
 		# - writes mol collections metatable
 		# - writes UCSC molecular data json
@@ -40,18 +41,9 @@ mapCoordinates:
 
 #----- Calculate Values
 
-mds:
-	Rscript networks.calculate.mds.edges.R mds
+cluster:
+	Rscript networks.calculate.mds.edges.R
 		# hobo MDS
-edges:
-	Rscript networks.calculate.mds.edges.R edges
-		# edges
-
-scale:
-	Rscript networks.scale.mds.genomic.coordinates.R mdsScaled geneScaled chromosomeScaled
-		# MDS values scaled
-		# geneset coordinates scaled
-		# genomic coordinates scaled
 
 #----- Create Tool Specific Views
 

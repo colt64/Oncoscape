@@ -6,7 +6,7 @@ const auth = require('./auth-module.js');
 const uuid = require('node-uuid');
 const favicon = require('serve-favicon');
 
-mongoose.connect('mongodb://localhost/os');
+mongoose.connect('mongodb://localhost/oncoscape');
 
 var app = express();
 

@@ -9,6 +9,7 @@ library(rmongodb)
 
 os.dataset.enumerations     <- fromJSON("../manifests/os.dataset.enumerations.json" )
 date <- as.character(Sys.Date())
+chromosomes <- c(seq(1:22), "X", "Y")
 
 #---------------------------------------------------------
 connect.to.mongo <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
@@ -39,12 +40,37 @@ get.mongo.table <- function(mongo, db, table){
 }
 
 #---------------------------------------------------------
-convert.to.mtx <- function(data.list){
+mongo.collection.as.matrix <- function(collection, format=""){
+
+  cursor <- mongo.find(mongo, paste("oncoscape",collection, sep="."), query=list(), fields=list())
+  count <- mong.count(mongo, paste("oncoscape",collection, sep="."))
+  result_lst <- vector('list', count)
+  i <- 1
+  while (mongo.cursor.next(cursor)) {
+    result_lst[[i]] <- mongo.bson.to.list(mongo.cursor.value(cursor))
+    val <-geneRow$patients; 
+    null.val <- which(unlist(lapply(val, is.null)))
+    if(length(null.val)>0) val[null.val] <- NA
+    val <- unlist(val);
+    if(format == "as.numeric") val <- as.numeric(val)
+    
+    i <- i + 1
+  }
+  result_dt <- data.table::rbindlist(result_lst)
+
+  colnames(mtx) <- sapply(data.list, function(geneRow){ geneRow$gene})
+  rownames(mtx) <- names(data.list[[1]]$patients)
+  return(mtx)  
+}
+
+#---------------------------------------------------------
+convert.to.mtx <- function(data.list, format=""){
   mtx <- sapply(data.list, function(geneRow){ 
     val <-geneRow$patients; 
     null.val <- which(unlist(lapply(val, is.null)))
     if(length(null.val)>0) val[null.val] <- NA
     val <- unlist(val);
+    if(format == "as.numeric") val <- as.numeric(val)
 #    if(all(is.null(val))){ val <- rep(NA, length(geneRow$patients))} 
     val})
   colnames(mtx) <- sapply(data.list, function(geneRow){ geneRow$gene})
@@ -83,8 +109,12 @@ save.mut01.from.mut <- function(mongo, result, dataset, dataType,source, parentI
 
 #---------------------------------------------------------
 collection.exists <- function(mongo, dataset, dataType,source,processName){
-  
-  collection.uniqueName <- paste(dataset, dataType, source, processName, sep="_")
+
+  source <- unique(source)
+  if(length(source)>1) source <- list(source)
+  sourceName <- paste(unlist(source), collapse="-")
+
+  collection.uniqueName <- paste(dataset, dataType, sourceName, processName, sep="_")
   collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
   if(mongo.count(mongo, collection.ns) != 0){
     print(paste(collection.uniqueName, " already exists.", sep=""))
@@ -101,8 +131,9 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   
   source <- unique(source)
   if(length(source)>1) source <- list(source)
+  sourceName <- paste(unlist(source), collapse="-")
   
-  collection.uniqueName <- paste(dataset, dataType, source, processName, sep="_")
+  collection.uniqueName <- paste(dataset, dataType, sourceName, processName, sep="_")
   collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
   if(mongo.count(mongo, collection.ns) != 0){
     print(paste(collection.uniqueName, " already exists. Skipping.", sep=""))
@@ -133,8 +164,9 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   datasource <- mongo.find.one(mongo, lookup.ns, query)
   
   if(length(datasource)==0){
-    data.list <- list();
-    data.list$disease = dataset
+    data.list <- list(disease = dataset, source = "TCGA",beta = TRUE)
+    data.list$name = dataset
+    data.list$img = paste(dataset, "png", sep=".")
   }else{
     data.list <- mongo.bson.to.list(datasource)
   }
@@ -149,19 +181,24 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
     
   }else if(dataType %in% c("mds", "pcaScores")){
     #update calculated
-    add.collection <- list(source=source, type=dataType, collection=collection.uniqueName)
+    add.collection <- list(data.frame(source=source, type=dataType, collection=collection.uniqueName))
     if("calculated" %in% names(data.list)){
       data.list$calculated	<-c(data.list$calculated, add.collection)
     } else {data.list$calculated <- add.collection }
     
-  }else if(dataType %in% c("edges", "geneDegree", "ptDegree")){
+  }else if(dataType %in% c("edges")){
     #update edges
-    add.collection <- list(name=name,edges=collection.uniqueName, patientWeights=collection.uniqueName, genesWeights=collection.uniqueName)
+    add.collection <- list(data.frame(name=process$geneset,edges=collection.uniqueName, 
+                           patientWeights=paste(dataset, "ptDegree", source, processName, sep="_"), 
+                           genesWeights=paste(dataset, "geneDegree", source, processName, sep="_")))
     if("edges" %in% names(data.list)){
       data.list$edges	<- c(data.list$edges, add.collection)
     } else {data.list$edges <- add.collection }
     
-  }else if(dataType %in% c("patient", "drug", "radiation", "followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
+  }else if(dataType %in% c("ptDegree", "geneDegree")){
+    print(paste(dataType, "lookup info processed with edge creation", sep=" "))
+    return()
+  }else if(dataType %in% c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
     #update patient
     add.collection <- list()
     add.collection[dataType] <- collection.uniqueName
@@ -291,12 +328,12 @@ os.copy.file <- function(inputDir, filename, outputDir= "./"){
   
 
 #--------------------------------------------------------------#
-get.chromosome.dimensions <- function(scaleFactor=1000){
+get.chromosome.dimensions <- function(scaleFactor=100000){
   
-  chrPosScaledObj <- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19",dataType="chromosome", process=list(calculation="scaled", input=scaleFactor)))
+  chrPosScaledObj <- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19",dataType="chromosome", process=list(scale=scaleFactor)))[[1]]
   
-  chrCoord <- mongo.find.all(mongo, paste("oncoscape",chrPosScaledObj$collection, sep="."))
-  chrPos_xy <-t(sapply(chrCoord, function(chr){ return(c(chr$x, chr$q))}))
+  chrCoord <- mongo.find.all(mongo, paste("oncoscape",chrPosScaledObj$collection, sep="."))[[1]][["data"]]
+  chrPos_xy <-t(sapply(chromosomes, function(chr){ return(c(chrCoord[[chr]]$x, chrCoord[[chr]]$q))}))
   chrDim <- c(max(chrPos_xy[,1]), max(chrPos_xy[,2]))
   
   return(chrDim)
@@ -317,9 +354,7 @@ scaleSamplesToChromosomes <- function(mtx, chrDim, dim.names=c("x", "y", "z")){
   mtx <- round(mtx)
   
   list.coord <- lapply(rownames(mtx), function(name){
-    df <- data.frame(mtx[name,dim.names])
-    colnames(df) <- dim.names
-    df
+    vals <- data.frame(t(mtx[name,dim.names]))
   })
   names(list.coord) <- rownames(mtx)
   return(list.coord)
@@ -340,7 +375,7 @@ scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
 #--------------------------------------------------------------#
 save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
   
-  geneObj<- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="genes", process=list(calculation="scaled", input=scaleFactor)))[[1]]
+  geneObj<- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="genes", process=list(scale=scaleFactor)))[[1]]
   genePos_scaled <- mongo.find.all(mongo, paste("oncoscape",geneObj$collection, sep="."))[[1]]
   
   genesetObj <-  mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19",dataType="genesets"))[[1]]
@@ -352,8 +387,8 @@ save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
   
   result <- lapply(genesets, function(geneSet){	
     genes <- geneSet$genes
-    map_genes <- intersect(genes, names(genePos_scaled))
-    genesetPos <- genePos_scaled[map_genes]
+    map_genes <- intersect(genes, names(genePos_scaled$data))
+    genesetPos <- genePos_scaled$data[map_genes]
     list(type="geneset", name=geneSet$name, scale=scaleFactor, data=genesetPos)
   }	)
   

@@ -179,14 +179,16 @@ run.scale.chr.genes <- function(scaleFactor=10000){
   genePos_scaled <- scaleGenesToChromosomes(genePos$data, chrSpecs$chrCoordinates, scaleFactor=scaleFactor)
   
   ## create collections
-  process <- list(calculation="scaled", input=scaleFactor); processName <- paste(process, collapse="-")
+  process <- list(scale=scaleFactor); processName <- paste(process, collapse="-")
   ## Chr Positions
   parent <- list(chrLenObj$`_id`, centPosObj$`_id`)
-  save.collection(mongo, dataset=chrLenObj$dataset, dataType=chrLenObj$dataType,source=chrLenObj$source, result=list(chrPos),
+  result <- list(type="chromosome", scale=scaleFactor, data=chrPos)
+  save.collection(mongo, dataset=chrLenObj$dataset, dataType=chrLenObj$dataType,source=chrLenObj$source, result=list(result),
                               parent=parent, process=list(process),processName=processName)
   ## Gene Positions
   parent <- list(genePosObj$`_id`, chrLenObj$`_id`)
-  save.collection(mongo, dataset=genePosObj$dataset, dataType=genePosObj$dataType,source=genePosObj$source, result=list(genePos_scaled),
+  result <- list(type="geneset", scale=scaleFactor, data=genePos_scaled)
+  save.collection(mongo, dataset=genePosObj$dataset, dataType=genePosObj$dataType,source=genePosObj$source, result=list(result),
                               parent=parent, process=list(process),processName=processName)
   
 }	
@@ -197,6 +199,8 @@ run.scale.chr.genes <- function(scaleFactor=10000){
 
 #----------------------------------------------------------------------------------------------------
 ## must first initialize server (through shell >mongod)
+
+#mongo <- connect.to.mongo(host="oncoscape-dev-db1.sttrcancer.io", username="oncoscape", password=password)
 mongo <- connect.to.mongo()
 
 	saveChromosome_Coordinates()
@@ -204,7 +208,6 @@ mongo <- connect.to.mongo()
 	saveCentromere_Coordinates(cytoband_url)	
 	
 	run.scale.chr.genes(scaleFactor)
-	save.batch.genesets.scaled.pos(scaleFactor)
 	
 close.mongo(mongo)
 

@@ -63,6 +63,9 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA) {
 	tmp <- apply(mut, 1, function(x) any(is.na(x)))
 	if(length(which(tmp))>0)
 		mut <- mut[-which(tmp),]
+	tmp <- apply(cn, 1, function(x) any(is.na(x)))
+	if(length(which(tmp))>0)
+	  cn <- cn[-which(tmp),]
 	
 	similaritySNV <- calcSimilarity(as.matrix(mut))
 	similarityCNV <- calcSimilarity(as.matrix(cn))
@@ -88,10 +91,13 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
   cat("-calculating pca\n")
   
   ## ----- Configuration ------
-	process <- data.frame(calculation="prcomp", geneset= geneset)
+  genesetName <- geneset
+  if(is.na(genesetName)) genesetName = "All Genes"
+	process <- data.frame(calculation="prcomp", geneset= genesetName)
 	process$input=collection$dataType
+	process$scale=scaleFactor
 	processName <- paste(unlist(process), collapse="-")
-	process$center="TRUE"; process$scale="TRUE"
+	process$center="TRUE"; process$scaled="TRUE"
 	process <- list(process)
 
 	prev.run <- collection.exists(mongo, collection$dataset, dataType="pcaScores",
@@ -103,37 +109,47 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	
 	coll <- mongo.find.all(mongo, paste("oncoscape",collection$collection, sep="."))
 	
-	mtx <- convert.to.mtx(coll);
+	mtx <- convert.to.mtx(coll, format="as.numeric");
 	rm(coll);
+
+	if(!is.na(geneset)){
+	  genes <- getGeneSet(geneset)
+	  mtx <- mtx[, intersect(colnames(mtx), genes)]
+	}
 	
 	column.sums <- colSums(mtx, na.rm=TRUE)
 	removers <- as.integer(which(column.sums == 0))
+	removers <- c(removers, which(apply(mtx, 2, var)== 0))
 	if(length(removers) > 0) {
 		   printf("removing %d columns", length(removers))
 		   mtx <- mtx[, -removers]
 	} # if removers
 
-	if(!is.na(geneset)){
-			genes <- getGeneSet(geneset)
-			mtx <- mtx[, intersect(colnames(mtx), genes)]
+	if(any(dim(mtx)==0)){
+	  print("WARNING: mtx is singular.  PCA not computed")
+	  return();
 	}
-   
+	  
+	
 	   PCs <- tryCatch(
 		  prcomp(na.omit(mtx),center=T,scale=T),
 		  error=function(error.message){
-			 print(error.message)
-			 stop("error with PCA calculation.  See R log");
+			 print("ERROR: PRCOMP!")
+		    print(error.message)
+			 return(NA);
 			 })
    
+	   
 	   if(all(is.na(PCs)))
-		   stop("error with PCA calculation.  See R log");
+		   return();
 	
 	   parent <- collection$`_id`
 	   
 	   scores <- PCs$x
 	   if(!is.na(scaleFactor)){
 	     chrDim <- get.chromosome.dimensions(scaleFactor) 
-	     scores.list <- scaleSamplesToChromosomes(scores, chrDim)
+	     pc3 <- scores[,1:3]; colnames(pc3) <- c("x", "y", "z")
+	     scores.list <- scaleSamplesToChromosomes(pc3, chrDim)
 	   }else{
 	      colnames(scores) <- NULL
 	      scores.list <- lapply(rownames(scores), function(name){ scores[name,1:3]})
@@ -141,7 +157,7 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	   
 	   names(scores.list) <- rownames(scores)
 	   importance <- summary(PCs)$importance   
-	   propVar <- importance[2,] *100
+	   propVar <- round(importance[2,] *100, digits=2)
 	   names(propVar) <- NULL
 	   result <- list(disease=collection$dataset, geneset=geneset,scale=scaleFactor, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
 	   ## ----- Save  ------
@@ -165,8 +181,9 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
   ## ----- Configuration ------
   dataType <- "mds"
   datasetName <- tbl1$dataset
-  process <- data.frame(calculation="mds", geneset= geneset)
-  process$input=list( c(tbl1$dataType, tbl2$dataType))
+  process <- list(calculation="mds", geneset= geneset)
+  process$input=list( tbl1$dataType, tbl2$dataType)
+  process$scale=scaleFactor
   processName <- paste(unlist(process), collapse="-")
   
   prev.run <- collection.exists(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source),processName=processName)
@@ -175,7 +192,7 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
     return()
   }
   
-	regex = ".01$"; threshold = NA;
+	regex = "-01$"; threshold = NA;
 	if(datasetName == "laml"){        regex = "-03$|-09$";
 	} else if(datasetName == "luad"){ regex = "TCGA-(17)^-\\d{4}-01$" }
 	process$regex=regex; process$threshold=threshold
@@ -185,10 +202,10 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
   
  
   	coll1 <- mongo.find.all(mongo, paste("oncoscape",tbl1$collection, sep="."))
-  	coll2 <- mongo.find.all(mongo, paste("oncoscape",tbl1$collection, sep="."))
+  	coll2 <- mongo.find.all(mongo, paste("oncoscape",tbl2$collection, sep="."))
   	
-		mtx.tbl1 <- convert.to.mtx(coll1);
-		mtx.tbl2 <- convert.to.mtx(coll2);
+		mtx.tbl1 <- convert.to.mtx(coll1, format="as.numeric");
+		mtx.tbl2 <- convert.to.mtx(coll2, format="as.numeric");
 
 		rm(coll1); rm(coll2);
 		
@@ -213,7 +230,7 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
 			
 			if(!is.na(scaleFactor)){
 			  chrDim <- get.chromosome.dimensions(scaleFactor) 
-			  mds.list <- scaleSamplesToChromosomes(sample_similarity, chrDim)
+			  mds.list <- scaleSamplesToChromosomes(sample_similarity, chrDim, dim.names=c("x", "y"))
 			}else{
 			  mds.list<- lapply(rownames(sample_similarity), function(name) data.frame(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
 			  names(mds.list) <- rownames(sample_similarity)
@@ -227,21 +244,20 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
 
 
 #----------------------------------------------------------------------------------------------------
-run.batch.patient_similarity <- function(datasets){
+run.batch.patient_similarity <- function(datasets, scaleFactor=NA){
 
   gistic.scores <-c(-2,-1,1, 2)
   
   # Loop for each dataset
   for (collection in datasets){
-
     ## MDS
     if(collection$dataType =="cnv"){
       mut01_colls <- mongo.find.all(mongo, "oncoscape.manifest", 
                      query=list(dataset=collection$dataset, dataType="mut01"))
       for(mut01_coll in mut01_colls){
-        save.mds.innerProduct(collection, mut01_coll, copyNumberValues=gistic.scores, geneset = NA)
+        save.mds.innerProduct(collection, mut01_coll, copyNumberValues=gistic.scores, geneset = NA, scaleFactor=scaleFactor)
         for(geneset in genesets){
-          save.mds.innerProduct(collection, mut01_coll, copyNumberValues=gistic.scores, geneset = geneset$name)
+          save.mds.innerProduct(collection, mut01_coll, copyNumberValues=gistic.scores, geneset = geneset$name, scaleFactor=scaleFactor)
         }
         
       }
@@ -250,9 +266,9 @@ run.batch.patient_similarity <- function(datasets){
       cnv_colls <- mongo.find.all(mongo, "oncoscape.manifest", 
                                     query=list(dataset=collection$dataset, dataType="cnv"))
       for(cnv_coll in cnv_colls){
-        save.mds.innerProduct(cnv_coll, collection, copyNumberValues=gistic.scores, geneset = NA)
+        save.mds.innerProduct(cnv_coll, collection, copyNumberValues=gistic.scores, geneset = NA, scaleFactor=scaleFactor)
         for(geneset in genesets){
-          save.mds.innerProduct(cnv_coll, collection, copyNumberValues=gistic.scores, geneset = geneset$name)
+          save.mds.innerProduct(cnv_coll, collection, copyNumberValues=gistic.scores, geneset = geneset$name, scaleFactor=scaleFactor)
         }
         
       }
@@ -260,9 +276,9 @@ run.batch.patient_similarity <- function(datasets){
     }
     
     ## PCA
-      save.pca(collection, geneset = NA)
+      save.pca(collection, geneset = NA, scaleFactor=scaleFactor)
       for(geneset in genesets){
-        save.pca(collection, geneset = geneset$name)
+        save.pca(collection, geneset = geneset$name, scaleFactor=scaleFactor)
       }
 	      
 
@@ -281,17 +297,18 @@ get.network_edges <- function(mtx,samples, genes, edgeTypes){
   
   mtx <- mtx[genes, samples]
   rows <- rownames(mtx); cols <- colnames(mtx)
-  allEdges <- c()
+  allEdges <- list()
   
   for(edgeName in names(edgeTypes)){
   	matchingIndex <- which(mtx==edgeTypes[[edgeName]], arr.ind=T)
 	  edgeMap <- apply(matchingIndex, 1, function(matchPair){
-	    c(edgeName, rows[matchPair[1]], cols[matchPair[2]])
+	    list(m=edgeName, g=rows[matchPair[1]], p=cols[matchPair[2]])
 	  })
-	  allEdges <- rbind(allEdges, t(edgeMap))
+	  allEdges <- c(allEdges, edgeMap)
   }
-  colnames(allEdges) <- c("m", "g", "p")
+  #colnames(allEdges) <- c("m", "g", "p")
   
+#  allEdges <- apply(allEdges, 1, function(row){row})
   return(allEdges)
 }
 #----------------------------------------------------------------------------------------------------
@@ -300,29 +317,25 @@ save.edge.files <- function(dataset, result, source, parent, process,processName
   save.collection(mongo, dataset=dataset, dataType="edges",source=source, result=result,
                               parent=parent, process=process,processName=processName)
   
-  node1_counts <- as.data.frame(table(result[,2]))  
-  colnames(node1_counts) <- NULL
-  save.collection(mongo, dataset=dataset, dataType="geneDegree",source=source, result=node1_counts,
+  temp <- as.list(table(sapply(result,function(edge) edge$p)))
+  node1_counts <- lapply(names(temp), function(el) temp[el])
+  save.collection(mongo, dataset=dataset, dataType="ptDegree",source=source, result=node1_counts,
                               parent=parent, process=process,processName=processName)
   
-  node2_counts <- as.data.frame(table(result[,3]))  
-  colnames(node2_counts) <- NULL
-  save.collection(mongo, dataset=dataset, dataType="ptDegree", source=source, result=node2_counts,
+  temp <- as.list(table(sapply(result,function(edge) edge$g)))
+  node2_counts <- lapply(names(temp), function(el) temp[el])
+  save.collection(mongo, dataset=dataset, dataType="geneDegree", source=source, result=node2_counts,
                               parent=parent, process=process,processName=processName)
 }
 #----------------------------------------------------------------------------------------------------
 get.edgePairs <- function(collection, genesetName, ...){				
   
-    goi <- genesets[[genesetName]]
+    goi <- getGeneSet(genesetName)
  
-    File <- collection$file
-    dataObj <- fromJSON(paste(collection$directory, File,".json", sep="")) 
-    mtx <- dataObj$data[[1]]
-    rownames(mtx) <- dataObj$rows[[1]]
-    colnames(mtx) <- dataObj$cols[[1]]
+    mtx <- convert.to.mtx(collection)
     
     ## get and save edge pairs
-    edgePairs <- get.network_edges(mtx, samples=NA, genes=goi, ...)
+    edgePairs <- get.network_edges(t(mtx), samples=NA, genes=goi, ...)
 
   return(edgePairs)
 }
@@ -331,89 +344,65 @@ get.edgePairs <- function(collection, genesetName, ...){
 run.batch.network_edges <- function(datasets){
 
   cat("-calculating edges\n")
-  
-    # Load Input File 
-#    datasets <- fromJSON(manifest_file)
+
     dataType <- "network"
 
-    Manifest <-data.frame()
-
-    # Loop for each dataset
-    datasetNames <- unique(datasets$dataset)
-		for (datasetName in datasetNames){
-		  molTables <- subset(datasets, dataset==datasetName)
-
-		  cnvTables <- subset(molTables, dataType == "cnv")$collections[[1]]
-		  mutTables <- subset(molTables, dataType == "mut01")$collections[[1]]
-
-		  if(nrow(cnvTables)==0 & nrow(mutTables) ==0) next;
-		  cat(datasetName, "\n")		  
+    origin <- lapply(datasets , function(record){
+      c(dataset = record$dataset, source = record$source)
+    })
+    origin <- unique(origin)
+    # get unique dataset & source types
+    
+    # Loop for each dataset/source type, get mut &/or cnv edges
+    for (collection in origin){
+            
+		  mut01_colls <- sapply(datasets, function(record){record$dataset== collection[["dataset"]] &
+		                                                   record$source == collection[["source"]] &
+		                                                   record$dataType=="mut01"})
+		  mut01_colls <- datasets[mut01_colls]
+      cnv_colls <- sapply(datasets, function(record){record$dataset== collection[["dataset"]] &
+                                                       record$source == collection[["source"]] &
+                                                       record$dataType=="cnv"})
+      cnv_colls <- datasets[cnv_colls]
+      
+		  if(length(mut01_colls)==0 & length(cnv_colls) ==0) next;
+		  cat(collection[["dataset"]], "\n")		  
 		  
-			# save Edge sets for each Gene set
-			for(genesetName in names(genesets)){			
-	
-				EdgeList <- list()
-			  	 
-				# save individual CNV edges
-				if(nrow(cnvTables) >0){
-				  
-				  for(i in 1:nrow(cnvTables)){
-				    collection <- cnvTables[i,]
-					  newEdges <- get.edgePairs(collection, genesetName, edgeTypes=list("-2"="-2", "-1"="-1", "1"="1", "2"="2"))
-
-					  parent <- list(c(datasetName, "cnv", collection$id))
-					  process <- list(edgeType="cnv", geneset= genesetName); processName=paste(process, collapse="-")
-					  save.edge.files(dataset=datasetName, result=newEdges, source=collection$source,
-					                              parent=parent, process=list(process),processName=processName)				  
-					  
-					  EdgeList$cnv[[as.character(collection$id)]] <- newEdges
-				  }
-				}
-				# save individual MUT edges				
-				if(nrow(mutTables)==0)next;
-
-				for(i in 1:nrow(mutTables)){
-				  collection <- mutTables[i,]
-				  newEdges <- get.edgePairs(collection, genesetName, edgeTypes=list("0"="1"))
-				  
-				  parent <- list(c(datasetName, "mut", collection$id))
-				  process <- list(edgeType="mut01", geneset= genesetName); processName=paste(process, collapse="-")
-				  
-          save.edge.files(dataset=datasetName,source=collection$source, result=newEdges,
-                                      parent=parent, process=list(process),processName=processName)				  
-
-				  EdgeList$mut[[as.character(collection$id)]] <- newEdges
-				}
-
-				# save all combinations of MUT & CNV edges
-				numCNV = length(EdgeList$cnv)
-				numMut = length(EdgeList$mut)
-				process <- list(edgeType=c("cnv", "mut01"), geneset= genesetName)
-				processName <- paste(unlist(process), collapse="-")
-				
-				for(k in 1:numCNV){
-					cnvEdges <- EdgeList$cnv[[k]]
-					
-					for(m in 1:numMut){
-						mutEdges <- EdgeList$mut[[m]]
-																	
-						allEdges <- rbind(cnvEdges, mutEdges)
-
-						parent <- list(c(datasetName, "cnv", names(EdgeList$cnv)[k]),c(datasetName, "mut01", names(EdgeList$mut)[m]) )
-						source1 <- subset(datasets, dataset==datasetName & dataType=="cnv")$collections[[1]]
-						source1 <- source1[source1$id==as.integer(names(EdgeList$cnv)[k]),"source"]
-						source2 <- subset(datasets, dataset==datasetName & dataType=="mut")$collections[[1]]
-						source2 <- source2[source2$id==as.integer(names(EdgeList$mut)[m]),"source"]
-						save.edge.files(dataset=datasetName,source =list(c(source1,source2)),  result=allEdges,
-						                            parent=list(parent), process=list(process),processName=processName)				  
-						
-					}
-				}
-				
-				
-			} # for genesetName
-			
- 		} # for diseaseName	
+      for(geneset in genesets){
+        EdgeList_mut <- EdgeList_cnv <- list()
+        parent <- list()
+        process <- list(geneset=geneset$name)
+        
+        prev.run <- collection.exists(mongo, dataset=collection[["dataset"]], dataType="edges",source=collection[["source"]],
+                                      processName=paste(geneset$name, "mut01-cnv", sep="-"))
+        if(prev.run){
+          print("Skipping.")
+          next()
+        }
+        
+        
+        if(length(mut01_colls)>0){
+          mut01_coll <- mut01_colls[[1]]
+          coll <- mongo.find.all(mongo, paste("oncoscape",mut01_coll$collection, sep="."))
+          EdgeList_mut <- get.edgePairs(coll, geneset$name, edgeTypes=list("0"="1"))
+          parent <- list(mut01_coll$`_id`)
+          process$edgeType <- "mut01"
+        }
+        if(length(cnv_colls)>0){
+          cnv_coll <- cnv_colls[[1]]
+          coll <- mongo.find.all(mongo, paste("oncoscape",cnv_coll$collection, sep="."))
+          EdgeList_cnv <- get.edgePairs(coll, geneset$name, edgeTypes=list("-2"="-2", "-1"="-1", "1"="1", "2"="2"))
+          parent <- c(parent, cnv_coll$`_id`)
+          process$edgeType <- c(process$edgeType, "cnv")
+        }
+		    processName=paste(unlist(process), collapse="-")
+		    newEdges <- c(EdgeList_mut, EdgeList_cnv)
+		        
+		    save.edge.files(dataset=collection[["dataset"]], result=newEdges, source=collection[["source"]],
+		                    parent=parent, process=process,processName=processName)				  
+            
+		}# for genesetName
+  } #collection dataset/source type
 
 }
 
@@ -426,16 +415,13 @@ genesets <-     mongo.find.all(mongo, "oncoscape.hg19_genesets_hgnc_import", que
 
 molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
                                     query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
-
-if("mds" %in% commands){
-	run.batch.patient_similarity(molecular_manifest)
+run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
 		# calculate patient similarity
-}
 
-if("edges" %in% commands){
-	run.batch.network_edges(molecular_manifest)
+#molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
+#                                     query='{"dataType":{"$in":["cnv","mut01"]}}')
+#run.batch.network_edges(molecular_manifest)
 		# map edges for all patients between CNV/Mut and Geneset tables
 
-}
 
-
+close.mongo(mongo)

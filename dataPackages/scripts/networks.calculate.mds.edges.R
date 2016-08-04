@@ -95,6 +95,8 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
   if(is.na(genesetName)) genesetName = "All Genes"
 	process <- data.frame(calculation="prcomp", geneset= genesetName)
 	process$input=collection$dataType
+	outputName <- paste(unlist(process), collapse="-")
+	
 	process$scale=scaleFactor
 	processName <- paste(unlist(process), collapse="-")
 	process$center="TRUE"; process$scaled="TRUE"
@@ -146,24 +148,30 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	   parent <- collection$`_id`
 	   
 	   scores <- PCs$x
-	   if(!is.na(scaleFactor)){
-	     chrDim <- get.chromosome.dimensions(scaleFactor) 
-	     pc3 <- scores[,1:3]; colnames(pc3) <- c("x", "y", "z")
-	     scores.list <- scaleSamplesToChromosomes(pc3, chrDim)
-	   }else{
-	      colnames(scores) <- NULL
-	      scores.list <- lapply(rownames(scores), function(name){ scores[name,1:3]})
-	   }
-	   
-	   names(scores.list) <- rownames(scores)
+	   colnames(scores) <- NULL
 	   importance <- summary(PCs)$importance   
 	   propVar <- round(importance[2,] *100, digits=2)
 	   names(propVar) <- NULL
-	   result <- list(disease=collection$dataset, geneset=geneset,scale=scaleFactor, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
-	   ## ----- Save  ------
-     save.collection(mongo, dataset=collection$dataset, dataType="pcaScores",source=collection$source, result=list(result),
-                     parent=parent, process=process,processName=processName)
 
+	   
+	   ## ----- Save Raw ------
+	   scores.list <- lapply(rownames(scores), function(name){ scores[name,1:3]})
+	   names(scores.list) <- rownames(scores)
+	   result <- list(disease=collection$dataset,type=collection$dataType, geneset=genesetName,scale=NA, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
+     save.collection(mongo, dataset=collection$dataset, dataType="pcaScores",source=collection$source, result=list(result),
+                     parent=parent, process=process,processName=outputName)
+
+     ## ----- Save Scaled  ------
+     if(!is.na(scaleFactor)){
+	     chrDim <- get.chromosome.dimensions(scaleFactor) 
+	     pc3 <- scores[,1:3]; colnames(pc3) <- c("x", "y", "z")
+	     scores.list <- scaleSamplesToChromosomes(pc3, chrDim)
+	     names(scores.list) <- rownames(scores)
+	     result <- list(disease=collection$dataset,type=collection$dataType, geneset=genesetName,scale=scaleFactor, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
+	     save.collection(mongo, dataset=collection$dataset, dataType="pcaScores",source=collection$source, result=list(result),
+	                     parent=parent, process=process,processName=processName)
+	     
+     }
 #	   loadings <- PCs$rotation
 #	   result <- list(rowType="genes", colType="PC", rows=rownames(loadings), cols=colnames(loadings), data=loadings)
 #	   Manifest <- save.collection(mongo, dataset=collection$dataset, dataType="pcaLoadings", source=collection$source, result=result,
@@ -176,13 +184,22 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
     ## ----- MDS on All Combinations of CNV and MUT Tables ------
 
+  if(tbl1$source != tbl2$source){
+    print("currently not computing mds based on different sources")
+    return()
+  }
+  
   cat("-calculating mds\n")
   
   ## ----- Configuration ------
   dataType <- "mds"
+  genesetName <- geneset
+  if(is.na(genesetName)) genesetName = "All Genes"
   datasetName <- tbl1$dataset
-  process <- list(calculation="mds", geneset= geneset)
+  process <- list(calculation="mds", geneset= genesetName)
   process$input=list( tbl1$dataType, tbl2$dataType)
+  outputName <- paste(unlist(process), collapse="-")
+
   process$scale=scaleFactor
   processName <- paste(unlist(process), collapse="-")
   
@@ -228,18 +245,20 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
 
 			parent <- list(tbl1$`_id`, tbl2$`_id`)
 			
+		  mds.list<- lapply(rownames(sample_similarity), function(name) data.frame(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
+		  names(mds.list) <- rownames(sample_similarity)
+
+			result <- list(type="cluster", dataset=tbl1$dataset, name=outputName, scale=NA, data=mds.list)
+			save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source), result=list(result),
+			                            parent=parent, process=process,processName=outputName)
+
 			if(!is.na(scaleFactor)){
 			  chrDim <- get.chromosome.dimensions(scaleFactor) 
 			  mds.list <- scaleSamplesToChromosomes(sample_similarity, chrDim, dim.names=c("x", "y"))
-			}else{
-			  mds.list<- lapply(rownames(sample_similarity), function(name) data.frame(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
-			  names(mds.list) <- rownames(sample_similarity)
-			}
-			
-			result <- list(type="cluster", dataset=tbl1$dataset, name=processName, scale=scaleFactor, data=mds.list)
-			save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source), result=list(result),
-			                            parent=parent, process=process,processName=processName)
-			
+			  result <- list(type="cluster", dataset=tbl1$dataset, name=outputName, scale=scaleFactor, data=mds.list)
+			  save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source), result=list(result),
+			                  parent=parent, process=process,processName=processName)
+			}			
 }
 
 
@@ -415,12 +434,12 @@ genesets <-     mongo.find.all(mongo, "oncoscape.hg19_genesets_hgnc_import", que
 
 molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
                                     query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
-run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
+#run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
 		# calculate patient similarity
 
-#molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
-#                                     query='{"dataType":{"$in":["cnv","mut01"]}}')
-#run.batch.network_edges(molecular_manifest)
+molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
+                                     query='{"dataType":{"$in":["cnv","mut01"]}}')
+run.batch.network_edges(molecular_manifest)
 		# map edges for all patients between CNV/Mut and Geneset tables
 
 

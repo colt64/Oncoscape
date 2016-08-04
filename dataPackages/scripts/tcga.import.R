@@ -175,6 +175,7 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
   }
   
   mappedTable$patient_ID <- gsub("\\.", "\\-", mappedTable$patient_ID)
+  mappedTable$patient_ID <- paste(mappedTable$patient_ID, "-01", sep="")
   
   mappedList <- lapply(rownames(mappedTable), function(rowID){
     mappedTable[rowID,]
@@ -313,11 +314,11 @@ if(length(args) != 0 )
 #if("categories" %in% commands) 
 #  os.save.categories( datasets=c("gbm", "brca"))
 
-os.data.batch("../manifests/os.molecular.manifest.json",
+os.data.batch("../manifests/os.molecular.manifest.json")
+ 
+os.data.batch("../manifests/os.tcga.clinical.manifest.json",
               checkEnumerations = FALSE,
               checkClassType = "os.class.tcgaCharacter")
-
-os.data.batch("../manifests/os.tcga.clinical.manifest.json")
 
 save.batch.genesets.scaled.pos(scaleFactor=100000)
 

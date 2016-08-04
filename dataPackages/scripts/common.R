@@ -11,6 +11,12 @@ os.dataset.enumerations     <- fromJSON("../manifests/os.dataset.enumerations.js
 date <- as.character(Sys.Date())
 chromosomes <- c(seq(1:22), "X", "Y")
 
+dataset_map <- list(
+  brca=list(name="Breast", img= "DSbreast.png", beta=FALSE, source="TCGA"),
+  brain=list(name="Brain", img= "DSbrain.png", beta=FALSE, source="TCGA"),
+  gbm=list(name="Glioblastoma", img= "DSbrain.png", beta=TRUE, source="TCGA")
+)
+
 #---------------------------------------------------------
 connect.to.mongo <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
 	mongo <- mongo.create(host = host, name = name, username = username,
@@ -26,16 +32,6 @@ close.mongo <- function(mongo){
 	if(mongo.is.connected(mongo) == TRUE) {
 	  # close connection
 	  mongo.destroy(mongo)
-	}
-}
-
-#---------------------------------------------------------
-get.mongo.table <- function(mongo, db, table){
-
-	if(mongo.is.connected(mongo)){
-		collections <- mongo.get.database.collections(mongo, db)
-		pop <- mongo.distinct(mongo, coll, "pop")
-		pops1 <- mongo.find.all(mongo, coll, query = list('pop' = list('$lte' = 2), 'pop' = list('$gte' = 1)))
 	}
 }
 
@@ -134,6 +130,7 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   sourceName <- paste(unlist(source), collapse="-")
   
   collection.uniqueName <- paste(dataset, dataType, sourceName, processName, sep="_")
+  collection.uniqueName <- gsub("\\s+", "", tolower(collection.uniqueName))
   collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
   if(mongo.count(mongo, collection.ns) != 0){
     print(paste(collection.uniqueName, " already exists. Skipping.", sep=""))
@@ -164,9 +161,9 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   datasource <- mongo.find.one(mongo, lookup.ns, query)
   
   if(length(datasource)==0){
-    data.list <- list(disease = dataset, source = "TCGA",beta = TRUE)
-    data.list$name = dataset
-    data.list$img = paste(dataset, "png", sep=".")
+    data.list <- list(disease = dataset, source = dataset_map[[dataset]]$source,beta = dataset_map[[dataset]]$beta)
+    data.list$name = dataset_map[[dataset]]$name
+    data.list$img = dataset_map[[dataset]]$img
   }else{
     data.list <- mongo.bson.to.list(datasource)
   }
@@ -202,9 +199,9 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
     #update patient
     add.collection <- list()
     add.collection[dataType] <- collection.uniqueName
-    if("clinical" %in% names(data.list)){
-      data.list$clinical	<- c(data.list$clinical, add.collection)
-    } else {data.list$clinical <- add.collection }
+    if("collections" %in% names(data.list)){
+      data.list$collections	<- c(data.list$collections, add.collection)
+    } else {data.list$collections <- add.collection }
     
   }else if(dataType %in% c("chromosome", "centromere", "genes")){
     #update patient
@@ -233,76 +230,6 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   
 }
 
-
-#----------------------------------------------------------------------------------------------------
-### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
-os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", "JSON")){
-  
-  if(!dir.exists(directory))
-    dir.create(file.path(directory), recursive=TRUE)
-  
-  if(!grepl("/$", directory)) directory <- paste(directory, "/", sep="")
-  outFile = paste(directory, file, sep="")
-  
-  
-  # Write Tab Delimited
-  if("tsv" %in% format)
-    write.table(df, file=paste(outFile,".tsv", sep = ""), quote=F, sep="\t")
-  
-  # Write CSV Delimited
-  if("csv" %in% format)
-    write.csv(df, file=paste(outFile,".csv",sep = ""), quote = F)
-  
-  # Write RData File
-  if("RData" %in% format)
-    save(df, file=paste(outFile,".RData", sep = "") )
-  
-  # Write JSON File
-  if("JSON" %in% format)
-    write(toJSON(df, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
-  
-}
-##----------------------------
-## get parent collection given the parentID: [dataset, dataType, collection$id]
-get.parent.collection <- function(manifest, parentID){
-  
-  
-  if(is.list(parentID)){
-    if(length(parentID)>1){
-      collection <- lapply(parentID, function(parent){
-        get.parent.collection(manifest, parent)
-        #        subset(manifest, dataset==parent[1] & dataType==parent[2] & collections$id==parent[3])
-      })
-      return(collection)
-    }
-    if(length(parentID)==1)
-      parentID <- unlist(parentID)
-  }
-  if(is.data.frame(parentID)){
-    collection <- apply(parentID, 1, function(parent){ get.parent.collection(manifest, parent)})
-  }
-  if(is.null(parentID))return(NA)
-  Obj <- subset(manifest, dataset==parentID[1] & dataType==parentID[2])$collections[[1]]
-  collection <- subset(Obj, id==parentID[3])
-  return(collection)
-}
-##----------------------------
-## get all collections with a specific key:value pair within the process
-subset.collections <- function(collections, process=NA){
-
-    coll.subset <- collections
-    if(!all(is.na(process))){
-      matchColl <- sapply(coll.subset$process, function(coll){ 
-        all(names(process) %in% names(coll)) &&
-        all(unlist(sapply(names(process),function(param){
-          length(intersect(unlist(coll[[param]]),process[[param]])) == length(process[[param]]) }) ) )
-      })
-      matchColl[is.na(matchColl)] <- FALSE
-      coll.subset <- coll.subset[matchColl,]
-    }
-      
-    return(coll.subset)
-}
 #---------------------------------------------------------
 # Aggregate unmapped column names and classes into a single list  
 appendList <- function (x, val) 
@@ -317,15 +244,6 @@ appendList <- function (x, val)
     x
 }
 
-##----------------------------
-os.copy.file <- function(inputDir, filename, outputDir= "./"){
-
-    file.copy(paste(inputDir, filename, sep=""), paste(outputDir, filename, sep=""))
-  
-   # data <- fromJSON(paste(inputDir, filename, sep=""))
-  #  os.data.save(data, outputDir, filename, format= "JSON")
-}
-  
 
 #--------------------------------------------------------------#
 get.chromosome.dimensions <- function(scaleFactor=100000){

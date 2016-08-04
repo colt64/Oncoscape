@@ -1,0 +1,21 @@
+{
+":dataSubType": "phenotype", 
+"cohort": "TCGA Glioblastoma", 
+"wrangler": "cgData TCGAscript Clinical processed on 2015-02-24,cgData TCGAscript survival processed on 2015-02-24,cgData TCGAscript Clinical processed on 2015-02-24,cgData TCGAscript Clinical processed on 2015-02-24,cgData TCGAscript Clinical processed on 2015-02-24", 
+":clinicalFeature": "GBM_clinicalFeature", 
+"shortTitle": "GBM_Methylation_G-CIMP_Subtype,GBM_GeneExpSubtype,GBM CDE", 
+"url": "https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/gbm/bcr/", 
+"description": "This dataset is the TCGA Glioblastoma (GBM) clinical data.,TCGA GBM sample DNA methylation G-CIMP Subtype from TCGA analysis working group (AWG),This dataset is the TCGA Glioblastoma (GBM) clinical data.,This dataset is the TCGA Glioblastoma (GBM) clinical data.,TCGA GBM sample Gene Expression Subtype from TCGA analysis working group (AWG),This dataset is the TCGA Glioblastoma (GBM) clinical data.", 
+":sampleMap": "TCGA.GBM.sampleMap", 
+"label": "Phenotypes", 
+"upToDate": "1.0_nte,1.0", 
+"longTitle": "GBM_MethylationG_G-CIMP_Subtype,GBM_GeneExpSubtype,GBM Common Data Elements", 
+"version": "2015-02-24", 
+"cgDataVersion": 1, 
+"dataProducer": "TCGA biospecimen core resource,UCSC,https://www.synapse.org/#!Synapse:1875816,https://www.synapse.org/#!Synapse:2027079,https://www.synapse.org/#!Synapse:syn1701558,GBM AWG,https://www.synapse.org/#!Synapse:syn2492003,https://www.synapse.org/#!Synapse:syn2487022,https://www.synapse.org/#!Synapse:syn1715788,TCGA biospecimen core resource,TCGA biospecimen core resource,https://www.synapse.org/#!Synapse:syn1756922,GBM AWG,https://www.synapse.org/#!Synapse:syn1712142,TCGA biospecimen core resource,GBM AWG", 
+"redistribution": true, 
+"type": "clinicalMatrix", 
+"outOfDate": "yes", 
+"wrangling_procedure": "Clinical data download from TCGA DCC, processed at UCSC into cgData repository,https://groups.google.com/forum/?fromgroups#!topic/ucsc-cancer-genomics-browser/YvKnWZSsw1Q,Clinical data download from TCGA DCC, processed at UCSC into cgData repository,Clinical data download from TCGA DCC, processed at UCSC into cgData repository,Clinical data download from TCGA DCC, processed at UCSC into cgData repository", 
+"name": "GBM_clinicalMatrix"
+}

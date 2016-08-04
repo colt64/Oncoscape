@@ -1,0 +1,18 @@
+{
+":dataSubType": "phenotype", 
+"cohort": "TCGA Stomach Cancer", 
+"wrangler": "cgData TCGAscript Clinical processed on 2015-02-24,cgData TCGAscript survival processed on 2015-02-24,cgData TCGAscript Clinical processed on 2015-02-24,cgData TCGAscript Clinical processed on 2015-02-24", 
+":clinicalFeature": "STAD_clinicalFeature", 
+"url": "https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/stad/bcr/", 
+"type": "clinicalMatrix", 
+"description": "This dataset is the TCGA Stomach Cancer (STAD) clinical data.", 
+":sampleMap": "TCGA.STAD.sampleMap", 
+"label": "Phenotypes", 
+"upToDate": "1.0", 
+"version": "2015-02-24", 
+"dataProducer": "TCGA biospecimen core resource,https://www.synapse.org/#!Synapse:1875816,https://www.synapse.org/#!Synapse:2027079,TCGA biospecimen core resource,TCGA biospecimen core resource,UCSC,TCGA biospecimen core resource,https://www.synapse.org/#!Synapse:syn2487022,TCGA biospecimen core resource,https://www.synapse.org/#!Synapse:syn1715788,https://www.synapse.org/#!Synapse:syn2492003,https://www.synapse.org/#!Synapse:syn1712142,https://www.synapse.org/#!Synapse:syn1756922", 
+"redistribution": true, 
+"cgDataVersion": 1, 
+"wrangling_procedure": "Clinical data download from TCGA DCC, processed at UCSC into cgData repository,https://groups.google.com/forum/?fromgroups#!topic/ucsc-cancer-genomics-browser/YvKnWZSsw1Q,Clinical data download from TCGA DCC, processed at UCSC into cgData repository,Clinical data download from TCGA DCC, processed at UCSC into cgData repository", 
+"name": "STAD_clinicalMatrix"
+}

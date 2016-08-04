@@ -1,0 +1,788 @@
+#feature	attribute	value
+additional_pharmaceutical_therapy	shortTitle	addtl pharm Tx
+additional_pharmaceutical_therapy	longTitle	additional pharmaceutical therapy
+additional_pharmaceutical_therapy	valueType	category
+additional_pharmaceutical_therapy	state	NO
+additional_pharmaceutical_therapy	stateOrder	"NO"
+additional_radiation_therapy	shortTitle	addtl rad Tx
+additional_radiation_therapy	longTitle	additional radiation therapy
+additional_radiation_therapy	valueType	category
+additional_radiation_therapy	state	NO
+additional_radiation_therapy	stateOrder	"NO"
+bcr_followup_barcode	shortTitle	bcr_followup_barcode
+bcr_followup_barcode	longTitle	bcr_followup_barcode
+bcr_followup_barcode	valueType	category
+bcr_followup_barcode	state	TCGA-3X-AAVB-F67237
+bcr_followup_barcode	state	TCGA-3X-AAVC-F67116
+bcr_followup_barcode	state	TCGA-3X-AAVE-F67115
+bcr_followup_barcode	state	TCGA-W5-AA2G-F66604
+bcr_followup_barcode	state	TCGA-W5-AA2Q-F66605
+bcr_followup_barcode	state	TCGA-W5-AA2R-F66606
+bcr_followup_barcode	state	TCGA-W5-AA2Z-F66608
+bcr_followup_barcode	state	TCGA-W5-AA30-F66610
+bcr_followup_barcode	state	TCGA-W5-AA34-F66612
+bcr_followup_barcode	state	TCGA-W6-AA0S-F67141
+bcr_followup_barcode	state	TCGA-ZD-A8I3-F69616
+bcr_followup_barcode	state	TCGA-ZH-A8Y5-F70049
+bcr_followup_barcode	state	TCGA-ZH-A8Y6-F70052
+bcr_followup_barcode	state	TCGA-ZH-A8Y8-F68806
+bcr_followup_barcode	stateOrder	"TCGA-3X-AAVB-F67237","TCGA-3X-AAVC-F67116","TCGA-3X-AAVE-F67115","TCGA-W5-AA2G-F66604","TCGA-W5-AA2Q-F66605","TCGA-W5-AA2R-F66606","TCGA-W5-AA2Z-F66608","TCGA-W5-AA30-F66610","TCGA-W5-AA34-F66612","TCGA-W6-AA0S-F67141","TCGA-ZD-A8I3-F69616","TCGA-ZH-A8Y5-F70049","TCGA-ZH-A8Y6-F70052","TCGA-ZH-A8Y8-F68806"
+days_to_new_tumor_event_after_initial_treatment	shortTitle	days to new tumor after initial Tx
+days_to_new_tumor_event_after_initial_treatment	longTitle	days to new tumor event after initial treatment
+days_to_new_tumor_event_after_initial_treatment	valueType	category
+days_to_new_tumor_event_after_initial_treatment	state	40
+days_to_new_tumor_event_after_initial_treatment	state	59
+days_to_new_tumor_event_after_initial_treatment	state	549
+days_to_new_tumor_event_after_initial_treatment	stateOrder	"40","59","549"
+new_neoplasm_event_occurrence_anatomic_site	shortTitle	new neoplasm occur site
+new_neoplasm_event_occurrence_anatomic_site	longTitle	new neoplasm event occurrence anatomic site
+new_neoplasm_event_occurrence_anatomic_site	valueType	category
+new_neoplasm_event_occurrence_anatomic_site	state	Liver
+new_neoplasm_event_occurrence_anatomic_site	state	Non-regional / Distant Lymph Nodes
+new_neoplasm_event_occurrence_anatomic_site	stateOrder	"Liver","Non-regional / Distant Lymph Nodes"
+new_neoplasm_event_type	shortTitle	new neoplasm type
+new_neoplasm_event_type	longTitle	new neoplasm event type
+new_neoplasm_event_type	valueType	category
+new_neoplasm_event_type	state	Extrahepatic Recurrence
+new_neoplasm_event_type	state	Intrahepatic Recurrence
+new_neoplasm_event_type	state	Locoregional Recurrence
+new_neoplasm_event_type	stateOrder	"Extrahepatic Recurrence","Intrahepatic Recurrence","Locoregional Recurrence"
+new_tumor_event_ablation_embo_tx	shortTitle	new_tumor_event_ablation_embo_tx
+new_tumor_event_ablation_embo_tx	longTitle	new_tumor_event_ablation_embo_tx
+new_tumor_event_ablation_embo_tx	valueType	category
+new_tumor_event_ablation_embo_tx	state	NO
+new_tumor_event_ablation_embo_tx	state	YES
+new_tumor_event_ablation_embo_tx	stateOrder	"NO","YES"
+new_tumor_event_additional_surgery_procedure	shortTitle	new tumor event addtl surgery
+new_tumor_event_additional_surgery_procedure	longTitle	new tumor event additional surgery procedure
+new_tumor_event_additional_surgery_procedure	valueType	category
+new_tumor_event_additional_surgery_procedure	state	NO
+new_tumor_event_additional_surgery_procedure	stateOrder	"NO"
+new_tumor_event_liver_transplant	shortTitle	new_tumor_event_liver_transplant
+new_tumor_event_liver_transplant	longTitle	new_tumor_event_liver_transplant
+new_tumor_event_liver_transplant	valueType	category
+new_tumor_event_liver_transplant	state	NO
+new_tumor_event_liver_transplant	stateOrder	"NO"
+days_to_death	shortTitle	days to death
+days_to_death	longTitle	days to death
+days_to_death	valueType	float
+days_to_last_followup	shortTitle	days to last followup
+days_to_last_followup	longTitle	days to last followup
+days_to_last_followup	valueType	float
+form_completion_date	shortTitle	form_completion_date
+form_completion_date	longTitle	form_completion_date
+form_completion_date	valueType	category
+form_completion_date	state	2013-12-23
+form_completion_date	state	2014-3-11
+form_completion_date	state	2014-4-8
+form_completion_date	state	2014-5-22
+form_completion_date	state	2014-5-23
+form_completion_date	state	2014-5-24
+form_completion_date	state	2014-5-27
+form_completion_date	state	2014-7-9
+form_completion_date	state	2014-7-26
+form_completion_date	state	2014-7-28
+form_completion_date	state	2014-9-2
+form_completion_date	state	2014-10-21
+form_completion_date	state	2014-10-23
+form_completion_date	state	2014-10-30
+form_completion_date	state	2014-10-31
+form_completion_date	state	2014-11-3
+form_completion_date	state	2014-12-17
+form_completion_date	state	2015-1-15
+form_completion_date	state	2015-1-26
+form_completion_date	stateOrder	"2013-12-23","2014-3-11","2014-4-8","2014-5-22","2014-5-23","2014-5-24","2014-5-27","2014-7-9","2014-7-26","2014-7-28","2014-9-2","2014-10-21","2014-10-23","2014-10-30","2014-10-31","2014-11-3","2014-12-17","2015-1-15","2015-1-26"
+lost_follow_up	shortTitle	lost follow up
+lost_follow_up	longTitle	lost follow up
+lost_follow_up	valueType	category
+lost_follow_up	state	NO
+lost_follow_up	state	YES
+lost_follow_up	stateOrder	"NO","YES"
+new_tumor_event_after_initial_treatment	shortTitle	new tumor event after initial treatment
+new_tumor_event_after_initial_treatment	longTitle	new tumor event after initial treatment
+new_tumor_event_after_initial_treatment	valueType	category
+new_tumor_event_after_initial_treatment	state	NO
+new_tumor_event_after_initial_treatment	state	YES
+new_tumor_event_after_initial_treatment	stateOrder	"NO","YES"
+person_neoplasm_cancer_status	shortTitle	person neoplasm cancer status
+person_neoplasm_cancer_status	longTitle	person neoplasm cancer status
+person_neoplasm_cancer_status	valueType	category
+person_neoplasm_cancer_status	state	TUMOR FREE
+person_neoplasm_cancer_status	state	WITH TUMOR
+person_neoplasm_cancer_status	stateOrder	"TUMOR FREE","WITH TUMOR"
+post_op_ablation_embolization_tx	shortTitle	post_op_ablation_embolization_tx
+post_op_ablation_embolization_tx	longTitle	post_op_ablation_embolization_tx
+post_op_ablation_embolization_tx	valueType	category
+post_op_ablation_embolization_tx	state	NO
+post_op_ablation_embolization_tx	stateOrder	"NO"
+postoperative_rx_tx	shortTitle	postop Rx Tx
+postoperative_rx_tx	longTitle	postoperative drug treatment
+postoperative_rx_tx	valueType	category
+postoperative_rx_tx	state	NO
+postoperative_rx_tx	state	YES
+postoperative_rx_tx	stateOrder	"NO","YES"
+radiation_therapy	shortTitle	radiation therapy
+radiation_therapy	longTitle	radiation therapy
+radiation_therapy	valueType	category
+radiation_therapy	state	NO
+radiation_therapy	stateOrder	"NO"
+vital_status	shortTitle	vital status
+vital_status	longTitle	vital status
+vital_status	valueType	category
+vital_status	state	DECEASED
+vital_status	state	LIVING
+vital_status	stateOrder	"LIVING","DECEASED"
+vital_status	stateOrderRelax	true
+percent_lymphocyte_infiltration_TOP	shortTitle	percent_lymphocyte_infiltration_TOP
+percent_lymphocyte_infiltration_TOP	longTitle	percent_lymphocyte_infiltration_TOP
+percent_lymphocyte_infiltration_TOP	valueType	category
+percent_lymphocyte_infiltration_TOP	state	0
+percent_lymphocyte_infiltration_TOP	state	2
+percent_lymphocyte_infiltration_TOP	state	3
+percent_lymphocyte_infiltration_TOP	state	4
+percent_lymphocyte_infiltration_TOP	state	5
+percent_lymphocyte_infiltration_TOP	state	9
+percent_lymphocyte_infiltration_TOP	state	10
+percent_lymphocyte_infiltration_TOP	state	15
+percent_lymphocyte_infiltration_TOP	state	22
+percent_lymphocyte_infiltration_TOP	state	80
+percent_lymphocyte_infiltration_TOP	stateOrder	"0","2","3","4","5","9","10","15","22","80"
+percent_monocyte_infiltration_TOP	shortTitle	percent_monocyte_infiltration_TOP
+percent_monocyte_infiltration_TOP	longTitle	percent_monocyte_infiltration_TOP
+percent_monocyte_infiltration_TOP	valueType	category
+percent_monocyte_infiltration_TOP	state	0
+percent_monocyte_infiltration_TOP	state	1
+percent_monocyte_infiltration_TOP	state	2
+percent_monocyte_infiltration_TOP	state	20
+percent_monocyte_infiltration_TOP	stateOrder	"0","1","2","20"
+percent_necrosis_TOP	shortTitle	percent_necrosis_TOP
+percent_necrosis_TOP	longTitle	percent_necrosis_TOP
+percent_necrosis_TOP	valueType	category
+percent_necrosis_TOP	state	0
+percent_necrosis_TOP	state	1
+percent_necrosis_TOP	state	2
+percent_necrosis_TOP	state	5
+percent_necrosis_TOP	state	7
+percent_necrosis_TOP	state	10
+percent_necrosis_TOP	state	15
+percent_necrosis_TOP	stateOrder	"0","1","2","5","7","10","15"
+percent_neutrophil_infiltration_TOP	shortTitle	percent_neutrophil_infiltration_TOP
+percent_neutrophil_infiltration_TOP	longTitle	percent_neutrophil_infiltration_TOP
+percent_neutrophil_infiltration_TOP	valueType	category
+percent_neutrophil_infiltration_TOP	state	0
+percent_neutrophil_infiltration_TOP	state	1
+percent_neutrophil_infiltration_TOP	state	2
+percent_neutrophil_infiltration_TOP	state	3
+percent_neutrophil_infiltration_TOP	state	4
+percent_neutrophil_infiltration_TOP	state	5
+percent_neutrophil_infiltration_TOP	stateOrder	"0","1","2","3","4","5"
+percent_normal_cells_TOP	shortTitle	percent_normal_cells_TOP
+percent_normal_cells_TOP	longTitle	percent_normal_cells_TOP
+percent_normal_cells_TOP	valueType	category
+percent_normal_cells_TOP	state	0
+percent_normal_cells_TOP	state	4
+percent_normal_cells_TOP	state	10
+percent_normal_cells_TOP	state	15
+percent_normal_cells_TOP	state	35
+percent_normal_cells_TOP	state	80
+percent_normal_cells_TOP	state	94
+percent_normal_cells_TOP	state	100
+percent_normal_cells_TOP	stateOrder	"0","4","10","15","35","80","94","100"
+percent_stromal_cells_TOP	shortTitle	percent_stromal_cells_TOP
+percent_stromal_cells_TOP	longTitle	percent_stromal_cells_TOP
+percent_stromal_cells_TOP	valueType	float
+percent_tumor_cells_TOP	shortTitle	percent_tumor_cells_TOP
+percent_tumor_cells_TOP	longTitle	percent_tumor_cells_TOP
+percent_tumor_cells_TOP	valueType	float
+percent_tumor_nuclei_TOP	shortTitle	percent_tumor_nuclei_TOP
+percent_tumor_nuclei_TOP	longTitle	percent_tumor_nuclei_TOP
+percent_tumor_nuclei_TOP	valueType	category
+percent_tumor_nuclei_TOP	state	0
+percent_tumor_nuclei_TOP	state	60
+percent_tumor_nuclei_TOP	state	65
+percent_tumor_nuclei_TOP	state	70
+percent_tumor_nuclei_TOP	state	75
+percent_tumor_nuclei_TOP	state	80
+percent_tumor_nuclei_TOP	state	85
+percent_tumor_nuclei_TOP	state	90
+percent_tumor_nuclei_TOP	state	95
+percent_tumor_nuclei_TOP	stateOrder	"0","60","65","70","75","80","85","90","95"
+_EVENT	shortTitle	overall survival indicator
+_EVENT	longTitle	_EVENT overall survival indicator 1=death 0=censor
+_EVENT	valueType	category
+_EVENT	state	0
+_EVENT	state	1
+_EVENT	stateOrder	"0","1"
+_TIME_TO_EVENT	shortTitle	OVERALL SURVIVAL
+_TIME_TO_EVENT	longTitle	_TIME_TO_EVENT overall survival in days
+_TIME_TO_EVENT	valueType	float
+_OS_IND	shortTitle	overall survival indicator
+_OS_IND	longTitle	_OS_IND overall survival indicator 1=death 0=censor
+_OS_IND	valueType	category
+_OS_IND	state	0
+_OS_IND	state	1
+_OS_IND	stateOrder	"0","1"
+_OS	shortTitle	OVERALL SURVIVAL
+_OS	longTitle	_OS overall survival in days
+_OS	valueType	float
+days_to_collection	shortTitle	days to collection
+days_to_collection	longTitle	days to collection
+days_to_collection	valueType	float
+initial_weight	shortTitle	initial weight
+initial_weight	longTitle	initial weight
+initial_weight	valueType	float
+is_ffpe	shortTitle	is_ffpe
+is_ffpe	longTitle	is_ffpe
+is_ffpe	valueType	category
+is_ffpe	state	NO
+is_ffpe	stateOrder	"NO"
+oct_embedded	shortTitle	oct embedded
+oct_embedded	longTitle	OCT embedded (OCT is an embedding medium used for frozen tissue)
+oct_embedded	valueType	category
+oct_embedded	state	false
+oct_embedded	state	true
+oct_embedded	stateOrder	"false","true"
+pathology_report_file_name	shortTitle	pathology_report_file_name
+pathology_report_file_name	longTitle	pathology_report_file_name
+pathology_report_file_name	valueType	category
+pathology_report_file_name	state	TCGA-3X-AAV9.3E7DD345-7A2C-4D7B-B5A2-2207949186CA.pdf
+pathology_report_file_name	state	TCGA-3X-AAVA.4C9A220D-03E9-41CF-8FA9-4B7FD05A625A.pdf
+pathology_report_file_name	state	TCGA-3X-AAVB.BEA4C577-73ED-48F0-9417-AA8BD143B5C8.pdf
+pathology_report_file_name	state	TCGA-3X-AAVC.88206A8B-257B-4C0F-B42C-905DEA9483FB.pdf
+pathology_report_file_name	state	TCGA-3X-AAVE.15BF3FFE-B723-403A-AD20-CBB1D0C9E394.pdf
+pathology_report_file_name	state	TCGA-4G-AAZO.C6A65949-C248-4729-B41F-9C65A46A7AF7.pdf
+pathology_report_file_name	state	TCGA-4G-AAZT.C75C91FD-D4DE-4A58-A4C7-8F020AAC59EB.pdf
+pathology_report_file_name	state	TCGA-W5-AA2G.1E7EDF0B-283F-44F9-A89A-83DB12A0D58A.pdf
+pathology_report_file_name	state	TCGA-W5-AA2H.46A92484-5ECB-4F04-9207-4188D015B9CD.pdf
+pathology_report_file_name	state	TCGA-W5-AA2I.7C977B78-0280-4078-BA64-4D8D9554B38F.pdf
+pathology_report_file_name	state	TCGA-W5-AA2O.EDB0DC9B-6D0C-4591-81CA-BECD1BC27983.pdf
+pathology_report_file_name	state	TCGA-W5-AA2Q.ED7C4C0A-BBCE-4136-B95F-4E49DB17EEE3.pdf
+pathology_report_file_name	state	TCGA-W5-AA2R.153949E2-169E-4138-8D39-9EC9C61C7F3C.pdf
+pathology_report_file_name	state	TCGA-W5-AA2T.16492F27-A257-4DC8-84E8-E1F14B7DC3FD.pdf
+pathology_report_file_name	state	TCGA-W5-AA2U.205BDA9B-D391-4075-B1A6-32CBF06B06EF.pdf
+pathology_report_file_name	state	TCGA-W5-AA2W.EB47A378-F3DA-4892-8126-99CEE6BFA8EE.pdf
+pathology_report_file_name	state	TCGA-W5-AA2X.D2B18607-E16D-4570-9E96-5A7CBAFD79FC.pdf
+pathology_report_file_name	state	TCGA-W5-AA2Z.22F994D3-20A5-46CD-958F-2AAAB3F2D2EC.pdf
+pathology_report_file_name	state	TCGA-W5-AA30.9C2BEED7-DB8C-4BFE-920A-DD716B884777.pdf
+pathology_report_file_name	state	TCGA-W5-AA31.A3B869CE-5B61-4F3E-930E-BC6CB37DD4F0.pdf
+pathology_report_file_name	state	TCGA-W5-AA33.FAB26B40-D86E-4937-9D4D-2473D2AA838F.pdf
+pathology_report_file_name	state	TCGA-W5-AA34.36EAF28B-5091-4C1A-8BA6-D18C0407FC47.pdf
+pathology_report_file_name	state	TCGA-W5-AA36.6EC57D32-953A-4B46-AF10-A3AFCF636ED4.pdf
+pathology_report_file_name	state	TCGA-W5-AA38.626B6057-4EFB-4AC9-A761-6759D5EF9EC1.pdf
+pathology_report_file_name	state	TCGA-W5-AA39.733CC9D1-7D35-4976-9CD9-B8B8542313E2.pdf
+pathology_report_file_name	state	TCGA-W6-AA0S.2F3CE1B3-0DFD-4729-8A52-5E0BDE92BD12.pdf
+pathology_report_file_name	state	TCGA-WD-A7RX.9D3F4AEF-2F52-4035-AFFC-A5AD2A31EE5D.pdf
+pathology_report_file_name	state	TCGA-YR-A95A.AB615D8F-E4A3-48A9-86A3-C89861C89A5D.pdf
+pathology_report_file_name	state	TCGA-ZD-A8I3.0A18D59B-0D93-409E-8E7F-156B1C77964B.pdf
+pathology_report_file_name	state	TCGA-ZH-A8Y1.B4025F42-46CB-4D4E-ABB4-DBF701615F14.pdf
+pathology_report_file_name	state	TCGA-ZH-A8Y2.1D1D2814-ECEE-463D-9EF9-E27F9CDCFEB6.pdf
+pathology_report_file_name	state	TCGA-ZH-A8Y4.8C44AB5C-5F49-4F12-9273-F8AEDD9F0316.pdf
+pathology_report_file_name	state	TCGA-ZH-A8Y5.793D6E81-1D43-4C8F-9490-F55217AF4E8E.pdf
+pathology_report_file_name	state	TCGA-ZH-A8Y6.1308ED5B-3B3F-4E9A-91D6-64507F549473.pdf
+pathology_report_file_name	state	TCGA-ZH-A8Y8.D35938C2-CFED-444E-8284-B1A4D5EAD0F3.pdf
+pathology_report_file_name	state	TCGA-ZU-A8S4.92337E74-DF14-48C7-90AC-907A787E1D0E.pdf
+pathology_report_file_name	stateOrder	"TCGA-3X-AAV9.3E7DD345-7A2C-4D7B-B5A2-2207949186CA.pdf","TCGA-3X-AAVA.4C9A220D-03E9-41CF-8FA9-4B7FD05A625A.pdf","TCGA-3X-AAVB.BEA4C577-73ED-48F0-9417-AA8BD143B5C8.pdf","TCGA-3X-AAVC.88206A8B-257B-4C0F-B42C-905DEA9483FB.pdf","TCGA-3X-AAVE.15BF3FFE-B723-403A-AD20-CBB1D0C9E394.pdf","TCGA-4G-AAZO.C6A65949-C248-4729-B41F-9C65A46A7AF7.pdf","TCGA-4G-AAZT.C75C91FD-D4DE-4A58-A4C7-8F020AAC59EB.pdf","TCGA-W5-AA2G.1E7EDF0B-283F-44F9-A89A-83DB12A0D58A.pdf","TCGA-W5-AA2H.46A92484-5ECB-4F04-9207-4188D015B9CD.pdf","TCGA-W5-AA2I.7C977B78-0280-4078-BA64-4D8D9554B38F.pdf","TCGA-W5-AA2O.EDB0DC9B-6D0C-4591-81CA-BECD1BC27983.pdf","TCGA-W5-AA2Q.ED7C4C0A-BBCE-4136-B95F-4E49DB17EEE3.pdf","TCGA-W5-AA2R.153949E2-169E-4138-8D39-9EC9C61C7F3C.pdf","TCGA-W5-AA2T.16492F27-A257-4DC8-84E8-E1F14B7DC3FD.pdf","TCGA-W5-AA2U.205BDA9B-D391-4075-B1A6-32CBF06B06EF.pdf","TCGA-W5-AA2W.EB47A378-F3DA-4892-8126-99CEE6BFA8EE.pdf","TCGA-W5-AA2X.D2B18607-E16D-4570-9E96-5A7CBAFD79FC.pdf","TCGA-W5-AA2Z.22F994D3-20A5-46CD-958F-2AAAB3F2D2EC.pdf","TCGA-W5-AA30.9C2BEED7-DB8C-4BFE-920A-DD716B884777.pdf","TCGA-W5-AA31.A3B869CE-5B61-4F3E-930E-BC6CB37DD4F0.pdf","TCGA-W5-AA33.FAB26B40-D86E-4937-9D4D-2473D2AA838F.pdf","TCGA-W5-AA34.36EAF28B-5091-4C1A-8BA6-D18C0407FC47.pdf","TCGA-W5-AA36.6EC57D32-953A-4B46-AF10-A3AFCF636ED4.pdf","TCGA-W5-AA38.626B6057-4EFB-4AC9-A761-6759D5EF9EC1.pdf","TCGA-W5-AA39.733CC9D1-7D35-4976-9CD9-B8B8542313E2.pdf","TCGA-W6-AA0S.2F3CE1B3-0DFD-4729-8A52-5E0BDE92BD12.pdf","TCGA-WD-A7RX.9D3F4AEF-2F52-4035-AFFC-A5AD2A31EE5D.pdf","TCGA-YR-A95A.AB615D8F-E4A3-48A9-86A3-C89861C89A5D.pdf","TCGA-ZD-A8I3.0A18D59B-0D93-409E-8E7F-156B1C77964B.pdf","TCGA-ZH-A8Y1.B4025F42-46CB-4D4E-ABB4-DBF701615F14.pdf","TCGA-ZH-A8Y2.1D1D2814-ECEE-463D-9EF9-E27F9CDCFEB6.pdf","TCGA-ZH-A8Y4.8C44AB5C-5F49-4F12-9273-F8AEDD9F0316.pdf","TCGA-ZH-A8Y5.793D6E81-1D43-4C8F-9490-F55217AF4E8E.pdf","TCGA-ZH-A8Y6.1308ED5B-3B3F-4E9A-91D6-64507F549473.pdf","TCGA-ZH-A8Y8.D35938C2-CFED-444E-8284-B1A4D5EAD0F3.pdf","TCGA-ZU-A8S4.92337E74-DF14-48C7-90AC-907A787E1D0E.pdf"
+sample_type	shortTitle	sample type
+sample_type	longTitle	sample type
+sample_type	valueType	category
+sample_type	state	Additional - New Primary
+sample_type	state	Additional Metastatic
+sample_type	state	Blood Derived Normal
+sample_type	state	Bone Marrow Normal
+sample_type	state	Buccal Cell Normal
+sample_type	state	Cell Line Derived Xenograft Tissue
+sample_type	state	Cell Lines
+sample_type	state	Control Analyte
+sample_type	state	EBV Immortalized Normal
+sample_type	state	Human Tumor Original Cells
+sample_type	state	Metastatic
+sample_type	state	Primary Blood Derived Cancer - Bone Marrow
+sample_type	state	Primary Blood Derived Cancer - Peripheral Blood
+sample_type	state	Primary Tumor
+sample_type	state	Primary Xenograft Tissue
+sample_type	state	Primary solid Tumor
+sample_type	state	Recurrent Blood Derived Cancer - Bone Marrow
+sample_type	state	Recurrent Blood Derived Cancer - Peripheral Blood
+sample_type	state	Recurrent Solid Tumor
+sample_type	state	Recurrent Tumor
+sample_type	state	Solid Tissue Normal
+sample_type	stateOrder	"Primary Tumor","Primary solid Tumor","Primary Blood Derived Cancer - Peripheral Blood","Primary Blood Derived Cancer - Bone Marrow","Recurrent Tumor","Recurrent Solid Tumor","Recurrent Blood Derived Cancer - Peripheral Blood","Recurrent Blood Derived Cancer - Bone Marrow","Additional - New Primary","Metastatic","Additional Metastatic","Human Tumor Original Cells","Blood Derived Normal","Solid Tissue Normal","Buccal Cell Normal","EBV Immortalized Normal","Bone Marrow Normal","Cell Lines","Primary Xenograft Tissue","Cell Line Derived Xenograft Tissue","Control Analyte"
+sample_type	stateOrderRelax	true
+sample_type_id	shortTitle	sample type id
+sample_type_id	longTitle	sample type id
+sample_type_id	valueType	category
+sample_type_id	state	01
+sample_type_id	state	11
+sample_type_id	stateOrder	"01","11"
+vial_number	shortTitle	vial number
+vial_number	longTitle	vial number
+vial_number	valueType	category
+vial_number	state	A
+vial_number	stateOrder	"A"
+age_at_initial_pathologic_diagnosis	shortTitle	age Dx
+age_at_initial_pathologic_diagnosis	longTitle	age at initial pathologic diagnosis
+age_at_initial_pathologic_diagnosis	valueType	float
+albumin_result_lower_limit	shortTitle	albumin_result_lower_limit
+albumin_result_lower_limit	longTitle	albumin_result_lower_limit
+albumin_result_lower_limit	valueType	category
+albumin_result_lower_limit	state	3.3
+albumin_result_lower_limit	state	3.4
+albumin_result_lower_limit	state	3.5
+albumin_result_lower_limit	stateOrder	"3.3","3.4","3.5"
+albumin_result_specified_value	shortTitle	albumin_result_specified_value
+albumin_result_specified_value	longTitle	albumin_result_specified_value
+albumin_result_specified_value	valueType	float
+albumin_result_upper_limit	shortTitle	albumin_result_upper_limit
+albumin_result_upper_limit	longTitle	albumin_result_upper_limit
+albumin_result_upper_limit	valueType	category
+albumin_result_upper_limit	state	4.7
+albumin_result_upper_limit	state	4.8
+albumin_result_upper_limit	state	5.0
+albumin_result_upper_limit	stateOrder	"4.7","4.8","5.0"
+bilirubin_lower_limit	shortTitle	bilirubin_lower_limit
+bilirubin_lower_limit	longTitle	bilirubin_lower_limit
+bilirubin_lower_limit	valueType	category
+bilirubin_lower_limit	state	0
+bilirubin_lower_limit	state	0.0
+bilirubin_lower_limit	state	0.1
+bilirubin_lower_limit	state	0.2
+bilirubin_lower_limit	state	0.3
+bilirubin_lower_limit	stateOrder	"0","0.0","0.1","0.2","0.3"
+bilirubin_upper_limit	shortTitle	bilirubin_upper_limit
+bilirubin_upper_limit	longTitle	bilirubin_upper_limit
+bilirubin_upper_limit	valueType	float
+ca_19_9_level	shortTitle	ca_19_9_level
+ca_19_9_level	longTitle	ca_19_9_level
+ca_19_9_level	valueType	float
+ca_19_9_level_lower	shortTitle	ca_19_9_level_lower
+ca_19_9_level_lower	longTitle	ca_19_9_level_lower
+ca_19_9_level_lower	valueType	category
+ca_19_9_level_lower	state	0
+ca_19_9_level_lower	state	0.0
+ca_19_9_level_lower	stateOrder	"0","0.0"
+ca_19_9_level_upper	shortTitle	ca_19_9_level_upper
+ca_19_9_level_upper	longTitle	ca_19_9_level_upper
+ca_19_9_level_upper	valueType	category
+ca_19_9_level_upper	state	35
+ca_19_9_level_upper	state	35.0
+ca_19_9_level_upper	state	36
+ca_19_9_level_upper	state	36.9
+ca_19_9_level_upper	state	37
+ca_19_9_level_upper	state	39
+ca_19_9_level_upper	state	40
+ca_19_9_level_upper	state	55
+ca_19_9_level_upper	stateOrder	"35","35.0","36","36.9","37","39","40","55"
+cancer_first_degree_relative	shortTitle	cancer_first_degree_relative
+cancer_first_degree_relative	longTitle	cancer_first_degree_relative
+cancer_first_degree_relative	valueType	category
+cancer_first_degree_relative	state	1
+cancer_first_degree_relative	state	2
+cancer_first_degree_relative	state	3
+cancer_first_degree_relative	state	4
+cancer_first_degree_relative	stateOrder	"1","2","3","4"
+child_pugh_classification_grade	shortTitle	child pugh classif grade
+child_pugh_classification_grade	longTitle	child pugh classification grade
+child_pugh_classification_grade	valueType	category
+child_pugh_classification_grade	state	A
+child_pugh_classification_grade	state	B
+child_pugh_classification_grade	stateOrder	"A","B"
+cholangitis_tissue_evidence	shortTitle	cholangitis_tissue_evidence
+cholangitis_tissue_evidence	longTitle	cholangitis_tissue_evidence
+cholangitis_tissue_evidence	valueType	category
+cholangitis_tissue_evidence	state	None
+cholangitis_tissue_evidence	stateOrder	"None"
+creatinine_lower_level	shortTitle	creatinine_lower_level
+creatinine_lower_level	longTitle	creatinine_lower_level
+creatinine_lower_level	valueType	category
+creatinine_lower_level	state	0.4
+creatinine_lower_level	state	0.5
+creatinine_lower_level	state	0.6
+creatinine_lower_level	state	0.7
+creatinine_lower_level	state	0.8
+creatinine_lower_level	state	0.9
+creatinine_lower_level	state	0.40
+creatinine_lower_level	state	0.60
+creatinine_lower_level	stateOrder	"0.4","0.5","0.6","0.7","0.8","0.9","0.40","0.60"
+creatinine_upper_limit	shortTitle	creatinine_upper_limit
+creatinine_upper_limit	longTitle	creatinine_upper_limit
+creatinine_upper_limit	valueType	category
+creatinine_upper_limit	state	1.00
+creatinine_upper_limit	state	1.0
+creatinine_upper_limit	state	1.1
+creatinine_upper_limit	state	1.2
+creatinine_upper_limit	state	1.3
+creatinine_upper_limit	state	1.4
+creatinine_upper_limit	state	1.30
+creatinine_upper_limit	stateOrder	"1.00","1.0","1.1","1.2","1.3","1.4","1.30"
+creatinine_value_in_mg_dl	shortTitle	creatinine_value_in_mg_dl
+creatinine_value_in_mg_dl	longTitle	creatinine_value_in_mg_dl
+creatinine_value_in_mg_dl	valueType	category
+creatinine_value_in_mg_dl	state	0.5
+creatinine_value_in_mg_dl	state	0.6
+creatinine_value_in_mg_dl	state	0.7
+creatinine_value_in_mg_dl	state	0.8
+creatinine_value_in_mg_dl	state	0.9
+creatinine_value_in_mg_dl	state	1.0
+creatinine_value_in_mg_dl	state	1.1
+creatinine_value_in_mg_dl	state	1.2
+creatinine_value_in_mg_dl	state	1.4
+creatinine_value_in_mg_dl	stateOrder	"0.5","0.6","0.7","0.8","0.9","1.0","1.1","1.2","1.4"
+days_to_birth	shortTitle	days to birth
+days_to_birth	longTitle	days to birth
+days_to_birth	valueType	float
+days_to_initial_pathologic_diagnosis	shortTitle	days to initial path Dx
+days_to_initial_pathologic_diagnosis	longTitle	days to initial pathologic diagnosis
+days_to_initial_pathologic_diagnosis	valueType	category
+days_to_initial_pathologic_diagnosis	state	0
+days_to_initial_pathologic_diagnosis	stateOrder	"0"
+eastern_cancer_oncology_group	shortTitle	eastern cancer oncology group
+eastern_cancer_oncology_group	longTitle	eastern cancer oncology group
+eastern_cancer_oncology_group	valueType	category
+eastern_cancer_oncology_group	state	0
+eastern_cancer_oncology_group	state	1
+eastern_cancer_oncology_group	state	3
+eastern_cancer_oncology_group	stateOrder	"0","1","3"
+family_cancer_type_txt	shortTitle	family_cancer_type_txt
+family_cancer_type_txt	longTitle	family_cancer_type_txt
+family_cancer_type_txt	valueType	category
+family_cancer_type_txt	state	Bone cancer
+family_cancer_type_txt	state	Brain tumor
+family_cancer_type_txt	state	Breast
+family_cancer_type_txt	state	Colon
+family_cancer_type_txt	state	Gastric Cancer|Testicular Cancer
+family_cancer_type_txt	state	Melanoma
+family_cancer_type_txt	state	Prostate Cancer|Breast Cancer and skin cancer
+family_cancer_type_txt	state	Stomach cancer|Prostate and colon cancer|lung cancer|non-invasive ductal carcinoma in situ of the breast
+family_cancer_type_txt	state	Testicular|Prostate|Leukemia
+family_cancer_type_txt	state	Thyroid|Lung
+family_cancer_type_txt	state	breast
+family_cancer_type_txt	state	breast cancer
+family_cancer_type_txt	state	cervical cancer|lung cancer
+family_cancer_type_txt	state	colon cancer
+family_cancer_type_txt	state	colon cancer|transitional cell cancer|colon cancer
+family_cancer_type_txt	state	colon/rectal cancer|lung
+family_cancer_type_txt	state	colorectal cancer
+family_cancer_type_txt	state	multiple myeloma
+family_cancer_type_txt	state	uterine|uterine|breast
+family_cancer_type_txt	state	|Probably Kidney Cancer
+family_cancer_type_txt	stateOrder	"Bone cancer","Brain tumor","Breast","Colon","Gastric Cancer|Testicular Cancer","Melanoma","Prostate Cancer|Breast Cancer and skin cancer","Stomach cancer|Prostate and colon cancer|lung cancer|non-invasive ductal carcinoma in situ of the breast","Testicular|Prostate|Leukemia","Thyroid|Lung","breast","breast cancer","cervical cancer|lung cancer","colon cancer","colon cancer|transitional cell cancer|colon cancer","colon/rectal cancer|lung","colorectal cancer","multiple myeloma","uterine|uterine|breast","|Probably Kidney Cancer"
+family_member_relationship_type	shortTitle	family_member_relationship_type
+family_member_relationship_type	longTitle	family_member_relationship_type
+family_member_relationship_type	valueType	category
+family_member_relationship_type	state	Brother
+family_member_relationship_type	state	Brother|Brother
+family_member_relationship_type	state	Brother|Brother|Sister
+family_member_relationship_type	state	Father|Father|Father
+family_member_relationship_type	state	Father|Grandmother
+family_member_relationship_type	state	Father|Sister
+family_member_relationship_type	state	Grandmother
+family_member_relationship_type	state	Mother
+family_member_relationship_type	state	Mother|Father
+family_member_relationship_type	state	Mother|Father|Sister|Sister
+family_member_relationship_type	state	Mother|Grandmother|Grandmother
+family_member_relationship_type	state	Sister
+family_member_relationship_type	state	Sister|Child
+family_member_relationship_type	state	Sister|Sister
+family_member_relationship_type	state	Sister|Sister|Brother
+family_member_relationship_type	stateOrder	"Brother","Brother|Brother","Brother|Brother|Sister","Father|Father|Father","Father|Grandmother","Father|Sister","Grandmother","Mother","Mother|Father","Mother|Father|Sister|Sister","Mother|Grandmother|Grandmother","Sister","Sister|Child","Sister|Sister","Sister|Sister|Brother"
+fetoprotein_outcome_lower_limit	shortTitle	fetoprotein_outcome_lower_limit
+fetoprotein_outcome_lower_limit	longTitle	fetoprotein_outcome_lower_limit
+fetoprotein_outcome_lower_limit	valueType	category
+fetoprotein_outcome_lower_limit	state	0
+fetoprotein_outcome_lower_limit	state	0.0
+fetoprotein_outcome_lower_limit	stateOrder	"0","0.0"
+fetoprotein_outcome_upper_limit	shortTitle	fetoprotein_outcome_upper_limit
+fetoprotein_outcome_upper_limit	longTitle	fetoprotein_outcome_upper_limit
+fetoprotein_outcome_upper_limit	valueType	category
+fetoprotein_outcome_upper_limit	state	6.0
+fetoprotein_outcome_upper_limit	state	8
+fetoprotein_outcome_upper_limit	state	8.0
+fetoprotein_outcome_upper_limit	state	8.1
+fetoprotein_outcome_upper_limit	state	9.0
+fetoprotein_outcome_upper_limit	state	10
+fetoprotein_outcome_upper_limit	state	10.0
+fetoprotein_outcome_upper_limit	state	15
+fetoprotein_outcome_upper_limit	stateOrder	"6.0","8","8.0","8.1","9.0","10","10.0","15"
+fetoprotein_outcome_value	shortTitle	fetoprotein_outcome_value
+fetoprotein_outcome_value	longTitle	fetoprotein_outcome_value
+fetoprotein_outcome_value	valueType	float
+fibrosis_ishak_score	shortTitle	fibrosis_ishak_score
+fibrosis_ishak_score	longTitle	fibrosis_ishak_score
+fibrosis_ishak_score	valueType	category
+fibrosis_ishak_score	state	0 - No Fibrosis
+fibrosis_ishak_score	state	1,2 - Portal Fibrosis
+fibrosis_ishak_score	state	3,4 - Fibrous Speta
+fibrosis_ishak_score	stateOrder	"0 - No Fibrosis","1,2 - Portal Fibrosis","3,4 - Fibrous Speta"
+gender	shortTitle	gender
+gender	longTitle	gender
+gender	valueType	category
+gender	state	FEMALE
+gender	state	MALE
+gender	stateOrder	"FEMALE","MALE"
+height	shortTitle	height
+height	longTitle	height
+height	valueType	float
+hist_hepato_carc_fact	shortTitle	hist_hepato_carc_fact
+hist_hepato_carc_fact	longTitle	hist_hepato_carc_fact
+hist_hepato_carc_fact	valueType	category
+hist_hepato_carc_fact	state	Cirrhosis|Diabetes mellitus|Smoking
+hist_hepato_carc_fact	state	Diabetes mellitus|Non-Alcoholic Fatty Liver Disease
+hist_hepato_carc_fact	state	Diabetes mellitus|Smoking
+hist_hepato_carc_fact	state	Hepatitis B|Smoking
+hist_hepato_carc_fact	state	No History of Primary Risk Factors
+hist_hepato_carc_fact	state	Other
+hist_hepato_carc_fact	state	Smoking
+hist_hepato_carc_fact	state	Ulcerative colitis
+hist_hepato_carc_fact	stateOrder	"Cirrhosis|Diabetes mellitus|Smoking","Diabetes mellitus|Non-Alcoholic Fatty Liver Disease","Diabetes mellitus|Smoking","Hepatitis B|Smoking","No History of Primary Risk Factors","Other","Smoking","Ulcerative colitis"
+hist_hepato_carcinoma_risk	shortTitle	hist_hepato_carcinoma_risk
+hist_hepato_carcinoma_risk	longTitle	hist_hepato_carcinoma_risk
+hist_hepato_carcinoma_risk	valueType	category
+hist_hepato_carcinoma_risk	state	Pancreatitis
+hist_hepato_carcinoma_risk	stateOrder	"Pancreatitis"
+histological_type	shortTitle	histological type
+histological_type	longTitle	histological type
+histological_type	valueType	category
+histological_type	state	Cholangiocarcinoma; distal
+histological_type	state	Cholangiocarcinoma; hilar/perihilar
+histological_type	state	Cholangiocarcinoma; intrahepatic
+histological_type	stateOrder	"Cholangiocarcinoma; distal","Cholangiocarcinoma; hilar/perihilar","Cholangiocarcinoma; intrahepatic"
+history_of_neoadjuvant_treatment	shortTitle	history of neoadj Tx
+history_of_neoadjuvant_treatment	longTitle	history of neoadjuvant treatment
+history_of_neoadjuvant_treatment	valueType	category
+history_of_neoadjuvant_treatment	state	No
+history_of_neoadjuvant_treatment	stateOrder	"No"
+icd_o_3_histology	shortTitle	ICD-O-3 histology
+icd_o_3_histology	longTitle	ICD-O-3 histology
+icd_o_3_histology	valueType	category
+icd_o_3_histology	state	8160/3
+icd_o_3_histology	stateOrder	"8160/3"
+icd_o_3_site	shortTitle	ICD-O-3 site
+icd_o_3_site	longTitle	ICD-O-3 site
+icd_o_3_site	valueType	category
+icd_o_3_site	state	C22.0
+icd_o_3_site	state	C22.1
+icd_o_3_site	state	C23.9
+icd_o_3_site	state	C24.0
+icd_o_3_site	stateOrder	"C22.0","C22.1","C23.9","C24.0"
+informed_consent_verified	shortTitle	informed consent verified
+informed_consent_verified	longTitle	informed consent verified
+informed_consent_verified	valueType	category
+informed_consent_verified	state	YES
+informed_consent_verified	stateOrder	"YES"
+inter_norm_ratio_lower_limit	shortTitle	inter_norm_ratio_lower_limit
+inter_norm_ratio_lower_limit	longTitle	inter_norm_ratio_lower_limit
+inter_norm_ratio_lower_limit	valueType	category
+inter_norm_ratio_lower_limit	state	0
+inter_norm_ratio_lower_limit	state	0.8
+inter_norm_ratio_lower_limit	state	0.9
+inter_norm_ratio_lower_limit	state	8.4
+inter_norm_ratio_lower_limit	state	10
+inter_norm_ratio_lower_limit	state	10.4
+inter_norm_ratio_lower_limit	stateOrder	"0","0.8","0.9","8.4","10","10.4"
+intern_norm_ratio_upper_limit	shortTitle	intern_norm_ratio_upper_limit
+intern_norm_ratio_upper_limit	longTitle	intern_norm_ratio_upper_limit
+intern_norm_ratio_upper_limit	valueType	category
+intern_norm_ratio_upper_limit	state	1.1
+intern_norm_ratio_upper_limit	state	1.2
+intern_norm_ratio_upper_limit	state	12.0
+intern_norm_ratio_upper_limit	state	13
+intern_norm_ratio_upper_limit	state	13.1
+intern_norm_ratio_upper_limit	stateOrder	"1.1","1.2","12.0","13","13.1"
+neoplasm_histologic_grade	shortTitle	grade
+neoplasm_histologic_grade	longTitle	neoplasm histologic grade
+neoplasm_histologic_grade	valueType	category
+neoplasm_histologic_grade	state	High Grade
+neoplasm_histologic_grade	state	Low Grade
+neoplasm_histologic_grade	state	G3
+neoplasm_histologic_grade	state	G2
+neoplasm_histologic_grade	state	G4
+neoplasm_histologic_grade	state	G1
+neoplasm_histologic_grade	stateOrder	"Low Grade","High Grade","G3","G2","G4","G1"
+neoplasm_histologic_grade	stateOrderRelax	true
+pathologic_M	shortTitle	pathologic_M
+pathologic_M	longTitle	pathologic_M
+pathologic_M	valueType	category
+pathologic_M	state	M0
+pathologic_M	state	M1
+pathologic_M	state	MX
+pathologic_M	stateOrder	"M0","M1","MX"
+pathologic_N	shortTitle	pathologic_N
+pathologic_N	longTitle	pathologic_N
+pathologic_N	valueType	category
+pathologic_N	state	N0
+pathologic_N	state	N1
+pathologic_N	state	NX
+pathologic_N	stateOrder	"N0","N1","NX"
+pathologic_T	shortTitle	pathologic_T
+pathologic_T	longTitle	pathologic_T
+pathologic_T	valueType	category
+pathologic_T	state	T1
+pathologic_T	state	T2
+pathologic_T	state	T2a
+pathologic_T	state	T2b
+pathologic_T	state	T3
+pathologic_T	stateOrder	"T1","T2","T2a","T2b","T3"
+pathologic_stage	shortTitle	pathologic_stage
+pathologic_stage	longTitle	pathologic_stage
+pathologic_stage	valueType	category
+pathologic_stage	state	Stage I
+pathologic_stage	state	Stage II
+pathologic_stage	state	Stage III
+pathologic_stage	state	Stage IV
+pathologic_stage	state	Stage IVA
+pathologic_stage	state	Stage IVB
+pathologic_stage	stateOrder	"Stage I","Stage II","Stage III","Stage IV","Stage IVA","Stage IVB"
+perineural_invasion_present	shortTitle	perineural invasion present
+perineural_invasion_present	longTitle	perineural invasion present
+perineural_invasion_present	valueType	category
+perineural_invasion_present	state	NO
+perineural_invasion_present	state	YES
+perineural_invasion_present	stateOrder	"NO","YES"
+platelet_result_count	shortTitle	platelet_result_count
+platelet_result_count	longTitle	platelet_result_count
+platelet_result_count	valueType	float
+platelet_result_lower_limit	shortTitle	platelet_result_lower_limit
+platelet_result_lower_limit	longTitle	platelet_result_lower_limit
+platelet_result_lower_limit	valueType	category
+platelet_result_lower_limit	state	140
+platelet_result_lower_limit	state	150
+platelet_result_lower_limit	state	125000
+platelet_result_lower_limit	state	130000
+platelet_result_lower_limit	state	140000
+platelet_result_lower_limit	state	150000
+platelet_result_lower_limit	stateOrder	"140","150","125000","130000","140000","150000"
+platelet_result_upper_limit	shortTitle	platelet_result_upper_limit
+platelet_result_upper_limit	longTitle	platelet_result_upper_limit
+platelet_result_upper_limit	valueType	category
+platelet_result_upper_limit	state	400
+platelet_result_upper_limit	state	450
+platelet_result_upper_limit	state	400000
+platelet_result_upper_limit	state	440000
+platelet_result_upper_limit	state	450000
+platelet_result_upper_limit	stateOrder	"400","450","400000","440000","450000"
+prior_dx	shortTitle	prior Dx
+prior_dx	longTitle	prior diagnosis
+prior_dx	valueType	category
+prior_dx	state	No
+prior_dx	state	Yes
+prior_dx	stateOrder	"No","Yes"
+prothrombin_time_result_value	shortTitle	prothrombin_time_result_value
+prothrombin_time_result_value	longTitle	prothrombin_time_result_value
+prothrombin_time_result_value	valueType	category
+prothrombin_time_result_value	state	0.8
+prothrombin_time_result_value	state	0.9
+prothrombin_time_result_value	state	1.0
+prothrombin_time_result_value	state	1.1
+prothrombin_time_result_value	state	1.2
+prothrombin_time_result_value	state	9.3
+prothrombin_time_result_value	state	11.6
+prothrombin_time_result_value	state	11.7
+prothrombin_time_result_value	state	12.2
+prothrombin_time_result_value	stateOrder	"0.8","0.9","1.0","1.1","1.2","9.3","11.6","11.7","12.2"
+relative_family_cancer_history	shortTitle	relative_family_cancer_history
+relative_family_cancer_history	longTitle	relative_family_cancer_history
+relative_family_cancer_history	valueType	category
+relative_family_cancer_history	state	NO
+relative_family_cancer_history	state	YES
+relative_family_cancer_history	stateOrder	"NO","YES"
+residual_tumor	shortTitle	residual tumor
+residual_tumor	longTitle	residual tumor
+residual_tumor	valueType	category
+residual_tumor	state	R0
+residual_tumor	state	R1
+residual_tumor	state	RX
+residual_tumor	stateOrder	"R0","R1","RX"
+specimen_collection_method_name	shortTitle	specimen collection method name
+specimen_collection_method_name	longTitle	specimen collection method name
+specimen_collection_method_name	valueType	category
+specimen_collection_method_name	state	Extended Lobectomy
+specimen_collection_method_name	state	Lobectomy
+specimen_collection_method_name	state	Other (specify)
+specimen_collection_method_name	state	Pancreaticoduodenectomy (Whipple Resection)
+specimen_collection_method_name	state	Segmentectomy, Multiple
+specimen_collection_method_name	state	Segmentectomy, Single
+specimen_collection_method_name	stateOrder	"Extended Lobectomy","Lobectomy","Other (specify)","Pancreaticoduodenectomy (Whipple Resection)","Segmentectomy, Multiple","Segmentectomy, Single"
+surgical_procedure_name	shortTitle	surgical_procedure_name
+surgical_procedure_name	longTitle	surgical_procedure_name
+surgical_procedure_name	valueType	category
+surgical_procedure_name	state	Right Hepatectomy
+surgical_procedure_name	stateOrder	"Right Hepatectomy"
+system_version	shortTitle	system_version
+system_version	longTitle	system_version
+system_version	valueType	category
+system_version	state	6th
+system_version	state	7th
+system_version	stateOrder	"6th","7th"
+tissue_prospective_collection_indicator	shortTitle	tissue prospective collection indicator
+tissue_prospective_collection_indicator	longTitle	tissue prospective collection indicator
+tissue_prospective_collection_indicator	valueType	category
+tissue_prospective_collection_indicator	state	NO
+tissue_prospective_collection_indicator	state	YES
+tissue_prospective_collection_indicator	stateOrder	"NO","YES"
+tissue_retrospective_collection_indicator	shortTitle	tissue retrospective collection indicator
+tissue_retrospective_collection_indicator	longTitle	tissue retrospective collection indicator
+tissue_retrospective_collection_indicator	valueType	category
+tissue_retrospective_collection_indicator	state	NO
+tissue_retrospective_collection_indicator	state	YES
+tissue_retrospective_collection_indicator	stateOrder	"NO","YES"
+tissue_source_site	shortTitle	tissue source site
+tissue_source_site	longTitle	tissue source site
+tissue_source_site	valueType	category
+tissue_source_site	state	3X
+tissue_source_site	state	4G
+tissue_source_site	state	W5
+tissue_source_site	state	W6
+tissue_source_site	state	WD
+tissue_source_site	state	YR
+tissue_source_site	state	ZD
+tissue_source_site	state	ZH
+tissue_source_site	state	ZU
+tissue_source_site	stateOrder	"3X","4G","W5","W6","WD","YR","ZD","ZH","ZU"
+total_bilirubin_upper_limit	shortTitle	total_bilirubin_upper_limit
+total_bilirubin_upper_limit	longTitle	total_bilirubin_upper_limit
+total_bilirubin_upper_limit	valueType	category
+total_bilirubin_upper_limit	state	0.3
+total_bilirubin_upper_limit	state	1.0
+total_bilirubin_upper_limit	state	1.1
+total_bilirubin_upper_limit	state	1.2
+total_bilirubin_upper_limit	state	1.3
+total_bilirubin_upper_limit	state	1.4
+total_bilirubin_upper_limit	stateOrder	"0.3","1.0","1.1","1.2","1.3","1.4"
+tumor_tissue_site	shortTitle	tumor tissue site
+tumor_tissue_site	longTitle	tumor tissue site
+tumor_tissue_site	valueType	category
+tumor_tissue_site	state	Bile duct
+tumor_tissue_site	stateOrder	"Bile duct"
+vascular_tumor_cell_type	shortTitle	vascular_tumor_cell_type
+vascular_tumor_cell_type	longTitle	vascular_tumor_cell_type
+vascular_tumor_cell_type	valueType	category
+vascular_tumor_cell_type	state	Micro
+vascular_tumor_cell_type	state	None
+vascular_tumor_cell_type	stateOrder	"Micro","None"
+weight	shortTitle	weight
+weight	longTitle	weight
+weight	valueType	float
+year_of_initial_pathologic_diagnosis	shortTitle	year of initial pathologic diagnosis
+year_of_initial_pathologic_diagnosis	longTitle	year of initial pathologic diagnosis
+year_of_initial_pathologic_diagnosis	valueType	category
+year_of_initial_pathologic_diagnosis	state	2005
+year_of_initial_pathologic_diagnosis	state	2006
+year_of_initial_pathologic_diagnosis	state	2008
+year_of_initial_pathologic_diagnosis	state	2009
+year_of_initial_pathologic_diagnosis	state	2010
+year_of_initial_pathologic_diagnosis	state	2011
+year_of_initial_pathologic_diagnosis	state	2012
+year_of_initial_pathologic_diagnosis	state	2013
+year_of_initial_pathologic_diagnosis	stateOrder	"2005","2006","2008","2009","2010","2011","2012","2013"
+_anatomical_origin	shortTitle	_anatomical_origin
+_anatomical_origin	longTitle	_anatomical_origin
+_cohort	shortTitle	_cohort
+_cohort	longTitle	_cohort
+_primary_disease	shortTitle	_primary_disease
+_primary_disease	longTitle	_primary_disease
+_PATIENT	shortTitle	_PATIENT_ID
+_PATIENT	longTitle	_PATIENT_ID
+_PATIENT	valueType	category
+_INTEGRATION	shortTitle	_SAMPLE_ID
+_INTEGRATION	longTitle	_SAMPLE_ID
+_INTEGRATION	valueType	category

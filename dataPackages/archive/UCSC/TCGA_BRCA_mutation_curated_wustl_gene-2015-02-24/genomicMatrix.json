@@ -1,0 +1,42 @@
+{
+"domain": "TCGA", 
+"wrangling_procedure": "Download .maf file from TCGA DCC, processed into gene by sample matrix at UCSC, stored in the UCSC Xena repository", 
+"owner": "TCGA", 
+"dataProducer": "Genome Institute at Washington University Sequencing Center", 
+"cgDataVersion": 1, 
+"cohort": "TCGA Breast Cancer", 
+"min": -1, 
+"tags": [
+"cancer"
+], 
+":sampleMap": "TCGA.BRCA.sampleMap", 
+"sample_type": [
+"tumor"
+], 
+"label": "BRCA gene-level mutation (wustl curated)", 
+"PLATFORM": "IlluminaGA", 
+"version": "2015-01-27", 
+"gdata_tags": [
+"Genome Institute at Washington University Sequencing Center"
+], 
+":probeMap": "hugo", 
+"type": "genomicMatrix", 
+"method": "WashU pipeline", 
+"description": "TCGA breast invasive carcinoma (BRCA) somatic mutation data.  Sequencing data are generated on a IlluminaGA system. The calls are generated at Genome Institute at Washington University Sequencing Center using the WashU pipeline method. <br><br> Red (=1) indicates that a non-silent somatic mutation (nonsense, missense, frame-shif indels, splice site mutations, stop codon readthroughs, change of start codon, inframe indels) was identified in the protein coding region of a gene, or any mutation identified in a non-coding gene. White (=0) indicates that none of the above mutation calls were made in this gene for the specific sample.<br><br>", 
+"anatomical_origin": [
+"Breast"
+], 
+"max": 1, 
+"longTitle": "TCGA breast invasive carcinoma (BRCA) gene-level nonsilent somatic mutation (wustl curated)", 
+"gain": 10, 
+"path": "data/public/TCGA/BRCA/mutation_curated_wustl_gene", 
+":dataSubType": "somatic mutation", 
+"wrangler": "cgData TCGAscript maf processed on 2015-01-27", 
+"redistribution": true, 
+"name": "TCGA_BRCA_mutation_curated_wustl_gene", 
+"shortTitle": "BRCA gene-level mutation (wustl curated)", 
+"url": "https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/brca/gsc/genome.wustl.edu/illuminaga_dnaseq_curated/mutations/", 
+"primary_disease": "breast invasive carcinoma", 
+"security": "public", 
+"groupTitle": "TCGA breast invasive carcinoma"
+}

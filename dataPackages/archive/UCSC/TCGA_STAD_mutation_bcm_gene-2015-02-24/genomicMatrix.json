@@ -1,0 +1,43 @@
+{
+"domain": "TCGA", 
+"wrangling_procedure": "Download .maf file from TCGA DCC, processed into gene by sample matrix at UCSC, stored in the UCSC Xena repository", 
+"owner": "TCGA", 
+"dataProducer": "Baylor College of Medicine Human Genome Sequencing Center", 
+"cgDataVersion": 1, 
+"cohort": "TCGA Stomach Cancer", 
+"min": -1, 
+"tags": [
+"cancer", 
+"gastric cancer"
+], 
+":sampleMap": "TCGA.STAD.sampleMap", 
+"sample_type": [
+"tumor"
+], 
+"label": "STAD gene-level mutation (bcm automated)", 
+"PLATFORM": "IlluminaGA", 
+"version": "2015-01-27", 
+"gdata_tags": [
+"Baylor College of Medicine Human Genome Sequencing Center"
+], 
+":probeMap": "hugo", 
+"type": "genomicMatrix", 
+"method": "Baylor pipeline", 
+"description": "TCGA stomach adenocarcinoma (STAD) somatic mutation data.  Sequencing data are generated on a IlluminaGA system. The calls are generated at Baylor College of Medicine Human Genome Sequencing Center using the Baylor pipeline method. <br><br> Red (=1) indicates that a non-silent somatic mutation (nonsense, missense, frame-shif indels, splice site mutations, stop codon readthroughs, change of start codon, inframe indels) was identified in the protein coding region of a gene, or any mutation identified in a non-coding gene. White (=0) indicates that none of the above mutation calls were made in this gene for the specific sample.<br><br>", 
+"anatomical_origin": [
+"Stomach"
+], 
+"max": 1, 
+"longTitle": "TCGA stomach adenocarcinoma (STAD) gene-level nonsilent somatic mutation (bcm automated)", 
+"gain": 10, 
+"path": "data/public/TCGA/STAD/mutation_bcm_gene", 
+":dataSubType": "somatic mutation", 
+"wrangler": "cgData TCGAscript maf processed on 2015-01-27", 
+"redistribution": true, 
+"name": "TCGA_STAD_mutation_bcm_gene", 
+"shortTitle": "STAD gene-level mutation (bcm automated)", 
+"url": "https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/stad/gsc/hgsc.bcm.edu/illuminaga_dnaseq_automated/mutations/", 
+"primary_disease": "stomach adenocarcinoma", 
+"security": "public", 
+"groupTitle": "TCGA stomach adenocarcinoma"
+}

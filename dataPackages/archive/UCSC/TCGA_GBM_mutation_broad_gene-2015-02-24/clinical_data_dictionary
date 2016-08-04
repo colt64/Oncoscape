@@ -1,0 +1,1835 @@
+#feature	attribute	value
+additional_pharmaceutical_therapy	shortTitle	addtl pharm Tx
+additional_pharmaceutical_therapy	longTitle	additional pharmaceutical therapy
+additional_pharmaceutical_therapy	valueType	category
+additional_pharmaceutical_therapy	state	NO
+additional_pharmaceutical_therapy	state	YES
+additional_pharmaceutical_therapy	stateOrder	"NO","YES"
+additional_radiation_therapy	shortTitle	addtl rad Tx
+additional_radiation_therapy	longTitle	additional radiation therapy
+additional_radiation_therapy	valueType	category
+additional_radiation_therapy	state	NO
+additional_radiation_therapy	state	YES
+additional_radiation_therapy	stateOrder	"NO","YES"
+bcr_followup_barcode	shortTitle	bcr_followup_barcode
+bcr_followup_barcode	longTitle	bcr_followup_barcode
+bcr_followup_barcode	valueType	category
+bcr_followup_barcode	state	TCGA-02-0001-F22169
+bcr_followup_barcode	state	TCGA-02-0003-F22176
+bcr_followup_barcode	state	TCGA-02-0004-F22180
+bcr_followup_barcode	state	TCGA-02-0006-F22185
+bcr_followup_barcode	state	TCGA-02-0007-F22191
+bcr_followup_barcode	state	TCGA-02-0009-F22196
+bcr_followup_barcode	state	TCGA-02-0010-F22198
+bcr_followup_barcode	state	TCGA-02-0011-F22204
+bcr_followup_barcode	state	TCGA-02-0014-F22211
+bcr_followup_barcode	state	TCGA-02-0015-F22216
+bcr_followup_barcode	state	TCGA-02-0016-F22221
+bcr_followup_barcode	state	TCGA-02-0021-F22225
+bcr_followup_barcode	state	TCGA-02-0023-F22233
+bcr_followup_barcode	state	TCGA-02-0024-F22238
+bcr_followup_barcode	state	TCGA-02-0025-F22242
+bcr_followup_barcode	state	TCGA-02-0026-F22248
+bcr_followup_barcode	state	TCGA-02-0027-F22254
+bcr_followup_barcode	state	TCGA-02-0028-F22262
+bcr_followup_barcode	state	TCGA-02-0033-F22269
+bcr_followup_barcode	state	TCGA-02-0034-F22271
+bcr_followup_barcode	state	TCGA-02-0037-F22275
+bcr_followup_barcode	state	TCGA-02-0038-F22277
+bcr_followup_barcode	state	TCGA-02-0039-F22281
+bcr_followup_barcode	state	TCGA-02-0043-F22283
+bcr_followup_barcode	state	TCGA-02-0046-F22291
+bcr_followup_barcode	state	TCGA-02-0047-F22293
+bcr_followup_barcode	state	TCGA-02-0048-F22295
+bcr_followup_barcode	state	TCGA-02-0051-F22297
+bcr_followup_barcode	state	TCGA-02-0052-F22299
+bcr_followup_barcode	state	TCGA-02-0054-F22303
+bcr_followup_barcode	state	TCGA-02-0055-F22311
+bcr_followup_barcode	state	TCGA-02-0057-F22316
+bcr_followup_barcode	state	TCGA-02-0058-F22321
+bcr_followup_barcode	state	TCGA-02-0059-F22325
+bcr_followup_barcode	state	TCGA-02-0060-F22327
+bcr_followup_barcode	state	TCGA-02-0064-F22332
+bcr_followup_barcode	state	TCGA-02-0068-F22338
+bcr_followup_barcode	state	TCGA-02-0069-F22345
+bcr_followup_barcode	state	TCGA-02-0070-F22350
+bcr_followup_barcode	state	TCGA-02-0071-F22354
+bcr_followup_barcode	state	TCGA-02-0074-F22356
+bcr_followup_barcode	state	TCGA-02-0075-F22361
+bcr_followup_barcode	state	TCGA-02-0079-F22365
+bcr_followup_barcode	state	TCGA-02-0080-F22367
+bcr_followup_barcode	state	TCGA-02-0083-F22372
+bcr_followup_barcode	state	TCGA-02-0084-F22376
+bcr_followup_barcode	state	TCGA-02-0085-F22378
+bcr_followup_barcode	state	TCGA-02-0086-F22382
+bcr_followup_barcode	state	TCGA-02-0087-F22390
+bcr_followup_barcode	state	TCGA-02-0089-F22392
+bcr_followup_barcode	state	TCGA-02-0099-F22396
+bcr_followup_barcode	state	TCGA-02-0102-F22401
+bcr_followup_barcode	state	TCGA-02-0104-F22407
+bcr_followup_barcode	state	TCGA-02-0106-F22412
+bcr_followup_barcode	state	TCGA-02-0107-F22418
+bcr_followup_barcode	state	TCGA-02-0111-F22422
+bcr_followup_barcode	state	TCGA-02-0113-F22426
+bcr_followup_barcode	state	TCGA-02-0114-F22430
+bcr_followup_barcode	state	TCGA-02-0115-F22438
+bcr_followup_barcode	state	TCGA-02-0116-F22443
+bcr_followup_barcode	state	TCGA-02-0258-F22449
+bcr_followup_barcode	state	TCGA-02-0260-F22451
+bcr_followup_barcode	state	TCGA-02-0266-F22453
+bcr_followup_barcode	state	TCGA-02-0269-F22455
+bcr_followup_barcode	state	TCGA-02-0271-F22457
+bcr_followup_barcode	state	TCGA-02-0281-F22459
+bcr_followup_barcode	state	TCGA-02-0285-F22461
+bcr_followup_barcode	state	TCGA-02-0289-F22463
+bcr_followup_barcode	state	TCGA-02-0290-F22469
+bcr_followup_barcode	state	TCGA-02-0317-F22475
+bcr_followup_barcode	state	TCGA-02-0321-F22479
+bcr_followup_barcode	state	TCGA-02-0324-F22481
+bcr_followup_barcode	state	TCGA-02-0325-F22483
+bcr_followup_barcode	state	TCGA-02-0326-F22490
+bcr_followup_barcode	state	TCGA-02-0330-F22492
+bcr_followup_barcode	state	TCGA-02-0332-F22500
+bcr_followup_barcode	state	TCGA-02-0333-F22506
+bcr_followup_barcode	state	TCGA-02-0337-F22508
+bcr_followup_barcode	state	TCGA-02-0338-F22514
+bcr_followup_barcode	state	TCGA-02-0339-F22516
+bcr_followup_barcode	state	TCGA-02-0422-F22518
+bcr_followup_barcode	state	TCGA-02-0430-F22520
+bcr_followup_barcode	state	TCGA-02-0432-F22522
+bcr_followup_barcode	state	TCGA-02-0439-F22526
+bcr_followup_barcode	state	TCGA-02-0440-F22528
+bcr_followup_barcode	state	TCGA-02-0446-F22532
+bcr_followup_barcode	state	TCGA-02-0451-F22534
+bcr_followup_barcode	state	TCGA-02-0456-F22536
+bcr_followup_barcode	state	TCGA-02-2466-F22538
+bcr_followup_barcode	state	TCGA-02-2470-F22543
+bcr_followup_barcode	state	TCGA-02-2483-F22548
+bcr_followup_barcode	state	TCGA-02-2485-F22553
+bcr_followup_barcode	state	TCGA-02-2486-F22558
+bcr_followup_barcode	state	TCGA-06-0119-F40087
+bcr_followup_barcode	state	TCGA-06-0122-F22564
+bcr_followup_barcode	state	TCGA-06-0124-F22566
+bcr_followup_barcode	state	TCGA-06-0125-F22569
+bcr_followup_barcode	state	TCGA-06-0126-F51988
+bcr_followup_barcode	state	TCGA-06-0127-F22578
+bcr_followup_barcode	state	TCGA-06-0128-F22582
+bcr_followup_barcode	state	TCGA-06-0129-F22591
+bcr_followup_barcode	state	TCGA-06-0130-F22596
+bcr_followup_barcode	state	TCGA-06-0132-F22600
+bcr_followup_barcode	state	TCGA-06-0133-F22602
+bcr_followup_barcode	state	TCGA-06-0137-F22609
+bcr_followup_barcode	state	TCGA-06-0138-F22612
+bcr_followup_barcode	state	TCGA-06-0139-F22614
+bcr_followup_barcode	state	TCGA-06-0141-F22618
+bcr_followup_barcode	state	TCGA-06-0143-F22624
+bcr_followup_barcode	state	TCGA-06-0145-F22626
+bcr_followup_barcode	state	TCGA-06-0146-F22629
+bcr_followup_barcode	state	TCGA-06-0147-F22634
+bcr_followup_barcode	state	TCGA-06-0148-F22642
+bcr_followup_barcode	state	TCGA-06-0149-F22645
+bcr_followup_barcode	state	TCGA-06-0152-F22647
+bcr_followup_barcode	state	TCGA-06-0154-F22654
+bcr_followup_barcode	state	TCGA-06-0155-F22662
+bcr_followup_barcode	state	TCGA-06-0156-F22669
+bcr_followup_barcode	state	TCGA-06-0157-F22673
+bcr_followup_barcode	state	TCGA-06-0158-F22676
+bcr_followup_barcode	state	TCGA-06-0162-F22680
+bcr_followup_barcode	state	TCGA-06-0164-F22684
+bcr_followup_barcode	state	TCGA-06-0166-F22686
+bcr_followup_barcode	state	TCGA-06-0168-F22690
+bcr_followup_barcode	state	TCGA-06-0169-F22697
+bcr_followup_barcode	state	TCGA-06-0171-F22701
+bcr_followup_barcode	state	TCGA-06-0173-F22706
+bcr_followup_barcode	state	TCGA-06-0174-F22708
+bcr_followup_barcode	state	TCGA-06-0175-F22712
+bcr_followup_barcode	state	TCGA-06-0176-F22716
+bcr_followup_barcode	state	TCGA-06-0177-F22718
+bcr_followup_barcode	state	TCGA-06-0178-F22720
+bcr_followup_barcode	state	TCGA-06-0179-F22722
+bcr_followup_barcode	state	TCGA-06-0182-F22724
+bcr_followup_barcode	state	TCGA-06-0184-F19255
+bcr_followup_barcode	state	TCGA-06-0185-F22728
+bcr_followup_barcode	state	TCGA-06-0187-F22730
+bcr_followup_barcode	state	TCGA-06-0188-F20854
+bcr_followup_barcode	state	TCGA-06-0189-F22734
+bcr_followup_barcode	state	TCGA-06-0190-F22736
+bcr_followup_barcode	state	TCGA-06-0192-F20865
+bcr_followup_barcode	state	TCGA-06-0194-F22740
+bcr_followup_barcode	state	TCGA-06-0195-F22742
+bcr_followup_barcode	state	TCGA-06-0197-F22750
+bcr_followup_barcode	state	TCGA-06-0201-F22753
+bcr_followup_barcode	state	TCGA-06-0206-F22755
+bcr_followup_barcode	state	TCGA-06-0208-F22759
+bcr_followup_barcode	state	TCGA-06-0209-F22764
+bcr_followup_barcode	state	TCGA-06-0210-F22767
+bcr_followup_barcode	state	TCGA-06-0211-F22770
+bcr_followup_barcode	state	TCGA-06-0213-F22776
+bcr_followup_barcode	state	TCGA-06-0214-F22778
+bcr_followup_barcode	state	TCGA-06-0216-F22784
+bcr_followup_barcode	state	TCGA-06-0219-F22791
+bcr_followup_barcode	state	TCGA-06-0221-F22793
+bcr_followup_barcode	state	TCGA-06-0237-F22804
+bcr_followup_barcode	state	TCGA-06-0238-F22806
+bcr_followup_barcode	state	TCGA-06-0241-F22808
+bcr_followup_barcode	state	TCGA-06-0394-F22810
+bcr_followup_barcode	state	TCGA-06-0397-F22817
+bcr_followup_barcode	state	TCGA-06-0402-F22823
+bcr_followup_barcode	state	TCGA-06-0409-F22825
+bcr_followup_barcode	state	TCGA-06-0410-F22838
+bcr_followup_barcode	state	TCGA-06-0412-F22840
+bcr_followup_barcode	state	TCGA-06-0413-F22846
+bcr_followup_barcode	state	TCGA-06-0414-F22848
+bcr_followup_barcode	state	TCGA-06-0644-F22853
+bcr_followup_barcode	state	TCGA-06-0645-F22855
+bcr_followup_barcode	state	TCGA-06-0646-F22857
+bcr_followup_barcode	state	TCGA-06-0648-F22859
+bcr_followup_barcode	state	TCGA-06-0649-F22861
+bcr_followup_barcode	state	TCGA-06-0650-F23088
+bcr_followup_barcode	state	TCGA-06-0686-F22863
+bcr_followup_barcode	state	TCGA-06-0743-F22865
+bcr_followup_barcode	state	TCGA-06-0744-F20885
+bcr_followup_barcode	state	TCGA-06-0745-F22869
+bcr_followup_barcode	state	TCGA-06-0747-F22871
+bcr_followup_barcode	state	TCGA-06-0749-F22873
+bcr_followup_barcode	state	TCGA-06-0750-F22875
+bcr_followup_barcode	state	TCGA-06-0875-F22877
+bcr_followup_barcode	state	TCGA-06-0876-F31562
+bcr_followup_barcode	state	TCGA-06-0877-F22885
+bcr_followup_barcode	state	TCGA-06-0878-F22888
+bcr_followup_barcode	state	TCGA-06-0879-F22894
+bcr_followup_barcode	state	TCGA-06-0881-F22899
+bcr_followup_barcode	state	TCGA-06-0882-F31551
+bcr_followup_barcode	state	TCGA-06-0939-F22909
+bcr_followup_barcode	state	TCGA-06-1084-F22911
+bcr_followup_barcode	state	TCGA-06-1086-F22917
+bcr_followup_barcode	state	TCGA-06-1087-F22921
+bcr_followup_barcode	state	TCGA-06-1800-F22925
+bcr_followup_barcode	state	TCGA-06-1801-F22929
+bcr_followup_barcode	state	TCGA-06-1802-F22931
+bcr_followup_barcode	state	TCGA-06-1804-F23101
+bcr_followup_barcode	state	TCGA-06-1805-F22933
+bcr_followup_barcode	state	TCGA-06-2557-F22937
+bcr_followup_barcode	state	TCGA-06-2558-F22939
+bcr_followup_barcode	state	TCGA-06-2559-F22942
+bcr_followup_barcode	state	TCGA-06-2561-F22946
+bcr_followup_barcode	state	TCGA-06-2562-F22953
+bcr_followup_barcode	state	TCGA-06-2563-F29198
+bcr_followup_barcode	state	TCGA-06-2564-F22961
+bcr_followup_barcode	state	TCGA-06-2565-F22965
+bcr_followup_barcode	state	TCGA-06-2566-F22975
+bcr_followup_barcode	state	TCGA-06-2567-F22980
+bcr_followup_barcode	state	TCGA-06-2569-F22984
+bcr_followup_barcode	state	TCGA-06-2570-F22986
+bcr_followup_barcode	state	TCGA-06-5408-F22991
+bcr_followup_barcode	state	TCGA-06-5410-F22997
+bcr_followup_barcode	state	TCGA-06-5411-F22999
+bcr_followup_barcode	state	TCGA-06-5412-F23005
+bcr_followup_barcode	state	TCGA-06-5413-F23010
+bcr_followup_barcode	state	TCGA-06-5414-F23015
+bcr_followup_barcode	state	TCGA-06-5415-F23020
+bcr_followup_barcode	state	TCGA-06-5416-F23024
+bcr_followup_barcode	state	TCGA-06-5417-F23028
+bcr_followup_barcode	state	TCGA-06-5418-F23032
+bcr_followup_barcode	state	TCGA-06-5856-F23034
+bcr_followup_barcode	state	TCGA-06-5858-F23036
+bcr_followup_barcode	state	TCGA-06-5859-F23043
+bcr_followup_barcode	state	TCGA-06-6388-F23048
+bcr_followup_barcode	state	TCGA-06-6389-F23103
+bcr_followup_barcode	state	TCGA-06-6390-F23108
+bcr_followup_barcode	state	TCGA-06-6391-F23055
+bcr_followup_barcode	state	TCGA-06-6693-F23113
+bcr_followup_barcode	state	TCGA-06-6694-F23115
+bcr_followup_barcode	state	TCGA-06-6695-F23057
+bcr_followup_barcode	state	TCGA-06-6697-F23062
+bcr_followup_barcode	state	TCGA-06-6698-F23069
+bcr_followup_barcode	state	TCGA-06-6699-F23074
+bcr_followup_barcode	state	TCGA-06-6700-F23078
+bcr_followup_barcode	state	TCGA-06-6701-F23084
+bcr_followup_barcode	state	TCGA-08-0244-F23117
+bcr_followup_barcode	state	TCGA-08-0245-F23122
+bcr_followup_barcode	state	TCGA-08-0246-F23131
+bcr_followup_barcode	state	TCGA-08-0344-F23135
+bcr_followup_barcode	state	TCGA-08-0345-F23141
+bcr_followup_barcode	state	TCGA-08-0346-F23144
+bcr_followup_barcode	state	TCGA-08-0347-F23148
+bcr_followup_barcode	state	TCGA-08-0348-F23157
+bcr_followup_barcode	state	TCGA-08-0349-F23165
+bcr_followup_barcode	state	TCGA-08-0350-F23172
+bcr_followup_barcode	state	TCGA-08-0351-F23178
+bcr_followup_barcode	state	TCGA-08-0352-F23185
+bcr_followup_barcode	state	TCGA-08-0353-F23187
+bcr_followup_barcode	state	TCGA-08-0354-F23193
+bcr_followup_barcode	state	TCGA-08-0355-F23201
+bcr_followup_barcode	state	TCGA-08-0356-F23211
+bcr_followup_barcode	state	TCGA-08-0357-F23216
+bcr_followup_barcode	state	TCGA-08-0358-F23234
+bcr_followup_barcode	state	TCGA-08-0359-F23244
+bcr_followup_barcode	state	TCGA-08-0360-F23246
+bcr_followup_barcode	state	TCGA-08-0375-F23251
+bcr_followup_barcode	state	TCGA-08-0380-F23255
+bcr_followup_barcode	state	TCGA-08-0385-F23263
+bcr_followup_barcode	state	TCGA-08-0386-F23265
+bcr_followup_barcode	state	TCGA-08-0389-F23273
+bcr_followup_barcode	state	TCGA-08-0390-F23278
+bcr_followup_barcode	state	TCGA-08-0392-F23285
+bcr_followup_barcode	state	TCGA-08-0510-F23288
+bcr_followup_barcode	state	TCGA-08-0511-F23293
+bcr_followup_barcode	state	TCGA-08-0512-F23297
+bcr_followup_barcode	state	TCGA-08-0514-F23300
+bcr_followup_barcode	state	TCGA-08-0516-F23303
+bcr_followup_barcode	state	TCGA-08-0517-F23307
+bcr_followup_barcode	state	TCGA-08-0518-F23312
+bcr_followup_barcode	state	TCGA-08-0520-F23315
+bcr_followup_barcode	state	TCGA-08-0521-F23320
+bcr_followup_barcode	state	TCGA-08-0522-F23325
+bcr_followup_barcode	state	TCGA-08-0524-F23333
+bcr_followup_barcode	state	TCGA-08-0525-F23341
+bcr_followup_barcode	state	TCGA-08-0529-F23347
+bcr_followup_barcode	state	TCGA-08-0531-F23353
+bcr_followup_barcode	state	TCGA-12-0615-F23452
+bcr_followup_barcode	state	TCGA-12-0616-F23461
+bcr_followup_barcode	state	TCGA-12-0618-F23472
+bcr_followup_barcode	state	TCGA-12-0619-F23477
+bcr_followup_barcode	state	TCGA-12-0620-F23487
+bcr_followup_barcode	state	TCGA-12-0653-F33741
+bcr_followup_barcode	state	TCGA-12-0654-F23492
+bcr_followup_barcode	state	TCGA-12-0656-F23497
+bcr_followup_barcode	state	TCGA-12-0657-F23509
+bcr_followup_barcode	state	TCGA-12-0662-F23511
+bcr_followup_barcode	state	TCGA-12-0670-F23531
+bcr_followup_barcode	state	TCGA-12-0688-F23555
+bcr_followup_barcode	state	TCGA-12-0691-F23565
+bcr_followup_barcode	state	TCGA-12-0692-F23570
+bcr_followup_barcode	state	TCGA-12-0703-F23573
+bcr_followup_barcode	state	TCGA-12-0769-F23582
+bcr_followup_barcode	state	TCGA-12-0772-F23589
+bcr_followup_barcode	state	TCGA-12-0773-F23607
+bcr_followup_barcode	state	TCGA-12-0775-F23626
+bcr_followup_barcode	state	TCGA-12-0776-F23631
+bcr_followup_barcode	state	TCGA-12-0778-F23638
+bcr_followup_barcode	state	TCGA-12-0780-F23654
+bcr_followup_barcode	state	TCGA-12-0818-F23664
+bcr_followup_barcode	state	TCGA-12-0819-F23673
+bcr_followup_barcode	state	TCGA-12-0820-F23683
+bcr_followup_barcode	state	TCGA-12-0821-F23695
+bcr_followup_barcode	state	TCGA-12-0822-F23701
+bcr_followup_barcode	state	TCGA-12-0826-F23712
+bcr_followup_barcode	state	TCGA-12-0827-F23714
+bcr_followup_barcode	state	TCGA-12-0828-F23726
+bcr_followup_barcode	state	TCGA-12-0829-F23730
+bcr_followup_barcode	state	TCGA-12-1088-F23358
+bcr_followup_barcode	state	TCGA-12-1089-F23363
+bcr_followup_barcode	state	TCGA-12-1090-F23367
+bcr_followup_barcode	state	TCGA-12-1091-F23373
+bcr_followup_barcode	state	TCGA-12-1092-F23390
+bcr_followup_barcode	state	TCGA-12-1093-F23402
+bcr_followup_barcode	state	TCGA-12-1094-F23410
+bcr_followup_barcode	state	TCGA-12-1095-F23419
+bcr_followup_barcode	state	TCGA-12-1096-F23428
+bcr_followup_barcode	state	TCGA-12-1097-F23435
+bcr_followup_barcode	state	TCGA-12-1098-F23443
+bcr_followup_barcode	state	TCGA-12-1099-F23447
+bcr_followup_barcode	state	TCGA-12-1597-F23740
+bcr_followup_barcode	state	TCGA-12-1598-F23749
+bcr_followup_barcode	state	TCGA-12-1599-F23754
+bcr_followup_barcode	state	TCGA-12-1600-F23770
+bcr_followup_barcode	state	TCGA-12-1602-F23775
+bcr_followup_barcode	state	TCGA-12-3644-F23780
+bcr_followup_barcode	state	TCGA-12-3646-F23812
+bcr_followup_barcode	state	TCGA-12-3648-F23823
+bcr_followup_barcode	state	TCGA-12-3649-F23834
+bcr_followup_barcode	state	TCGA-12-3650-F23844
+bcr_followup_barcode	state	TCGA-12-3651-F23859
+bcr_followup_barcode	state	TCGA-12-3652-F23868
+bcr_followup_barcode	state	TCGA-12-3653-F23881
+bcr_followup_barcode	state	TCGA-12-5295-F23890
+bcr_followup_barcode	state	TCGA-12-5299-F23897
+bcr_followup_barcode	state	TCGA-12-5301-F23902
+bcr_followup_barcode	state	TCGA-14-0736-F25026
+bcr_followup_barcode	state	TCGA-14-0740-F25255
+bcr_followup_barcode	state	TCGA-14-0781-F25033
+bcr_followup_barcode	state	TCGA-14-0783-F25036
+bcr_followup_barcode	state	TCGA-14-0786-F25041
+bcr_followup_barcode	state	TCGA-14-0787-F25057
+bcr_followup_barcode	state	TCGA-14-0789-F25061
+bcr_followup_barcode	state	TCGA-14-0790-F25068
+bcr_followup_barcode	state	TCGA-14-0812-F25074
+bcr_followup_barcode	state	TCGA-14-0813-F25078
+bcr_followup_barcode	state	TCGA-14-0817-F25081
+bcr_followup_barcode	state	TCGA-14-0862-F25259
+bcr_followup_barcode	state	TCGA-14-0865-F25084
+bcr_followup_barcode	state	TCGA-14-0866-F25091
+bcr_followup_barcode	state	TCGA-14-0867-F25096
+bcr_followup_barcode	state	TCGA-14-0871-F25099
+bcr_followup_barcode	state	TCGA-14-1034-F25103
+bcr_followup_barcode	state	TCGA-14-1037-F25109
+bcr_followup_barcode	state	TCGA-14-1043-F25262
+bcr_followup_barcode	state	TCGA-14-1395-F25266
+bcr_followup_barcode	state	TCGA-14-1396-F25117
+bcr_followup_barcode	state	TCGA-14-1401-F25120
+bcr_followup_barcode	state	TCGA-14-1402-F25123
+bcr_followup_barcode	state	TCGA-14-1450-F25270
+bcr_followup_barcode	state	TCGA-14-1451-F25134
+bcr_followup_barcode	state	TCGA-14-1452-F25147
+bcr_followup_barcode	state	TCGA-14-1453-F25154
+bcr_followup_barcode	state	TCGA-14-1454-F25157
+bcr_followup_barcode	state	TCGA-14-1455-F25166
+bcr_followup_barcode	state	TCGA-14-1456-F25170
+bcr_followup_barcode	state	TCGA-14-1458-F25179
+bcr_followup_barcode	state	TCGA-14-1459-F25187
+bcr_followup_barcode	state	TCGA-14-1794-F25193
+bcr_followup_barcode	state	TCGA-14-1795-F25197
+bcr_followup_barcode	state	TCGA-14-1821-F25201
+bcr_followup_barcode	state	TCGA-14-1823-F25207
+bcr_followup_barcode	state	TCGA-14-1825-F25216
+bcr_followup_barcode	state	TCGA-14-1827-F25221
+bcr_followup_barcode	state	TCGA-14-1829-F25226
+bcr_followup_barcode	state	TCGA-14-2554-F25231
+bcr_followup_barcode	state	TCGA-14-2555-F25235
+bcr_followup_barcode	state	TCGA-14-3476-F25240
+bcr_followup_barcode	state	TCGA-14-3477-F25243
+bcr_followup_barcode	state	TCGA-14-4157-F25249
+bcr_followup_barcode	state	TCGA-15-0742-F25278
+bcr_followup_barcode	state	TCGA-15-1446-F25283
+bcr_followup_barcode	state	TCGA-15-1447-F25287
+bcr_followup_barcode	state	TCGA-15-1449-F25293
+bcr_followup_barcode	state	TCGA-16-0846-F25297
+bcr_followup_barcode	state	TCGA-16-0848-F25299
+bcr_followup_barcode	state	TCGA-16-0849-F25302
+bcr_followup_barcode	state	TCGA-16-0850-F25305
+bcr_followup_barcode	state	TCGA-16-0861-F25309
+bcr_followup_barcode	state	TCGA-16-1045-F25312
+bcr_followup_barcode	state	TCGA-16-1047-F25316
+bcr_followup_barcode	state	TCGA-16-1055-F25318
+bcr_followup_barcode	state	TCGA-16-1056-F25321
+bcr_followup_barcode	state	TCGA-16-1060-F25324
+bcr_followup_barcode	state	TCGA-16-1062-F25327
+bcr_followup_barcode	state	TCGA-16-1063-F25330
+bcr_followup_barcode	state	TCGA-16-1460-F25333
+bcr_followup_barcode	state	TCGA-19-0955-F25335
+bcr_followup_barcode	state	TCGA-19-0957-F25340
+bcr_followup_barcode	state	TCGA-19-0960-F25351
+bcr_followup_barcode	state	TCGA-19-0962-F25355
+bcr_followup_barcode	state	TCGA-19-0963-F25357
+bcr_followup_barcode	state	TCGA-19-0964-F25362
+bcr_followup_barcode	state	TCGA-19-1385-F25366
+bcr_followup_barcode	state	TCGA-19-1386-F25371
+bcr_followup_barcode	state	TCGA-19-1387-F25379
+bcr_followup_barcode	state	TCGA-19-1388-F25383
+bcr_followup_barcode	state	TCGA-19-1389-F25390
+bcr_followup_barcode	state	TCGA-19-1390-F25396
+bcr_followup_barcode	state	TCGA-19-1392-F25398
+bcr_followup_barcode	state	TCGA-19-1786-F25400
+bcr_followup_barcode	state	TCGA-19-1787-F25403
+bcr_followup_barcode	state	TCGA-19-1788-F25410
+bcr_followup_barcode	state	TCGA-19-1789-F25414
+bcr_followup_barcode	state	TCGA-19-1790-F25418
+bcr_followup_barcode	state	TCGA-19-1791-F25422
+bcr_followup_barcode	state	TCGA-19-2619-F25424
+bcr_followup_barcode	state	TCGA-19-2620-F25431
+bcr_followup_barcode	state	TCGA-19-2621-F25435
+bcr_followup_barcode	state	TCGA-19-2623-F25437
+bcr_followup_barcode	state	TCGA-19-2624-F25443
+bcr_followup_barcode	state	TCGA-19-2625-F25445
+bcr_followup_barcode	state	TCGA-19-2629-F25447
+bcr_followup_barcode	state	TCGA-19-2631-F25453
+bcr_followup_barcode	state	TCGA-19-4065-F25511
+bcr_followup_barcode	state	TCGA-19-4068-F25456
+bcr_followup_barcode	state	TCGA-19-5947-F25462
+bcr_followup_barcode	state	TCGA-19-5950-F25465
+bcr_followup_barcode	state	TCGA-19-5951-F25471
+bcr_followup_barcode	state	TCGA-19-5952-F25475
+bcr_followup_barcode	state	TCGA-19-5953-F25509
+bcr_followup_barcode	state	TCGA-19-5954-F25478
+bcr_followup_barcode	state	TCGA-19-5955-F25483
+bcr_followup_barcode	state	TCGA-19-5956-F43175
+bcr_followup_barcode	state	TCGA-19-5958-F43233
+bcr_followup_barcode	state	TCGA-19-5959-F25497
+bcr_followup_barcode	state	TCGA-19-5960-F43299
+bcr_followup_barcode	state	TCGA-19-A6J5-F64477
+bcr_followup_barcode	state	TCGA-19-A60I-F63167
+bcr_followup_barcode	state	TCGA-26-1438-F26846
+bcr_followup_barcode	state	TCGA-26-1439-F26853
+bcr_followup_barcode	state	TCGA-26-1440-F26857
+bcr_followup_barcode	state	TCGA-26-1442-F26889
+bcr_followup_barcode	state	TCGA-26-1443-F26862
+bcr_followup_barcode	state	TCGA-26-1799-F26867
+bcr_followup_barcode	state	TCGA-26-5132-F26871
+bcr_followup_barcode	state	TCGA-26-5133-F26876
+bcr_followup_barcode	state	TCGA-26-5134-F26882
+bcr_followup_barcode	state	TCGA-26-5135-F68870
+bcr_followup_barcode	state	TCGA-26-5136-F61146
+bcr_followup_barcode	state	TCGA-26-5139-F26887
+bcr_followup_barcode	state	TCGA-26-6173-F26895
+bcr_followup_barcode	state	TCGA-26-6174-F26902
+bcr_followup_barcode	state	TCGA-26-A7UX-F68744
+bcr_followup_barcode	state	TCGA-27-1830-F26906
+bcr_followup_barcode	state	TCGA-27-1831-F26913
+bcr_followup_barcode	state	TCGA-27-1832-F26920
+bcr_followup_barcode	state	TCGA-27-1833-F26926
+bcr_followup_barcode	state	TCGA-27-1834-F26934
+bcr_followup_barcode	state	TCGA-27-1835-F26943
+bcr_followup_barcode	state	TCGA-27-1836-F26953
+bcr_followup_barcode	state	TCGA-27-1837-F26965
+bcr_followup_barcode	state	TCGA-27-1838-F26973
+bcr_followup_barcode	state	TCGA-27-2518-F26980
+bcr_followup_barcode	state	TCGA-27-2519-F26989
+bcr_followup_barcode	state	TCGA-27-2521-F26997
+bcr_followup_barcode	state	TCGA-27-2523-F27003
+bcr_followup_barcode	state	TCGA-27-2524-F27013
+bcr_followup_barcode	state	TCGA-27-2526-F27021
+bcr_followup_barcode	state	TCGA-27-2527-F27024
+bcr_followup_barcode	state	TCGA-27-2528-F27030
+bcr_followup_barcode	state	TCGA-28-1745-F27038
+bcr_followup_barcode	state	TCGA-28-1746-F27045
+bcr_followup_barcode	state	TCGA-28-1747-F27047
+bcr_followup_barcode	state	TCGA-28-1749-F27051
+bcr_followup_barcode	state	TCGA-28-1750-F27057
+bcr_followup_barcode	state	TCGA-28-1751-F27064
+bcr_followup_barcode	state	TCGA-28-1752-F27071
+bcr_followup_barcode	state	TCGA-28-1753-F27079
+bcr_followup_barcode	state	TCGA-28-1755-F27082
+bcr_followup_barcode	state	TCGA-28-1756-F27086
+bcr_followup_barcode	state	TCGA-28-1760-F27092
+bcr_followup_barcode	state	TCGA-28-2502-F27098
+bcr_followup_barcode	state	TCGA-28-2506-F27101
+bcr_followup_barcode	state	TCGA-28-2509-F27107
+bcr_followup_barcode	state	TCGA-28-2512-F30232
+bcr_followup_barcode	state	TCGA-28-2513-F27113
+bcr_followup_barcode	state	TCGA-28-2514-F27120
+bcr_followup_barcode	state	TCGA-28-5204-F15040
+bcr_followup_barcode	state	TCGA-28-5207-F15032
+bcr_followup_barcode	state	TCGA-28-5208-F15027
+bcr_followup_barcode	state	TCGA-28-5209-F15023
+bcr_followup_barcode	state	TCGA-28-5211-F15035
+bcr_followup_barcode	state	TCGA-28-5213-F15019
+bcr_followup_barcode	state	TCGA-28-5214-F14982
+bcr_followup_barcode	state	TCGA-28-5215-F14979
+bcr_followup_barcode	state	TCGA-28-5216-F14976
+bcr_followup_barcode	state	TCGA-28-5218-F14972
+bcr_followup_barcode	state	TCGA-28-5219-F14961
+bcr_followup_barcode	state	TCGA-28-5220-F14967
+bcr_followup_barcode	state	TCGA-28-6450-F15043
+bcr_followup_barcode	state	TCGA-32-1970-F27719
+bcr_followup_barcode	state	TCGA-32-1973-F27724
+bcr_followup_barcode	state	TCGA-32-1976-F27734
+bcr_followup_barcode	state	TCGA-32-1977-F15815
+bcr_followup_barcode	state	TCGA-32-1978-F27737
+bcr_followup_barcode	state	TCGA-32-1979-F27846
+bcr_followup_barcode	state	TCGA-32-1980-F27848
+bcr_followup_barcode	state	TCGA-32-1982-F27739
+bcr_followup_barcode	state	TCGA-32-1986-F27742
+bcr_followup_barcode	state	TCGA-32-1987-F27746
+bcr_followup_barcode	state	TCGA-32-1991-F27753
+bcr_followup_barcode	state	TCGA-32-2491-F27762
+bcr_followup_barcode	state	TCGA-32-2494-F27767
+bcr_followup_barcode	state	TCGA-32-2495-F27779
+bcr_followup_barcode	state	TCGA-32-2615-F27788
+bcr_followup_barcode	state	TCGA-32-2616-F30224
+bcr_followup_barcode	state	TCGA-32-2634-F27800
+bcr_followup_barcode	state	TCGA-32-2638-F27806
+bcr_followup_barcode	state	TCGA-32-4208-F27812
+bcr_followup_barcode	state	TCGA-32-4209-F27818
+bcr_followup_barcode	state	TCGA-32-4210-F27822
+bcr_followup_barcode	state	TCGA-32-4211-F27824
+bcr_followup_barcode	state	TCGA-32-4213-F27830
+bcr_followup_barcode	state	TCGA-32-4719-F27837
+bcr_followup_barcode	state	TCGA-32-5222-F27842
+bcr_followup_barcode	state	TCGA-41-2571-F27980
+bcr_followup_barcode	state	TCGA-41-2572-F27983
+bcr_followup_barcode	state	TCGA-41-2573-F27989
+bcr_followup_barcode	state	TCGA-41-2575-F27996
+bcr_followup_barcode	state	TCGA-41-3392-F28002
+bcr_followup_barcode	state	TCGA-41-3393-F28004
+bcr_followup_barcode	state	TCGA-41-3915-F12837
+bcr_followup_barcode	state	TCGA-41-4097-F28013
+bcr_followup_barcode	state	TCGA-41-5651-F28015
+bcr_followup_barcode	state	TCGA-41-6646-F28022
+bcr_followup_barcode	state	TCGA-74-6573-F16941
+bcr_followup_barcode	state	TCGA-74-6575-F16928
+bcr_followup_barcode	state	TCGA-74-6577-F16920
+bcr_followup_barcode	state	TCGA-74-6578-F16913
+bcr_followup_barcode	state	TCGA-74-6581-F16907
+bcr_followup_barcode	state	TCGA-74-6584-F16901
+bcr_followup_barcode	state	TCGA-76-4925-F28519
+bcr_followup_barcode	state	TCGA-76-4926-F28523
+bcr_followup_barcode	state	TCGA-76-4927-F28527
+bcr_followup_barcode	state	TCGA-76-4928-F28529
+bcr_followup_barcode	state	TCGA-76-4929-F28533
+bcr_followup_barcode	state	TCGA-76-4931-F28535
+bcr_followup_barcode	state	TCGA-76-4932-F28539
+bcr_followup_barcode	state	TCGA-76-4934-F28543
+bcr_followup_barcode	state	TCGA-76-4935-F28545
+bcr_followup_barcode	state	TCGA-76-6191-F28550
+bcr_followup_barcode	state	TCGA-76-6192-F28557
+bcr_followup_barcode	state	TCGA-76-6193-F28561
+bcr_followup_barcode	state	TCGA-76-6280-F30214
+bcr_followup_barcode	state	TCGA-76-6282-F28565
+bcr_followup_barcode	state	TCGA-76-6285-F28570
+bcr_followup_barcode	state	TCGA-76-6286-F28573
+bcr_followup_barcode	state	TCGA-76-6656-F28579
+bcr_followup_barcode	state	TCGA-76-6657-F28583
+bcr_followup_barcode	state	TCGA-76-6661-F28587
+bcr_followup_barcode	state	TCGA-76-6662-F30219
+bcr_followup_barcode	state	TCGA-76-6663-F28591
+bcr_followup_barcode	state	TCGA-76-6664-F28596
+bcr_followup_barcode	state	TCGA-81-5910-F28600
+bcr_followup_barcode	state	TCGA-81-5911-F28602
+bcr_followup_barcode	state	TCGA-87-5896-F43207
+bcr_followup_barcode	stateOrder	"TCGA-02-0001-F22169","TCGA-02-0003-F22176","TCGA-02-0004-F22180","TCGA-02-0006-F22185","TCGA-02-0007-F22191","TCGA-02-0009-F22196","TCGA-02-0010-F22198","TCGA-02-0011-F22204","TCGA-02-0014-F22211","TCGA-02-0015-F22216","TCGA-02-0016-F22221","TCGA-02-0021-F22225","TCGA-02-0023-F22233","TCGA-02-0024-F22238","TCGA-02-0025-F22242","TCGA-02-0026-F22248","TCGA-02-0027-F22254","TCGA-02-0028-F22262","TCGA-02-0033-F22269","TCGA-02-0034-F22271","TCGA-02-0037-F22275","TCGA-02-0038-F22277","TCGA-02-0039-F22281","TCGA-02-0043-F22283","TCGA-02-0046-F22291","TCGA-02-0047-F22293","TCGA-02-0048-F22295","TCGA-02-0051-F22297","TCGA-02-0052-F22299","TCGA-02-0054-F22303","TCGA-02-0055-F22311","TCGA-02-0057-F22316","TCGA-02-0058-F22321","TCGA-02-0059-F22325","TCGA-02-0060-F22327","TCGA-02-0064-F22332","TCGA-02-0068-F22338","TCGA-02-0069-F22345","TCGA-02-0070-F22350","TCGA-02-0071-F22354","TCGA-02-0074-F22356","TCGA-02-0075-F22361","TCGA-02-0079-F22365","TCGA-02-0080-F22367","TCGA-02-0083-F22372","TCGA-02-0084-F22376","TCGA-02-0085-F22378","TCGA-02-0086-F22382","TCGA-02-0087-F22390","TCGA-02-0089-F22392","TCGA-02-0099-F22396","TCGA-02-0102-F22401","TCGA-02-0104-F22407","TCGA-02-0106-F22412","TCGA-02-0107-F22418","TCGA-02-0111-F22422","TCGA-02-0113-F22426","TCGA-02-0114-F22430","TCGA-02-0115-F22438","TCGA-02-0116-F22443","TCGA-02-0258-F22449","TCGA-02-0260-F22451","TCGA-02-0266-F22453","TCGA-02-0269-F22455","TCGA-02-0271-F22457","TCGA-02-0281-F22459","TCGA-02-0285-F22461","TCGA-02-0289-F22463","TCGA-02-0290-F22469","TCGA-02-0317-F22475","TCGA-02-0321-F22479","TCGA-02-0324-F22481","TCGA-02-0325-F22483","TCGA-02-0326-F22490","TCGA-02-0330-F22492","TCGA-02-0332-F22500","TCGA-02-0333-F22506","TCGA-02-0337-F22508","TCGA-02-0338-F22514","TCGA-02-0339-F22516","TCGA-02-0422-F22518","TCGA-02-0430-F22520","TCGA-02-0432-F22522","TCGA-02-0439-F22526","TCGA-02-0440-F22528","TCGA-02-0446-F22532","TCGA-02-0451-F22534","TCGA-02-0456-F22536","TCGA-02-2466-F22538","TCGA-02-2470-F22543","TCGA-02-2483-F22548","TCGA-02-2485-F22553","TCGA-02-2486-F22558","TCGA-06-0119-F40087","TCGA-06-0122-F22564","TCGA-06-0124-F22566","TCGA-06-0125-F22569","TCGA-06-0126-F51988","TCGA-06-0127-F22578","TCGA-06-0128-F22582","TCGA-06-0129-F22591","TCGA-06-0130-F22596","TCGA-06-0132-F22600","TCGA-06-0133-F22602","TCGA-06-0137-F22609","TCGA-06-0138-F22612","TCGA-06-0139-F22614","TCGA-06-0141-F22618","TCGA-06-0143-F22624","TCGA-06-0145-F22626","TCGA-06-0146-F22629","TCGA-06-0147-F22634","TCGA-06-0148-F22642","TCGA-06-0149-F22645","TCGA-06-0152-F22647","TCGA-06-0154-F22654","TCGA-06-0155-F22662","TCGA-06-0156-F22669","TCGA-06-0157-F22673","TCGA-06-0158-F22676","TCGA-06-0162-F22680","TCGA-06-0164-F22684","TCGA-06-0166-F22686","TCGA-06-0168-F22690","TCGA-06-0169-F22697","TCGA-06-0171-F22701","TCGA-06-0173-F22706","TCGA-06-0174-F22708","TCGA-06-0175-F22712","TCGA-06-0176-F22716","TCGA-06-0177-F22718","TCGA-06-0178-F22720","TCGA-06-0179-F22722","TCGA-06-0182-F22724","TCGA-06-0184-F19255","TCGA-06-0185-F22728","TCGA-06-0187-F22730","TCGA-06-0188-F20854","TCGA-06-0189-F22734","TCGA-06-0190-F22736","TCGA-06-0192-F20865","TCGA-06-0194-F22740","TCGA-06-0195-F22742","TCGA-06-0197-F22750","TCGA-06-0201-F22753","TCGA-06-0206-F22755","TCGA-06-0208-F22759","TCGA-06-0209-F22764","TCGA-06-0210-F22767","TCGA-06-0211-F22770","TCGA-06-0213-F22776","TCGA-06-0214-F22778","TCGA-06-0216-F22784","TCGA-06-0219-F22791","TCGA-06-0221-F22793","TCGA-06-0237-F22804","TCGA-06-0238-F22806","TCGA-06-0241-F22808","TCGA-06-0394-F22810","TCGA-06-0397-F22817","TCGA-06-0402-F22823","TCGA-06-0409-F22825","TCGA-06-0410-F22838","TCGA-06-0412-F22840","TCGA-06-0413-F22846","TCGA-06-0414-F22848","TCGA-06-0644-F22853","TCGA-06-0645-F22855","TCGA-06-0646-F22857","TCGA-06-0648-F22859","TCGA-06-0649-F22861","TCGA-06-0650-F23088","TCGA-06-0686-F22863","TCGA-06-0743-F22865","TCGA-06-0744-F20885","TCGA-06-0745-F22869","TCGA-06-0747-F22871","TCGA-06-0749-F22873","TCGA-06-0750-F22875","TCGA-06-0875-F22877","TCGA-06-0876-F31562","TCGA-06-0877-F22885","TCGA-06-0878-F22888","TCGA-06-0879-F22894","TCGA-06-0881-F22899","TCGA-06-0882-F31551","TCGA-06-0939-F22909","TCGA-06-1084-F22911","TCGA-06-1086-F22917","TCGA-06-1087-F22921","TCGA-06-1800-F22925","TCGA-06-1801-F22929","TCGA-06-1802-F22931","TCGA-06-1804-F23101","TCGA-06-1805-F22933","TCGA-06-2557-F22937","TCGA-06-2558-F22939","TCGA-06-2559-F22942","TCGA-06-2561-F22946","TCGA-06-2562-F22953","TCGA-06-2563-F29198","TCGA-06-2564-F22961","TCGA-06-2565-F22965","TCGA-06-2566-F22975","TCGA-06-2567-F22980","TCGA-06-2569-F22984","TCGA-06-2570-F22986","TCGA-06-5408-F22991","TCGA-06-5410-F22997","TCGA-06-5411-F22999","TCGA-06-5412-F23005","TCGA-06-5413-F23010","TCGA-06-5414-F23015","TCGA-06-5415-F23020","TCGA-06-5416-F23024","TCGA-06-5417-F23028","TCGA-06-5418-F23032","TCGA-06-5856-F23034","TCGA-06-5858-F23036","TCGA-06-5859-F23043","TCGA-06-6388-F23048","TCGA-06-6389-F23103","TCGA-06-6390-F23108","TCGA-06-6391-F23055","TCGA-06-6693-F23113","TCGA-06-6694-F23115","TCGA-06-6695-F23057","TCGA-06-6697-F23062","TCGA-06-6698-F23069","TCGA-06-6699-F23074","TCGA-06-6700-F23078","TCGA-06-6701-F23084","TCGA-08-0244-F23117","TCGA-08-0245-F23122","TCGA-08-0246-F23131","TCGA-08-0344-F23135","TCGA-08-0345-F23141","TCGA-08-0346-F23144","TCGA-08-0347-F23148","TCGA-08-0348-F23157","TCGA-08-0349-F23165","TCGA-08-0350-F23172","TCGA-08-0351-F23178","TCGA-08-0352-F23185","TCGA-08-0353-F23187","TCGA-08-0354-F23193","TCGA-08-0355-F23201","TCGA-08-0356-F23211","TCGA-08-0357-F23216","TCGA-08-0358-F23234","TCGA-08-0359-F23244","TCGA-08-0360-F23246","TCGA-08-0375-F23251","TCGA-08-0380-F23255","TCGA-08-0385-F23263","TCGA-08-0386-F23265","TCGA-08-0389-F23273","TCGA-08-0390-F23278","TCGA-08-0392-F23285","TCGA-08-0510-F23288","TCGA-08-0511-F23293","TCGA-08-0512-F23297","TCGA-08-0514-F23300","TCGA-08-0516-F23303","TCGA-08-0517-F23307","TCGA-08-0518-F23312","TCGA-08-0520-F23315","TCGA-08-0521-F23320","TCGA-08-0522-F23325","TCGA-08-0524-F23333","TCGA-08-0525-F23341","TCGA-08-0529-F23347","TCGA-08-0531-F23353","TCGA-12-0615-F23452","TCGA-12-0616-F23461","TCGA-12-0618-F23472","TCGA-12-0619-F23477","TCGA-12-0620-F23487","TCGA-12-0653-F33741","TCGA-12-0654-F23492","TCGA-12-0656-F23497","TCGA-12-0657-F23509","TCGA-12-0662-F23511","TCGA-12-0670-F23531","TCGA-12-0688-F23555","TCGA-12-0691-F23565","TCGA-12-0692-F23570","TCGA-12-0703-F23573","TCGA-12-0769-F23582","TCGA-12-0772-F23589","TCGA-12-0773-F23607","TCGA-12-0775-F23626","TCGA-12-0776-F23631","TCGA-12-0778-F23638","TCGA-12-0780-F23654","TCGA-12-0818-F23664","TCGA-12-0819-F23673","TCGA-12-0820-F23683","TCGA-12-0821-F23695","TCGA-12-0822-F23701","TCGA-12-0826-F23712","TCGA-12-0827-F23714","TCGA-12-0828-F23726","TCGA-12-0829-F23730","TCGA-12-1088-F23358","TCGA-12-1089-F23363","TCGA-12-1090-F23367","TCGA-12-1091-F23373","TCGA-12-1092-F23390","TCGA-12-1093-F23402","TCGA-12-1094-F23410","TCGA-12-1095-F23419","TCGA-12-1096-F23428","TCGA-12-1097-F23435","TCGA-12-1098-F23443","TCGA-12-1099-F23447","TCGA-12-1597-F23740","TCGA-12-1598-F23749","TCGA-12-1599-F23754","TCGA-12-1600-F23770","TCGA-12-1602-F23775","TCGA-12-3644-F23780","TCGA-12-3646-F23812","TCGA-12-3648-F23823","TCGA-12-3649-F23834","TCGA-12-3650-F23844","TCGA-12-3651-F23859","TCGA-12-3652-F23868","TCGA-12-3653-F23881","TCGA-12-5295-F23890","TCGA-12-5299-F23897","TCGA-12-5301-F23902","TCGA-14-0736-F25026","TCGA-14-0740-F25255","TCGA-14-0781-F25033","TCGA-14-0783-F25036","TCGA-14-0786-F25041","TCGA-14-0787-F25057","TCGA-14-0789-F25061","TCGA-14-0790-F25068","TCGA-14-0812-F25074","TCGA-14-0813-F25078","TCGA-14-0817-F25081","TCGA-14-0862-F25259","TCGA-14-0865-F25084","TCGA-14-0866-F25091","TCGA-14-0867-F25096","TCGA-14-0871-F25099","TCGA-14-1034-F25103","TCGA-14-1037-F25109","TCGA-14-1043-F25262","TCGA-14-1395-F25266","TCGA-14-1396-F25117","TCGA-14-1401-F25120","TCGA-14-1402-F25123","TCGA-14-1450-F25270","TCGA-14-1451-F25134","TCGA-14-1452-F25147","TCGA-14-1453-F25154","TCGA-14-1454-F25157","TCGA-14-1455-F25166","TCGA-14-1456-F25170","TCGA-14-1458-F25179","TCGA-14-1459-F25187","TCGA-14-1794-F25193","TCGA-14-1795-F25197","TCGA-14-1821-F25201","TCGA-14-1823-F25207","TCGA-14-1825-F25216","TCGA-14-1827-F25221","TCGA-14-1829-F25226","TCGA-14-2554-F25231","TCGA-14-2555-F25235","TCGA-14-3476-F25240","TCGA-14-3477-F25243","TCGA-14-4157-F25249","TCGA-15-0742-F25278","TCGA-15-1446-F25283","TCGA-15-1447-F25287","TCGA-15-1449-F25293","TCGA-16-0846-F25297","TCGA-16-0848-F25299","TCGA-16-0849-F25302","TCGA-16-0850-F25305","TCGA-16-0861-F25309","TCGA-16-1045-F25312","TCGA-16-1047-F25316","TCGA-16-1055-F25318","TCGA-16-1056-F25321","TCGA-16-1060-F25324","TCGA-16-1062-F25327","TCGA-16-1063-F25330","TCGA-16-1460-F25333","TCGA-19-0955-F25335","TCGA-19-0957-F25340","TCGA-19-0960-F25351","TCGA-19-0962-F25355","TCGA-19-0963-F25357","TCGA-19-0964-F25362","TCGA-19-1385-F25366","TCGA-19-1386-F25371","TCGA-19-1387-F25379","TCGA-19-1388-F25383","TCGA-19-1389-F25390","TCGA-19-1390-F25396","TCGA-19-1392-F25398","TCGA-19-1786-F25400","TCGA-19-1787-F25403","TCGA-19-1788-F25410","TCGA-19-1789-F25414","TCGA-19-1790-F25418","TCGA-19-1791-F25422","TCGA-19-2619-F25424","TCGA-19-2620-F25431","TCGA-19-2621-F25435","TCGA-19-2623-F25437","TCGA-19-2624-F25443","TCGA-19-2625-F25445","TCGA-19-2629-F25447","TCGA-19-2631-F25453","TCGA-19-4065-F25511","TCGA-19-4068-F25456","TCGA-19-5947-F25462","TCGA-19-5950-F25465","TCGA-19-5951-F25471","TCGA-19-5952-F25475","TCGA-19-5953-F25509","TCGA-19-5954-F25478","TCGA-19-5955-F25483","TCGA-19-5956-F43175","TCGA-19-5958-F43233","TCGA-19-5959-F25497","TCGA-19-5960-F43299","TCGA-19-A6J5-F64477","TCGA-19-A60I-F63167","TCGA-26-1438-F26846","TCGA-26-1439-F26853","TCGA-26-1440-F26857","TCGA-26-1442-F26889","TCGA-26-1443-F26862","TCGA-26-1799-F26867","TCGA-26-5132-F26871","TCGA-26-5133-F26876","TCGA-26-5134-F26882","TCGA-26-5135-F68870","TCGA-26-5136-F61146","TCGA-26-5139-F26887","TCGA-26-6173-F26895","TCGA-26-6174-F26902","TCGA-26-A7UX-F68744","TCGA-27-1830-F26906","TCGA-27-1831-F26913","TCGA-27-1832-F26920","TCGA-27-1833-F26926","TCGA-27-1834-F26934","TCGA-27-1835-F26943","TCGA-27-1836-F26953","TCGA-27-1837-F26965","TCGA-27-1838-F26973","TCGA-27-2518-F26980","TCGA-27-2519-F26989","TCGA-27-2521-F26997","TCGA-27-2523-F27003","TCGA-27-2524-F27013","TCGA-27-2526-F27021","TCGA-27-2527-F27024","TCGA-27-2528-F27030","TCGA-28-1745-F27038","TCGA-28-1746-F27045","TCGA-28-1747-F27047","TCGA-28-1749-F27051","TCGA-28-1750-F27057","TCGA-28-1751-F27064","TCGA-28-1752-F27071","TCGA-28-1753-F27079","TCGA-28-1755-F27082","TCGA-28-1756-F27086","TCGA-28-1760-F27092","TCGA-28-2502-F27098","TCGA-28-2506-F27101","TCGA-28-2509-F27107","TCGA-28-2512-F30232","TCGA-28-2513-F27113","TCGA-28-2514-F27120","TCGA-28-5204-F15040","TCGA-28-5207-F15032","TCGA-28-5208-F15027","TCGA-28-5209-F15023","TCGA-28-5211-F15035","TCGA-28-5213-F15019","TCGA-28-5214-F14982","TCGA-28-5215-F14979","TCGA-28-5216-F14976","TCGA-28-5218-F14972","TCGA-28-5219-F14961","TCGA-28-5220-F14967","TCGA-28-6450-F15043","TCGA-32-1970-F27719","TCGA-32-1973-F27724","TCGA-32-1976-F27734","TCGA-32-1977-F15815","TCGA-32-1978-F27737","TCGA-32-1979-F27846","TCGA-32-1980-F27848","TCGA-32-1982-F27739","TCGA-32-1986-F27742","TCGA-32-1987-F27746","TCGA-32-1991-F27753","TCGA-32-2491-F27762","TCGA-32-2494-F27767","TCGA-32-2495-F27779","TCGA-32-2615-F27788","TCGA-32-2616-F30224","TCGA-32-2634-F27800","TCGA-32-2638-F27806","TCGA-32-4208-F27812","TCGA-32-4209-F27818","TCGA-32-4210-F27822","TCGA-32-4211-F27824","TCGA-32-4213-F27830","TCGA-32-4719-F27837","TCGA-32-5222-F27842","TCGA-41-2571-F27980","TCGA-41-2572-F27983","TCGA-41-2573-F27989","TCGA-41-2575-F27996","TCGA-41-3392-F28002","TCGA-41-3393-F28004","TCGA-41-3915-F12837","TCGA-41-4097-F28013","TCGA-41-5651-F28015","TCGA-41-6646-F28022","TCGA-74-6573-F16941","TCGA-74-6575-F16928","TCGA-74-6577-F16920","TCGA-74-6578-F16913","TCGA-74-6581-F16907","TCGA-74-6584-F16901","TCGA-76-4925-F28519","TCGA-76-4926-F28523","TCGA-76-4927-F28527","TCGA-76-4928-F28529","TCGA-76-4929-F28533","TCGA-76-4931-F28535","TCGA-76-4932-F28539","TCGA-76-4934-F28543","TCGA-76-4935-F28545","TCGA-76-6191-F28550","TCGA-76-6192-F28557","TCGA-76-6193-F28561","TCGA-76-6280-F30214","TCGA-76-6282-F28565","TCGA-76-6285-F28570","TCGA-76-6286-F28573","TCGA-76-6656-F28579","TCGA-76-6657-F28583","TCGA-76-6661-F28587","TCGA-76-6662-F30219","TCGA-76-6663-F28591","TCGA-76-6664-F28596","TCGA-81-5910-F28600","TCGA-81-5911-F28602","TCGA-87-5896-F43207"
+days_to_new_tumor_event_additional_surgery_procedure	shortTitle	days to new tumor addtl surgery
+days_to_new_tumor_event_additional_surgery_procedure	longTitle	days to new tumor event additional surgery procedure
+days_to_new_tumor_event_additional_surgery_procedure	valueType	category
+days_to_new_tumor_event_additional_surgery_procedure	state	20
+days_to_new_tumor_event_additional_surgery_procedure	state	29
+days_to_new_tumor_event_additional_surgery_procedure	state	301
+days_to_new_tumor_event_additional_surgery_procedure	state	324
+days_to_new_tumor_event_additional_surgery_procedure	state	379
+days_to_new_tumor_event_additional_surgery_procedure	state	452
+days_to_new_tumor_event_additional_surgery_procedure	state	670
+days_to_new_tumor_event_additional_surgery_procedure	state	1643
+days_to_new_tumor_event_additional_surgery_procedure	stateOrder	"20","29","301","324","379","452","670","1643"
+days_to_new_tumor_event_after_initial_treatment	shortTitle	days to new tumor after initial Tx
+days_to_new_tumor_event_after_initial_treatment	longTitle	days to new tumor event after initial treatment
+days_to_new_tumor_event_after_initial_treatment	valueType	float
+new_neoplasm_event_type	shortTitle	new neoplasm type
+new_neoplasm_event_type	longTitle	new neoplasm event type
+new_neoplasm_event_type	valueType	category
+new_neoplasm_event_type	state	Locoregional Disease
+new_neoplasm_event_type	state	Progression of Disease
+new_neoplasm_event_type	state	Recurrence
+new_neoplasm_event_type	stateOrder	"Locoregional Disease","Progression of Disease","Recurrence"
+new_tumor_event_additional_surgery_procedure	shortTitle	new tumor event addtl surgery
+new_tumor_event_additional_surgery_procedure	longTitle	new tumor event additional surgery procedure
+new_tumor_event_additional_surgery_procedure	valueType	category
+new_tumor_event_additional_surgery_procedure	state	YES
+new_tumor_event_additional_surgery_procedure	stateOrder	"YES"
+days_to_death	shortTitle	days to death
+days_to_death	longTitle	days to death
+days_to_death	valueType	float
+days_to_last_followup	shortTitle	days to last followup
+days_to_last_followup	longTitle	days to last followup
+days_to_last_followup	valueType	float
+eastern_cancer_oncology_group	shortTitle	eastern cancer oncology group
+eastern_cancer_oncology_group	longTitle	eastern cancer oncology group
+eastern_cancer_oncology_group	valueType	category
+eastern_cancer_oncology_group	state	0
+eastern_cancer_oncology_group	state	1
+eastern_cancer_oncology_group	state	2
+eastern_cancer_oncology_group	state	3
+eastern_cancer_oncology_group	state	4
+eastern_cancer_oncology_group	stateOrder	"0","1","2","3","4"
+followup_case_report_form_submission_reason	shortTitle	followup case report form submission reason
+followup_case_report_form_submission_reason	longTitle	followup case report form submission reason
+followup_case_report_form_submission_reason	valueType	category
+followup_case_report_form_submission_reason	state	Scheduled Follow-up Submission
+followup_case_report_form_submission_reason	state	[Discrepancy]
+followup_case_report_form_submission_reason	stateOrder	"Scheduled Follow-up Submission","[Discrepancy]"
+followup_treatment_success	shortTitle	followup Tx success
+followup_treatment_success	longTitle	followup treatment success
+followup_treatment_success	valueType	category
+followup_treatment_success	state	Complete Remission/Response
+followup_treatment_success	state	Progressive Disease
+followup_treatment_success	state	Stable Disease
+followup_treatment_success	stateOrder	"Complete Remission/Response","Progressive Disease","Stable Disease"
+form_completion_date	shortTitle	form_completion_date
+form_completion_date	longTitle	form_completion_date
+form_completion_date	valueType	category
+form_completion_date	state	2008-12-4
+form_completion_date	state	2008-12-5
+form_completion_date	state	2008-12-8
+form_completion_date	state	2008-12-9
+form_completion_date	state	2008-12-10
+form_completion_date	state	2008-12-11
+form_completion_date	state	2008-12-12
+form_completion_date	state	2008-12-16
+form_completion_date	state	2008-12-17
+form_completion_date	state	2008-12-18
+form_completion_date	state	2008-12-19
+form_completion_date	state	2009-1-20
+form_completion_date	state	2009-1-23
+form_completion_date	state	2009-1-26
+form_completion_date	state	2009-2-3
+form_completion_date	state	2009-2-25
+form_completion_date	state	2009-3-17
+form_completion_date	state	2009-4-6
+form_completion_date	state	2009-5-4
+form_completion_date	state	2009-5-11
+form_completion_date	state	2009-5-18
+form_completion_date	state	2009-5-27
+form_completion_date	state	2009-5-28
+form_completion_date	state	2009-6-2
+form_completion_date	state	2009-6-4
+form_completion_date	state	2009-6-18
+form_completion_date	state	2009-7-2
+form_completion_date	state	2009-7-6
+form_completion_date	state	2009-7-17
+form_completion_date	state	2009-7-27
+form_completion_date	state	2009-8-4
+form_completion_date	state	2009-8-5
+form_completion_date	state	2009-8-19
+form_completion_date	state	2009-9-1
+form_completion_date	state	2009-9-18
+form_completion_date	state	2009-9-21
+form_completion_date	state	2009-9-22
+form_completion_date	state	2009-9-23
+form_completion_date	state	2009-9-24
+form_completion_date	state	2009-10-2
+form_completion_date	state	2009-11-16
+form_completion_date	state	2009-11-30
+form_completion_date	state	2010-2-5
+form_completion_date	state	2010-3-3
+form_completion_date	state	2010-3-5
+form_completion_date	state	2010-3-8
+form_completion_date	state	2010-3-12
+form_completion_date	state	2010-3-15
+form_completion_date	state	2010-3-22
+form_completion_date	state	2010-5-6
+form_completion_date	state	2010-5-11
+form_completion_date	state	2010-5-12
+form_completion_date	state	2010-5-14
+form_completion_date	state	2010-5-28
+form_completion_date	state	2010-6-1
+form_completion_date	state	2010-6-3
+form_completion_date	state	2010-6-7
+form_completion_date	state	2010-6-8
+form_completion_date	state	2010-6-14
+form_completion_date	state	2010-6-16
+form_completion_date	state	2010-6-17
+form_completion_date	state	2010-6-18
+form_completion_date	state	2010-6-24
+form_completion_date	state	2010-7-6
+form_completion_date	state	2010-7-12
+form_completion_date	state	2010-7-30
+form_completion_date	state	2010-8-31
+form_completion_date	state	2010-10-26
+form_completion_date	state	2010-12-14
+form_completion_date	state	2010-12-20
+form_completion_date	state	2010-12-21
+form_completion_date	state	2010-12-27
+form_completion_date	state	2011-1-4
+form_completion_date	state	2011-1-24
+form_completion_date	state	2011-1-25
+form_completion_date	state	2011-1-31
+form_completion_date	state	2011-2-7
+form_completion_date	state	2011-3-9
+form_completion_date	state	2011-4-6
+form_completion_date	state	2011-5-2
+form_completion_date	state	2011-5-5
+form_completion_date	state	2011-6-3
+form_completion_date	state	2011-6-7
+form_completion_date	state	2011-6-13
+form_completion_date	state	2011-7-5
+form_completion_date	state	2011-7-14
+form_completion_date	state	2011-7-21
+form_completion_date	state	2011-8-8
+form_completion_date	state	2011-8-9
+form_completion_date	state	2011-8-15
+form_completion_date	state	2011-8-20
+form_completion_date	state	2011-8-22
+form_completion_date	state	2011-8-29
+form_completion_date	state	2011-9-14
+form_completion_date	state	2011-9-15
+form_completion_date	state	2011-9-22
+form_completion_date	state	2011-9-26
+form_completion_date	state	2011-10-4
+form_completion_date	state	2011-10-21
+form_completion_date	state	2011-10-24
+form_completion_date	state	2011-11-7
+form_completion_date	state	2011-11-14
+form_completion_date	state	2011-11-15
+form_completion_date	state	2011-12-9
+form_completion_date	state	2012-1-17
+form_completion_date	state	2012-7-14
+form_completion_date	state	2013-2-12
+form_completion_date	state	2013-2-13
+form_completion_date	state	2013-2-27
+form_completion_date	state	2013-4-4
+form_completion_date	state	2013-5-13
+form_completion_date	state	2013-5-15
+form_completion_date	state	2013-9-16
+form_completion_date	state	2013-9-18
+form_completion_date	state	2013-10-1
+form_completion_date	state	2013-11-26
+form_completion_date	state	2013-12-23
+form_completion_date	state	2014-2-5
+form_completion_date	state	2014-3-18
+form_completion_date	state	2014-3-28
+form_completion_date	state	2014-6-25
+form_completion_date	state	2014-8-1
+form_completion_date	state	2014-8-18
+form_completion_date	state	2014-9-3
+form_completion_date	state	2014-9-23
+form_completion_date	state	2014-12-22
+form_completion_date	stateOrder	"2008-12-4","2008-12-5","2008-12-8","2008-12-9","2008-12-10","2008-12-11","2008-12-12","2008-12-16","2008-12-17","2008-12-18","2008-12-19","2009-1-20","2009-1-23","2009-1-26","2009-2-3","2009-2-25","2009-3-17","2009-4-6","2009-5-4","2009-5-11","2009-5-18","2009-5-27","2009-5-28","2009-6-2","2009-6-4","2009-6-18","2009-7-2","2009-7-6","2009-7-17","2009-7-27","2009-8-4","2009-8-5","2009-8-19","2009-9-1","2009-9-18","2009-9-21","2009-9-22","2009-9-23","2009-9-24","2009-10-2","2009-11-16","2009-11-30","2010-2-5","2010-3-3","2010-3-5","2010-3-8","2010-3-12","2010-3-15","2010-3-22","2010-5-6","2010-5-11","2010-5-12","2010-5-14","2010-5-28","2010-6-1","2010-6-3","2010-6-7","2010-6-8","2010-6-14","2010-6-16","2010-6-17","2010-6-18","2010-6-24","2010-7-6","2010-7-12","2010-7-30","2010-8-31","2010-10-26","2010-12-14","2010-12-20","2010-12-21","2010-12-27","2011-1-4","2011-1-24","2011-1-25","2011-1-31","2011-2-7","2011-3-9","2011-4-6","2011-5-2","2011-5-5","2011-6-3","2011-6-7","2011-6-13","2011-7-5","2011-7-14","2011-7-21","2011-8-8","2011-8-9","2011-8-15","2011-8-20","2011-8-22","2011-8-29","2011-9-14","2011-9-15","2011-9-22","2011-9-26","2011-10-4","2011-10-21","2011-10-24","2011-11-7","2011-11-14","2011-11-15","2011-12-9","2012-1-17","2012-7-14","2013-2-12","2013-2-13","2013-2-27","2013-4-4","2013-5-13","2013-5-15","2013-9-16","2013-9-18","2013-10-1","2013-11-26","2013-12-23","2014-2-5","2014-3-18","2014-3-28","2014-6-25","2014-8-1","2014-8-18","2014-9-3","2014-9-23","2014-12-22"
+karnofsky_performance_score	shortTitle	karnofsky performance score
+karnofsky_performance_score	longTitle	karnofsky performance score
+karnofsky_performance_score	valueType	category
+karnofsky_performance_score	state	0
+karnofsky_performance_score	state	20
+karnofsky_performance_score	state	40
+karnofsky_performance_score	state	60
+karnofsky_performance_score	state	70
+karnofsky_performance_score	state	80
+karnofsky_performance_score	state	90
+karnofsky_performance_score	state	100
+karnofsky_performance_score	stateOrder	"0","20","40","60","70","80","90","100"
+lost_follow_up	shortTitle	lost follow up
+lost_follow_up	longTitle	lost follow up
+lost_follow_up	valueType	category
+lost_follow_up	state	NO
+lost_follow_up	state	YES
+lost_follow_up	state	[Discrepancy]
+lost_follow_up	stateOrder	"NO","YES","[Discrepancy]"
+new_tumor_event_after_initial_treatment	shortTitle	new tumor event after initial treatment
+new_tumor_event_after_initial_treatment	longTitle	new tumor event after initial treatment
+new_tumor_event_after_initial_treatment	valueType	category
+new_tumor_event_after_initial_treatment	state	NO
+new_tumor_event_after_initial_treatment	state	YES
+new_tumor_event_after_initial_treatment	stateOrder	"NO","YES"
+performance_status_scale_timing	shortTitle	performance status scale timing
+performance_status_scale_timing	longTitle	performance status scale timing
+performance_status_scale_timing	valueType	category
+performance_status_scale_timing	state	Other
+performance_status_scale_timing	state	Post-Adjuvant Therapy
+performance_status_scale_timing	state	Pre-Adjuvant Therapy
+performance_status_scale_timing	state	Pre-Operative
+performance_status_scale_timing	stateOrder	"Other","Post-Adjuvant Therapy","Pre-Adjuvant Therapy","Pre-Operative"
+person_neoplasm_cancer_status	shortTitle	person neoplasm cancer status
+person_neoplasm_cancer_status	longTitle	person neoplasm cancer status
+person_neoplasm_cancer_status	valueType	category
+person_neoplasm_cancer_status	state	TUMOR FREE
+person_neoplasm_cancer_status	state	WITH TUMOR
+person_neoplasm_cancer_status	stateOrder	"TUMOR FREE","WITH TUMOR"
+postoperative_rx_tx	shortTitle	postop Rx Tx
+postoperative_rx_tx	longTitle	postoperative drug treatment
+postoperative_rx_tx	valueType	category
+postoperative_rx_tx	state	NO
+postoperative_rx_tx	state	YES
+postoperative_rx_tx	stateOrder	"NO","YES"
+primary_therapy_outcome_success	shortTitle	primary therapy outcome success
+primary_therapy_outcome_success	longTitle	primary therapy outcome success
+primary_therapy_outcome_success	valueType	category
+primary_therapy_outcome_success	state	Complete Remission/Response
+primary_therapy_outcome_success	state	Partial Remission/Response
+primary_therapy_outcome_success	state	Progressive Disease
+primary_therapy_outcome_success	state	Stable Disease
+primary_therapy_outcome_success	state	[Discrepancy]
+primary_therapy_outcome_success	stateOrder	"Complete Remission/Response","Partial Remission/Response","Progressive Disease","Stable Disease","[Discrepancy]"
+radiation_therapy	shortTitle	radiation therapy
+radiation_therapy	longTitle	radiation therapy
+radiation_therapy	valueType	category
+radiation_therapy	state	NO
+radiation_therapy	state	YES
+radiation_therapy	state	[Discrepancy]
+radiation_therapy	stateOrder	"NO","YES","[Discrepancy]"
+vital_status	shortTitle	vital status
+vital_status	longTitle	vital status
+vital_status	valueType	category
+vital_status	state	DECEASED
+vital_status	state	LIVING
+vital_status	stateOrder	"LIVING","DECEASED"
+vital_status	stateOrderRelax	true
+_EVENT	shortTitle	overall survival indicator
+_EVENT	longTitle	_EVENT overall survival indicator 1=death 0=censor
+_EVENT	valueType	category
+_EVENT	state	0
+_EVENT	state	1
+_EVENT	stateOrder	"0","1"
+_TIME_TO_EVENT	shortTitle	OVERALL SURVIVAL
+_TIME_TO_EVENT	longTitle	_TIME_TO_EVENT overall survival in days
+_TIME_TO_EVENT	valueType	float
+_OS_IND	shortTitle	overall survival indicator
+_OS_IND	longTitle	_OS_IND overall survival indicator 1=death 0=censor
+_OS_IND	valueType	category
+_OS_IND	state	0
+_OS_IND	state	1
+_OS_IND	stateOrder	"0","1"
+_OS	shortTitle	OVERALL SURVIVAL
+_OS	longTitle	_OS overall survival in days
+_OS	valueType	float
+_PANCAN_DNAMethyl_PANCAN	shortTitle	PANCAN DNA methylation
+_PANCAN_DNAMethyl_PANCAN	longTitle	_PANCAN AWG DNA methylation subtype k=19 (syn1875816)
+_PANCAN_DNAMethyl_PANCAN	valueType	category
+_PANCAN_DNAMethyl_PANCAN	state	Cluster 5
+_PANCAN_DNAMethyl_PANCAN	state	GBM CIMP c16
+_PANCAN_DNAMethyl_PANCAN	state	GBM non-CIMP c15
+_PANCAN_DNAMethyl_PANCAN	state	Low purity c2
+_PANCAN_DNAMethyl_PANCAN	stateOrder	"Cluster 5","GBM non-CIMP c15","GBM CIMP c16","Low purity c2"
+_PANCAN_DNAMethyl_GBM	shortTitle	GBM DNA methylation
+_PANCAN_DNAMethyl_GBM	longTitle	_GBM DNA methylation subtype (syn1701558)
+_PANCAN_DNAMethyl_GBM	valueType	category
+_PANCAN_DNAMethyl_GBM	state	cluster 1
+_PANCAN_DNAMethyl_GBM	state	cluster 2
+_PANCAN_DNAMethyl_GBM	state	cluster 3
+_PANCAN_DNAMethyl_GBM	state	cluster 4
+_PANCAN_DNAMethyl_GBM	state	cluster 5
+_PANCAN_DNAMethyl_GBM	state	cluster 6
+_PANCAN_DNAMethyl_GBM	stateOrder	"cluster 1","cluster 2","cluster 3","cluster 4","cluster 5","cluster 6"
+G_CIMP_STATUS	shortTitle	G-CIMP
+G_CIMP_STATUS	longTitle	glioma CpG island methylator phenotype (TCGA AWG)
+G_CIMP_STATUS	valueType	category
+G_CIMP_STATUS	state	G-CIMP
+G_CIMP_STATUS	state	NON G-CIMP
+G_CIMP_STATUS	stateOrder	"NON G-CIMP","G-CIMP"
+_PANCAN_mutation_PANCAN	shortTitle	PANCAN mutation
+_PANCAN_mutation_PANCAN	longTitle	_PANCAN AWG mutation subtype k=14 (syn2492003)
+_PANCAN_mutation_PANCAN	valueType	category
+_PANCAN_mutation_PANCAN	state	mutation c1uster 9
+_PANCAN_mutation_PANCAN	state	mutation c1uster 10
+_PANCAN_mutation_PANCAN	state	mutation cluster 1
+_PANCAN_mutation_PANCAN	state	mutation cluster 2
+_PANCAN_mutation_PANCAN	state	mutation cluster 3
+_PANCAN_mutation_PANCAN	state	mutation cluster 4
+_PANCAN_mutation_PANCAN	state	mutation cluster 5
+_PANCAN_mutation_PANCAN	state	mutation cluster 6
+_PANCAN_mutation_PANCAN	state	mutation cluster 7
+_PANCAN_mutation_PANCAN	state	mutation cluster 8
+_PANCAN_mutation_PANCAN	state	mutation cluster 11
+_PANCAN_mutation_PANCAN	state	mutation cluster 12
+_PANCAN_mutation_PANCAN	state	mutation cluster 13
+_PANCAN_mutation_PANCAN	state	mutation cluster 14
+_PANCAN_mutation_PANCAN	stateOrder	"mutation cluster 1","mutation cluster 2","mutation cluster 3","mutation cluster 4","mutation cluster 5","mutation cluster 6","mutation cluster 7","mutation cluster 8","mutation c1uster 9","mutation c1uster 10","mutation cluster 11","mutation cluster 12","mutation cluster 13","mutation cluster 14"
+_PANCAN_Cluster_Cluster_PANCAN	shortTitle	PANCAN COCA
+_PANCAN_Cluster_Cluster_PANCAN	longTitle	_PANCAN AWG COCA subtype assignment (syn2487022)
+_PANCAN_Cluster_Cluster_PANCAN	valueType	category
+_PANCAN_Cluster_Cluster_PANCAN	state	C1-LUAD-enriched
+_PANCAN_Cluster_Cluster_PANCAN	state	C5-KIRC
+_PANCAN_Cluster_Cluster_PANCAN	state	C10-GBM
+_PANCAN_Cluster_Cluster_PANCAN	stateOrder	"C10-GBM","C5-KIRC","C1-LUAD-enriched"
+_PANCAN_UNC_RNAseq_PANCAN_K16	shortTitle	PANCAN RNAseq
+_PANCAN_UNC_RNAseq_PANCAN_K16	longTitle	_PANCAN AWG RNAseq subtype k=16 (syn1715788)
+_PANCAN_UNC_RNAseq_PANCAN_K16	valueType	category
+_PANCAN_UNC_RNAseq_PANCAN_K16	state	GBM-like c6
+_PANCAN_UNC_RNAseq_PANCAN_K16	stateOrder	"GBM-like c6"
+days_to_collection	shortTitle	days to collection
+days_to_collection	longTitle	days to collection
+days_to_collection	valueType	float
+initial_weight	shortTitle	initial weight
+initial_weight	longTitle	initial weight
+initial_weight	valueType	float
+intermediate_dimension	shortTitle	intmed dimension
+intermediate_dimension	longTitle	intermediate dimension
+intermediate_dimension	valueType	float
+is_ffpe	shortTitle	is_ffpe
+is_ffpe	longTitle	is_ffpe
+is_ffpe	valueType	category
+is_ffpe	state	NO
+is_ffpe	stateOrder	"NO"
+longest_dimension	shortTitle	longest dimension
+longest_dimension	longTitle	longest dimension
+longest_dimension	valueType	float
+oct_embedded	shortTitle	oct embedded
+oct_embedded	longTitle	OCT embedded (OCT is an embedding medium used for frozen tissue)
+oct_embedded	valueType	category
+oct_embedded	state	false
+oct_embedded	state	true
+oct_embedded	stateOrder	"false","true"
+pathology_report_file_name	shortTitle	pathology_report_file_name
+pathology_report_file_name	longTitle	pathology_report_file_name
+pathology_report_file_name	valueType	category
+pathology_report_file_name	state	TCGA-02-0003.1E5D6194-FE78-41E6-A05E-92B2A8E0B162.pdf
+pathology_report_file_name	state	TCGA-02-0004.AE5353B3-E46A-4068-BBEF-B0FF19727177.pdf
+pathology_report_file_name	state	TCGA-02-0007.915ED9E0-E0FC-459B-97BE-7BBE91B6D100.pdf
+pathology_report_file_name	state	TCGA-02-0009.1AD9AD8E-0DA4-4D15-B984-A59D88014D51.pdf
+pathology_report_file_name	state	TCGA-02-0010.C7B6B2FC-48A7-4A56-893F-F8EDAFCE952A.pdf
+pathology_report_file_name	state	TCGA-02-0015.33BE0BE1-74ED-40B2-96D3-CE530B463B1A.pdf
+pathology_report_file_name	state	TCGA-02-0016.C5C8437D-6CFB-4B93-9E66-26CC207541AD.pdf
+pathology_report_file_name	state	TCGA-02-0021.1BEE82DA-EB4A-492E-B872-632F81F7C84E.pdf
+pathology_report_file_name	state	TCGA-02-0025.4919E951-446B-423F-B0F6-C39032A73197.pdf
+pathology_report_file_name	state	TCGA-02-0028.6F1D506B-6A14-4C53-B0BC-714AC0178E09.pdf
+pathology_report_file_name	state	TCGA-02-0033.BD51E951-1FAF-4FCA-8985-CF63B76411F6.pdf
+pathology_report_file_name	state	TCGA-02-0034.834B13FD-1F37-4B25-AD92-90A62D6495B8.pdf
+pathology_report_file_name	state	TCGA-02-0037.AB4312D6-534C-4A04-88F2-FE2211CDCF4D.pdf
+pathology_report_file_name	state	TCGA-02-0038.62D3F086-5FEA-4D2E-BE3F-0A7B4AEA6EE8.pdf
+pathology_report_file_name	state	TCGA-02-0039.649D2E34-A0BC-4565-BF8F-BFBAB18AC795.pdf
+pathology_report_file_name	state	TCGA-02-0043.5C2BF316-AB63-43BC-9C08-BD3E9C09C3BC.pdf
+pathology_report_file_name	state	TCGA-02-0046.926E149C-6E1F-4289-8D7B-AA54884A9A56.pdf
+pathology_report_file_name	state	TCGA-02-0047.66F4DDD0-A0E6-4EA9-97AF-8691C0457D2B.pdf
+pathology_report_file_name	state	TCGA-02-0048.B7F1BB8A-5A64-4184-9F71-623264FD814A.pdf
+pathology_report_file_name	state	TCGA-02-0052.2C72AB1F-B083-495A-9A1F-FDDFD4C376AC.pdf
+pathology_report_file_name	state	TCGA-02-0055.9CD99ACE-FAD5-436B-A5B0-73E5C60082E8.pdf
+pathology_report_file_name	state	TCGA-02-0057.2BBD61DD-5788-42C0-9A18-4CAB364A21A2.pdf
+pathology_report_file_name	state	TCGA-02-0058.18FF1EAD-03C4-41B2-BB1C-444FEBE58CFE.pdf
+pathology_report_file_name	state	TCGA-02-0060.DD267BA8-557B-4C0B-8EF7-BE5A27229D72.pdf
+pathology_report_file_name	state	TCGA-02-0064.25610949-CD04-4BE3-89F5-26BC30B386C1.pdf
+pathology_report_file_name	state	TCGA-02-0068.1BE8314B-1A45-4C73-A323-2CB54824B68A.pdf
+pathology_report_file_name	state	TCGA-02-0070.2BDBBBD8-36A6-49FE-A9BB-2D42017257A4.pdf
+pathology_report_file_name	state	TCGA-02-0071.0A2B7936-DACF-4F84-A383-59FF7637ADDC.pdf
+pathology_report_file_name	state	TCGA-02-0074.44665986-6826-4D73-BFCF-5DB45BE175A2.pdf
+pathology_report_file_name	state	TCGA-02-0075.1EC2BC30-A445-494B-A83D-77BE78B0BA15.pdf
+pathology_report_file_name	state	TCGA-02-0079.2F87CBAA-E59F-446E-8D8B-DEE0126BC508.pdf
+pathology_report_file_name	state	TCGA-02-0083.EDE2C787-0E27-43C0-BC69-F69D730B634D.pdf
+pathology_report_file_name	state	TCGA-02-0084.7FF8D96F-F7BB-4D82-A1A4-ED53C055BAEB.pdf
+pathology_report_file_name	state	TCGA-02-0085.BA7C2B1A-C988-41E4-A880-C860F8350440.pdf
+pathology_report_file_name	state	TCGA-02-0086.A79063FC-E71C-4360-8B85-8B9F668BD75A.pdf
+pathology_report_file_name	state	TCGA-02-0087.19699A5B-AD9F-4D32-8258-B306E197D06C.pdf
+pathology_report_file_name	state	TCGA-02-0089.5CA76D8B-F5EA-4545-86DF-41D49484AE77.pdf
+pathology_report_file_name	state	TCGA-02-0099.93C6F910-9993-4D1B-818D-0D6BA924B4FF.pdf
+pathology_report_file_name	state	TCGA-02-0102.DB1F457F-FB07-4A4E-AC21-D13139ED3A6B.pdf
+pathology_report_file_name	state	TCGA-02-0104.37E1CC7A-3BFA-48CE-A998-9B6F4AE5DD0C.pdf
+pathology_report_file_name	state	TCGA-02-0106.401798E2-B154-4CD0-8B79-5864B9CD371C.pdf
+pathology_report_file_name	state	TCGA-02-0107.4217DB96-339E-4C6E-99A6-FB2784C6CAC4.pdf
+pathology_report_file_name	state	TCGA-02-0113.79F2DBF9-E27B-4A5B-A953-401B1D5AB5C0.pdf
+pathology_report_file_name	state	TCGA-02-0115.A93ABC54-B50A-4F3E-9A10-CE85E56A0798.pdf
+pathology_report_file_name	state	TCGA-02-0116.7EBDA425-B0B2-42C7-A533-1B0F8D0D67B0.pdf
+pathology_report_file_name	state	TCGA-02-2466.e9e97b51-1474-463b-8693-7b66f74319c9.pdf
+pathology_report_file_name	state	TCGA-02-2470.e21f66d9-e124-43d7-81fe-489d15d69cbf.pdf
+pathology_report_file_name	state	TCGA-02-2483.e73f6ba1-564c-4fea-b088-f2357ff49ee7.pdf
+pathology_report_file_name	state	TCGA-02-2485.5b0be7bb-15b5-429b-9bc0-94e435c1a164.pdf
+pathology_report_file_name	state	TCGA-02-2486.26e31c62-06a2-4906-a1d5-985dc0f961e4.pdf
+pathology_report_file_name	state	TCGA-4W-AA9R.B41500A8-E606-4B03-AD04-55989B30C041.pdf
+pathology_report_file_name	state	TCGA-4W-AA9S.87CEFA2B-7AA8-40DA-A987-9050F449D828.pdf
+pathology_report_file_name	state	TCGA-4W-AA9T.F1D9DB81-6170-4A62-B16E-0D826CD0D173.pdf
+pathology_report_file_name	state	TCGA-06-0121.8A91BDA2-B037-4B68-A3E4-8D6AB00BE2E9.pdf
+pathology_report_file_name	state	TCGA-06-0122.E7349776-3120-4D3B-90DA-34320894FD70.pdf
+pathology_report_file_name	state	TCGA-06-0124.5ba4f4a0-e68c-4bad-88bc-8dd9f399a653.pdf
+pathology_report_file_name	state	TCGA-06-0125.e2760aae-ed41-402f-a777-7b1d7f50e52e.pdf
+pathology_report_file_name	state	TCGA-06-0126.2f9689ce-2e05-4508-95f5-d052680dae36.pdf
+pathology_report_file_name	state	TCGA-06-0127.6c344ba6-e1e2-457d-a4de-a03e03ee706b.pdf
+pathology_report_file_name	state	TCGA-06-0128.f782b0e3-3957-4b0e-baed-803f0c199ce3.pdf
+pathology_report_file_name	state	TCGA-06-0129.8495b7bf-2bc1-4ea8-8c66-09fee094e120.pdf
+pathology_report_file_name	state	TCGA-06-0130.8dbae41f-a953-4c98-b46d-417825e8df65.pdf
+pathology_report_file_name	state	TCGA-06-0132.b572cee6-5c7e-402b-a25d-cd380594c7dd.pdf
+pathology_report_file_name	state	TCGA-06-0133.6d9a0d3d-ccbf-4e8d-9eeb-8182f1000f39.pdf
+pathology_report_file_name	state	TCGA-06-0137.608435f3-0b6e-4191-b678-c023e8936906.pdf
+pathology_report_file_name	state	TCGA-06-0138.9a7ac58b-1ece-4196-aa88-5924f5fbe853.pdf
+pathology_report_file_name	state	TCGA-06-0139.964df5a7-62aa-4cd7-b6ad-e41f27747616.pdf
+pathology_report_file_name	state	TCGA-06-0141.caa0b0ec-7b94-4326-99d5-483fed429ed4.pdf
+pathology_report_file_name	state	TCGA-06-0143.7774787d-3a55-4c74-87e6-da6e51a16b9e.pdf
+pathology_report_file_name	state	TCGA-06-0145.5f18975c-bf2a-4476-ad21-94fb8ca7351f.pdf
+pathology_report_file_name	state	TCGA-06-0147.2b37e144-879c-4423-af3f-b548db00e57c.pdf
+pathology_report_file_name	state	TCGA-06-0148.4f46fcb4-a2f4-4eea-a62a-4baedef21d69.pdf
+pathology_report_file_name	state	TCGA-06-0152.328704ab-7065-4e17-ba30-1a50b9949dd4.pdf
+pathology_report_file_name	state	TCGA-06-0154.a01c82db-37c0-42dc-b926-840f8b0e64ad.pdf
+pathology_report_file_name	state	TCGA-06-0157.2fa84b5c-8326-4a85-959a-0b0c03bb465c.pdf
+pathology_report_file_name	state	TCGA-06-0158.584952b9-bbd0-4da2-9a40-cd0291e8f780.pdf
+pathology_report_file_name	state	TCGA-06-0162.498908D0-4805-49AF-B56C-4D8B9A19132F.pdf
+pathology_report_file_name	state	TCGA-06-0164.D7871E54-18DC-4ECC-8CE9-6B96B9EC6D9D.pdf
+pathology_report_file_name	state	TCGA-06-0166.8c5fd571-8b2c-4360-9014-2e96833e8ec5.pdf
+pathology_report_file_name	state	TCGA-06-0168.204cc10b-2024-400f-bcaa-161955d0f3b5.pdf
+pathology_report_file_name	state	TCGA-06-0169.46db3ed2-4a31-40a4-b88f-24e2a63a6087.pdf
+pathology_report_file_name	state	TCGA-06-0171.0a97321a-4250-4dbd-b00b-e52c21a38c73.pdf
+pathology_report_file_name	state	TCGA-06-0173.623de96f-c53a-43d8-b0b1-de2d8a9f7a51.pdf
+pathology_report_file_name	state	TCGA-06-0174.b93eb902-cea8-4bf5-830b-ddbaceab7444.pdf
+pathology_report_file_name	state	TCGA-06-0175.623888E0-C267-428E-B7A6-65BE61BEFA30.pdf
+pathology_report_file_name	state	TCGA-06-0176.4acf6767-5efb-4bfd-8f5d-edef05709c9b.pdf
+pathology_report_file_name	state	TCGA-06-0178.efa462f1-142c-45de-8234-7f9b12d7b701.pdf
+pathology_report_file_name	state	TCGA-06-0182.3B574C51-AD86-4AED-8BEE-282B1D050B84.pdf
+pathology_report_file_name	state	TCGA-06-0184.ce516253-acf1-4186-8998-dc089161e261.pdf
+pathology_report_file_name	state	TCGA-06-0185.4dd513d8-ff26-465b-b99d-6bf738bf7911.pdf
+pathology_report_file_name	state	TCGA-06-0187.17f164b8-9dc6-48f0-830b-60fc0efa83b4.pdf
+pathology_report_file_name	state	TCGA-06-0188.8cdb3fca-ac62-497e-9402-5bb50f97df4f.pdf
+pathology_report_file_name	state	TCGA-06-0189.eab1f4f5-081a-4396-b2e1-496e6e71ff7d.pdf
+pathology_report_file_name	state	TCGA-06-0190.ee9f398d-8fcf-4ef1-bded-2b4a7fec57ae.pdf
+pathology_report_file_name	state	TCGA-06-0197.ae825f51-bad6-490b-aab5-de19124ca57c.pdf
+pathology_report_file_name	state	TCGA-06-0201.96324e62-340c-4865-9729-e9a547df2df4.pdf
+pathology_report_file_name	state	TCGA-06-0206.14fc5ccd-ad34-4bd1-8d57-d73303935481.pdf
+pathology_report_file_name	state	TCGA-06-0208.7fd467b6-0e42-45cb-86bf-50b7c547bc9e.pdf
+pathology_report_file_name	state	TCGA-06-0209.93a70661-a507-4b57-bee6-b9bf201f31c6.pdf
+pathology_report_file_name	state	TCGA-06-0210.97a4b2c6-e498-4aa9-9e45-56401f6bc5ec.pdf
+pathology_report_file_name	state	TCGA-06-0211.d6eebf70-1fef-4b17-96ce-e18838ba5e57.pdf
+pathology_report_file_name	state	TCGA-06-0213.cd4f16dd-eb6a-40e3-82e7-07f878975e3b.pdf
+pathology_report_file_name	state	TCGA-06-0216.2e57f899-8d3f-4be7-99ba-095f58b2e89c.pdf
+pathology_report_file_name	state	TCGA-06-0219.90027ed9-92a4-4326-a531-be06db61e922.pdf
+pathology_report_file_name	state	TCGA-06-0221.8aa6e9d4-9520-4095-bbc2-5c37707d33df.pdf
+pathology_report_file_name	state	TCGA-06-0237.29763612-8827-45e2-90c1-c69e0d5b18cb.pdf
+pathology_report_file_name	state	TCGA-06-0238.2a19d86e-bea6-4892-9fa4-8f13fdfa9fa4.pdf
+pathology_report_file_name	state	TCGA-06-0241.32181322-04dc-447d-8121-80e2842e6308.pdf
+pathology_report_file_name	state	TCGA-06-0644.91fa8b36-59d2-4820-9ce0-14c8b7b38934.pdf
+pathology_report_file_name	state	TCGA-06-0645.b006fa12-7893-48f9-81f1-93b28989ffe1.pdf
+pathology_report_file_name	state	TCGA-06-0646.a087fe45-c2eb-4106-9c7a-aa0205ccdd73.pdf
+pathology_report_file_name	state	TCGA-06-0648.8868018a-2fc1-482a-ba46-29245beba686.pdf
+pathology_report_file_name	state	TCGA-06-0650.de2d8135-1c15-4475-be37-232d9779e908.pdf
+pathology_report_file_name	state	TCGA-06-0686.4d50d9db-eecf-4444-b6b7-da1c90be713d.pdf
+pathology_report_file_name	state	TCGA-06-0743.e5a35d11-6d87-4d7e-ac41-73bfe35871ff.pdf
+pathology_report_file_name	state	TCGA-06-0744.f01f0597-862d-4d9e-95de-a00604f9a298.pdf
+pathology_report_file_name	state	TCGA-06-0745.f46f4b25-6e54-4c40-842a-1c5c6dd99cab.pdf
+pathology_report_file_name	state	TCGA-06-0747.41920fbe-be2c-4f3b-b8ee-6f2915a2ae3f.pdf
+pathology_report_file_name	state	TCGA-06-0749.30421caa-b781-4140-97ff-5ede12ed288d.pdf
+pathology_report_file_name	state	TCGA-06-0750.723b1f21-67a7-4a47-ac10-d297ea428c8a.pdf
+pathology_report_file_name	state	TCGA-06-0875.1e48d17e-feda-4555-99eb-7e4744d79492.pdf
+pathology_report_file_name	state	TCGA-06-0876.64d0b1fe-8c45-4352-b557-c7e8d075a26b.pdf
+pathology_report_file_name	state	TCGA-06-0877.ce4f12d9-d24e-41a8-9841-075d30530173.pdf
+pathology_report_file_name	state	TCGA-06-0878.31037a8e-696a-4858-90ca-84578f350b7f.pdf
+pathology_report_file_name	state	TCGA-06-0879.f75c6170-1411-46b6-848f-b46007f2a656.pdf
+pathology_report_file_name	state	TCGA-06-0881.abde276c-97e1-4fe4-bb86-ee20e65f7d5e.pdf
+pathology_report_file_name	state	TCGA-06-0882.f2de8883-bc9a-4578-a154-a70335786740.pdf
+pathology_report_file_name	state	TCGA-06-0939.db0ce8dc-ce11-4574-9f60-df59b7af1cc3.pdf
+pathology_report_file_name	state	TCGA-06-1086.d370d57e-200b-49d4-99cf-9c186d7ab947.pdf
+pathology_report_file_name	state	TCGA-06-1087.36121b4d-6dde-4223-9f7a-5ca50ad4f7b5.pdf
+pathology_report_file_name	state	TCGA-06-1800.09f29d54-f430-4aa8-92fc-137a0b147909.pdf
+pathology_report_file_name	state	TCGA-06-1801.b1bce28c-461a-4a84-9c4f-1a3d7bac2cc9.pdf
+pathology_report_file_name	state	TCGA-06-1802.dd1001f7-1c3b-42eb-b7dd-e83024399f85.pdf
+pathology_report_file_name	state	TCGA-06-1804.136737bf-4365-470b-a34a-3c578b041a71.pdf
+pathology_report_file_name	state	TCGA-06-1805.0dab6572-812f-4fdc-9a25-495652a560e0.pdf
+pathology_report_file_name	state	TCGA-06-1806.5b8c6b1f-deef-489e-ba9c-41088ca2ed87.pdf
+pathology_report_file_name	state	TCGA-06-2557.d3ed0551-1ec4-4146-ab0c-af6371a4c708.pdf
+pathology_report_file_name	state	TCGA-06-2558.15262baa-42ba-49a8-a63d-071e1b34ab89.pdf
+pathology_report_file_name	state	TCGA-06-2559.8ec878d3-d1bd-4022-ac67-69ddc3119e5c.pdf
+pathology_report_file_name	state	TCGA-06-2561.15cb8bf0-7c77-4752-87b5-b67bb2776b76.pdf
+pathology_report_file_name	state	TCGA-06-2562.9e6cd324-7e45-4736-86ad-92b44321b0d7.pdf
+pathology_report_file_name	state	TCGA-06-2563.4f0a8aba-907a-4616-9704-db9889c626d8.pdf
+pathology_report_file_name	state	TCGA-06-2564.d89f8307-b898-47ac-957b-a9b76f58bd01.pdf
+pathology_report_file_name	state	TCGA-06-2565.2888b563-470d-4600-ab7d-f6b86bd11f7b.pdf
+pathology_report_file_name	state	TCGA-06-2566.4f4cb14a-6be7-4240-b220-edb8fa3c36f0.pdf
+pathology_report_file_name	state	TCGA-06-2567.455cace9-e0b5-4a2b-9e90-db88ed14f11b.pdf
+pathology_report_file_name	state	TCGA-06-2569.3713fba7-46ff-4499-9027-dc719227e0bd.pdf
+pathology_report_file_name	state	TCGA-06-2570.e01ea83a-97eb-41bc-841a-3f45576604ff.pdf
+pathology_report_file_name	state	TCGA-06-5408.dafe8753-d5cc-415b-a1df-8317a027c088.pdf
+pathology_report_file_name	state	TCGA-06-5410.cac1b60d-9ca3-4196-9e74-fba7a5490f2d.pdf
+pathology_report_file_name	state	TCGA-06-5411.3c5b40a1-47ca-4a9d-b967-bfc34bdc785c.pdf
+pathology_report_file_name	state	TCGA-06-5412.c88b9ab2-265c-4bb4-838f-98e88100ebbf.pdf
+pathology_report_file_name	state	TCGA-06-5413.81757237-a9c0-49ad-ac5a-68601083be40.pdf
+pathology_report_file_name	state	TCGA-06-5414.40314de5-33f1-4b29-85a1-d6292c6e2fc3.pdf
+pathology_report_file_name	state	TCGA-06-5415.9821b6b4-e3f3-4332-9aac-3fc1e871453c.pdf
+pathology_report_file_name	state	TCGA-06-5416.95607f05-091a-4f35-9a8b-446773c316f6.pdf
+pathology_report_file_name	state	TCGA-06-5417.6984f96f-e27e-4143-b7db-54e97dbaa25c.pdf
+pathology_report_file_name	state	TCGA-06-5418.84947803-ecc1-44f4-b158-ec517a23ad43.pdf
+pathology_report_file_name	state	TCGA-06-5856.7bbecef6-9b0c-43b8-be9b-55821f9ac49b.pdf
+pathology_report_file_name	state	TCGA-06-5858.2d08daa7-75ae-4fe0-8c06-311b585de812.pdf
+pathology_report_file_name	state	TCGA-06-5859.9baeb8a0-e852-4729-bfc6-e4666a1f0a37.pdf
+pathology_report_file_name	state	TCGA-06-6388.fc0566bf-e3a2-417d-8bce-ba5238521cd5.pdf
+pathology_report_file_name	state	TCGA-06-6389.8ca0ae5b-4448-4f8b-8cdc-50e6209ced26.pdf
+pathology_report_file_name	state	TCGA-06-6390.dfcad656-40f1-4ecf-a516-bc1fd73d66c1.pdf
+pathology_report_file_name	state	TCGA-06-6391.bfbd13ea-6f58-4b40-9e5a-85db0d9cd8d5.pdf
+pathology_report_file_name	state	TCGA-06-6693.73d0f748-136f-4000-ae46-de505f8bee47.pdf
+pathology_report_file_name	state	TCGA-06-6694.bfd32e29-52a6-4ccf-ad99-0c595e3127ec.pdf
+pathology_report_file_name	state	TCGA-06-6695.3e41fbb4-4032-4931-b91c-ade80781ea25.pdf
+pathology_report_file_name	state	TCGA-06-6697.6d372549-29b6-4a4f-b8f5-d9267b1b91d9.pdf
+pathology_report_file_name	state	TCGA-06-6698.73d3d6fe-216d-48d6-aaa5-afe8776964dd.pdf
+pathology_report_file_name	state	TCGA-06-6699.f4be21b6-ef74-4a59-b8d1-9a0f76719ab9.pdf
+pathology_report_file_name	state	TCGA-06-6700.7217dc7f-5df1-4b92-a7a7-6bf85dc8856e.pdf
+pathology_report_file_name	state	TCGA-06-6701.a124f2d0-f289-4a57-84b6-051ba2c3736f.pdf
+pathology_report_file_name	state	TCGA-06-A5U0.53494270-D299-4D89-8C66-05C361CFFA90.pdf
+pathology_report_file_name	state	TCGA-06-A5U1.5F19F1F8-73BF-4E7D-9169-2F2C25F33F2B.pdf
+pathology_report_file_name	state	TCGA-06-A6S0.E69F47F2-D127-46D7-BE0A-109BE0EF97E7.pdf
+pathology_report_file_name	state	TCGA-06-A6S1.0BAB6F0A-77A8-4D16-B4E6-1AC173521399.pdf
+pathology_report_file_name	state	TCGA-06-A7TK.5A1F6CD8-15C3-4D80-8496-340B0A9616D7.pdf
+pathology_report_file_name	state	TCGA-06-A7TL.A492E3BF-5ABE-4D39-A40C-6028BB6DDBEA.pdf
+pathology_report_file_name	state	TCGA-08-0244.816cfb3d-9d9b-4ee9-9a67-4bd086ed70d1.pdf
+pathology_report_file_name	state	TCGA-08-0349.5bf5ea3b-f8ee-411b-8941-7850ddc93a89.pdf
+pathology_report_file_name	state	TCGA-08-0352.8fd1d361-a630-4d7d-ad4f-0c6399f6cb23.pdf
+pathology_report_file_name	state	TCGA-08-0358.0a3754ed-0755-45ce-97a7-e4bcba46948e.pdf
+pathology_report_file_name	state	TCGA-08-0514.2549D86F-9A2B-4CCC-96E4-23721830D330.pdf
+pathology_report_file_name	state	TCGA-08-0516.BD22D723-B138-4669-8A46-51E882E38931.pdf
+pathology_report_file_name	state	TCGA-08-0520.2962A3BE-B85E-4374-BDC6-15C6CCDBD3B4.pdf
+pathology_report_file_name	state	TCGA-08-0525.8740A3A8-E87E-4547-B022-4737B495FA86.pdf
+pathology_report_file_name	state	TCGA-08-0529.AAD98DC6-75AD-471B-B403-157E2BFAD275.pdf
+pathology_report_file_name	state	TCGA-12-0656.815E7E21-0C62-402C-9C35-8EB40FE8150C.pdf
+pathology_report_file_name	state	TCGA-12-0657.7ED6B6C0-CA67-46E3-8D6E-7AC659B91910.pdf
+pathology_report_file_name	state	TCGA-12-0662.1E3F5991-807F-44F3-94A9-FF6A1837A4F1.pdf
+pathology_report_file_name	state	TCGA-12-0818.B31CE011-70CE-43F9-99EB-1869DBD7CD50.pdf
+pathology_report_file_name	state	TCGA-12-0819.A929B0FF-98A0-49AD-AFAE-B2BC16B7C209.pdf
+pathology_report_file_name	state	TCGA-12-0820.31965FF3-4EF9-4173-8CD1-846E392BE26F.pdf
+pathology_report_file_name	state	TCGA-12-0821.67FCF789-81E1-4AC7-83DC-33CD7465E973.pdf
+pathology_report_file_name	state	TCGA-12-0822.0B7718E4-941E-440B-9469-9076FD8FF7EB.pdf
+pathology_report_file_name	state	TCGA-12-0826.D8009182-11C3-4216-B94E-560E9B7126C9.pdf
+pathology_report_file_name	state	TCGA-12-0827.AFE8F2B1-2393-4D30-A11E-9D58512EB0F9.pdf
+pathology_report_file_name	state	TCGA-12-0828.C370D3FA-0E19-4BCC-B9B4-428F1D9D2F3D.pdf
+pathology_report_file_name	state	TCGA-12-0829.681B49B9-0B65-413E-921D-6906E19D1E36.pdf
+pathology_report_file_name	state	TCGA-12-1088.DA109B5A-8F0D-4830-B5E7-95CC7871F503.pdf
+pathology_report_file_name	state	TCGA-12-1089.4B7E16D2-FEEF-49FC-8173-E8F9B2AAD308.pdf
+pathology_report_file_name	state	TCGA-12-1090.80423CCA-3C27-401D-9B5C-66268F309C55.pdf
+pathology_report_file_name	state	TCGA-12-1091.C6592ACB-2DE0-4143-90E4-ECFE93A9E6A7.pdf
+pathology_report_file_name	state	TCGA-12-1093.CC68E8DC-4929-443F-BA64-9A2BDB650C02.pdf
+pathology_report_file_name	state	TCGA-12-1094.80C21FCB-E5EC-4FA7-A2CD-6FE0A086D887.pdf
+pathology_report_file_name	state	TCGA-12-1095.453C3231-000F-4D7E-939A-5BBEECD3174C.pdf
+pathology_report_file_name	state	TCGA-12-1096.E60FDB2A-7C2B-41DA-BB59-F10FD8FD1F09.pdf
+pathology_report_file_name	state	TCGA-12-1099.9EC36CE7-CAF3-4E95-9518-06E9FC6E1E84.pdf
+pathology_report_file_name	state	TCGA-12-1598.c319de13-7a4d-452e-baea-5a5f64e9ade5.pdf
+pathology_report_file_name	state	TCGA-12-1599.e122c279-8ba9-4624-a00f-f530cc8f58ac.pdf
+pathology_report_file_name	state	TCGA-12-1600.a65a18cf-e941-4062-9ed1-8c8f3cec9ae0.pdf
+pathology_report_file_name	state	TCGA-12-1602.c1981720-4558-43b4-bd31-f420a9e34589.pdf
+pathology_report_file_name	state	TCGA-12-3644.12a77f13-7940-4d58-ad15-f598c89f6a08.pdf
+pathology_report_file_name	state	TCGA-12-3646.47faa88a-2d5f-4b53-ad5c-80123fe54844.pdf
+pathology_report_file_name	state	TCGA-12-3648.83e094a1-fc5f-4b3b-9f57-827a095bba68.pdf
+pathology_report_file_name	state	TCGA-12-3649.65889743-1e73-4812-9909-0711a1b68c2e.pdf
+pathology_report_file_name	state	TCGA-12-3650.2a696ad0-69a3-435c-b4a4-c3ceb5fe28a6.pdf
+pathology_report_file_name	state	TCGA-12-3651.86b63612-fc00-4710-bbb0-bab9e15f290c.pdf
+pathology_report_file_name	state	TCGA-12-3652.ee607e3d-3aed-4b43-a0cf-ff0e4ca7375b.pdf
+pathology_report_file_name	state	TCGA-12-3653.b2ea02b9-4f9f-474e-88fe-7306aeac14ec.pdf
+pathology_report_file_name	state	TCGA-12-5295.ad20d555-7675-41c6-a22e-0c30db820b0d.pdf
+pathology_report_file_name	state	TCGA-12-5299.9f574ef4-3427-4f3c-8493-043a4d08ad00.pdf
+pathology_report_file_name	state	TCGA-12-5301.f306d9f8-b08a-4b45-a016-7c1fa97f700d.pdf
+pathology_report_file_name	state	TCGA-14-0736.F5AFB165-F5EA-41D0-99D9-C11DAB07CF18.pdf
+pathology_report_file_name	state	TCGA-14-0787.46bd5d64-24b5-4519-aaff-79a1240ae25e.pdf
+pathology_report_file_name	state	TCGA-14-0789.ed9f8678-240b-4029-8bc4-a73103b56cf2.pdf
+pathology_report_file_name	state	TCGA-14-0813.b0ac7f13-95e5-4b55-9de6-2efb7d0a2d91.pdf
+pathology_report_file_name	state	TCGA-14-0817.c93c85d6-fda0-4aed-8846-624fa502ee41.pdf
+pathology_report_file_name	state	TCGA-14-0867.6281ed47-96e8-4226-bedd-edb6318c3a57.pdf
+pathology_report_file_name	state	TCGA-14-0871.3c96ffd0-6aa2-4d06-a59a-d70e79d05822.pdf
+pathology_report_file_name	state	TCGA-14-1034.cddba95b-1894-48c6-b99b-cab435dbcd75.pdf
+pathology_report_file_name	state	TCGA-14-1037.DE813B96-AD44-4EE3-955C-010F50C639E2.pdf
+pathology_report_file_name	state	TCGA-14-1396.DB4C16AB-80B5-4D64-8806-AE83FB22C0A8.pdf
+pathology_report_file_name	state	TCGA-14-1401.0A6A0393-91DC-4748-AF59-A9BBA2C9CEFC.pdf
+pathology_report_file_name	state	TCGA-14-1402.10834755-f0a9-4023-aac5-3999a32a984b.pdf
+pathology_report_file_name	state	TCGA-14-1451.0b182102-28a4-43d7-89e7-1cfca42745ea.pdf
+pathology_report_file_name	state	TCGA-14-1452.f38cb64b-9649-4cc3-a14f-3eabf2c1b299.pdf
+pathology_report_file_name	state	TCGA-14-1453.2652e3cf-ccbc-4433-a46e-400afefa925d.pdf
+pathology_report_file_name	state	TCGA-14-1454.f8fa518d-f367-490e-9f74-15a6f822f7b8.pdf
+pathology_report_file_name	state	TCGA-14-1455.E7E121DF-61CC-429E-AF3B-50CC1A497460.pdf
+pathology_report_file_name	state	TCGA-14-1458.b3d7230a-7d53-4967-8a46-749a593d6711.pdf
+pathology_report_file_name	state	TCGA-14-1459.DF95C5D2-6FF3-46BE-8A7B-96A7106207F0.pdf
+pathology_report_file_name	state	TCGA-14-1794.b71b1650-b066-4179-9c2b-d0412acb7b77.pdf
+pathology_report_file_name	state	TCGA-14-1795.1619def7-f24e-49cf-b2fb-1879951e0c62.pdf
+pathology_report_file_name	state	TCGA-14-1821.2810e1d6-7f97-4d77-954a-f0b5fcf90d5b.pdf
+pathology_report_file_name	state	TCGA-14-1823.09e6a813-eb0d-4ebc-bf0c-95b9a0b9175b.pdf
+pathology_report_file_name	state	TCGA-14-1825.67478a3b-8b41-4571-bc63-36780f0d19e2.pdf
+pathology_report_file_name	state	TCGA-14-1827.d2455471-6972-448d-867b-bdff3ce64049.pdf
+pathology_report_file_name	state	TCGA-14-1829.a56c7808-d310-4d94-b0fa-5fcf5289555d.pdf
+pathology_report_file_name	state	TCGA-14-2554.a55777c9-e369-484c-87ff-f24ec2627a33.pdf
+pathology_report_file_name	state	TCGA-14-3477.ef5808a0-9573-44a7-90bb-a5273213302a.pdf
+pathology_report_file_name	state	TCGA-14-4157.c8be1f7b-f0b2-42e0-a6b3-454097f7f003.pdf
+pathology_report_file_name	state	TCGA-15-0742.e9fc50d8-86a1-451d-8b2d-caa8729a1bf4.pdf
+pathology_report_file_name	state	TCGA-15-1444.bdc60487-8aea-4657-bac9-736f204fe65b.pdf
+pathology_report_file_name	state	TCGA-15-1446.b04e9d08-f0bf-4a18-b638-0e1e739787a7.pdf
+pathology_report_file_name	state	TCGA-15-1447.4e0b5741-45db-4481-95ee-304c3648e673.pdf
+pathology_report_file_name	state	TCGA-15-1449.66905c10-f988-40c5-8d0f-08af3c6c499b.pdf
+pathology_report_file_name	state	TCGA-16-0846.3AF0506F-002C-4FDD-A111-63C08424A867.pdf
+pathology_report_file_name	state	TCGA-16-0848.37AC465F-E411-4A97-8269-3EED267030E7.pdf
+pathology_report_file_name	state	TCGA-16-0849.A9513A28-A440-44FD-B13F-B055A59BAA3F.pdf
+pathology_report_file_name	state	TCGA-16-0850.B5A3D86B-3289-40C3-B2C7-54C4A3995F45.pdf
+pathology_report_file_name	state	TCGA-16-0861.8289BC38-FE82-4AB9-95DD-DA620F778513.pdf
+pathology_report_file_name	state	TCGA-16-1060.423192C0-67D4-40B4-97AB-5E0CB0F4B5D3.pdf
+pathology_report_file_name	state	TCGA-16-1062.03A15E3C-3532-439D-8D9C-20D5A18091F0.pdf
+pathology_report_file_name	state	TCGA-16-1460.15d0b521-884d-4ad3-8928-6f27e9d3f701.pdf
+pathology_report_file_name	state	TCGA-19-0955.2c009ac4-3f16-43d8-ad3f-5b6fecc9f49c.pdf
+pathology_report_file_name	state	TCGA-19-0960.3e154285-f66b-4c5c-912b-02ae5762397d.pdf
+pathology_report_file_name	state	TCGA-19-0964.ba3dbed0-2bee-4188-9857-dff35f8d6a01.pdf
+pathology_report_file_name	state	TCGA-19-1385.ba34c5c0-ba80-4200-942c-f709d7acf69c.pdf
+pathology_report_file_name	state	TCGA-19-1386.F3877FA4-E6E5-4666-B9FB-A4AF91A5DA63.pdf
+pathology_report_file_name	state	TCGA-19-1387.6DF3D2E9-B3DF-47F4-92DC-B9EB51AFD3B3.pdf
+pathology_report_file_name	state	TCGA-19-1388.7A87E792-4AAD-479D-892D-5D515E3EB1D1.pdf
+pathology_report_file_name	state	TCGA-19-1389.FFB02D1A-1D35-4287-B2FF-F77A258A984D.pdf
+pathology_report_file_name	state	TCGA-19-1390.41FB6156-CD64-4304-AB47-B2A828C43BD2.pdf
+pathology_report_file_name	state	TCGA-19-1392.86aed977-cd39-47b0-94bf-99fcdbc8ac48.pdf
+pathology_report_file_name	state	TCGA-19-1786.6e533c58-e45a-4861-b460-bbe850d2a943.pdf
+pathology_report_file_name	state	TCGA-19-1788.1444b194-81d0-40ec-90ce-af7e5edfc645.pdf
+pathology_report_file_name	state	TCGA-19-1789.6a04f636-6851-43f5-974d-97c318e73c3a.pdf
+pathology_report_file_name	state	TCGA-19-1791.dc971fbf-7f2e-4257-af89-e5039838f6a8.pdf
+pathology_report_file_name	state	TCGA-19-2619.260109e5-21e7-41d0-909a-85add469f968.pdf
+pathology_report_file_name	state	TCGA-19-2620.dedd3bd8-b885-498e-a305-50b727240d09.pdf
+pathology_report_file_name	state	TCGA-19-2623.7b05b633-98c5-4474-86d3-8e8748a27b80.pdf
+pathology_report_file_name	state	TCGA-19-2624.c100bcaf-5c75-464e-97b5-9ff575796709.pdf
+pathology_report_file_name	state	TCGA-19-2625.4f37276d-3579-49db-ae54-5644b2f2f92f.pdf
+pathology_report_file_name	state	TCGA-19-2629.974b6590-7b55-4d77-94e0-f5c48204fdd7.pdf
+pathology_report_file_name	state	TCGA-19-2631.846f6219-3e04-4a51-bb52-2239085973b6.pdf
+pathology_report_file_name	state	TCGA-19-4065.E3EB10CD-611E-4424-8F2F-E771156168E0.pdf
+pathology_report_file_name	state	TCGA-19-4068.52dd5f36-fff5-4a3f-ae34-e27d7944808d.pdf
+pathology_report_file_name	state	TCGA-19-5947.204505d4-d58c-4187-8632-a900c41cdc99.pdf
+pathology_report_file_name	state	TCGA-19-5950.ed8ba394-7042-4de1-8e08-1ff92db2b544.pdf
+pathology_report_file_name	state	TCGA-19-5951.b43d622b-0fa9-4114-92ad-bdbd2033ccb1.pdf
+pathology_report_file_name	state	TCGA-19-5952.6ce18d81-108b-455b-b6d2-3717ac9866c7.pdf
+pathology_report_file_name	state	TCGA-19-5954.938c87ed-dd66-4300-8833-57111eb280bb.pdf
+pathology_report_file_name	state	TCGA-19-5955.cc6d5233-b9dc-4551-b3bc-6b7b2b2c2c7b.pdf
+pathology_report_file_name	state	TCGA-19-5956.d32e1293-485a-4b3c-a433-140750789471.pdf
+pathology_report_file_name	state	TCGA-19-5958.ac50e8a3-bca7-422e-937e-5521f9bfa399.pdf
+pathology_report_file_name	state	TCGA-19-5959.fd4c35f4-5fd4-49c5-8d6a-4f39dba0bb49.pdf
+pathology_report_file_name	state	TCGA-19-5960.7e7ef835-d652-476a-9b80-2bf6d23129d6.pdf
+pathology_report_file_name	state	TCGA-19-A6J4.39E56F35-C780-4461-8FDF-D0754CF38351.pdf
+pathology_report_file_name	state	TCGA-19-A6J5.C90FBF2D-9022-4E19-8AB6-DD008E82F12B.pdf
+pathology_report_file_name	state	TCGA-19-A60I.4E59C6BF-3B94-43C4-8269-1C0F271ACB7C.pdf
+pathology_report_file_name	state	TCGA-26-1438.491bf470-5482-4560-8140-543de057c069.pdf
+pathology_report_file_name	state	TCGA-26-1439.65fedb95-6e75-468a-be7e-8f75e9388d26.pdf
+pathology_report_file_name	state	TCGA-26-1440.b392efba-d6f2-48e6-bf80-d62cb986f1dd.pdf
+pathology_report_file_name	state	TCGA-26-1442.d371cef9-7c69-4a72-93a2-33b9741c44cb.pdf
+pathology_report_file_name	state	TCGA-26-1443.ec9ee159-997d-408d-8248-ad95701ab2ed.pdf
+pathology_report_file_name	state	TCGA-26-1799.946926e0-e570-4349-acff-922f546129fa.pdf
+pathology_report_file_name	state	TCGA-26-5132.a2075373-4a3f-4f19-bc80-a46537c888df.pdf
+pathology_report_file_name	state	TCGA-26-5133.29d8f95d-e333-433b-88c6-007134d7d8a0.pdf
+pathology_report_file_name	state	TCGA-26-5134.bc937071-ca55-4002-b4fa-44326be2ac1b.pdf
+pathology_report_file_name	state	TCGA-26-5135.89a229ab-908a-4062-9ce6-16bca172fa02.pdf
+pathology_report_file_name	state	TCGA-26-5139.caf0e16d-4f03-48e2-b5df-04c0e5720b22.pdf
+pathology_report_file_name	state	TCGA-26-6173.436138e9-3119-4b20-bbb5-e494c68e48cd.pdf
+pathology_report_file_name	state	TCGA-26-6174.b5ef9cb5-a4c5-4d0e-9a94-279bbf646905.pdf
+pathology_report_file_name	state	TCGA-27-1830.19fb9f5c-3e84-471e-84a3-daae18d97d71.pdf
+pathology_report_file_name	state	TCGA-27-1831.7dae7d19-47b9-41e7-9dde-293ed9a2bc26.pdf
+pathology_report_file_name	state	TCGA-27-1832.535d412f-ed27-467a-b373-8e26e940c07b.pdf
+pathology_report_file_name	state	TCGA-27-1833.3d379071-9a4c-4e4d-95b9-3fbe3cdb12c3.pdf
+pathology_report_file_name	state	TCGA-27-1834.ae312505-e73d-44c5-a3df-4096fada821b.pdf
+pathology_report_file_name	state	TCGA-27-1835.5f1de659-7d7f-4a96-a9fc-058eff128012.pdf
+pathology_report_file_name	state	TCGA-27-1836.fe622cd0-e679-4a07-9329-bb2a8f9d2c0b.pdf
+pathology_report_file_name	state	TCGA-27-1837.fab9682a-0940-4815-8789-81799ff395f6.pdf
+pathology_report_file_name	state	TCGA-27-1838.91fbafb9-e95b-486c-8029-24e0c77f6b57.pdf
+pathology_report_file_name	state	TCGA-27-2518.50376f0f-063e-4c47-bd08-eff5ed594804.pdf
+pathology_report_file_name	state	TCGA-27-2519.fd339d84-0063-4f89-b81d-6c0cff9c28f5.pdf
+pathology_report_file_name	state	TCGA-27-2521.3b0eadc8-f7c7-4458-a24f-5391314b8490.pdf
+pathology_report_file_name	state	TCGA-27-2523.13da443d-2407-4620-8963-f6bd4fb1dafc.pdf
+pathology_report_file_name	state	TCGA-27-2524.db1e1c7f-a262-4c77-a593-a833eefebeb1.pdf
+pathology_report_file_name	state	TCGA-27-2526.db4b12a3-ade7-4190-8104-cc07964a2d7f.pdf
+pathology_report_file_name	state	TCGA-27-2527.f5f2cbe2-2a67-4cc0-8867-6c96ae009ee3.pdf
+pathology_report_file_name	state	TCGA-27-2528.08b4c97d-4213-4897-bf40-0327eefe8385.pdf
+pathology_report_file_name	state	TCGA-28-1746.2abf3d8f-18f6-493d-89b8-3e2a5f37f84e.pdf
+pathology_report_file_name	state	TCGA-28-1749.52397ae2-9fbe-452a-ad46-714facf92043.pdf
+pathology_report_file_name	state	TCGA-28-1750.40fc97e5-9b5b-4c0f-9b95-80353828e983.pdf
+pathology_report_file_name	state	TCGA-28-1751.19f9b34f-8fd6-4b0b-b4a5-bdf247570394.pdf
+pathology_report_file_name	state	TCGA-28-1752.2dcfcd58-1196-4a7d-a242-ef7d01dccd00.pdf
+pathology_report_file_name	state	TCGA-28-1753.e6085b8d-d1b3-4f2d-a0f4-c8c823acc762.pdf
+pathology_report_file_name	state	TCGA-28-1755.ba78abe7-49ed-4838-90e7-52d0dcc66313.pdf
+pathology_report_file_name	state	TCGA-28-1757.9d377e4b-f2dc-4c21-a0d6-cc1b49efb34c.pdf
+pathology_report_file_name	state	TCGA-28-1760.9b40d6a7-43ee-4267-8290-c4d8b3876fdf.pdf
+pathology_report_file_name	state	TCGA-28-2499.5a1dd9da-df75-41b7-a37f-3005b4e1d7b9.pdf
+pathology_report_file_name	state	TCGA-28-2501.84170183-cb41-4637-bb8f-aa9dd894aa9c.pdf
+pathology_report_file_name	state	TCGA-28-2506.56a90981-a40f-463d-902c-1524037df000.pdf
+pathology_report_file_name	state	TCGA-28-2509.31042590-2b1f-4926-a12e-5e0a22bdb420.pdf
+pathology_report_file_name	state	TCGA-28-2510.ba885e83-e893-407b-b080-6c68f74b758e.pdf
+pathology_report_file_name	state	TCGA-28-2512.1d7636d1-6604-4261-a368-5252a7f30fa4.pdf
+pathology_report_file_name	state	TCGA-28-2513.c7ba045f-48dd-42ea-8da8-a5811b74e9fa.pdf
+pathology_report_file_name	state	TCGA-28-2514.d2cbb615-c4b7-4ae0-9de7-b31241302ce7.pdf
+pathology_report_file_name	state	TCGA-28-5204.3e248730-bc16-4d33-a304-2e1093a3b45c.pdf
+pathology_report_file_name	state	TCGA-28-5207.0bafbc8d-023d-4c05-a802-5c32767c0e55.pdf
+pathology_report_file_name	state	TCGA-28-5208.c683e7a3-f811-4f52-bcce-cf6eea75df12.pdf
+pathology_report_file_name	state	TCGA-28-5209.0bad36fe-5622-4d30-8005-24c247a4ce32.pdf
+pathology_report_file_name	state	TCGA-28-5213.591247be-ca98-4187-8280-42b2520e93f7.pdf
+pathology_report_file_name	state	TCGA-28-5214.63a3775f-34e7-41a7-b021-666dd4528272.pdf
+pathology_report_file_name	state	TCGA-28-5215.3a06f0a3-5eb6-4fef-948b-8067976886e0.pdf
+pathology_report_file_name	state	TCGA-28-5216.69f3d1ff-0b60-4841-b83c-ab9e707b5ff2.pdf
+pathology_report_file_name	state	TCGA-28-5218.461dabe9-5c81-4bce-abd6-ba60a652094d.pdf
+pathology_report_file_name	state	TCGA-28-5219.0bc37b81-620b-4f40-99e5-173f32f091b1.pdf
+pathology_report_file_name	state	TCGA-28-5220.29d77292-b31a-4839-a603-63f355f71368.pdf
+pathology_report_file_name	state	TCGA-28-6450.282745FC-4B69-4BF5-9112-6A8E6389A88D.pdf
+pathology_report_file_name	state	TCGA-32-1970.f55a66b9-6609-4ca0-bcad-11c787f25598.pdf
+pathology_report_file_name	state	TCGA-32-1973.f22ad2e6-4eed-4538-a07b-365250184f02.pdf
+pathology_report_file_name	state	TCGA-32-1976.7fbd753b-801d-4a28-9673-f17b80c643aa.pdf
+pathology_report_file_name	state	TCGA-32-1977.7ba4d37c-df8e-4cf2-b0e9-0a8ceb8378e0.pdf
+pathology_report_file_name	state	TCGA-32-1978.eae7fcc4-d235-4f95-8d55-5f6ea5371929.pdf
+pathology_report_file_name	state	TCGA-32-1979.102da0b4-1d6a-49c8-95b4-263021ca7e7c.pdf
+pathology_report_file_name	state	TCGA-32-1980.7660f091-9b09-4dfa-9530-bdb57e930938.pdf
+pathology_report_file_name	state	TCGA-32-1982.cd26781a-ec25-4240-beac-f45cc7a2b7a3.pdf
+pathology_report_file_name	state	TCGA-32-1987.54efd9df-284f-44a9-a48d-192bfa3a5941.pdf
+pathology_report_file_name	state	TCGA-32-1991.2be50793-4e68-43f0-96f8-992c82c0aa85.pdf
+pathology_report_file_name	state	TCGA-32-2491.aca82e7c-2baf-49fb-bb70-b05d479ce2a4.pdf
+pathology_report_file_name	state	TCGA-32-2494.9ec0ca6e-ff5a-4d34-a2e9-3889f4dd6e46.pdf
+pathology_report_file_name	state	TCGA-32-2495.521c3e99-ff9c-4e02-9217-532be091fac0.pdf
+pathology_report_file_name	state	TCGA-32-2616.317C0826-2B8D-4071-AC55-BAE793FD7CE9.pdf
+pathology_report_file_name	state	TCGA-32-2632.37cd6d1c-c10e-4ca0-ad18-3d707e9b1691.pdf
+pathology_report_file_name	state	TCGA-32-2634.38156b43-7b5a-4d7f-aef6-4922f6a2a690.pdf
+pathology_report_file_name	state	TCGA-32-2638.ed601144-2884-4d75-886c-eaaab49a6c33.pdf
+pathology_report_file_name	state	TCGA-32-4208.57687e5d-5795-48a3-a191-cd61e6c981fe.pdf
+pathology_report_file_name	state	TCGA-32-4209.9d750b1d-1794-4cea-8890-075b36048ca4.pdf
+pathology_report_file_name	state	TCGA-32-4210.b807ff3c-4473-4e77-a199-9df5c894186f.pdf
+pathology_report_file_name	state	TCGA-32-4211.1f48fa00-e1d1-42b2-881c-362a6f549556.pdf
+pathology_report_file_name	state	TCGA-32-4213.918246a7-4ae5-463d-b889-011e0ee45efb.pdf
+pathology_report_file_name	state	TCGA-32-4719.3352B153-886C-413C-A704-E66CD4DC39BC.pdf
+pathology_report_file_name	state	TCGA-32-5222.880e75f5-d2ec-4990-8397-3bdc9ea20693.pdf
+pathology_report_file_name	state	TCGA-41-2571.f3dafdb9-14e4-4524-ae4d-3d2860532e80.pdf
+pathology_report_file_name	state	TCGA-41-2572.b6c486c9-5fc6-4df1-8ec8-877c8fd96e49.pdf
+pathology_report_file_name	state	TCGA-41-2573.177cdf51-1694-4197-b0f3-1c97dfa38bbc.pdf
+pathology_report_file_name	state	TCGA-41-2575.7f1e7294-3f10-40fd-ab3e-d8ad2af07e5b.pdf
+pathology_report_file_name	state	TCGA-41-3392.ff6e82b9-5802-4edc-8310-32615b9511eb.pdf
+pathology_report_file_name	state	TCGA-41-3393.ef63aac8-bf7a-420b-bd2c-75b3112b836f.pdf
+pathology_report_file_name	state	TCGA-41-3915.170f0232-2209-4609-8c71-e39caec2ffc2.pdf
+pathology_report_file_name	state	TCGA-41-4097.38e71ada-a221-41fd-9283-5750413305b8.pdf
+pathology_report_file_name	state	TCGA-41-5651.f02981ba-f5ac-4182-864e-dc0cf37e7413.pdf
+pathology_report_file_name	state	TCGA-41-6646.6b3cf1a0-d385-4211-a68d-6cb8ae1a551f.pdf
+pathology_report_file_name	state	TCGA-74-6573.d33e2186-48d8-44da-84b6-e7f88daac1e2.pdf
+pathology_report_file_name	state	TCGA-74-6575.5ecedd86-01d1-40c8-896f-1566e6d2dffd.pdf
+pathology_report_file_name	state	TCGA-74-6577.0fe10a6d-e211-43c7-8a89-56ed221cbb96.pdf
+pathology_report_file_name	state	TCGA-74-6578.35f9320c-f804-47e5-904f-4d1a87fddd35.pdf
+pathology_report_file_name	state	TCGA-74-6581.7ab73575-cd7d-434f-b21d-fcffb52c3a4d.pdf
+pathology_report_file_name	state	TCGA-74-6584.315ce84d-6870-4a44-bf59-e5b1ba0d94bb.pdf
+pathology_report_file_name	state	TCGA-76-4925.886c961a-cfef-4f2c-8b58-7708e216db0e.pdf
+pathology_report_file_name	state	TCGA-76-4927.5f1a707b-6acd-45b3-8540-0ff1ec834ab7.pdf
+pathology_report_file_name	state	TCGA-76-4929.65054ac8-f9aa-4342-9f18-81c15efd6d81.pdf
+pathology_report_file_name	state	TCGA-76-4931.f34d64d6-6103-407f-b45b-4e660a1bfcd1.pdf
+pathology_report_file_name	state	TCGA-76-4932.7dd69551-44d6-4b99-b0ef-6ea886b23394.pdf
+pathology_report_file_name	state	TCGA-76-4934.31727bd3-2af9-4648-b5ae-60af7be49ea7.pdf
+pathology_report_file_name	state	TCGA-76-4935.84580ae3-e984-4071-b9ce-1641f06963ad.pdf
+pathology_report_file_name	state	TCGA-76-6191.d91aa8ca-fe4b-4f2e-89a7-c56d6fe176e1.pdf
+pathology_report_file_name	state	TCGA-76-6192.d2a94594-7f5a-40f2-87fa-beee3fa5be5b.pdf
+pathology_report_file_name	state	TCGA-76-6193.1ee55ecb-8de5-4a21-9fa0-babcb2d07212.pdf
+pathology_report_file_name	state	TCGA-76-6280.6c77527e-b771-4544-bd9a-8468f2ff593e.pdf
+pathology_report_file_name	state	TCGA-76-6282.fe3b0aee-6477-48dd-af17-54f991fa47a5.pdf
+pathology_report_file_name	state	TCGA-76-6283.a4576d26-9f8e-472d-be41-4b8632080c4a.pdf
+pathology_report_file_name	state	TCGA-76-6285.9b0a966e-0cd8-44a2-8f15-c5f5ed40c189.pdf
+pathology_report_file_name	state	TCGA-76-6286.3b124818-8d8c-46b9-a8e8-60b6f22e75ea.pdf
+pathology_report_file_name	state	TCGA-76-6656.916da87b-e1f7-43fc-91b6-8db07a5ba0b2.pdf
+pathology_report_file_name	state	TCGA-76-6657.476eed15-94af-4c24-9a4f-17fbde281c66.pdf
+pathology_report_file_name	state	TCGA-76-6660.230f31a8-f9b9-46a9-b7d3-d09a4fad5ee1.pdf
+pathology_report_file_name	state	TCGA-76-6661.ebdc6747-57b5-4d88-a9cd-9222a7f71129.pdf
+pathology_report_file_name	state	TCGA-76-6662.58dd362c-d11c-4b10-9b2b-40e3d2ba3192.pdf
+pathology_report_file_name	state	TCGA-76-6663.e6733441-1472-4deb-9654-8f5059b0b72c.pdf
+pathology_report_file_name	state	TCGA-76-6664.140f178d-a96f-4f36-bace-1199ebb43964.pdf
+pathology_report_file_name	state	TCGA-81-5910.9d6e4a44-727e-4713-842e-a75ded996614.pdf
+pathology_report_file_name	state	TCGA-81-5911.ceff84e7-7dac-4312-92fe-174cb3da3205.pdf
+pathology_report_file_name	state	TCGA-87-5896.a743b83f-a4ff-4b06-9728-765a6bb6807f.pdf
+pathology_report_file_name	state	TCGA-OX-A56R.9EF7E637-46F9-4498-B41C-D1219D20636A.pdf
+pathology_report_file_name	state	TCGA-RR-A6KA.F58558E1-9BB7-4991-9CDD-6C18DCB448E5.pdf
+pathology_report_file_name	state	TCGA-RR-A6KB.FE890D7D-5BB3-4A91-804E-894CA44AA71B.pdf
+pathology_report_file_name	state	TCGA-RR-A6KC.53E9E4FC-DBC4-41F0-8AA6-BB5493B324CB.pdf
+pathology_report_file_name	stateOrder	"TCGA-02-0003.1E5D6194-FE78-41E6-A05E-92B2A8E0B162.pdf","TCGA-02-0004.AE5353B3-E46A-4068-BBEF-B0FF19727177.pdf","TCGA-02-0007.915ED9E0-E0FC-459B-97BE-7BBE91B6D100.pdf","TCGA-02-0009.1AD9AD8E-0DA4-4D15-B984-A59D88014D51.pdf","TCGA-02-0010.C7B6B2FC-48A7-4A56-893F-F8EDAFCE952A.pdf","TCGA-02-0015.33BE0BE1-74ED-40B2-96D3-CE530B463B1A.pdf","TCGA-02-0016.C5C8437D-6CFB-4B93-9E66-26CC207541AD.pdf","TCGA-02-0021.1BEE82DA-EB4A-492E-B872-632F81F7C84E.pdf","TCGA-02-0025.4919E951-446B-423F-B0F6-C39032A73197.pdf","TCGA-02-0028.6F1D506B-6A14-4C53-B0BC-714AC0178E09.pdf","TCGA-02-0033.BD51E951-1FAF-4FCA-8985-CF63B76411F6.pdf","TCGA-02-0034.834B13FD-1F37-4B25-AD92-90A62D6495B8.pdf","TCGA-02-0037.AB4312D6-534C-4A04-88F2-FE2211CDCF4D.pdf","TCGA-02-0038.62D3F086-5FEA-4D2E-BE3F-0A7B4AEA6EE8.pdf","TCGA-02-0039.649D2E34-A0BC-4565-BF8F-BFBAB18AC795.pdf","TCGA-02-0043.5C2BF316-AB63-43BC-9C08-BD3E9C09C3BC.pdf","TCGA-02-0046.926E149C-6E1F-4289-8D7B-AA54884A9A56.pdf","TCGA-02-0047.66F4DDD0-A0E6-4EA9-97AF-8691C0457D2B.pdf","TCGA-02-0048.B7F1BB8A-5A64-4184-9F71-623264FD814A.pdf","TCGA-02-0052.2C72AB1F-B083-495A-9A1F-FDDFD4C376AC.pdf","TCGA-02-0055.9CD99ACE-FAD5-436B-A5B0-73E5C60082E8.pdf","TCGA-02-0057.2BBD61DD-5788-42C0-9A18-4CAB364A21A2.pdf","TCGA-02-0058.18FF1EAD-03C4-41B2-BB1C-444FEBE58CFE.pdf","TCGA-02-0060.DD267BA8-557B-4C0B-8EF7-BE5A27229D72.pdf","TCGA-02-0064.25610949-CD04-4BE3-89F5-26BC30B386C1.pdf","TCGA-02-0068.1BE8314B-1A45-4C73-A323-2CB54824B68A.pdf","TCGA-02-0070.2BDBBBD8-36A6-49FE-A9BB-2D42017257A4.pdf","TCGA-02-0071.0A2B7936-DACF-4F84-A383-59FF7637ADDC.pdf","TCGA-02-0074.44665986-6826-4D73-BFCF-5DB45BE175A2.pdf","TCGA-02-0075.1EC2BC30-A445-494B-A83D-77BE78B0BA15.pdf","TCGA-02-0079.2F87CBAA-E59F-446E-8D8B-DEE0126BC508.pdf","TCGA-02-0083.EDE2C787-0E27-43C0-BC69-F69D730B634D.pdf","TCGA-02-0084.7FF8D96F-F7BB-4D82-A1A4-ED53C055BAEB.pdf","TCGA-02-0085.BA7C2B1A-C988-41E4-A880-C860F8350440.pdf","TCGA-02-0086.A79063FC-E71C-4360-8B85-8B9F668BD75A.pdf","TCGA-02-0087.19699A5B-AD9F-4D32-8258-B306E197D06C.pdf","TCGA-02-0089.5CA76D8B-F5EA-4545-86DF-41D49484AE77.pdf","TCGA-02-0099.93C6F910-9993-4D1B-818D-0D6BA924B4FF.pdf","TCGA-02-0102.DB1F457F-FB07-4A4E-AC21-D13139ED3A6B.pdf","TCGA-02-0104.37E1CC7A-3BFA-48CE-A998-9B6F4AE5DD0C.pdf","TCGA-02-0106.401798E2-B154-4CD0-8B79-5864B9CD371C.pdf","TCGA-02-0107.4217DB96-339E-4C6E-99A6-FB2784C6CAC4.pdf","TCGA-02-0113.79F2DBF9-E27B-4A5B-A953-401B1D5AB5C0.pdf","TCGA-02-0115.A93ABC54-B50A-4F3E-9A10-CE85E56A0798.pdf","TCGA-02-0116.7EBDA425-B0B2-42C7-A533-1B0F8D0D67B0.pdf","TCGA-02-2466.e9e97b51-1474-463b-8693-7b66f74319c9.pdf","TCGA-02-2470.e21f66d9-e124-43d7-81fe-489d15d69cbf.pdf","TCGA-02-2483.e73f6ba1-564c-4fea-b088-f2357ff49ee7.pdf","TCGA-02-2485.5b0be7bb-15b5-429b-9bc0-94e435c1a164.pdf","TCGA-02-2486.26e31c62-06a2-4906-a1d5-985dc0f961e4.pdf","TCGA-4W-AA9R.B41500A8-E606-4B03-AD04-55989B30C041.pdf","TCGA-4W-AA9S.87CEFA2B-7AA8-40DA-A987-9050F449D828.pdf","TCGA-4W-AA9T.F1D9DB81-6170-4A62-B16E-0D826CD0D173.pdf","TCGA-06-0121.8A91BDA2-B037-4B68-A3E4-8D6AB00BE2E9.pdf","TCGA-06-0122.E7349776-3120-4D3B-90DA-34320894FD70.pdf","TCGA-06-0124.5ba4f4a0-e68c-4bad-88bc-8dd9f399a653.pdf","TCGA-06-0125.e2760aae-ed41-402f-a777-7b1d7f50e52e.pdf","TCGA-06-0126.2f9689ce-2e05-4508-95f5-d052680dae36.pdf","TCGA-06-0127.6c344ba6-e1e2-457d-a4de-a03e03ee706b.pdf","TCGA-06-0128.f782b0e3-3957-4b0e-baed-803f0c199ce3.pdf","TCGA-06-0129.8495b7bf-2bc1-4ea8-8c66-09fee094e120.pdf","TCGA-06-0130.8dbae41f-a953-4c98-b46d-417825e8df65.pdf","TCGA-06-0132.b572cee6-5c7e-402b-a25d-cd380594c7dd.pdf","TCGA-06-0133.6d9a0d3d-ccbf-4e8d-9eeb-8182f1000f39.pdf","TCGA-06-0137.608435f3-0b6e-4191-b678-c023e8936906.pdf","TCGA-06-0138.9a7ac58b-1ece-4196-aa88-5924f5fbe853.pdf","TCGA-06-0139.964df5a7-62aa-4cd7-b6ad-e41f27747616.pdf","TCGA-06-0141.caa0b0ec-7b94-4326-99d5-483fed429ed4.pdf","TCGA-06-0143.7774787d-3a55-4c74-87e6-da6e51a16b9e.pdf","TCGA-06-0145.5f18975c-bf2a-4476-ad21-94fb8ca7351f.pdf","TCGA-06-0147.2b37e144-879c-4423-af3f-b548db00e57c.pdf","TCGA-06-0148.4f46fcb4-a2f4-4eea-a62a-4baedef21d69.pdf","TCGA-06-0152.328704ab-7065-4e17-ba30-1a50b9949dd4.pdf","TCGA-06-0154.a01c82db-37c0-42dc-b926-840f8b0e64ad.pdf","TCGA-06-0157.2fa84b5c-8326-4a85-959a-0b0c03bb465c.pdf","TCGA-06-0158.584952b9-bbd0-4da2-9a40-cd0291e8f780.pdf","TCGA-06-0162.498908D0-4805-49AF-B56C-4D8B9A19132F.pdf","TCGA-06-0164.D7871E54-18DC-4ECC-8CE9-6B96B9EC6D9D.pdf","TCGA-06-0166.8c5fd571-8b2c-4360-9014-2e96833e8ec5.pdf","TCGA-06-0168.204cc10b-2024-400f-bcaa-161955d0f3b5.pdf","TCGA-06-0169.46db3ed2-4a31-40a4-b88f-24e2a63a6087.pdf","TCGA-06-0171.0a97321a-4250-4dbd-b00b-e52c21a38c73.pdf","TCGA-06-0173.623de96f-c53a-43d8-b0b1-de2d8a9f7a51.pdf","TCGA-06-0174.b93eb902-cea8-4bf5-830b-ddbaceab7444.pdf","TCGA-06-0175.623888E0-C267-428E-B7A6-65BE61BEFA30.pdf","TCGA-06-0176.4acf6767-5efb-4bfd-8f5d-edef05709c9b.pdf","TCGA-06-0178.efa462f1-142c-45de-8234-7f9b12d7b701.pdf","TCGA-06-0182.3B574C51-AD86-4AED-8BEE-282B1D050B84.pdf","TCGA-06-0184.ce516253-acf1-4186-8998-dc089161e261.pdf","TCGA-06-0185.4dd513d8-ff26-465b-b99d-6bf738bf7911.pdf","TCGA-06-0187.17f164b8-9dc6-48f0-830b-60fc0efa83b4.pdf","TCGA-06-0188.8cdb3fca-ac62-497e-9402-5bb50f97df4f.pdf","TCGA-06-0189.eab1f4f5-081a-4396-b2e1-496e6e71ff7d.pdf","TCGA-06-0190.ee9f398d-8fcf-4ef1-bded-2b4a7fec57ae.pdf","TCGA-06-0197.ae825f51-bad6-490b-aab5-de19124ca57c.pdf","TCGA-06-0201.96324e62-340c-4865-9729-e9a547df2df4.pdf","TCGA-06-0206.14fc5ccd-ad34-4bd1-8d57-d73303935481.pdf","TCGA-06-0208.7fd467b6-0e42-45cb-86bf-50b7c547bc9e.pdf","TCGA-06-0209.93a70661-a507-4b57-bee6-b9bf201f31c6.pdf","TCGA-06-0210.97a4b2c6-e498-4aa9-9e45-56401f6bc5ec.pdf","TCGA-06-0211.d6eebf70-1fef-4b17-96ce-e18838ba5e57.pdf","TCGA-06-0213.cd4f16dd-eb6a-40e3-82e7-07f878975e3b.pdf","TCGA-06-0216.2e57f899-8d3f-4be7-99ba-095f58b2e89c.pdf","TCGA-06-0219.90027ed9-92a4-4326-a531-be06db61e922.pdf","TCGA-06-0221.8aa6e9d4-9520-4095-bbc2-5c37707d33df.pdf","TCGA-06-0237.29763612-8827-45e2-90c1-c69e0d5b18cb.pdf","TCGA-06-0238.2a19d86e-bea6-4892-9fa4-8f13fdfa9fa4.pdf","TCGA-06-0241.32181322-04dc-447d-8121-80e2842e6308.pdf","TCGA-06-0644.91fa8b36-59d2-4820-9ce0-14c8b7b38934.pdf","TCGA-06-0645.b006fa12-7893-48f9-81f1-93b28989ffe1.pdf","TCGA-06-0646.a087fe45-c2eb-4106-9c7a-aa0205ccdd73.pdf","TCGA-06-0648.8868018a-2fc1-482a-ba46-29245beba686.pdf","TCGA-06-0650.de2d8135-1c15-4475-be37-232d9779e908.pdf","TCGA-06-0686.4d50d9db-eecf-4444-b6b7-da1c90be713d.pdf","TCGA-06-0743.e5a35d11-6d87-4d7e-ac41-73bfe35871ff.pdf","TCGA-06-0744.f01f0597-862d-4d9e-95de-a00604f9a298.pdf","TCGA-06-0745.f46f4b25-6e54-4c40-842a-1c5c6dd99cab.pdf","TCGA-06-0747.41920fbe-be2c-4f3b-b8ee-6f2915a2ae3f.pdf","TCGA-06-0749.30421caa-b781-4140-97ff-5ede12ed288d.pdf","TCGA-06-0750.723b1f21-67a7-4a47-ac10-d297ea428c8a.pdf","TCGA-06-0875.1e48d17e-feda-4555-99eb-7e4744d79492.pdf","TCGA-06-0876.64d0b1fe-8c45-4352-b557-c7e8d075a26b.pdf","TCGA-06-0877.ce4f12d9-d24e-41a8-9841-075d30530173.pdf","TCGA-06-0878.31037a8e-696a-4858-90ca-84578f350b7f.pdf","TCGA-06-0879.f75c6170-1411-46b6-848f-b46007f2a656.pdf","TCGA-06-0881.abde276c-97e1-4fe4-bb86-ee20e65f7d5e.pdf","TCGA-06-0882.f2de8883-bc9a-4578-a154-a70335786740.pdf","TCGA-06-0939.db0ce8dc-ce11-4574-9f60-df59b7af1cc3.pdf","TCGA-06-1086.d370d57e-200b-49d4-99cf-9c186d7ab947.pdf","TCGA-06-1087.36121b4d-6dde-4223-9f7a-5ca50ad4f7b5.pdf","TCGA-06-1800.09f29d54-f430-4aa8-92fc-137a0b147909.pdf","TCGA-06-1801.b1bce28c-461a-4a84-9c4f-1a3d7bac2cc9.pdf","TCGA-06-1802.dd1001f7-1c3b-42eb-b7dd-e83024399f85.pdf","TCGA-06-1804.136737bf-4365-470b-a34a-3c578b041a71.pdf","TCGA-06-1805.0dab6572-812f-4fdc-9a25-495652a560e0.pdf","TCGA-06-1806.5b8c6b1f-deef-489e-ba9c-41088ca2ed87.pdf","TCGA-06-2557.d3ed0551-1ec4-4146-ab0c-af6371a4c708.pdf","TCGA-06-2558.15262baa-42ba-49a8-a63d-071e1b34ab89.pdf","TCGA-06-2559.8ec878d3-d1bd-4022-ac67-69ddc3119e5c.pdf","TCGA-06-2561.15cb8bf0-7c77-4752-87b5-b67bb2776b76.pdf","TCGA-06-2562.9e6cd324-7e45-4736-86ad-92b44321b0d7.pdf","TCGA-06-2563.4f0a8aba-907a-4616-9704-db9889c626d8.pdf","TCGA-06-2564.d89f8307-b898-47ac-957b-a9b76f58bd01.pdf","TCGA-06-2565.2888b563-470d-4600-ab7d-f6b86bd11f7b.pdf","TCGA-06-2566.4f4cb14a-6be7-4240-b220-edb8fa3c36f0.pdf","TCGA-06-2567.455cace9-e0b5-4a2b-9e90-db88ed14f11b.pdf","TCGA-06-2569.3713fba7-46ff-4499-9027-dc719227e0bd.pdf","TCGA-06-2570.e01ea83a-97eb-41bc-841a-3f45576604ff.pdf","TCGA-06-5408.dafe8753-d5cc-415b-a1df-8317a027c088.pdf","TCGA-06-5410.cac1b60d-9ca3-4196-9e74-fba7a5490f2d.pdf","TCGA-06-5411.3c5b40a1-47ca-4a9d-b967-bfc34bdc785c.pdf","TCGA-06-5412.c88b9ab2-265c-4bb4-838f-98e88100ebbf.pdf","TCGA-06-5413.81757237-a9c0-49ad-ac5a-68601083be40.pdf","TCGA-06-5414.40314de5-33f1-4b29-85a1-d6292c6e2fc3.pdf","TCGA-06-5415.9821b6b4-e3f3-4332-9aac-3fc1e871453c.pdf","TCGA-06-5416.95607f05-091a-4f35-9a8b-446773c316f6.pdf","TCGA-06-5417.6984f96f-e27e-4143-b7db-54e97dbaa25c.pdf","TCGA-06-5418.84947803-ecc1-44f4-b158-ec517a23ad43.pdf","TCGA-06-5856.7bbecef6-9b0c-43b8-be9b-55821f9ac49b.pdf","TCGA-06-5858.2d08daa7-75ae-4fe0-8c06-311b585de812.pdf","TCGA-06-5859.9baeb8a0-e852-4729-bfc6-e4666a1f0a37.pdf","TCGA-06-6388.fc0566bf-e3a2-417d-8bce-ba5238521cd5.pdf","TCGA-06-6389.8ca0ae5b-4448-4f8b-8cdc-50e6209ced26.pdf","TCGA-06-6390.dfcad656-40f1-4ecf-a516-bc1fd73d66c1.pdf","TCGA-06-6391.bfbd13ea-6f58-4b40-9e5a-85db0d9cd8d5.pdf","TCGA-06-6693.73d0f748-136f-4000-ae46-de505f8bee47.pdf","TCGA-06-6694.bfd32e29-52a6-4ccf-ad99-0c595e3127ec.pdf","TCGA-06-6695.3e41fbb4-4032-4931-b91c-ade80781ea25.pdf","TCGA-06-6697.6d372549-29b6-4a4f-b8f5-d9267b1b91d9.pdf","TCGA-06-6698.73d3d6fe-216d-48d6-aaa5-afe8776964dd.pdf","TCGA-06-6699.f4be21b6-ef74-4a59-b8d1-9a0f76719ab9.pdf","TCGA-06-6700.7217dc7f-5df1-4b92-a7a7-6bf85dc8856e.pdf","TCGA-06-6701.a124f2d0-f289-4a57-84b6-051ba2c3736f.pdf","TCGA-06-A5U0.53494270-D299-4D89-8C66-05C361CFFA90.pdf","TCGA-06-A5U1.5F19F1F8-73BF-4E7D-9169-2F2C25F33F2B.pdf","TCGA-06-A6S0.E69F47F2-D127-46D7-BE0A-109BE0EF97E7.pdf","TCGA-06-A6S1.0BAB6F0A-77A8-4D16-B4E6-1AC173521399.pdf","TCGA-06-A7TK.5A1F6CD8-15C3-4D80-8496-340B0A9616D7.pdf","TCGA-06-A7TL.A492E3BF-5ABE-4D39-A40C-6028BB6DDBEA.pdf","TCGA-08-0244.816cfb3d-9d9b-4ee9-9a67-4bd086ed70d1.pdf","TCGA-08-0349.5bf5ea3b-f8ee-411b-8941-7850ddc93a89.pdf","TCGA-08-0352.8fd1d361-a630-4d7d-ad4f-0c6399f6cb23.pdf","TCGA-08-0358.0a3754ed-0755-45ce-97a7-e4bcba46948e.pdf","TCGA-08-0514.2549D86F-9A2B-4CCC-96E4-23721830D330.pdf","TCGA-08-0516.BD22D723-B138-4669-8A46-51E882E38931.pdf","TCGA-08-0520.2962A3BE-B85E-4374-BDC6-15C6CCDBD3B4.pdf","TCGA-08-0525.8740A3A8-E87E-4547-B022-4737B495FA86.pdf","TCGA-08-0529.AAD98DC6-75AD-471B-B403-157E2BFAD275.pdf","TCGA-12-0656.815E7E21-0C62-402C-9C35-8EB40FE8150C.pdf","TCGA-12-0657.7ED6B6C0-CA67-46E3-8D6E-7AC659B91910.pdf","TCGA-12-0662.1E3F5991-807F-44F3-94A9-FF6A1837A4F1.pdf","TCGA-12-0818.B31CE011-70CE-43F9-99EB-1869DBD7CD50.pdf","TCGA-12-0819.A929B0FF-98A0-49AD-AFAE-B2BC16B7C209.pdf","TCGA-12-0820.31965FF3-4EF9-4173-8CD1-846E392BE26F.pdf","TCGA-12-0821.67FCF789-81E1-4AC7-83DC-33CD7465E973.pdf","TCGA-12-0822.0B7718E4-941E-440B-9469-9076FD8FF7EB.pdf","TCGA-12-0826.D8009182-11C3-4216-B94E-560E9B7126C9.pdf","TCGA-12-0827.AFE8F2B1-2393-4D30-A11E-9D58512EB0F9.pdf","TCGA-12-0828.C370D3FA-0E19-4BCC-B9B4-428F1D9D2F3D.pdf","TCGA-12-0829.681B49B9-0B65-413E-921D-6906E19D1E36.pdf","TCGA-12-1088.DA109B5A-8F0D-4830-B5E7-95CC7871F503.pdf","TCGA-12-1089.4B7E16D2-FEEF-49FC-8173-E8F9B2AAD308.pdf","TCGA-12-1090.80423CCA-3C27-401D-9B5C-66268F309C55.pdf","TCGA-12-1091.C6592ACB-2DE0-4143-90E4-ECFE93A9E6A7.pdf","TCGA-12-1093.CC68E8DC-4929-443F-BA64-9A2BDB650C02.pdf","TCGA-12-1094.80C21FCB-E5EC-4FA7-A2CD-6FE0A086D887.pdf","TCGA-12-1095.453C3231-000F-4D7E-939A-5BBEECD3174C.pdf","TCGA-12-1096.E60FDB2A-7C2B-41DA-BB59-F10FD8FD1F09.pdf","TCGA-12-1099.9EC36CE7-CAF3-4E95-9518-06E9FC6E1E84.pdf","TCGA-12-1598.c319de13-7a4d-452e-baea-5a5f64e9ade5.pdf","TCGA-12-1599.e122c279-8ba9-4624-a00f-f530cc8f58ac.pdf","TCGA-12-1600.a65a18cf-e941-4062-9ed1-8c8f3cec9ae0.pdf","TCGA-12-1602.c1981720-4558-43b4-bd31-f420a9e34589.pdf","TCGA-12-3644.12a77f13-7940-4d58-ad15-f598c89f6a08.pdf","TCGA-12-3646.47faa88a-2d5f-4b53-ad5c-80123fe54844.pdf","TCGA-12-3648.83e094a1-fc5f-4b3b-9f57-827a095bba68.pdf","TCGA-12-3649.65889743-1e73-4812-9909-0711a1b68c2e.pdf","TCGA-12-3650.2a696ad0-69a3-435c-b4a4-c3ceb5fe28a6.pdf","TCGA-12-3651.86b63612-fc00-4710-bbb0-bab9e15f290c.pdf","TCGA-12-3652.ee607e3d-3aed-4b43-a0cf-ff0e4ca7375b.pdf","TCGA-12-3653.b2ea02b9-4f9f-474e-88fe-7306aeac14ec.pdf","TCGA-12-5295.ad20d555-7675-41c6-a22e-0c30db820b0d.pdf","TCGA-12-5299.9f574ef4-3427-4f3c-8493-043a4d08ad00.pdf","TCGA-12-5301.f306d9f8-b08a-4b45-a016-7c1fa97f700d.pdf","TCGA-14-0736.F5AFB165-F5EA-41D0-99D9-C11DAB07CF18.pdf","TCGA-14-0787.46bd5d64-24b5-4519-aaff-79a1240ae25e.pdf","TCGA-14-0789.ed9f8678-240b-4029-8bc4-a73103b56cf2.pdf","TCGA-14-0813.b0ac7f13-95e5-4b55-9de6-2efb7d0a2d91.pdf","TCGA-14-0817.c93c85d6-fda0-4aed-8846-624fa502ee41.pdf","TCGA-14-0867.6281ed47-96e8-4226-bedd-edb6318c3a57.pdf","TCGA-14-0871.3c96ffd0-6aa2-4d06-a59a-d70e79d05822.pdf","TCGA-14-1034.cddba95b-1894-48c6-b99b-cab435dbcd75.pdf","TCGA-14-1037.DE813B96-AD44-4EE3-955C-010F50C639E2.pdf","TCGA-14-1396.DB4C16AB-80B5-4D64-8806-AE83FB22C0A8.pdf","TCGA-14-1401.0A6A0393-91DC-4748-AF59-A9BBA2C9CEFC.pdf","TCGA-14-1402.10834755-f0a9-4023-aac5-3999a32a984b.pdf","TCGA-14-1451.0b182102-28a4-43d7-89e7-1cfca42745ea.pdf","TCGA-14-1452.f38cb64b-9649-4cc3-a14f-3eabf2c1b299.pdf","TCGA-14-1453.2652e3cf-ccbc-4433-a46e-400afefa925d.pdf","TCGA-14-1454.f8fa518d-f367-490e-9f74-15a6f822f7b8.pdf","TCGA-14-1455.E7E121DF-61CC-429E-AF3B-50CC1A497460.pdf","TCGA-14-1458.b3d7230a-7d53-4967-8a46-749a593d6711.pdf","TCGA-14-1459.DF95C5D2-6FF3-46BE-8A7B-96A7106207F0.pdf","TCGA-14-1794.b71b1650-b066-4179-9c2b-d0412acb7b77.pdf","TCGA-14-1795.1619def7-f24e-49cf-b2fb-1879951e0c62.pdf","TCGA-14-1821.2810e1d6-7f97-4d77-954a-f0b5fcf90d5b.pdf","TCGA-14-1823.09e6a813-eb0d-4ebc-bf0c-95b9a0b9175b.pdf","TCGA-14-1825.67478a3b-8b41-4571-bc63-36780f0d19e2.pdf","TCGA-14-1827.d2455471-6972-448d-867b-bdff3ce64049.pdf","TCGA-14-1829.a56c7808-d310-4d94-b0fa-5fcf5289555d.pdf","TCGA-14-2554.a55777c9-e369-484c-87ff-f24ec2627a33.pdf","TCGA-14-3477.ef5808a0-9573-44a7-90bb-a5273213302a.pdf","TCGA-14-4157.c8be1f7b-f0b2-42e0-a6b3-454097f7f003.pdf","TCGA-15-0742.e9fc50d8-86a1-451d-8b2d-caa8729a1bf4.pdf","TCGA-15-1444.bdc60487-8aea-4657-bac9-736f204fe65b.pdf","TCGA-15-1446.b04e9d08-f0bf-4a18-b638-0e1e739787a7.pdf","TCGA-15-1447.4e0b5741-45db-4481-95ee-304c3648e673.pdf","TCGA-15-1449.66905c10-f988-40c5-8d0f-08af3c6c499b.pdf","TCGA-16-0846.3AF0506F-002C-4FDD-A111-63C08424A867.pdf","TCGA-16-0848.37AC465F-E411-4A97-8269-3EED267030E7.pdf","TCGA-16-0849.A9513A28-A440-44FD-B13F-B055A59BAA3F.pdf","TCGA-16-0850.B5A3D86B-3289-40C3-B2C7-54C4A3995F45.pdf","TCGA-16-0861.8289BC38-FE82-4AB9-95DD-DA620F778513.pdf","TCGA-16-1060.423192C0-67D4-40B4-97AB-5E0CB0F4B5D3.pdf","TCGA-16-1062.03A15E3C-3532-439D-8D9C-20D5A18091F0.pdf","TCGA-16-1460.15d0b521-884d-4ad3-8928-6f27e9d3f701.pdf","TCGA-19-0955.2c009ac4-3f16-43d8-ad3f-5b6fecc9f49c.pdf","TCGA-19-0960.3e154285-f66b-4c5c-912b-02ae5762397d.pdf","TCGA-19-0964.ba3dbed0-2bee-4188-9857-dff35f8d6a01.pdf","TCGA-19-1385.ba34c5c0-ba80-4200-942c-f709d7acf69c.pdf","TCGA-19-1386.F3877FA4-E6E5-4666-B9FB-A4AF91A5DA63.pdf","TCGA-19-1387.6DF3D2E9-B3DF-47F4-92DC-B9EB51AFD3B3.pdf","TCGA-19-1388.7A87E792-4AAD-479D-892D-5D515E3EB1D1.pdf","TCGA-19-1389.FFB02D1A-1D35-4287-B2FF-F77A258A984D.pdf","TCGA-19-1390.41FB6156-CD64-4304-AB47-B2A828C43BD2.pdf","TCGA-19-1392.86aed977-cd39-47b0-94bf-99fcdbc8ac48.pdf","TCGA-19-1786.6e533c58-e45a-4861-b460-bbe850d2a943.pdf","TCGA-19-1788.1444b194-81d0-40ec-90ce-af7e5edfc645.pdf","TCGA-19-1789.6a04f636-6851-43f5-974d-97c318e73c3a.pdf","TCGA-19-1791.dc971fbf-7f2e-4257-af89-e5039838f6a8.pdf","TCGA-19-2619.260109e5-21e7-41d0-909a-85add469f968.pdf","TCGA-19-2620.dedd3bd8-b885-498e-a305-50b727240d09.pdf","TCGA-19-2623.7b05b633-98c5-4474-86d3-8e8748a27b80.pdf","TCGA-19-2624.c100bcaf-5c75-464e-97b5-9ff575796709.pdf","TCGA-19-2625.4f37276d-3579-49db-ae54-5644b2f2f92f.pdf","TCGA-19-2629.974b6590-7b55-4d77-94e0-f5c48204fdd7.pdf","TCGA-19-2631.846f6219-3e04-4a51-bb52-2239085973b6.pdf","TCGA-19-4065.E3EB10CD-611E-4424-8F2F-E771156168E0.pdf","TCGA-19-4068.52dd5f36-fff5-4a3f-ae34-e27d7944808d.pdf","TCGA-19-5947.204505d4-d58c-4187-8632-a900c41cdc99.pdf","TCGA-19-5950.ed8ba394-7042-4de1-8e08-1ff92db2b544.pdf","TCGA-19-5951.b43d622b-0fa9-4114-92ad-bdbd2033ccb1.pdf","TCGA-19-5952.6ce18d81-108b-455b-b6d2-3717ac9866c7.pdf","TCGA-19-5954.938c87ed-dd66-4300-8833-57111eb280bb.pdf","TCGA-19-5955.cc6d5233-b9dc-4551-b3bc-6b7b2b2c2c7b.pdf","TCGA-19-5956.d32e1293-485a-4b3c-a433-140750789471.pdf","TCGA-19-5958.ac50e8a3-bca7-422e-937e-5521f9bfa399.pdf","TCGA-19-5959.fd4c35f4-5fd4-49c5-8d6a-4f39dba0bb49.pdf","TCGA-19-5960.7e7ef835-d652-476a-9b80-2bf6d23129d6.pdf","TCGA-19-A6J4.39E56F35-C780-4461-8FDF-D0754CF38351.pdf","TCGA-19-A6J5.C90FBF2D-9022-4E19-8AB6-DD008E82F12B.pdf","TCGA-19-A60I.4E59C6BF-3B94-43C4-8269-1C0F271ACB7C.pdf","TCGA-26-1438.491bf470-5482-4560-8140-543de057c069.pdf","TCGA-26-1439.65fedb95-6e75-468a-be7e-8f75e9388d26.pdf","TCGA-26-1440.b392efba-d6f2-48e6-bf80-d62cb986f1dd.pdf","TCGA-26-1442.d371cef9-7c69-4a72-93a2-33b9741c44cb.pdf","TCGA-26-1443.ec9ee159-997d-408d-8248-ad95701ab2ed.pdf","TCGA-26-1799.946926e0-e570-4349-acff-922f546129fa.pdf","TCGA-26-5132.a2075373-4a3f-4f19-bc80-a46537c888df.pdf","TCGA-26-5133.29d8f95d-e333-433b-88c6-007134d7d8a0.pdf","TCGA-26-5134.bc937071-ca55-4002-b4fa-44326be2ac1b.pdf","TCGA-26-5135.89a229ab-908a-4062-9ce6-16bca172fa02.pdf","TCGA-26-5139.caf0e16d-4f03-48e2-b5df-04c0e5720b22.pdf","TCGA-26-6173.436138e9-3119-4b20-bbb5-e494c68e48cd.pdf","TCGA-26-6174.b5ef9cb5-a4c5-4d0e-9a94-279bbf646905.pdf","TCGA-27-1830.19fb9f5c-3e84-471e-84a3-daae18d97d71.pdf","TCGA-27-1831.7dae7d19-47b9-41e7-9dde-293ed9a2bc26.pdf","TCGA-27-1832.535d412f-ed27-467a-b373-8e26e940c07b.pdf","TCGA-27-1833.3d379071-9a4c-4e4d-95b9-3fbe3cdb12c3.pdf","TCGA-27-1834.ae312505-e73d-44c5-a3df-4096fada821b.pdf","TCGA-27-1835.5f1de659-7d7f-4a96-a9fc-058eff128012.pdf","TCGA-27-1836.fe622cd0-e679-4a07-9329-bb2a8f9d2c0b.pdf","TCGA-27-1837.fab9682a-0940-4815-8789-81799ff395f6.pdf","TCGA-27-1838.91fbafb9-e95b-486c-8029-24e0c77f6b57.pdf","TCGA-27-2518.50376f0f-063e-4c47-bd08-eff5ed594804.pdf","TCGA-27-2519.fd339d84-0063-4f89-b81d-6c0cff9c28f5.pdf","TCGA-27-2521.3b0eadc8-f7c7-4458-a24f-5391314b8490.pdf","TCGA-27-2523.13da443d-2407-4620-8963-f6bd4fb1dafc.pdf","TCGA-27-2524.db1e1c7f-a262-4c77-a593-a833eefebeb1.pdf","TCGA-27-2526.db4b12a3-ade7-4190-8104-cc07964a2d7f.pdf","TCGA-27-2527.f5f2cbe2-2a67-4cc0-8867-6c96ae009ee3.pdf","TCGA-27-2528.08b4c97d-4213-4897-bf40-0327eefe8385.pdf","TCGA-28-1746.2abf3d8f-18f6-493d-89b8-3e2a5f37f84e.pdf","TCGA-28-1749.52397ae2-9fbe-452a-ad46-714facf92043.pdf","TCGA-28-1750.40fc97e5-9b5b-4c0f-9b95-80353828e983.pdf","TCGA-28-1751.19f9b34f-8fd6-4b0b-b4a5-bdf247570394.pdf","TCGA-28-1752.2dcfcd58-1196-4a7d-a242-ef7d01dccd00.pdf","TCGA-28-1753.e6085b8d-d1b3-4f2d-a0f4-c8c823acc762.pdf","TCGA-28-1755.ba78abe7-49ed-4838-90e7-52d0dcc66313.pdf","TCGA-28-1757.9d377e4b-f2dc-4c21-a0d6-cc1b49efb34c.pdf","TCGA-28-1760.9b40d6a7-43ee-4267-8290-c4d8b3876fdf.pdf","TCGA-28-2499.5a1dd9da-df75-41b7-a37f-3005b4e1d7b9.pdf","TCGA-28-2501.84170183-cb41-4637-bb8f-aa9dd894aa9c.pdf","TCGA-28-2506.56a90981-a40f-463d-902c-1524037df000.pdf","TCGA-28-2509.31042590-2b1f-4926-a12e-5e0a22bdb420.pdf","TCGA-28-2510.ba885e83-e893-407b-b080-6c68f74b758e.pdf","TCGA-28-2512.1d7636d1-6604-4261-a368-5252a7f30fa4.pdf","TCGA-28-2513.c7ba045f-48dd-42ea-8da8-a5811b74e9fa.pdf","TCGA-28-2514.d2cbb615-c4b7-4ae0-9de7-b31241302ce7.pdf","TCGA-28-5204.3e248730-bc16-4d33-a304-2e1093a3b45c.pdf","TCGA-28-5207.0bafbc8d-023d-4c05-a802-5c32767c0e55.pdf","TCGA-28-5208.c683e7a3-f811-4f52-bcce-cf6eea75df12.pdf","TCGA-28-5209.0bad36fe-5622-4d30-8005-24c247a4ce32.pdf","TCGA-28-5213.591247be-ca98-4187-8280-42b2520e93f7.pdf","TCGA-28-5214.63a3775f-34e7-41a7-b021-666dd4528272.pdf","TCGA-28-5215.3a06f0a3-5eb6-4fef-948b-8067976886e0.pdf","TCGA-28-5216.69f3d1ff-0b60-4841-b83c-ab9e707b5ff2.pdf","TCGA-28-5218.461dabe9-5c81-4bce-abd6-ba60a652094d.pdf","TCGA-28-5219.0bc37b81-620b-4f40-99e5-173f32f091b1.pdf","TCGA-28-5220.29d77292-b31a-4839-a603-63f355f71368.pdf","TCGA-28-6450.282745FC-4B69-4BF5-9112-6A8E6389A88D.pdf","TCGA-32-1970.f55a66b9-6609-4ca0-bcad-11c787f25598.pdf","TCGA-32-1973.f22ad2e6-4eed-4538-a07b-365250184f02.pdf","TCGA-32-1976.7fbd753b-801d-4a28-9673-f17b80c643aa.pdf","TCGA-32-1977.7ba4d37c-df8e-4cf2-b0e9-0a8ceb8378e0.pdf","TCGA-32-1978.eae7fcc4-d235-4f95-8d55-5f6ea5371929.pdf","TCGA-32-1979.102da0b4-1d6a-49c8-95b4-263021ca7e7c.pdf","TCGA-32-1980.7660f091-9b09-4dfa-9530-bdb57e930938.pdf","TCGA-32-1982.cd26781a-ec25-4240-beac-f45cc7a2b7a3.pdf","TCGA-32-1987.54efd9df-284f-44a9-a48d-192bfa3a5941.pdf","TCGA-32-1991.2be50793-4e68-43f0-96f8-992c82c0aa85.pdf","TCGA-32-2491.aca82e7c-2baf-49fb-bb70-b05d479ce2a4.pdf","TCGA-32-2494.9ec0ca6e-ff5a-4d34-a2e9-3889f4dd6e46.pdf","TCGA-32-2495.521c3e99-ff9c-4e02-9217-532be091fac0.pdf","TCGA-32-2616.317C0826-2B8D-4071-AC55-BAE793FD7CE9.pdf","TCGA-32-2632.37cd6d1c-c10e-4ca0-ad18-3d707e9b1691.pdf","TCGA-32-2634.38156b43-7b5a-4d7f-aef6-4922f6a2a690.pdf","TCGA-32-2638.ed601144-2884-4d75-886c-eaaab49a6c33.pdf","TCGA-32-4208.57687e5d-5795-48a3-a191-cd61e6c981fe.pdf","TCGA-32-4209.9d750b1d-1794-4cea-8890-075b36048ca4.pdf","TCGA-32-4210.b807ff3c-4473-4e77-a199-9df5c894186f.pdf","TCGA-32-4211.1f48fa00-e1d1-42b2-881c-362a6f549556.pdf","TCGA-32-4213.918246a7-4ae5-463d-b889-011e0ee45efb.pdf","TCGA-32-4719.3352B153-886C-413C-A704-E66CD4DC39BC.pdf","TCGA-32-5222.880e75f5-d2ec-4990-8397-3bdc9ea20693.pdf","TCGA-41-2571.f3dafdb9-14e4-4524-ae4d-3d2860532e80.pdf","TCGA-41-2572.b6c486c9-5fc6-4df1-8ec8-877c8fd96e49.pdf","TCGA-41-2573.177cdf51-1694-4197-b0f3-1c97dfa38bbc.pdf","TCGA-41-2575.7f1e7294-3f10-40fd-ab3e-d8ad2af07e5b.pdf","TCGA-41-3392.ff6e82b9-5802-4edc-8310-32615b9511eb.pdf","TCGA-41-3393.ef63aac8-bf7a-420b-bd2c-75b3112b836f.pdf","TCGA-41-3915.170f0232-2209-4609-8c71-e39caec2ffc2.pdf","TCGA-41-4097.38e71ada-a221-41fd-9283-5750413305b8.pdf","TCGA-41-5651.f02981ba-f5ac-4182-864e-dc0cf37e7413.pdf","TCGA-41-6646.6b3cf1a0-d385-4211-a68d-6cb8ae1a551f.pdf","TCGA-74-6573.d33e2186-48d8-44da-84b6-e7f88daac1e2.pdf","TCGA-74-6575.5ecedd86-01d1-40c8-896f-1566e6d2dffd.pdf","TCGA-74-6577.0fe10a6d-e211-43c7-8a89-56ed221cbb96.pdf","TCGA-74-6578.35f9320c-f804-47e5-904f-4d1a87fddd35.pdf","TCGA-74-6581.7ab73575-cd7d-434f-b21d-fcffb52c3a4d.pdf","TCGA-74-6584.315ce84d-6870-4a44-bf59-e5b1ba0d94bb.pdf","TCGA-76-4925.886c961a-cfef-4f2c-8b58-7708e216db0e.pdf","TCGA-76-4927.5f1a707b-6acd-45b3-8540-0ff1ec834ab7.pdf","TCGA-76-4929.65054ac8-f9aa-4342-9f18-81c15efd6d81.pdf","TCGA-76-4931.f34d64d6-6103-407f-b45b-4e660a1bfcd1.pdf","TCGA-76-4932.7dd69551-44d6-4b99-b0ef-6ea886b23394.pdf","TCGA-76-4934.31727bd3-2af9-4648-b5ae-60af7be49ea7.pdf","TCGA-76-4935.84580ae3-e984-4071-b9ce-1641f06963ad.pdf","TCGA-76-6191.d91aa8ca-fe4b-4f2e-89a7-c56d6fe176e1.pdf","TCGA-76-6192.d2a94594-7f5a-40f2-87fa-beee3fa5be5b.pdf","TCGA-76-6193.1ee55ecb-8de5-4a21-9fa0-babcb2d07212.pdf","TCGA-76-6280.6c77527e-b771-4544-bd9a-8468f2ff593e.pdf","TCGA-76-6282.fe3b0aee-6477-48dd-af17-54f991fa47a5.pdf","TCGA-76-6283.a4576d26-9f8e-472d-be41-4b8632080c4a.pdf","TCGA-76-6285.9b0a966e-0cd8-44a2-8f15-c5f5ed40c189.pdf","TCGA-76-6286.3b124818-8d8c-46b9-a8e8-60b6f22e75ea.pdf","TCGA-76-6656.916da87b-e1f7-43fc-91b6-8db07a5ba0b2.pdf","TCGA-76-6657.476eed15-94af-4c24-9a4f-17fbde281c66.pdf","TCGA-76-6660.230f31a8-f9b9-46a9-b7d3-d09a4fad5ee1.pdf","TCGA-76-6661.ebdc6747-57b5-4d88-a9cd-9222a7f71129.pdf","TCGA-76-6662.58dd362c-d11c-4b10-9b2b-40e3d2ba3192.pdf","TCGA-76-6663.e6733441-1472-4deb-9654-8f5059b0b72c.pdf","TCGA-76-6664.140f178d-a96f-4f36-bace-1199ebb43964.pdf","TCGA-81-5910.9d6e4a44-727e-4713-842e-a75ded996614.pdf","TCGA-81-5911.ceff84e7-7dac-4312-92fe-174cb3da3205.pdf","TCGA-87-5896.a743b83f-a4ff-4b06-9728-765a6bb6807f.pdf","TCGA-OX-A56R.9EF7E637-46F9-4498-B41C-D1219D20636A.pdf","TCGA-RR-A6KA.F58558E1-9BB7-4991-9CDD-6C18DCB448E5.pdf","TCGA-RR-A6KB.FE890D7D-5BB3-4A91-804E-894CA44AA71B.pdf","TCGA-RR-A6KC.53E9E4FC-DBC4-41F0-8AA6-BB5493B324CB.pdf"
+sample_type	shortTitle	sample type
+sample_type	longTitle	sample type
+sample_type	valueType	category
+sample_type	state	Additional - New Primary
+sample_type	state	Additional Metastatic
+sample_type	state	Blood Derived Normal
+sample_type	state	Bone Marrow Normal
+sample_type	state	Buccal Cell Normal
+sample_type	state	Cell Line Derived Xenograft Tissue
+sample_type	state	Cell Lines
+sample_type	state	Control Analyte
+sample_type	state	EBV Immortalized Normal
+sample_type	state	Human Tumor Original Cells
+sample_type	state	Metastatic
+sample_type	state	Primary Blood Derived Cancer - Bone Marrow
+sample_type	state	Primary Blood Derived Cancer - Peripheral Blood
+sample_type	state	Primary Tumor
+sample_type	state	Primary Xenograft Tissue
+sample_type	state	Primary solid Tumor
+sample_type	state	Recurrent Blood Derived Cancer - Bone Marrow
+sample_type	state	Recurrent Blood Derived Cancer - Peripheral Blood
+sample_type	state	Recurrent Solid Tumor
+sample_type	state	Recurrent Tumor
+sample_type	state	Solid Tissue Normal
+sample_type	stateOrder	"Primary Tumor","Primary solid Tumor","Primary Blood Derived Cancer - Peripheral Blood","Primary Blood Derived Cancer - Bone Marrow","Recurrent Tumor","Recurrent Solid Tumor","Recurrent Blood Derived Cancer - Peripheral Blood","Recurrent Blood Derived Cancer - Bone Marrow","Additional - New Primary","Metastatic","Additional Metastatic","Human Tumor Original Cells","Blood Derived Normal","Solid Tissue Normal","Buccal Cell Normal","EBV Immortalized Normal","Bone Marrow Normal","Cell Lines","Primary Xenograft Tissue","Cell Line Derived Xenograft Tissue","Control Analyte"
+sample_type	stateOrderRelax	true
+sample_type_id	shortTitle	sample type id
+sample_type_id	longTitle	sample type id
+sample_type_id	valueType	category
+sample_type_id	state	01
+sample_type_id	state	02
+sample_type_id	state	11
+sample_type_id	stateOrder	"01","02","11"
+shortest_dimension	shortTitle	shortest dimension
+shortest_dimension	longTitle	shortest dimension
+shortest_dimension	valueType	float
+vial_number	shortTitle	vial number
+vial_number	longTitle	vial number
+vial_number	valueType	category
+vial_number	state	A
+vial_number	state	B
+vial_number	state	C
+vial_number	stateOrder	"A","B","C"
+age_at_initial_pathologic_diagnosis	shortTitle	age Dx
+age_at_initial_pathologic_diagnosis	longTitle	age at initial pathologic diagnosis
+age_at_initial_pathologic_diagnosis	valueType	float
+days_to_birth	shortTitle	days to birth
+days_to_birth	longTitle	days to birth
+days_to_birth	valueType	float
+days_to_initial_pathologic_diagnosis	shortTitle	days to initial path Dx
+days_to_initial_pathologic_diagnosis	longTitle	days to initial pathologic diagnosis
+days_to_initial_pathologic_diagnosis	valueType	category
+days_to_initial_pathologic_diagnosis	state	0
+days_to_initial_pathologic_diagnosis	stateOrder	"0"
+gender	shortTitle	gender
+gender	longTitle	gender
+gender	valueType	category
+gender	state	FEMALE
+gender	state	MALE
+gender	stateOrder	"FEMALE","MALE"
+histological_type	shortTitle	histological type
+histological_type	longTitle	histological type
+histological_type	valueType	category
+histological_type	state	Glioblastoma Multiforme (GBM)
+histological_type	state	Treated primary GBM
+histological_type	state	Untreated primary (de novo) GBM
+histological_type	stateOrder	"Glioblastoma Multiforme (GBM)","Treated primary GBM","Untreated primary (de novo) GBM"
+history_of_neoadjuvant_treatment	shortTitle	history of neoadj Tx
+history_of_neoadjuvant_treatment	longTitle	history of neoadjuvant treatment
+history_of_neoadjuvant_treatment	valueType	category
+history_of_neoadjuvant_treatment	state	No
+history_of_neoadjuvant_treatment	state	Yes
+history_of_neoadjuvant_treatment	stateOrder	"No","Yes"
+icd_10	shortTitle	International Classification of Diseases, tenth revision (ICD-10)
+icd_10	longTitle	International Classification of Diseases, tenth revision (ICD-10)
+icd_10	valueType	category
+icd_10	state	C71.2
+icd_10	state	C71.9
+icd_10	stateOrder	"C71.2","C71.9"
+icd_o_3_histology	shortTitle	ICD-O-3 histology
+icd_o_3_histology	longTitle	ICD-O-3 histology
+icd_o_3_histology	valueType	category
+icd_o_3_histology	state	9440/3
+icd_o_3_histology	stateOrder	"9440/3"
+icd_o_3_site	shortTitle	ICD-O-3 site
+icd_o_3_site	longTitle	ICD-O-3 site
+icd_o_3_site	valueType	category
+icd_o_3_site	state	C71.0
+icd_o_3_site	state	C71.1
+icd_o_3_site	state	C71.2
+icd_o_3_site	state	C71.3
+icd_o_3_site	state	C71.4
+icd_o_3_site	state	C71.8
+icd_o_3_site	state	C71.9
+icd_o_3_site	stateOrder	"C71.0","C71.1","C71.2","C71.3","C71.4","C71.8","C71.9"
+informed_consent_verified	shortTitle	informed consent verified
+informed_consent_verified	longTitle	informed consent verified
+informed_consent_verified	valueType	category
+informed_consent_verified	state	YES
+informed_consent_verified	stateOrder	"YES"
+initial_pathologic_diagnosis_method	shortTitle	initial path Dx method
+initial_pathologic_diagnosis_method	longTitle	initial pathologic diagnosis method
+initial_pathologic_diagnosis_method	valueType	category
+initial_pathologic_diagnosis_method	state	Excisional Biopsy
+initial_pathologic_diagnosis_method	state	Fine needle aspiration biopsy
+initial_pathologic_diagnosis_method	state	Incisional Biopsy
+initial_pathologic_diagnosis_method	state	Other method, specify:
+initial_pathologic_diagnosis_method	state	Tumor resection
+initial_pathologic_diagnosis_method	stateOrder	"Excisional Biopsy","Fine needle aspiration biopsy","Incisional Biopsy","Other method, specify:","Tumor resection"
+prior_dx	shortTitle	prior Dx
+prior_dx	longTitle	prior diagnosis
+prior_dx	valueType	category
+prior_dx	state	No
+prior_dx	state	Yes, History of Prior Malignancy
+prior_dx	stateOrder	"No","Yes, History of Prior Malignancy"
+prior_glioma	shortTitle	prior glioma
+prior_glioma	longTitle	prior glioma
+prior_glioma	valueType	category
+prior_glioma	state	NO
+prior_glioma	state	YES
+prior_glioma	stateOrder	"NO","YES"
+tissue_prospective_collection_indicator	shortTitle	tissue prospective collection indicator
+tissue_prospective_collection_indicator	longTitle	tissue prospective collection indicator
+tissue_prospective_collection_indicator	valueType	category
+tissue_prospective_collection_indicator	state	NO
+tissue_prospective_collection_indicator	state	YES
+tissue_prospective_collection_indicator	state	[Discrepancy]
+tissue_prospective_collection_indicator	stateOrder	"NO","YES","[Discrepancy]"
+tissue_retrospective_collection_indicator	shortTitle	tissue retrospective collection indicator
+tissue_retrospective_collection_indicator	longTitle	tissue retrospective collection indicator
+tissue_retrospective_collection_indicator	valueType	category
+tissue_retrospective_collection_indicator	state	NO
+tissue_retrospective_collection_indicator	state	YES
+tissue_retrospective_collection_indicator	state	[Discrepancy]
+tissue_retrospective_collection_indicator	stateOrder	"NO","YES","[Discrepancy]"
+tissue_source_site	shortTitle	tissue source site
+tissue_source_site	longTitle	tissue source site
+tissue_source_site	valueType	category
+tissue_source_site	state	02
+tissue_source_site	state	4W
+tissue_source_site	state	06
+tissue_source_site	state	08
+tissue_source_site	state	12
+tissue_source_site	state	14
+tissue_source_site	state	15
+tissue_source_site	state	16
+tissue_source_site	state	19
+tissue_source_site	state	26
+tissue_source_site	state	27
+tissue_source_site	state	28
+tissue_source_site	state	32
+tissue_source_site	state	41
+tissue_source_site	state	74
+tissue_source_site	state	76
+tissue_source_site	state	81
+tissue_source_site	state	87
+tissue_source_site	state	OX
+tissue_source_site	state	RR
+tissue_source_site	stateOrder	"02","4W","06","08","12","14","15","16","19","26","27","28","32","41","74","76","81","87","OX","RR"
+tumor_tissue_site	shortTitle	tumor tissue site
+tumor_tissue_site	longTitle	tumor tissue site
+tumor_tissue_site	valueType	category
+tumor_tissue_site	state	Brain
+tumor_tissue_site	stateOrder	"Brain"
+year_of_initial_pathologic_diagnosis	shortTitle	year of initial pathologic diagnosis
+year_of_initial_pathologic_diagnosis	longTitle	year of initial pathologic diagnosis
+year_of_initial_pathologic_diagnosis	valueType	float
+_PANCAN_RPPA_PANCAN_K8	shortTitle	PANCAN protein
+_PANCAN_RPPA_PANCAN_K8	longTitle	_PANCAN AWG protein RBN subtype k=8 (syn1756922)
+_PANCAN_RPPA_PANCAN_K8	valueType	category
+_PANCAN_RPPA_PANCAN_K8	state	GBM-like c2
+_PANCAN_RPPA_PANCAN_K8	state	KIRC-like c1
+_PANCAN_RPPA_PANCAN_K8	state	squamous c3
+_PANCAN_RPPA_PANCAN_K8	stateOrder	"squamous c3","GBM-like c2","KIRC-like c1"
+GeneExp_Subtype	shortTitle	gene exp subtype
+GeneExp_Subtype	longTitle	gene expression subtype of primary tumor (TCGA AWG)
+GeneExp_Subtype	valueType	category
+GeneExp_Subtype	state	Classical
+GeneExp_Subtype	state	Mesenchymal
+GeneExp_Subtype	state	Neural
+GeneExp_Subtype	state	Proneural
+GeneExp_Subtype	stateOrder	"Proneural","Neural","Classical","Mesenchymal"
+In_Cancer_Cell_Paper	shortTitle	In Cancer Cell Paper
+In_Cancer_Cell_Paper	longTitle	In Cancer Cell Pape
+In_Cancer_Cell_Paper	valueType	category
+In_Cancer_Cell_Paper	state	FALSE
+In_Cancer_Cell_Paper	state	TRUE
+In_Cancer_Cell_Paper	stateOrder	"FALSE","TRUE"
+_PANCAN_CNA_PANCAN_K8	shortTitle	PANCAN CNA k=8
+_PANCAN_CNA_PANCAN_K8	longTitle	_PANCAN copy number subtype k=8 (syn1712142)
+_PANCAN_CNA_PANCAN_K8	valueType	category
+_PANCAN_CNA_PANCAN_K8	state	BRCA-LUAD+
+_PANCAN_CNA_PANCAN_K8	state	COAD-READ
+_PANCAN_CNA_PANCAN_K8	state	GBM
+_PANCAN_CNA_PANCAN_K8	state	High
+_PANCAN_CNA_PANCAN_K8	state	Iq
+_PANCAN_CNA_PANCAN_K8	state	Kirc+
+_PANCAN_CNA_PANCAN_K8	state	Quiet
+_PANCAN_CNA_PANCAN_K8	state	Squamous
+_PANCAN_CNA_PANCAN_K8	stateOrder	"High","Squamous","BRCA-LUAD+","COAD-READ","GBM","Iq","Kirc+","Quiet"
+percent_lymphocyte_infiltration_BOTTOM	shortTitle	percent_lymphocyte_infiltration_BOTTOM
+percent_lymphocyte_infiltration_BOTTOM	longTitle	percent_lymphocyte_infiltration_BOTTOM
+percent_lymphocyte_infiltration_BOTTOM	valueType	category
+percent_lymphocyte_infiltration_BOTTOM	state	0
+percent_lymphocyte_infiltration_BOTTOM	state	10
+percent_lymphocyte_infiltration_BOTTOM	state	50
+percent_lymphocyte_infiltration_BOTTOM	state	90
+percent_lymphocyte_infiltration_BOTTOM	state	100
+percent_lymphocyte_infiltration_BOTTOM	stateOrder	"0","10","50","90","100"
+percent_lymphocyte_infiltration_TOP	shortTitle	percent_lymphocyte_infiltration_TOP
+percent_lymphocyte_infiltration_TOP	longTitle	percent_lymphocyte_infiltration_TOP
+percent_lymphocyte_infiltration_TOP	valueType	category
+percent_lymphocyte_infiltration_TOP	state	0
+percent_lymphocyte_infiltration_TOP	state	2
+percent_lymphocyte_infiltration_TOP	state	5
+percent_lymphocyte_infiltration_TOP	state	10
+percent_lymphocyte_infiltration_TOP	state	50
+percent_lymphocyte_infiltration_TOP	state	70
+percent_lymphocyte_infiltration_TOP	state	90
+percent_lymphocyte_infiltration_TOP	state	100
+percent_lymphocyte_infiltration_TOP	stateOrder	"0","2","5","10","50","70","90","100"
+percent_monocyte_infiltration_BOTTOM	shortTitle	percent_monocyte_infiltration_BOTTOM
+percent_monocyte_infiltration_BOTTOM	longTitle	percent_monocyte_infiltration_BOTTOM
+percent_monocyte_infiltration_BOTTOM	valueType	category
+percent_monocyte_infiltration_BOTTOM	state	0
+percent_monocyte_infiltration_BOTTOM	state	10
+percent_monocyte_infiltration_BOTTOM	state	50
+percent_monocyte_infiltration_BOTTOM	state	90
+percent_monocyte_infiltration_BOTTOM	state	100
+percent_monocyte_infiltration_BOTTOM	stateOrder	"0","10","50","90","100"
+percent_monocyte_infiltration_TOP	shortTitle	percent_monocyte_infiltration_TOP
+percent_monocyte_infiltration_TOP	longTitle	percent_monocyte_infiltration_TOP
+percent_monocyte_infiltration_TOP	valueType	category
+percent_monocyte_infiltration_TOP	state	0
+percent_monocyte_infiltration_TOP	state	2
+percent_monocyte_infiltration_TOP	state	5
+percent_monocyte_infiltration_TOP	state	10
+percent_monocyte_infiltration_TOP	state	50
+percent_monocyte_infiltration_TOP	state	100
+percent_monocyte_infiltration_TOP	stateOrder	"0","2","5","10","50","100"
+percent_necrosis_BOTTOM	shortTitle	percent_necrosis_BOTTOM
+percent_necrosis_BOTTOM	longTitle	percent_necrosis_BOTTOM
+percent_necrosis_BOTTOM	valueType	float
+percent_necrosis_TOP	shortTitle	percent_necrosis_TOP
+percent_necrosis_TOP	longTitle	percent_necrosis_TOP
+percent_necrosis_TOP	valueType	float
+percent_neutrophil_infiltration_BOTTOM	shortTitle	percent_neutrophil_infiltration_BOTTOM
+percent_neutrophil_infiltration_BOTTOM	longTitle	percent_neutrophil_infiltration_BOTTOM
+percent_neutrophil_infiltration_BOTTOM	valueType	category
+percent_neutrophil_infiltration_BOTTOM	state	0
+percent_neutrophil_infiltration_BOTTOM	state	1
+percent_neutrophil_infiltration_BOTTOM	state	2
+percent_neutrophil_infiltration_BOTTOM	state	80
+percent_neutrophil_infiltration_BOTTOM	state	100
+percent_neutrophil_infiltration_BOTTOM	stateOrder	"0","1","2","80","100"
+percent_neutrophil_infiltration_TOP	shortTitle	percent_neutrophil_infiltration_TOP
+percent_neutrophil_infiltration_TOP	longTitle	percent_neutrophil_infiltration_TOP
+percent_neutrophil_infiltration_TOP	valueType	category
+percent_neutrophil_infiltration_TOP	state	0
+percent_neutrophil_infiltration_TOP	state	5
+percent_neutrophil_infiltration_TOP	state	50
+percent_neutrophil_infiltration_TOP	state	100
+percent_neutrophil_infiltration_TOP	stateOrder	"0","5","50","100"
+percent_normal_cells_BOTTOM	shortTitle	percent_normal_cells_BOTTOM
+percent_normal_cells_BOTTOM	longTitle	percent_normal_cells_BOTTOM
+percent_normal_cells_BOTTOM	valueType	float
+percent_normal_cells_TOP	shortTitle	percent_normal_cells_TOP
+percent_normal_cells_TOP	longTitle	percent_normal_cells_TOP
+percent_normal_cells_TOP	valueType	float
+percent_stromal_cells_BOTTOM	shortTitle	percent_stromal_cells_BOTTOM
+percent_stromal_cells_BOTTOM	longTitle	percent_stromal_cells_BOTTOM
+percent_stromal_cells_BOTTOM	valueType	float
+percent_stromal_cells_TOP	shortTitle	percent_stromal_cells_TOP
+percent_stromal_cells_TOP	longTitle	percent_stromal_cells_TOP
+percent_stromal_cells_TOP	valueType	float
+percent_tumor_cells_BOTTOM	shortTitle	percent_tumor_cells_BOTTOM
+percent_tumor_cells_BOTTOM	longTitle	percent_tumor_cells_BOTTOM
+percent_tumor_cells_BOTTOM	valueType	float
+percent_tumor_cells_TOP	shortTitle	percent_tumor_cells_TOP
+percent_tumor_cells_TOP	longTitle	percent_tumor_cells_TOP
+percent_tumor_cells_TOP	valueType	float
+percent_tumor_nuclei_BOTTOM	shortTitle	percent_tumor_nuclei_BOTTOM
+percent_tumor_nuclei_BOTTOM	longTitle	percent_tumor_nuclei_BOTTOM
+percent_tumor_nuclei_BOTTOM	valueType	float
+percent_tumor_nuclei_TOP	shortTitle	percent_tumor_nuclei_TOP
+percent_tumor_nuclei_TOP	longTitle	percent_tumor_nuclei_TOP
+percent_tumor_nuclei_TOP	valueType	float
+CDE_radiation_any	shortTitle	radiation
+CDE_radiation_any	longTitle	radiation therapy
+CDE_radiation_any	valueType	category
+CDE_radiation_any	state	FALSE
+CDE_radiation_any	state	TRUE
+CDE_radiation_any	stateOrder	"FALSE","TRUE"
+CDE_radiation_adjuvant	shortTitle	adjuvant radiation
+CDE_radiation_adjuvant	longTitle	adjuvant radiation therapy
+CDE_radiation_adjuvant	valueType	category
+CDE_radiation_adjuvant	state	FALSE
+CDE_radiation_adjuvant	state	TRUE
+CDE_radiation_adjuvant	stateOrder	"FALSE","TRUE"
+CDE_radiation_standard	shortTitle	standard radiation
+CDE_radiation_standard	longTitle	standard radiation therapy
+CDE_radiation_standard	valueType	category
+CDE_radiation_standard	state	FALSE
+CDE_radiation_standard	state	TRUE
+CDE_radiation_standard	stateOrder	"FALSE","TRUE"
+CDE_radiation_standard_probable	shortTitle	standard radiation
+CDE_radiation_standard_probable	longTitle	probably received standard radiation therapy
+CDE_radiation_standard_probable	valueType	category
+CDE_radiation_standard_probable	state	FALSE
+CDE_radiation_standard_probable	state	TRUE
+CDE_radiation_standard_probable	stateOrder	"FALSE","TRUE"
+CDE_radiation_adjuvant_standard	shortTitle	adjuvant/standard radiation
+CDE_radiation_adjuvant_standard	longTitle	adjuvant and standard radiation therapy
+CDE_radiation_adjuvant_standard	valueType	category
+CDE_radiation_adjuvant_standard	state	FALSE
+CDE_radiation_adjuvant_standard	state	TRUE
+CDE_radiation_adjuvant_standard	stateOrder	"FALSE","TRUE"
+CDE_radiation_adjuvant_standard_probable	shortTitle	adjuvant/standard radiation
+CDE_radiation_adjuvant_standard_probable	longTitle	probably received adjuvant and standard radiation therapy
+CDE_radiation_adjuvant_standard_probable	valueType	category
+CDE_radiation_adjuvant_standard_probable	state	FALSE
+CDE_radiation_adjuvant_standard_probable	state	TRUE
+CDE_radiation_adjuvant_standard_probable	stateOrder	"FALSE","TRUE"
+CDE_chemo_alk	shortTitle	alkylating agents
+CDE_chemo_alk	longTitle	alkylating agents
+CDE_chemo_alk	valueType	category
+CDE_chemo_alk	state	FALSE
+CDE_chemo_alk	state	TRUE
+CDE_chemo_alk	stateOrder	"FALSE","TRUE"
+CDE_chemo_alk_long	shortTitle	alkylating agents (long term)
+CDE_chemo_alk_long	longTitle	alkylating agents chemotherapy (long term)
+CDE_chemo_alk_long	valueType	category
+CDE_chemo_alk_long	state	FALSE
+CDE_chemo_alk_long	state	TRUE
+CDE_chemo_alk_long	stateOrder	"FALSE","TRUE"
+CDE_chemo_tmz	shortTitle	temozolomide
+CDE_chemo_tmz	longTitle	temozolomide chemotherapy
+CDE_chemo_tmz	valueType	category
+CDE_chemo_tmz	state	FALSE
+CDE_chemo_tmz	state	TRUE
+CDE_chemo_tmz	stateOrder	"FALSE","TRUE"
+CDE_chemo_tmz_long	shortTitle	temozolomide (long-term)
+CDE_chemo_tmz_long	longTitle	temozolomide (long-term)
+CDE_chemo_tmz_long	valueType	category
+CDE_chemo_tmz_long	state	FALSE
+CDE_chemo_tmz_long	state	TRUE
+CDE_chemo_tmz_long	stateOrder	"FALSE","TRUE"
+CDE_chemo_alk_days	shortTitle	alkylating agents (days)
+CDE_chemo_alk_days	longTitle	number of days patient recieved alkylating agent chemotherapy
+CDE_chemo_alk_days	valueType	float
+CDE_chemo_tmz_days	shortTitle	temozolomide (days)
+CDE_chemo_tmz_days	longTitle	number of days patient recieved temozolomide chemotherapy
+CDE_chemo_tmz_days	valueType	float
+CDE_chemo_adjuvant_alk	shortTitle	alkylating agent & adjuvant
+CDE_chemo_adjuvant_alk	longTitle	patient received alkylating agent chemotherapy with adjuvant
+CDE_chemo_adjuvant_alk	valueType	category
+CDE_chemo_adjuvant_alk	state	FALSE
+CDE_chemo_adjuvant_alk	state	TRUE
+CDE_chemo_adjuvant_alk	stateOrder	"FALSE","TRUE"
+CDE_chemo_adjuvant_tmz	shortTitle	temozolomide & adjuvant
+CDE_chemo_adjuvant_tmz	longTitle	patient received temozolomide chemotherapy with adjuvant
+CDE_chemo_adjuvant_tmz	valueType	category
+CDE_chemo_adjuvant_tmz	state	FALSE
+CDE_chemo_adjuvant_tmz	state	TRUE
+CDE_chemo_adjuvant_tmz	stateOrder	"FALSE","TRUE"
+CDE_alk_chemoradiation_standard	shortTitle	alkylating agents & radiation
+CDE_alk_chemoradiation_standard	longTitle	alkylating agents chemotherapy and standard radiation
+CDE_alk_chemoradiation_standard	valueType	category
+CDE_alk_chemoradiation_standard	state	FALSE
+CDE_alk_chemoradiation_standard	state	TRUE
+CDE_alk_chemoradiation_standard	stateOrder	"FALSE","TRUE"
+CDE_tmz_chemoradiation_standard	shortTitle	temozolomide & radiation
+CDE_tmz_chemoradiation_standard	longTitle	temozolomide chemotherapy and standard radiation
+CDE_tmz_chemoradiation_standard	valueType	category
+CDE_tmz_chemoradiation_standard	state	FALSE
+CDE_tmz_chemoradiation_standard	state	TRUE
+CDE_tmz_chemoradiation_standard	stateOrder	"FALSE","TRUE"
+CDE_therapy	shortTitle	therapy
+CDE_therapy	longTitle	received therapy
+CDE_therapy	valueType	category
+CDE_therapy	state	AlkChemo
+CDE_therapy	state	AlkChemoLong
+CDE_therapy	state	AlkChemoradiation.AlkChemoLong
+CDE_therapy	state	NonstandardRadiation
+CDE_therapy	state	NonstandardRadiation.AlkChemo
+CDE_therapy	state	NonstandardRadiation.AlkChemoLong
+CDE_therapy	state	NonstandardRadiation.TMZChemo
+CDE_therapy	state	NonstandardRadiation.TMZChemoLong
+CDE_therapy	state	StandardRadiation
+CDE_therapy	state	StandardRadiation.AlkChemo
+CDE_therapy	state	StandardRadiation.AlkChemoLong
+CDE_therapy	state	StandardRadiation.TMZChemo
+CDE_therapy	state	StandardRadiation.TMZChemoLong
+CDE_therapy	state	TMZChemoLong
+CDE_therapy	state	TMZChemoradiation.TMZChemoLong
+CDE_therapy	stateOrder	"AlkChemo","AlkChemoLong","AlkChemoradiation.AlkChemoLong","NonstandardRadiation","NonstandardRadiation.AlkChemo","NonstandardRadiation.AlkChemoLong","NonstandardRadiation.TMZChemo","NonstandardRadiation.TMZChemoLong","StandardRadiation","StandardRadiation.AlkChemo","StandardRadiation.AlkChemoLong","StandardRadiation.TMZChemo","StandardRadiation.TMZChemoLong","TMZChemoLong","TMZChemoradiation.TMZChemoLong"
+CDE_DxAge	shortTitle	age Dx
+CDE_DxAge	longTitle	diagnostic age (Common Data Element)
+CDE_DxAge	valueType	float
+CDE_previously_treated	shortTitle	prev treated
+CDE_previously_treated	longTitle	previously treated (Common Data Element)
+CDE_previously_treated	valueType	category
+CDE_previously_treated	state	FALSE
+CDE_previously_treated	state	TRUE
+CDE_previously_treated	stateOrder	"FALSE","TRUE"
+CDE_sourcesite	shortTitle	source site
+CDE_sourcesite	longTitle	source site (Common Data Element)
+CDE_sourcesite	valueType	float
+CDE_survival_time	shortTitle	survival
+CDE_survival_time	longTitle	survival time (Common Data Element)
+CDE_survival_time	valueType	float
+CDE_vital_status	shortTitle	vital status
+CDE_vital_status	longTitle	vital status (Common Data Element)
+CDE_vital_status	valueType	category
+CDE_vital_status	state	DECEASED
+CDE_vital_status	state	LIVING
+CDE_vital_status	stateOrder	"DECEASED","LIVING"
+CDE_missing	shortTitle	CDE missing
+CDE_missing	longTitle	common data element missing
+CDE_missing	valueType	category
+CDE_missing	state	histological_type,
+CDE_missing	state	vital_status,
+CDE_missing	stateOrder	"histological_type,","vital_status,"
+CDE_missingflag	shortTitle	CDE missing flag
+CDE_missingflag	longTitle	common data element missing flag
+CDE_missingflag	valueType	category
+CDE_missingflag	state	FALSE
+CDE_missingflag	state	TRUE
+CDE_missingflag	stateOrder	"FALSE","TRUE"
+CDE_suspect	shortTitle	CDE suspect
+CDE_suspect	longTitle	common data element suspect
+CDE_suspect	valueType	category
+CDE_suspect	state	,Age<18
+CDE_suspect	state	,daysToRecurrence/Progression>survivalTime
+CDE_suspect	stateOrder	",Age<18",",daysToRecurrence/Progression>survivalTime"
+_anatomical_origin	shortTitle	_anatomical_origin
+_anatomical_origin	longTitle	_anatomical_origin
+_cohort	shortTitle	_cohort
+_cohort	longTitle	_cohort
+_primary_disease	shortTitle	_primary_disease
+_primary_disease	longTitle	_primary_disease
+additional_chemo_therapy	shortTitle	additional_chemo_therapy
+additional_chemo_therapy	longTitle	additional_chemo_therapy
+additional_drug_therapy	shortTitle	additional_drug_therapy
+additional_drug_therapy	longTitle	additional_drug_therapy
+additional_immuno_therapy	shortTitle	additional_immuno_therapy
+additional_immuno_therapy	longTitle	additional_immuno_therapy
+anatomic_organ_subdivision	shortTitle	anatomic_organ_subdivision
+anatomic_organ_subdivision	longTitle	anatomic_organ_subdivision
+bcr_patient_uuid	shortTitle	bcr_patient_uuid
+bcr_patient_uuid	longTitle	bcr_patient_uuid
+chemo_therapy	shortTitle	chemo_therapy
+chemo_therapy	longTitle	chemo_therapy
+days_to_tumor_progression	shortTitle	days_to_tumor_progression
+days_to_tumor_progression	longTitle	days_to_tumor_progression
+days_to_tumor_recurrence	shortTitle	days_to_tumor_recurrence
+days_to_tumor_recurrence	longTitle	days_to_tumor_recurrence
+hormonal_therapy	shortTitle	hormonal_therapy
+hormonal_therapy	longTitle	hormonal_therapy
+immuno_therapy	shortTitle	immuno_therapy
+immuno_therapy	longTitle	immuno_therapy
+patient_id	shortTitle	patient_id
+patient_id	longTitle	patient_id
+pretreatment_history	shortTitle	pretreatment_history
+pretreatment_history	longTitle	pretreatment_history
+targeted_molecular_therapy	shortTitle	targeted_molecular_therapy
+targeted_molecular_therapy	longTitle	targeted_molecular_therapy
+_PATIENT	shortTitle	_PATIENT_ID
+_PATIENT	longTitle	_PATIENT_ID
+_PATIENT	valueType	category
+_INTEGRATION	shortTitle	_SAMPLE_ID
+_INTEGRATION	longTitle	_SAMPLE_ID
+_INTEGRATION	valueType	category

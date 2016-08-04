@@ -1,0 +1,19 @@
+{
+":integrationId": "TCGA.CESC.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.CESC.sampleMap", 
+"anatomical_origin": [
+"Cervix"
+], 
+"primary_disease": "cervical & endocervical cancer", 
+"tags": [
+"cancer"
+], 
+"sample_type": [
+"tumor"
+], 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

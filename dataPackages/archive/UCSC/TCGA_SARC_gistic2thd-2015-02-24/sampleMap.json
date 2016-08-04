@@ -1,0 +1,18 @@
+{
+":integrationId": "TCGA.SARC.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.SARC.sampleMap", 
+"anatomical_origin": [
+"Soft tissue", 
+"Bone"
+], 
+"primary_disease": "sarcoma", 
+"tags": [
+"cancer"
+], 
+"sample_type": "tumor", 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

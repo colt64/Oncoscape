@@ -1,0 +1,19 @@
+{
+":integrationId": "TCGA.PRAD.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.PRAD.sampleMap", 
+"anatomical_origin": [
+"Prostate"
+], 
+"primary_disease": "prostate adenocarcinoma", 
+"tags": [
+"cancer"
+], 
+"sample_type": [
+"tumor"
+], 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

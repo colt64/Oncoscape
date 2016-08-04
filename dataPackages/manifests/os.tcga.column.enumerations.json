@@ -232,8 +232,7 @@
 	"os.class.tcgaNumeric": {
 		"age_allergy_animals_insects": ["allergy_animals_insects_dx_age"],
 		"age_allergy_food": ["allergy_food_dx_age"],
-		"age_at_diagnosis": ["age_at_diagnosis"],
-		"age_at_initial_pathologic_diagnosis": ["age_at_initial_pathologic_diagnosis"],
+		"age_at_diagnosis": ["age_at_diagnosis","age_at_initial_pathologic_diagnosis"], //probably needs to be separate!!!
 		"bcg_tx_90_days_prior_to_resection": ["bcg_tx_90_days_prior_to_resection"],
 		"carbon_monoxide_diffusion": ["carbon_monoxide_diffusion_dlco"],
 		"days_hydroxyurea_tx": ["hydroxyurea_tx_days"],

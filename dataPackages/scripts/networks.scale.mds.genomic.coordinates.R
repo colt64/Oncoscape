@@ -4,6 +4,7 @@ library(jsonlite)
 printf = function (...) print (noquote (sprintf (...)))
 options(stringsAsFactors=FALSE)
 
+<<<<<<< HEAD
 commands <- c("chromosomeScaled", "mdsScaled", "pcaScaled", "geneScaled")
 #commands <- c("chromosomeScaled", "geneScaled")
 #commands <- c("chromosomeScaled", "pcaScaled", "mdsScaled")
@@ -11,6 +12,11 @@ scaleFactor <- 100000
 date <- as.character(Sys.Date())
 
 source("common.R")
+=======
+commands <- c("chromosomeScaled", "mdsScaled", "geneScaled")
+scaleFactor <- 10000
+date <- Sys.Date()
+>>>>>>> develop
 
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0)
@@ -18,7 +24,11 @@ if(length(args) != 0)
 
 #--------------------------------------------------------------#
 
+<<<<<<< HEAD
 mds_manifest_file <- "../manifests/os.mds.manifest.json"
+=======
+mds_manifest_file <- "../manifests/os.mds.network.2016-06-27.manifest.json"
+>>>>>>> develop
 hg19_manifest_file <- "../manifests/os.hg19.manifest.json"
 
 mds_scaled_dir <- "../data/molecular/mds/scaled/"
@@ -27,6 +37,74 @@ hg19_dir <- "../data/molecular/hg19/"
 Manifest_hg19 <- fromJSON(hg19_manifest_file)
 Manifest_mds  <- fromJSON(mds_manifest_file)
 
+<<<<<<< HEAD
+=======
+#---------------------------------------------------------
+get.new.collection.index <- function(Manifest, datasetName, dataTypeName){
+  
+  if(nrow(Manifest) == 0) return(1)
+  
+  dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
+  if(nrow(dataObj) == 0) return(1)
+  
+  return(nrow(dataObj$collections[[1]]) +1)
+}
+#---------------------------------------------------------
+add.new.collection <- function(Manifest, datasetName, dataTypeName, collection){
+  
+  if(nrow(Manifest) == 0){	
+    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
+    newCollection$collections <- list(collection)
+    Manifest <- newCollection
+    return(Manifest)
+  }
+  
+  dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
+  if(nrow(dataObj) == 1){
+    newCollection <- list(rbind(dataObj$collections[[1]],collection))
+    Manifest[Manifest$dataset==datasetName & Manifest$dataType ==dataTypeName,"collections"] <- list(newCollection)
+    return(Manifest)
+  }
+  if(nrow(dataObj) == 0){	
+    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
+    newCollection$collections <- list(collection)
+    Manifest <- rbind(Manifest, newCollection)
+    return(Manifest)
+  }
+  stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), datasetName, dataTypeName))
+  
+}
+#----------------------------------------------------------------------------------------------------
+### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
+os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", "JSON")){
+
+  if(!dir.exists(directory))
+    dir.create(file.path(directory), recursive=TRUE)
+  
+  if(!grepl("/$", directory)) directory <- paste(directory, "/", sep="")
+  outFile = paste(directory, file, sep="")
+
+  
+  # Write Tab Delimited
+  if("tsv" %in% format)
+    write.table(df, file=paste(outFile,".tsv", sep = ""), quote=F, sep="\t")
+  
+  # Write CSV Delimited
+  if("csv" %in% format)
+    write.csv(df, file=paste(outFile,".csv",sep = ""), quote = F)
+  
+  # Write RData File
+  if("RData" %in% format)
+    save(df, file=paste(outFile,".RData", sep = "") )
+  
+  # Write JSON File
+  if("JSON" %in% format)
+  write(toJSON(df, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
+  
+  # Return DataFrame For Chaining
+  return(df)
+}
+>>>>>>> develop
 
 #--------------------------------------------------------------#
 getChromosomeOffsets <- function(chromosomes, chrLengths, pLength, scaleFactor=1000){
@@ -62,6 +140,7 @@ getChromosomePositions <- function(chromosomes, chrCoordinates){
 	return(chrPos)
 
 }
+<<<<<<< HEAD
 #--------------------------------------------------------------#
 scaleSamplesToChromosomes <- function(mtx, chrDim, dim.names=c("x", "y", "z")){
   
@@ -85,6 +164,8 @@ scaleSamplesToChromosomes <- function(mtx, chrDim, dim.names=c("x", "y", "z")){
   names(list.coord) <- rownames(mtx)
   return(list.coord)
 }
+=======
+>>>>>>> develop
 
 #--------------------------------------------------------------#
 scaleSamplesToChromosomes <- function(mtx.xy, chrDim){
@@ -105,6 +186,7 @@ scaleSamplesToChromosomes <- function(mtx.xy, chrDim){
 	mtx.xy <- mtx.xy * scale
 	mtx.xy <- round(mtx.xy)
 
+<<<<<<< HEAD
 	list.xy <- lapply(rownames(mtx.xy), function(name){
 	  x<- mtx.xy[name,"x"]
 	  y<- -1*  mtx.xy[name,"y"]
@@ -112,6 +194,9 @@ scaleSamplesToChromosomes <- function(mtx.xy, chrDim){
 	})
 	names(list.xy) <- rownames(mtx.xy)
 	return(list.xy)
+=======
+	return(mtx.xy)
+>>>>>>> develop
 }
 #--------------------------------------------------------------#
 scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
@@ -119,7 +204,11 @@ scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
 	genePos_xy <- lapply(genePos, function(gene){
 		x <- chrCoordinates[gene[1], "xOffset"]
 		y <- chrCoordinates[gene[1], "yOffset"] + as.numeric(gene[2])/scaleFactor
+<<<<<<< HEAD
 		data.frame(x=round(x),y=round(y))
+=======
+		c(x,y)
+>>>>>>> develop
 	})
 
 	return(genePos_xy)	
@@ -129,7 +218,11 @@ scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
 get.chromosome.dimensions <- function(manifest, scaleFactor=1000){
   
   chrPosObj <- subset(manifest, dataType=="chromosome")$collections[[1]]
+<<<<<<< HEAD
   chrPosScaledObj <- chrPosObj[which(sapply(chrPosObj$process, function(proc){proc["calculation"] == "scaled" & proc["input"] == scaleFactor})),]
+=======
+  chrPosScaledObj <- chrPosObj[sapply(chrPosObj$process, function(proc){all(proc == c("scaled", scaleFactor))}),]
+>>>>>>> develop
 
   chrCoord <- fromJSON(paste(chrPosScaledObj$directory, chrPosScaledObj$file, ".json", sep=""))
   chrPos_xy <-t(sapply(chrCoord, function(chr){ return(c(chr$x, chr$q))}))
@@ -161,6 +254,7 @@ run.scale.chr.genes <- function(manifest, scaleFactor=10000){
 	chrPos <- getChromosomePositions(chromosomes, chrSpecs$chrCoordinates)
 	genePos_scaled <- scaleGenesToChromosomes(genePos, chrSpecs$chrCoordinates, scaleFactor=scaleFactor)
 	
+<<<<<<< HEAD
 	## create collections
 	process <- data.frame(calculation="scaled", input=scaleFactor); processName <- paste(process, collapse="-")
 	## Chr Positions
@@ -171,10 +265,35 @@ run.scale.chr.genes <- function(manifest, scaleFactor=10000){
 	parent <- list(c(geneObj$dataset, geneObj$dataType, genePosObj$id), c(chrLenObj$dataset, chrLenObj$dataType, chrLenObj$id))
 	manifest <- save.collection(Manifest=manifest, dataset=geneObj$dataset, dataType=geneObj$dataType, result=genePos_scaled,
 	                            parent=list(parent), process=list(process),processName=processName, outputDirectory=hg19_dir)
+=======
+	## create collection: Chromosome Positions
+	process <- c("scaled", scaleFactor); processName <- paste(process, collapse="-")
+	## Chromosome Positions
+	index_chr <- get.new.collection.index(manifest, chromObj$dataset, chromObj$dataType)
+	outfile_chr <- paste(chromObj$dataset, chromObj$dataType, index_chr, processName, sep="_")
+	parent <- list(c(chromObj$dataset, chromObj$dataType, chrLenObj$id), c(centObj$dataset, centObj$dataType, centPosObj$id))
+	collection_chr <- data.frame(id=index_chr, date=date, directory=hg19_dir, file=outfile_chr)
+	collection_chr$parent <- list(parent)
+	collection_chr$process <- list(process)
+	## Gene Positions
+	index_gene <- get.new.collection.index(manifest, geneObj$dataset, geneObj$dataType)
+	outfile_gene <- paste(geneObj$dataset, geneObj$dataType, index_gene, processName, sep="_")
+	parent <- list(c(geneObj$dataset, geneObj$dataType, genePosObj$id), c(chrLenObj$dataset, chrLenObj$dataType, chrLenObj$id))
+	collection_gene <- data.frame(id=index_gene, date=date, directory=hg19_dir, file=outfile_gene)
+	collection_gene$parent <- list(parent)
+	collection_gene$process <- list(process)
+	
+	#save and update manifest
+	manifest <- add.new.collection(manifest,chromObj$dataset, chromObj$dataType, collection_chr)
+	os.data.save(chrPos, hg19_dir, outfile_chr, format="JSON")
+	manifest <- add.new.collection(manifest, geneObj$dataset, geneObj$dataType, collection_gene)
+	os.data.save(genePos_scaled, hg19_dir, outfile_gene, format="JSON")
+>>>>>>> develop
 
 	return(manifest)
 }	
 #--------------------------------------------------------------#
+<<<<<<< HEAD
 run.batch.pca <- function(manifest,chrDim, scaleFactor=10000){
   
   pca_Files <- subset(manifest, dataType=="pcaScores")
@@ -224,6 +343,8 @@ run.batch.pca <- function(manifest,chrDim, scaleFactor=10000){
 }
 
 #--------------------------------------------------------------#
+=======
+>>>>>>> develop
 run.batch.mds <- function(manifest,chrDim, scaleFactor=10000){
 
 		mds_Files <- subset(manifest, dataType=="mds")
@@ -235,7 +356,11 @@ run.batch.mds <- function(manifest,chrDim, scaleFactor=10000){
 			dataType <- mdsFile$dataType
 			collections <- mdsFile$collections[[1]]
 			
+<<<<<<< HEAD
 			orig_mds <- collections[sapply(collections$process, function(proc){"mds" %in% proc$calculation }),]
+=======
+			orig_mds <- collections[sapply(collections$process, function(proc){"mds" %in% proc }),]
+>>>>>>> develop
 			
 			for(j in 1:nrow(orig_mds)){
 				dataObj <- orig_mds[j,]
@@ -243,6 +368,7 @@ run.batch.mds <- function(manifest,chrDim, scaleFactor=10000){
 				ptList <- fromJSON(paste(dataObj$directory, dataObj$file,".json", sep=""))
 				mtx <- t(sapply(ptList, function(id){ return(c(id$x, id$y))}))
 				colnames(mtx) <- c("x", "y")
+<<<<<<< HEAD
 				mtx[,"y"] <- -1 * mtx[,"y"]
 				list_scaled <- scaleSamplesToChromosomes(mtx, chrDim)
 
@@ -251,6 +377,22 @@ run.batch.mds <- function(manifest,chrDim, scaleFactor=10000){
 				parent <- list(c(datasetName, dataType, dataObj$id))
 				manifest <- save.collection(Manifest=manifest, dataset=datasetName, dataType=dataType, result=list_scaled,
 				                            parent=parent, process=list(process),processName=processName, outputDirectory=mds_scaled_dir)
+=======
+				mtx_scaled <- scaleSamplesToChromosomes(mtx, chrDim)
+				colnames(mtx_scaled) <- c("x", "y")
+				
+				index <- get.new.collection.index(manifest, datasetName, dataType)
+				process= c("scaled", scaleFactor);				processName <- paste(process, collapse="-")
+				file= paste(datasetName, dataType, index, processName, sep="_")
+				parent <- list(c(datasetName, dataType, dataObj$id))
+				
+				collection <- data.frame(id=index, date=date,directory=mds_scaled_dir, file=file)
+				collection$parent <- list(parent)
+				collection$process <- list(process)
+
+				manifest <- add.new.collection(manifest, datasetName, dataType, collection)
+				os.data.save(mtx_scaled, mds_scaled_dir, file, format="JSON")
+>>>>>>> develop
 			}
 		}
 		
@@ -277,11 +419,25 @@ run.batch.genesets <- function(manifest, scaleFactor=10000){
 			map_genes <- intersect(genes, names(genePos_scaled))
 			genesetPos <- genePos_scaled[map_genes]
 			
+<<<<<<< HEAD
 			process <- data.frame(calculation="scaled", scaleFactor=scaleFactor, geneset=genesetName); 
 			processName <- paste(process, collapse="-")
 			parent <- list(c(geneObj$dataset, geneObj$dataType, genePosObj$id),c(genesetObj$dataset, genesetObj$dataType, genesetSymObj$id))
 			manifest <- save.collection(Manifest=manifest, dataset=geneObj$dataset, dataType=geneObj$dataType, result=genesetPos,
 			                            parent=list(parent), process=list(process),processName=processName, outputDirectory=hg19_dir)
+=======
+			process <- c("scaled", scaleFactor, genesetName); processName <- paste(process, collapse="-")
+			
+			index <- get.new.collection.index(manifest,geneObj$dataset, geneObj$dataType)
+			file= paste(geneObj$dataset, geneObj$dataType, index, processName, sep="_")
+			parent <- list(c(geneObj$dataset, geneObj$dataType, genePosObj$id),c(genesetObj$dataset, genesetObj$dataType, genesetSymObj$id))
+			collection <- data.frame(id=index, date=date,directory=hg19_dir, file=file)
+			collection$parent <- list(parent)
+			collection$process <- list(process)
+
+			manifest <- add.new.collection(manifest, geneObj$dataset, geneObj$dataType, collection)
+			os.data.save(genesetPos, hg19_dir, file, format="JSON")
+>>>>>>> develop
 		}	
 		
 		return(manifest)
@@ -289,6 +445,7 @@ run.batch.genesets <- function(manifest, scaleFactor=10000){
 
 
 #--------------------------------------------------------------#
+<<<<<<< HEAD
 if("chromosomeScaled" %in% commands) {
   Manifest_hg19<- run.scale.chr.genes(Manifest_hg19,scaleFactor)
   os.data.save(Manifest_hg19,"../manifests/", "os.hg19.scaled.manifest", format="JSON")
@@ -309,3 +466,16 @@ if("geneScaled" %in% commands) {
   os.data.save(Manifest_hg19,"../manifests/", "os.hg19.scaled.manifest", format="JSON")
 }
 
+=======
+if("chromosomeScaled" %in% commands) 
+  Manifest_hg19<- run.scale.chr.genes(Manifest_hg19,scaleFactor)
+if("mdsScaled" %in% commands){
+   chrDim <- get.chromosome.dimensions(Manifest_hg19, scaleFactor) 
+   Manifest_mds <- run.batch.mds(Manifest_mds,chrDim, scaleFactor)
+}
+if("geneScaled" %in% commands) 
+  Manifest_hg19<- run.batch.genesets(Manifest_hg19, scaleFactor)
+
+os.data.save(Manifest_hg19,"../manifests/", "os.hg19.manifest", format="JSON")
+os.data.save(Manifest_mds,"../manifests/", paste("os.mds.network", date, "manifest", sep="."), format="JSON")
+>>>>>>> develop

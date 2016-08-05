@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "follow_up_v1.0",
+    "inputFile": "nationwidechildrens.org_clinical_follow_up_v1.0_prad.txt",
+    "disease": "prad",
+    "source": "tcga",
+    "data": {}
+  }
+]

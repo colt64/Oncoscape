@@ -77,6 +77,7 @@
 
             // View Model
             var vm = (function(vm, osApi) {
+            debugger;
                 vm.datasource = osApi.getDataSource();
                 vm.geneSets = [];
                 vm.geneSet = null;
@@ -126,7 +127,7 @@
                 d3Chart
                     .attr("width", '100%')
                     .attr("height", layout.height);
-                    
+
                 layout.xScale = d3.scale.linear()
                     .domain([-layout.xMax, layout.xMax])
                     .range([0, layout.width]).nice();

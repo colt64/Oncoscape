@@ -9,7 +9,7 @@ library(org.Hs.eg.db)
 cytoband_url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz"
 chromosomes <- c(seq(1:22), "X", "Y")
 date <- as.character(Sys.Date())
-scaleFactor <- 100000 
+scaleFactor <- 10000
 
 #----------------------------------------------------------------------------------------------------
 getChromosomeLengths <- function(){
@@ -203,9 +203,9 @@ run.scale.chr.genes <- function(scaleFactor=10000){
 #mongo <- connect.to.mongo(host="oncoscape-dev-db1.sttrcancer.io", username="oncoscape", password=password)
 mongo <- connect.to.mongo()
 
-	saveChromosome_Coordinates()
-	saveGene_Coordinates()
-	saveCentromere_Coordinates(cytoband_url)	
+#	saveChromosome_Coordinates()
+#	saveGene_Coordinates()
+#	saveCentromere_Coordinates(cytoband_url)	
 	
 	run.scale.chr.genes(scaleFactor)
 	

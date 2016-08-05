@@ -212,7 +212,7 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
       data.list$location	<- c(data.list$location, add.collection)
     } else {data.list$location <- add.collection }
     
-  }else if(dataType %in% c("genesets")){
+  }else if(dataType %in% c("genesets", "colorCategory")){
     add.collection <- list(data.frame(source=source, type=dataType, collection=collection.uniqueName))
     if("category" %in% names(data.list)){
       data.list$category <- c(data.list$category, add.collection)
@@ -294,7 +294,9 @@ scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
 #--------------------------------------------------------------#
 save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
   
-  geneObj<- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="genes", process=list(scale=scaleFactor)))[[1]]
+  geneObj<- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="genes"))
+  matchScale <- which(sapply(geneObj, function(coll) return("scale" %in% names(coll$process[[1]]) && coll$process[[1]][["scale"]]==scaleFactor)))
+  geneObj <- geneObj[[matchScale]]
   genePos_scaled <- mongo.find.all(mongo, paste("oncoscape",geneObj$collection, sep="."))[[1]]
   
   genesetObj <-  mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19",dataType="genesets"))[[1]]
@@ -313,4 +315,19 @@ save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
   
   save.collection(mongo, dataset=geneObj$dataset, dataType="genesets",source=geneObj$source, result=result,
                   parent=parent, process=process,processName=processName)
+}
+
+#--------------------------------------------------------------#
+save.batch.cluster.scaled.pos <- function(scaleFactor=100000){
+  
+  mds_colls<- mongo.find.all(mongo, "oncoscape.manifest", list(dataType="mds", scale=NA))
+  chrDim <- get.chromosome.dimensions(scaleFactor) 
+  
+  for(collection in mds_colls)
+    coll <- mongo.find.all(mongo, paste("oncoscape",collection$collection, sep="."))[[1]]
+    mtx <- convert.to.mtx(coll, format="as.numeric");
+    mds.list <- scaleSamplesToChromosomes(mtx, chrDim, dim.names=c("x", "y"))
+    result <- list(type="cluster", dataset=collection$dataset, name=outputName, scale=scaleFactor, data=mds.list)
+    save.collection(mongo, dataset=collection$dataset, dataType=collection$dataType,source=collection$source, result=list(result),
+                  parent=collection$parent, process=list(scale=scaleFactor),processName=collection$processName)
 }

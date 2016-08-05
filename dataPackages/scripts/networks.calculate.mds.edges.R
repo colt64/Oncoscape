@@ -215,8 +215,7 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
 	if(datasetName == "laml"){        regex = "-03$|-09$";
 	} else if(datasetName == "luad"){ regex = "TCGA-(17)^-\\d{4}-01$" }
 	process$regex=regex; process$threshold=threshold
-	process <- list(process)
-	
+
 	if(datasetName == "brca" | datasetName == "brain")  threshold = -1e-04
   
  
@@ -251,12 +250,13 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
 		  names(mds.list) <- rownames(sample_similarity)
 
 		  process$scale = NA
+		  process <- list(process)
 			result <- list(type="cluster", dataset=tbl1$dataset, name=outputName, scale=NA, data=mds.list)
 			save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source), result=list(result),
 			                            parent=parent, process=process,processName=outputName)
 
 			if(!is.na(scaleFactor)){
-			    process$scale = scaleFactor
+			    process[[1]]$scale = scaleFactor
 			    chrDim <- get.chromosome.dimensions(scaleFactor) 
 			  mds.list <- scaleSamplesToChromosomes(sample_similarity, chrDim, dim.names=c("x", "y"))
 			  result <- list(type="cluster", dataset=tbl1$dataset, name=outputName, scale=scaleFactor, data=mds.list)

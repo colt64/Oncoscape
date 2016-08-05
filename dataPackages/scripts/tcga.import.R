@@ -280,7 +280,7 @@ add.category.fromFile <- function(file, name, col.name, dataset, type){
 os.save.categories <- function(datasets = c("brain")){
   
   color.categories <- list()
-  type= "colorCategory"
+  type= "color"
   
   if("gbm" %in% datasets){  
 

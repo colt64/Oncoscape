@@ -26,32 +26,32 @@
         function getDataSources(){
             return _dataSources;
         }
-        function getDataSource(){ 
-            return _dataSource; 
+        function getDataSource(){
+            return _dataSource;
         }
         function setDataSource(value){
-        
             if (angular.isObject(value)){
                 if (_dataSource != value){
                     _dataSource = value;
                     onDataSource.dispatch(_dataSource);
-                } 
+                }
             }else if (angular.isString(value)){
                 if (_dataSource.disease!=value){
                     if (_dataSource != value){
+                            debugger;
                         _dataSource = _dataSources.filter(function(v){ v.disease==disease}, {key:value})[0]
                         onDataSource.dispatch(_dataSource);
-                    } 
-                    
+                    }
+
                 }
             }
         }
 
-        query("lookup_oncoscape_datasources",{beta:false}).then(function(response){ 
-            _dataSources = response.data; 
-                            
+        query("lookup_oncoscape_datasources",{beta:false}).then(function(response){
+            _dataSources = response.data;
+
         });
-        
+
         /*** User Api ***/
         function userApi(){
 
@@ -96,7 +96,7 @@
                     if (res.data.success) {
                         _user.authenticated = true;
                         _user.token = res.data.token;
-                        _user.datasets = res.data.datasets;                        
+                        _user.datasets = res.data.datasets;
                         onLogin.dispatch(_user);
                     } else {
                         _user.authenticated = false;
@@ -124,8 +124,8 @@
                 angular.element(".loader-modal").hide();
             }
         }
-        
-       
+
+
         function queryString(table, query){
             return osHttp.queryString({
                 table: table,

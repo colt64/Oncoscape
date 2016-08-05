@@ -7,10 +7,17 @@ const uuid = require('node-uuid');
 const favicon = require('serve-favicon');
 
 
+<<<<<<< HEAD
 mongoose.connect('mongodb://localhost/oncoscape');
 
 /*mongoose.connect(
     'mongodb://oncoscape-dev-db1.sttrcancer.io:27017,oncoscape-dev-db2.sttrcancer.io:27017,oncoscape-dev-db3.sttrcancer.io:27017/oncoscape?authSource=admin', {
+=======
+
+//mongoose.connect('mongodb://localhost/os');
+mongoose.connect(
+    'mongodb://oncoscape-dev-db1.sttrcancer.io:27017,oncoscape-dev-db2.sttrcancer.io:27017,oncoscape-dev-db3.sttrcancer.io:27017/BnB?authSource=admin', {
+>>>>>>> db3bee47c5cfd772e9ef861eed548b4ff3dfa7fb
         db: {
             native_parser: true
         },
@@ -24,7 +31,10 @@ mongoose.connect('mongodb://localhost/oncoscape');
         user: 'oncoscapeRead',
         pass: 'i1f4d9botHD4xnZ'
     });
+<<<<<<< HEAD
 */
+=======
+>>>>>>> db3bee47c5cfd772e9ef861eed548b4ff3dfa7fb
 
 var app = express();
 
@@ -54,13 +64,16 @@ app.use(function(req, res, next) { // Diable Cors
     next();
 });
 
+
 app.get('/ping', function(req, res){
   res.send('pong');
 });
 
 // Mongoose Gateway Route
 app.get('/api/:collection*', function(req, res, next) {
-
+    
+ 
+    
         mongoose.connection.db.collection(req.params.collection, function(err, collection) {
             if (err) {
                 res.status(err.code).send(err.messages);

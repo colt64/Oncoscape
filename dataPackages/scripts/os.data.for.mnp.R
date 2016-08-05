@@ -11,8 +11,6 @@ source("common.R")
 # Configuration -----------------------------------------------------------
 
 date <- as.character(Sys.Date())
-commands <- c("patient", "pca", "chromosome")
-#commands <- c("patient", "pca")
 scaleFactor = 100000
 
 args = commandArgs(trailingOnly=TRUE)
@@ -29,7 +27,11 @@ os.save.ptLayouts <- function(scaleFactor=100000){
 	  scale <- collection$process[[1]]$scale
 	  if(is.null(scale) || scale != scaleFactor) next;
 	  data_coll <- mongo.find.one(mongo, paste("oncoscape", collection$collection, sep="."))
-    mongo.insert(mongo, "oncoscape.render_patient", data_coll)
+    if(length(data_coll)==0){
+      print(paste("ERROR: collection not found - ", collection$collection, sep=""))
+      next;
+    }
+	   mongo.insert(mongo, "oncoscape.render_patient", data_coll)
 	}
 }
 
@@ -47,27 +49,37 @@ os.copy.chromosome.layout <- function(scaleFactor=100000){
   mongo.insert(mongo, "oncoscape.render_chromosome", data_coll)
 
   collection <- mongo.find.all(mongo, "oncoscape.manifest", 
-                               query=list(dataset="hg19", dataType="genesets", scale=scaleFactor))[[1]]
+                               query=list(dataset="hg19", dataType="genesets", process=list(scale=scaleFactor)))[[1]]
   
   data_coll <- mongo.find.one(mongo, paste("oncoscape", collection$collection, sep="."))
   mongo.insert(mongo, "oncoscape.render_chromosome", data_coll)
   
 }
 #----------------------------------------------------------------------------------------------------
-os.save.pca <- function(scaleFactor=100000){
+os.save.pca <- function(scaleFactor=NA){
   
   datatypeName= "cluster"
   pca_colls <- mongo.find.all(mongo, "oncoscape.manifest", 
                               query=list(dataType="pcaScores"))
   
   for(collection in pca_colls){
-    if(collection$process[[1]]$scale != scaleFactor) next;
+    scale <- collection$process[[1]]$scale
+    if(is.na(scaleFactor)){
+      if(is.null(scale)){
+        data_coll <- mongo.find.one(mongo, paste("oncoscape", collection$collection, sep="."))
+        mongo.insert(mongo, "oncoscape.render_pca", data_coll)
+      }
+      next;
+    }
+    if(is.null(scale) ||is.na(scale) || scale != scaleFactor) next;
     data_coll <- mongo.find.one(mongo, paste("oncoscape", collection$collection, sep="."))
     mongo.insert(mongo, "oncoscape.render_pca", data_coll)
   }
 }
 
 ##----------------------------
+#commands <- c("patient", "pca", "chromosome")
+commands <- c("pca")
 
 mongo <- connect.to.mongo()
 

@@ -300,7 +300,7 @@ save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
   genesetObj <-  mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19",dataType="genesets"))[[1]]
   genesets <- mongo.find.all(mongo, paste("oncoscape",genesetObj$collection, sep="."))
   
-  process <- list(calculation="scaled", scaleFactor=scaleFactor); 
+  process <- list(scale=scaleFactor); 
   processName <- paste(process, collapse="-")
   parent <- list(geneObj$`_id`,genesetObj$`_id`)
   

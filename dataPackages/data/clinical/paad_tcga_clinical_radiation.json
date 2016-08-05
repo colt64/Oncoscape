@@ -1,0 +1,10 @@
+[
+  {
+    "dataType": "clinical",
+    "process": "radiation",
+    "inputFile": "nationwidechildrens.org_clinical_radiation_paad.txt",
+    "disease": "paad",
+    "source": "tcga",
+    "data": {}
+  }
+]

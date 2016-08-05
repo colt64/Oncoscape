@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
->>>>>>> HoBo
 
 # Configuration -----------------------------------------------------------
 rm(list = ls(all = TRUE))
@@ -16,41 +9,7 @@ library(org.Hs.eg.db)
 cytoband_url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz"
 chromosomes <- c(seq(1:22), "X", "Y")
 date <- as.character(Sys.Date())
-<<<<<<< HEAD
-scaleFactor <- 100000 
-=======
 scaleFactor <- 10000
-<<<<<<< HEAD
-=======
-library(org.Hs.eg.db)
-library(jsonlite)
-
-#--------------------------------- make plot data -----------------------------#
-directory <- "../molecular_data/hg19"
-chr_file <- "chromosome_lengths_hg19"
-gene_file <- "gene_symbol_min_abs_start_hg19"
-cent_file <- "centromere_position_hg19"
-cytoband_url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz"
-
-chromosomes <- c(seq(1:22), "X", "Y")
-
-#----------------------------------------------------------------------------------------------------
-save.json <- function(dataObj, directory, file)
-{
-  if(!dir.exists(directory))
-    dir.create(file.path(directory), recursive=TRUE)
-  
-  if(!grepl("/$", directory)) directory <- paste(directory, "/", sep="")
- 
-  outFile = paste(directory, file, sep="")
-  write(toJSON(dataObj, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
-  
-} # saveGraph
-
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
->>>>>>> HoBo
 
 #----------------------------------------------------------------------------------------------------
 getChromosomeLengths <- function(){
@@ -94,30 +53,11 @@ getGenePositions_Symbol <- function(){
 }
 
 #----------------------------------------------------------------------------------------------------
-<<<<<<< HEAD
 saveChromosome_Coordinates <- function(){
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-saveChromosome_Coordinates <- function(){
-=======
-saveChromosome_Coordinates <- function(out_file){
->>>>>>> develop
-=======
-saveChromosome_Coordinates <- function(){
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
->>>>>>> HoBo
-	
+
 	chrLengths <- getChromosomeLengths()
 	df<-data.frame(t(chrLengths))
 	names(df) <- names(chrLengths)
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
->>>>>>> HoBo
 
 	result = list(dataset="hg19", type="chromosome", process="length", data=df)
 	
@@ -126,18 +66,6 @@ saveChromosome_Coordinates <- function(){
 }	
 #----------------------------------------------------------------------------------------------------
 saveGene_Coordinates <- function(){
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-	save.json(df, directory, file=out_file)
-}	
-#----------------------------------------------------------------------------------------------------
-saveGene_Coordinates <- function(out_file){
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
->>>>>>> HoBo
 
 	genePos <- getGenePositions_Symbol()
 		# list of all start locations for each gene symbol
@@ -156,13 +84,6 @@ saveGene_Coordinates <- function(out_file){
 	genePos_min[notMapped] <- NULL
 		# removes gene positions that map to chromosomes outside our list (ie 1-22, X, Y)
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
->>>>>>> HoBo
 	process = list("position", "min", "abs", "start")
 	processName = paste(unlist(process), collapse="-")
 	result = list(dataset="hg19", type="genes", process=process, data=genePos_min)
@@ -173,19 +94,6 @@ saveGene_Coordinates <- function(out_file){
 }
 #----------------------------------------------------------------------------------------------------
 saveCentromere_Coordinates <- function(cytoband_url){
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-	save.json(genePos_min, directory, out_file)
-
-}
-#----------------------------------------------------------------------------------------------------
-saveCentromere_Coordinates <- function(cytoband_url, out_file){
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
->>>>>>> HoBo
 	
 	temp <- tempfile()
 	download.file(cytoband_url,temp)
@@ -207,13 +115,6 @@ saveCentromere_Coordinates <- function(cytoband_url, out_file){
 	df<-data.frame(t(centromere))
 	names(df) <- names(centromere)
 	
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
->>>>>>> HoBo
 	result = list(dataset="hg19", type="centromere", process="position", data=df)
 	
 	save.collection(mongo, dataset="hg19", dataType="centromere", source="orgHs",
@@ -302,36 +203,13 @@ run.scale.chr.genes <- function(scaleFactor=10000){
 #mongo <- connect.to.mongo(host="oncoscape-dev-db1.sttrcancer.io", username="oncoscape", password=password)
 mongo <- connect.to.mongo()
 
-<<<<<<< HEAD
-	saveChromosome_Coordinates()
-	saveGene_Coordinates()
-	saveCentromere_Coordinates(cytoband_url)	
-=======
+
 #	saveChromosome_Coordinates()
 #	saveGene_Coordinates()
 #	saveCentromere_Coordinates(cytoband_url)	
->>>>>>> HoBo
 	
 	run.scale.chr.genes(scaleFactor)
 	
 close.mongo(mongo)
 
-
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-	save.json(df, directory, out_file)
-}
-#----------------------------------------------------------------------------------------------------
-
-	saveChromosome_Coordinates(chr_file)
-	saveGene_Coordinates(gene_file)
-	saveCentromere_Coordinates(cytoband_url, cent_file)	
-	
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
->>>>>>> HoBo
 	

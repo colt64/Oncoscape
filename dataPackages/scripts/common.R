@@ -111,10 +111,7 @@ collection.exists <- function(mongo, dataset, dataType,source,processName){
   sourceName <- paste(unlist(source), collapse="-")
 
   collection.uniqueName <- paste(dataset, dataType, sourceName, processName, sep="_")
-<<<<<<< HEAD
-=======
   collection.uniqueName <- gsub("\\s+", "", tolower(collection.uniqueName))
->>>>>>> HoBo
   collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
   if(mongo.count(mongo, collection.ns) != 0){
     print(paste(collection.uniqueName, " already exists.", sep=""))
@@ -152,11 +149,7 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   
   pass <- lapply(result, function(el){mongo.insert(mongo, collection.ns, as.list(el))})
   if(!all(unlist(pass))){
-<<<<<<< HEAD
-    print("ERROR: result not inserted into mongodb.")
-=======
     print(paste("ERROR: result not inserted into mongodb: ", collection.uniqueName, sep=""))
->>>>>>> HoBo
     return()
   }
   
@@ -193,17 +186,11 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
     
   }else if(dataType %in% c("edges")){
     #update edges
-<<<<<<< HEAD
-    add.collection <- list(data.frame(name=process$geneset,edges=collection.uniqueName, 
-                           patientWeights=paste(dataset, "ptDegree", source, processName, sep="_"), 
-                           genesWeights=paste(dataset, "geneDegree", source, processName, sep="_")))
-=======
     ptweights   <- gsub("\\s+", "", tolower(paste(dataset, "ptDegree", source, processName, sep="_")))
     geneweights <- gsub("\\s+", "", tolower(paste(dataset, "geneDegree", source, processName, sep="_")))
     add.collection <- list(data.frame(name=process$geneset,edges=collection.uniqueName, 
                            patientWeights=ptweights, 
                            genesWeights=geneweights))
->>>>>>> HoBo
     if("edges" %in% names(data.list)){
       data.list$edges	<- c(data.list$edges, add.collection)
     } else {data.list$edges <- add.collection }
@@ -227,11 +214,7 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
       data.list$location	<- c(data.list$location, add.collection)
     } else {data.list$location <- add.collection }
     
-<<<<<<< HEAD
-  }else if(dataType %in% c("genesets")){
-=======
   }else if(dataType %in% c("genesets", "color")){
->>>>>>> HoBo
     add.collection <- list(data.frame(source=source, type=dataType, collection=collection.uniqueName))
     if("category" %in% names(data.list)){
       data.list$category <- c(data.list$category, add.collection)
@@ -313,23 +296,15 @@ scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
 #--------------------------------------------------------------#
 save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
   
-<<<<<<< HEAD
-  geneObj<- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="genes", process=list(scale=scaleFactor)))[[1]]
-=======
   geneObj<- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="genes"))
   matchScale <- which(sapply(geneObj, function(coll) return("scale" %in% names(coll$process[[1]]) && coll$process[[1]][["scale"]]==scaleFactor)))
   geneObj <- geneObj[[matchScale]]
->>>>>>> HoBo
   genePos_scaled <- mongo.find.all(mongo, paste("oncoscape",geneObj$collection, sep="."))[[1]]
   
   genesetObj <-  mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19",dataType="genesets"))[[1]]
   genesets <- mongo.find.all(mongo, paste("oncoscape",genesetObj$collection, sep="."))
   
-<<<<<<< HEAD
-  process <- list(calculation="scaled", scaleFactor=scaleFactor); 
-=======
   process <- list(scale=scaleFactor); 
->>>>>>> HoBo
   processName <- paste(process, collapse="-")
   parent <- list(geneObj$`_id`,genesetObj$`_id`)
   
@@ -343,8 +318,6 @@ save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
   save.collection(mongo, dataset=geneObj$dataset, dataType="genesets",source=geneObj$source, result=result,
                   parent=parent, process=process,processName=processName)
 }
-<<<<<<< HEAD
-=======
 
 #--------------------------------------------------------------#
 save.batch.cluster.scaled.pos <- function(scaleFactor=100000){
@@ -360,4 +333,3 @@ save.batch.cluster.scaled.pos <- function(scaleFactor=100000){
     save.collection(mongo, dataset=collection$dataset, dataType=collection$dataType,source=collection$source, result=list(result),
                   parent=collection$parent, process=list(scale=scaleFactor),processName=collection$processName)
 }
->>>>>>> HoBo

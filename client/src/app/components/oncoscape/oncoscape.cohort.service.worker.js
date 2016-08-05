@@ -31,7 +31,7 @@ var patientData = [];
 var survivalData = {};
 var patientMetric = null;
 
-request({table:'clinical_tcga_brca_pt'}).then(function(response){
+request({table:'brca_patient_tcga_clinical'}).then(function(response){
 	patientData = response;
 	for (var i=0; i<patientData.length; i++){
 		var status = patientData[i].status_vital.toUpperCase(),
@@ -95,7 +95,7 @@ cmd.getSurvivalData = function(data){
 				max: 0,
 				color: datum.color,
 				data: datum.ids
-					.map(function(id){ 
+					.map(function(id){
 
 						if (this.sd.hasOwnProperty(id)){
 							var tmp = this.sd[id];
@@ -104,7 +104,7 @@ cmd.getSurvivalData = function(data){
 							console.log("BAD DATA");
 							return [-1,-1];
 						}
-						
+
 						}, {sd:survivalData})
 					.filter(function(data){
 
@@ -122,7 +122,7 @@ cmd.getSurvivalData = function(data){
 
 			// Add 0,0 Point To Line - This is if a censored patient occurs before death
 			output.data.unshift([0,1]);
-			
+
 			output.max = output.data.reduce(function(p,c){
 				return Math.max(p, c[0]);
 			}, -Infinity);
@@ -150,7 +150,7 @@ cmd.getSurvivalData = function(data){
                 return p;
             }, {line:[], tick:[]} );
 
-            // // Add Additional Points For Death Angles 
+            // // Add Additional Points For Death Angles
             var line = [];
             points.line.forEach(function(c,i,a){
                 line.push(c);
@@ -160,7 +160,7 @@ cmd.getSurvivalData = function(data){
             })
             points.line = line;
 
-            
+
             // Add Points If Zero To One Death
             for (var i=points.line.length; i<2; i++){
             	points.line.push([0,1,0]);
@@ -190,7 +190,7 @@ cmd.getSurvivalData = function(data){
 
 
 cmd.getPatientMetric = function(data){
-	
+
 	function getNumericStats(patients, attribute){
 		var bin = 10;
 		var props = patients.map(function(pd){ return pd[attribute]; });
@@ -277,7 +277,7 @@ cmd.getPatientMetric = function(data){
 				{label: "Tumor", data: getFactorStats(data, "status_tumor"), prop:"Status_tumor", type:"factor"}
 			]
 		};
-	
+
 		send('setPatientMetric', data);
 	}
 };

@@ -126,7 +126,7 @@
                 d3Chart
                     .attr("width", '100%')
                     .attr("height", layout.height);
-                    
+
                 layout.xScale = d3.scale.linear()
                     .domain([-layout.xMax, layout.xMax])
                     .range([0, layout.width]).nice();
@@ -144,17 +144,17 @@
                     data: data
                 });
                 layout.max = Math.abs(d3.max(vals, function(d) {
-                    return +d.x;
+                    return +d[0];
                 }));
                 layout.min = Math.abs(d3.min(vals, function(d) {
-                    return +d.x;
+                    return +d[0];
                 }));
                 layout.xMax = ((layout.max > layout.min) ? layout.max : layout.min) * 1.2;
                 layout.max = Math.abs(d3.max(vals, function(d) {
-                    return +d.y;
+                    return +d[1];
                 }));
                 layout.min = Math.abs(d3.min(vals, function(d) {
-                    return +d.y;
+                    return +d[1];
                 }));
                 layout.yMax = ((layout.max > layout.min) ? layout.max : layout.min) * 1.2;
 
@@ -228,10 +228,10 @@
                         return i / 300 * 100;
                     })
                     .attr("cx", function(d) {
-                        return layout.xScale(d.x);
+                        return layout.xScale(d[0]);
                     })
                     .attr("cy", function(d) {
-                        return layout.yScale(d.y);
+                        return layout.yScale(d[1]);
                     })
                     .style("fill-opacity", .3);
 
@@ -279,10 +279,10 @@
                 d3xAxis.attr("transform", "translate(" + layout.xScale(0) + ", 0)").call(layout.yAxis);
                 d3Chart.selectAll("circle")
                     .attr("cx", function(d) {
-                        return layout.xScale(d.x);
+                        return layout.xScale(d[0]);
                     })
                     .attr("cy", function(d) {
-                        return layout.yScale(d.y);
+                        return layout.yScale(d[1]);
                     })
             };
 

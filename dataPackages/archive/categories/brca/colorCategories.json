@@ -1,7 +1,7 @@
   [
     {
       "dataset": "brca",
-      "datatype": "colorCategory",
+      "type": "color",
       "name": "gender",
       "data": 
         [
@@ -18,7 +18,7 @@
     },
      {
       "dataset": "brca",
-      "datatype": "colorCategory",
+      "type": "color",
       "name": "race",
       "data": [
           {

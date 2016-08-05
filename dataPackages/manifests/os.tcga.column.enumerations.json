@@ -232,16 +232,7 @@
 	"os.class.tcgaNumeric": {
 		"age_allergy_animals_insects": ["allergy_animals_insects_dx_age"],
 		"age_allergy_food": ["allergy_food_dx_age"],
-<<<<<<< HEAD
-<<<<<<< HEAD
 		"age_at_diagnosis": ["age_at_diagnosis","age_at_initial_pathologic_diagnosis"], //probably needs to be separate!!!
-=======
-		"age_at_diagnosis": ["age_at_diagnosis"],
-		"age_at_initial_pathologic_diagnosis": ["age_at_initial_pathologic_diagnosis"],
->>>>>>> develop
-=======
-		"age_at_diagnosis": ["age_at_diagnosis","age_at_initial_pathologic_diagnosis"], //probably needs to be separate!!!
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 		"bcg_tx_90_days_prior_to_resection": ["bcg_tx_90_days_prior_to_resection"],
 		"carbon_monoxide_diffusion": ["carbon_monoxide_diffusion_dlco"],
 		"days_hydroxyurea_tx": ["hydroxyurea_tx_days"],
@@ -252,15 +243,7 @@
 		"days_to_bone_scan": ["days_to_bone_scan"],
 		"days_to_completion_of_curative_tx": ["days_to_completion_of_curative_tx"],
 		"days_to_ctAbPel": ["days_to_ct_scan_ab_pelvis"],
-<<<<<<< HEAD
-<<<<<<< HEAD
 		"days_to_death": ["death_days_to","days_to_death"], 
-=======
-		"death_days_to": ["death_days_to","days_to_death"], //two different captures
->>>>>>> develop
-=======
-		"days_to_death": ["death_days_to","days_to_death"], 
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 		"days_to_diagnosis_diabetes": ["diabetes_diagnosis_days_to"],
 		"days_to_diagnosis_pathologic": ["initial_pathologic_dx_days_to"],
 		"days_to_diagnosis": ["days_to_other_malignancy_dx", "other_malignancy_dx_days_to", "days_to_initial_pathologic_diagnosis"],

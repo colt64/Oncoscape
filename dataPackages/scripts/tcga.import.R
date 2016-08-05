@@ -5,27 +5,11 @@
 #       
 ###
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-# Library Imports ---------------------------------------------------------
-library(RUnit)
-library(R.utils)
-library(stringr)
-library(plyr)
-library(jsonlite)
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 
 # Configuration -----------------------------------------------------------
 rm(list = ls(all = TRUE))
 options(stringsAsFactors = FALSE)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 source("common.R")
 source("os.tcga.mappings.R")
 
@@ -34,194 +18,11 @@ date <- as.character(Sys.Date())
 process <- "import"
 
 # -------------------------------------------------------
-<<<<<<< HEAD
-=======
-os.molecular.ucsc.batch   <- fromJSON("../manifests/os.ucsc.molecular.manifest.json")
-os.clinical.tcga.batch    <- fromJSON("../manifests/os.tcga.clinical.manifest.json")
-
-outputDir_molecular <- "../data/molecular/clean/"
-outputDir_clinical  <- "../data/clinical/clean/"
-
-os.tcga.field.enumerations  <- fromJSON(paste("../manifests","os.tcga.field.enumerations.json" , sep="/"))
-os.tcga.column.enumerations <- fromJSON(paste("../manifests","os.tcga.column.enumerations.json", sep="/"))
-os.dataset.enumerations     <- fromJSON(paste("../manifests","os.dataset.enumerations.json"    , sep="/"))
-
-date <- Sys.Date()
-process <- "import"
-
-# Class Definitions :: Enumerations -------------------------------------------------------
-os.enum.na <- c("", "NA", "[NOTAVAILABLE]","[UNKNOWN]","[NOT AVAILABLE]","[NOT EVALUATED]","UKNOWN","[DISCREPANCY]",
-                "NOT LISTED IN MEDICAL RECORD","[NOT APPLICABLE]","[PENDING]","PENDING", "[NOT AVAILABLE]","[PENDING]",
-                "[NOTAVAILABLE]","NOT SPECIFIED","[NOT AVAILABLE]|[NOT AVAILABLE]",
-                "[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]",
-                "[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILABLE]",
-                "[NOT AVAILABLE]|[NOT AVAILABLE]|[NOT AVAILosABLE]",
-                "[NOT AVAILABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT AVAILABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]|[NOT AVAILABLE]|[NOT APPLICABLE]|[NOT APPLICABLE]","N/A")
-os.enum.logical.true  <- c("TRUE","YES","1","Y")
-os.enum.logical.false <- c("FALSE","NO","0","N")
-os.tcga.ignore.columns <- c("bcr_patient_uuid", 
-                            "bcr_drug_uuid","bcr_drug_barcode",
-                            "bcr_followup_uuid","bcr_followup_barcode",
-                            "bcr_radiation_uuid","bcr_radiation_barcode", 
-                            "bcr_omf_uuid", "bcr_omf_barcode",
-                            "informed_consent_verified", "form_completion_date", 
-                            "project_code", "patient_id")
-
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 # aggregate list of unmapped data & cde id mapping
 unmapped.List <- list()
 cde.df <- data.frame()
 
 # Data Processing Functions :: [Map, Clean, Filter]  -------------------------------------------------------
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-Map( function(key, value, env=parent.frame()){
-  setClass(key)
-  setAs("character", key, function(from){ 
-    # Convert To Upper + Set NAs  
-    from<-toupper(from) 
-    from.na<-which(from %in% os.enum.na)
-    from[from.na]<-NA    
-    
-    from.clean <- rep(NA, length(from))
-    
-    # Return Enum or NA
-    standardVals <- names(os.tcga.field.enumerations[[key]])
-    for(fieldName in standardVals){
-      values <-os.tcga.field.enumerations[[key]][[fieldName]]
-      from.clean[ which(from %in% values)] <- paste(from.clean[which(from %in% values)], fieldName, sep=";")
-    }
-    from.clean <- gsub("^NA;", "", from.clean)
- #   from.clean[from.clean==""] <- NA
-    
-    if(all(unlist(sapply(from.clean, function(val){strsplit(val, ";")})) %in% c(standardVals, NA)))
-      return(from.clean)
-    
-    # Kill If Not In Enum or Na
-    stop(paste(key, " not set due to: ", paste(setdiff(from.clean,c(standardVals, NA)), collapse="..."), " not belonging to ", paste(standardVals, collapse=";")))
-  })
-}, names(os.tcga.field.enumerations), os.tcga.field.enumerations);
-
-# Class Definitions :: TCGA [ID | DATE | CHAR | NUM | BOOL] -------------------------------------------------------
-
-### TCGA ID
-setClass("os.class.tcgaId")
-setAs("character","os.class.tcgaId", function(from) {
-  as.character(str_replace_all(from,"-","." )) 
-})
-
-### TCGA Date
-setClass("os.class.tcgaDate");
-setAs("character","os.class.tcgaDate", function(from){
-  
-  # Convert Input Character Vector To Uppercase
-  from<-toupper(from) 
-  
-  # Validate Format + Convert Day-Month to 1-1
-  if ((str_length(from)==4) && !is.na(as.integer(from) ) ){
-    return(as.numeric(as.POSIXct(paste(from, "-1-1", sep=""), format="%Y-%m-%d")))
-    #    return(format(as.Date(paste(from, "-1-1", sep=""), "%Y-%m-%d"), "%m/%d/%Y"))
-  }
-  
-  # Return NA If Validation Fails
-  return(NA)
-})
-
-### TCGA Character
-setClass("os.class.tcgaCharacter");
-setAs("character","os.class.tcgaCharacter", function(from){
-  
-  # Convert Input Character Vector To Uppercase
-  from<-toupper(from) 
-  
-  # Get Indexes Of Fram Where Value Is In NA
-  from.na<-which(from %in% os.enum.na)
-  
-  # Set From Indexes Values To NA
-  from[from.na]<-NA 
-  
-  return(from)
-})
-
-### TCGA Numeric Radiation
-setClass("os.class.tcgaNumeric.radiation");
-setAs("character","os.class.tcgaNumeric.radiation", function(from){
-  
-  # Convert Input Character Vector To Uppercase
-  from<-toupper(from) 
-  
-  # Get Indexes Of Fram Where Value Is In NA
-  from.na<-which(from %in% os.enum.na)
-  
-  # Set From Indexes Values To NA
-  from[from.na]<-NA 
-  
-  from<- gsub("MCI|MILLICURIES|-MILLICURIE|MCI (3730 MBQ)|MILLICURIES 131-IODINE", "", from)
-  trim(from)
-  
-  from <- as.numeric(from)
-  
-  if(all(is.numeric(from))) return (from)
-  
-  # Kill If Not In Enum or Na
-  stop(paste("os.class.tcgaNumeric.radiation not properly set: ", from[!is.numeric(from)], collapse=";"))
-  
-})
-
-
-### TCGA Numeric
-setClass("os.class.tcgaNumeric");
-setAs("character","os.class.tcgaNumeric", function(from){
-  
-  # Convert Input Character Vector To Uppercase
-  from<-toupper(from) 
-  
-  # Get Indexes Of Fram Where Value Is In NA
-  from.na<-which(from %in% os.enum.na)
-  
-  # Set From Indexes Values To NA
-  from[from.na]<-NA 
-  
-  from <- as.numeric(from)
-  
-  if(all(is.numeric(from))) return (from)
-  
-  # Kill If Not In Enum or Na
-  stop(paste("os.class.tcgaNumeric not properly set: ", from[!is.numeric(from)], collapse=";"))
-  
-})
-
-### TCGA Boolean
-setClass("os.class.tcgaBoolean");
-setAs("character","os.class.tcgaBoolean", function(from){
-  
-  from<-toupper(from) 
-  
-  from.na<-which(from %in% os.enum.na)
-  from[from.na]<-NA  
-  
-  from.true <- which( from %in% os.enum.logical.true )
-  from[from.true] <- "TRUE"
-  
-  from.false <- which(from %in% os.enum.logical.false )
-  from[from.false] <- "FALSE"
-  
-  from <- as.logical(from)
-  
-  # Return Enum or NA        
-  if( all(from %in% c( TRUE, FALSE, NA))) return( from )
-  
-  # Kill If Not In Enum or Na
-  stop(paste("os.class.tcgaBoolean not properly set: ", setdiff(from,c( TRUE, FALSE, NA )), collapse=";"))
-})
-
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 ### Takes matrix, returns list of row names, col names, and data with NA labels removed from mtx
 get.processed.mtx <- function(mtx, dimension){
   if("row" %in% dimension){
@@ -243,10 +44,6 @@ get.processed.mtx <- function(mtx, dimension){
   
   return(list(rownames=rownames, colnames=colnames, data=mtx))
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 # IO Utility Functions :: [Batch, Load, Save]  -------------------------------------------------------
 
 ### Load Function Takes An Import File + Column List & Returns A DataFrame
@@ -258,28 +55,28 @@ os.data.load.molecular <- function(inputFile){
     mtx <- get(load(inputFile))
     if(all(grepl("^TCGA", rownames(mtx)))) { mtx <- t(mtx)}
     colType <- "patient"; rowType <- "gene"
-
+    
     colnames(mtx) <- gsub("\\.", "-", colnames(mtx)); 
     if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", colnames(mtx))))
       colType <- "sample"
     
- #   dimnames(mtx) <- NULL
- #   mtx.Data<- list(rownames=rownames, colnames=colnames, data=mtx)
+    #   dimnames(mtx) <- NULL
+    #   mtx.Data<- list(rownames=rownames, colnames=colnames, data=mtx)
     
-   data.list <- lapply(rownames(mtx), function(geneName){
-     list(gene=geneName, min=min(mtx[geneName,]), max=max(mtx[geneName,]), patients = as.list(mtx[geneName,]))
-   })    
+    data.list <- lapply(rownames(mtx), function(geneName){
+      list(gene=geneName, min=min(mtx[geneName,]), max=max(mtx[geneName,]), patients = as.list(mtx[geneName,]))
+    })    
     
-     
+    
   } else{ 
     mtx<- read.delim(inputFile, header=F) 
     #orient mtx so row: gene, col: patient/sample
     if(all(grepl("^TCGA", mtx[-1,1]))) { mtx <- t(mtx)}
     colType <- "patient"; rowType <- "gene"
-
+    
     if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", mtx[1,-1])))
       colType <- "sample"
-
+    
     mtx.Data<- get.processed.mtx(mtx, dimension= c("row", "col"))
     mtx <- mtx.Data$data; 
     dimnames(mtx) <- list(mtx.Data$rownames, mtx.Data$colnames)
@@ -293,66 +90,11 @@ os.data.load.molecular <- function(inputFile){
     })    
     
   }
- return(data.list)
- # return(list(rowType=rowType, colType=colType, rows=mtx.Data$rownames, cols=mtx.Data$colnames, data=mtx.Data$data))
+  return(data.list)
+  # return(list(rowType=rowType, colType=colType, rows=mtx.Data$rownames, cols=mtx.Data$colnames, data=mtx.Data$data))
 }
 
 #---------------------------------------------------------
-<<<<<<< HEAD
-=======
-
-
-# IO Utility Functions :: [Batch, Load, Save]  -------------------------------------------------------
-
-### Save Function Takes A matrix/data.frame + Base File Path (w/o extension) & Writes to Disk In Multiple (optionally specified) Formats
-os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", "JSON")){
-
-	if(!dir.exists(directory))
-		dir.create(file.path(directory), recursive=TRUE)
-
-	if(!grepl("/$", directory)) directory <- paste(directory, "/", sep="")
-	
-	outFile = paste(directory, file, sep="")
-
-	# Write Tab Delimited
-	if("tsv" %in% format)
-		write.table(df, file=paste(outFile,".tsv", sep = ""), quote=F, sep="\t")
-
-	# Write CSV Delimited
-	if("csv" %in% format)
-		write.csv(df, file=paste(outFile,".csv",sep = ""), quote = F)
-
-	# Write RData File
-	if("RData" %in% format)
-		save(df, file=paste(outFile,".RData", sep = "") )
-
-	# Write JSON File
-	if("JSON" %in% format)
-		write(toJSON(df, pretty=TRUE, digits=I(8)), file=paste(outFile,".json", sep = "") )
-
-}
-
-### Load Function Takes An Import File + Column List & Returns A DataFrame
-os.data.load.molecular <- function(inputFile){
-  
-  mtx<- read.delim(inputFile, header=F)
-  
-  #orient mtx so row: gene, col: patient/sample
-  if(all(grepl("^TCGA", mtx[-1,1]))) { mtx <- t(mtx)}
-  colType <- "patient"; rowType <- "gene"
-
-  if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", mtx[1,-1])))
-    colType <- "sample"
-
-  mtx.Data<- get.processed.mtx(mtx, dimension= c("row", "col"))
- 
-  return(list(rowType=rowType, colType=colType, rows=mtx.Data$rownames, cols=mtx.Data$colnames, data=mtx.Data$data))
- 
-}
-
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 ### Load Function Takes An Import File + Column List & Returns A DataFrame
 os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClassType = "character"){
   
@@ -361,41 +103,21 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
   columns <- unlist(strsplit(header[1],'\t'));
   cde_ids <- unlist(strsplit(header[3],'\t'));
   cde_ids <- gsub("CDE_ID:", "", cde_ids)
-
+  
   unMappedData <- list();
   tcga_columns <- columns
   
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
   if(grepl("../archive/clinical/nationwidechildrens.org_clinical_patient_skcm.txt",inputFile)){
-  	columns[match("submitted_tumor_site", columns)] = "skcm_tissue_site"
-  	columns[match("submitted_tumor_site", columns)] = "skcm_tumor_type"
+    columns[match("submitted_tumor_site", columns)] = "skcm_tissue_site"
+    columns[match("submitted_tumor_site", columns)] = "skcm_tumor_type"
   }
   if(grepl("../archive/clinical/nationwidechildrens.org_follow_up_v2.0_skcm.txt",inputFile)){
-  	columns[match("new_tumor_event_type", columns)] = "skcm_tumor_event_type"
+    columns[match("new_tumor_event_type", columns)] = "skcm_tumor_event_type"
   }
   if(grepl("../archive/clinical/nationwidechildrens.org_clinical_patient_thca.txt",inputFile)){
     columns[columns=="metastatic_dx_confirmed_by_other"] = "thca_metastatic_dx_confirmed_by_other"
   }
   if(grepl("../archive/clinical/nationwidechildrens.org_clinical_patient_kirp.txt",inputFile)){
-<<<<<<< HEAD
-=======
-  if(grepl("clinical_patient_skcm.txt",inputFile)){
-  	columns[match("submitted_tumor_site", columns)] = "skcm_tissue_site"
-  	columns[match("submitted_tumor_site", columns)] = "skcm_tumor_type"
-  }
-  if(grepl("follow_up_v2.0_skcm.txt",inputFile)){
-  	columns[match("new_tumor_event_type", columns)] = "skcm_tumor_event_type"
-  }
-  if(grepl("clinical_patient_thca.txt",inputFile)){
-    columns[columns=="metastatic_dx_confirmed_by_other"] = "thca_metastatic_dx_confirmed_by_other"
-  }
-  if(grepl("clinical_patient_kirp.txt",inputFile)){
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
     columns[columns=="tumor_type"] = "disease_subtype"
   }
   
@@ -404,7 +126,7 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
   if(checkEnumerations) { column_type <- rep("character", length(columns))}
   else                  { column_type <- rep("NULL", length(columns)) }
   
-
+  
   # assign class types for recognized columns
   #   for each enumerated class type, 
   #     rename matching column to mapped name and assign appropriate type
@@ -449,12 +171,8 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
     names(unMappedData) <- headerWithData
     print("---Unused columns")
     print(unMappedData)
-
+    
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
   
   mappedTable$patient_ID <- gsub("\\.", "\\-", mappedTable$patient_ID)
   mappedTable$patient_ID <- paste(mappedTable$patient_ID, "-01", sep="")
@@ -478,61 +196,61 @@ os.data.load.genome <- function( inputFile = inputFile){
 #---------------------------------------------------------
 ### Batch Is Used To Process Multiple TCGA Files Defined 
 os.data.batch <- function(manifest, ...){
-           
-    # From Input File: dataframe of datasets, types and list of collections
-    datasets <- fromJSON(manifest)
-    resultObj <- list()
-
-		# Loop for each file to load
-		for (i in 1:nrow(datasets)){
-			sourceObj <- datasets[i,]
-			stopifnot(all(c("dataset","source", "type","process") %in% names(sourceObj)))
-			cat(sourceObj$dataset,sourceObj$source, sourceObj$type,"\n")
-
-			prev.run <- collection.exists(mongo, dataset=sourceObj$dataset, dataType=sourceObj$type,
-			                              source=sourceObj$source,processName=sourceObj$process)
-			if(prev.run){
-			  print("Skipping.")
-			  next;
-			}
-			
-			#specific for raw data import
-			stopifnot(all(c("directory", "file") %in% names(sourceObj)))
-				
-			inputDirectory <- sourceObj$directory
-			if(!grepl("/$", inputDirectory)) inputDirectory <- paste(inputDirectory, "/", sep="")	
-			inputFile <- paste(inputDirectory, sourceObj$file, sep = "")
-
-			dataType <- sourceObj$type
-#			resultObj <- list(dataset = sourceObj$dataset, type = dataType)
-			
-			if(dataType %in%  c("cnv","mut01", "mut", "rna", "protein", "methylation")){
-				# Load Data Frame - map and filter by named columns
-				result <- os.data.load.molecular( inputFile = inputFile)
-	
-				resultObj <- result
-				
-			}
-			else if(dataType %in%  c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
-				# Load Data Frame - map and filter by named columns
-				result <- os.data.load.clinical( inputFile = inputFile, ...)
-				resultObj <- result$mapped
-#				resultObj$cde <- list(result$cde)
-				
-			}else if(dataType %in%  c("genes", "chromosome", "centromere", "genesets")){
-			  resultObj <- os.data.load.genome( inputFile = inputFile)
-			}else {
-			  print(paste("WARNING: data type not recognized:", dataType, sep=" "))
-			  next;
-			}
-
-			parent <-  NA
-						
-			save.collection(mongo, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$source,
-							result=resultObj,parent=parent, process=process,processName=sourceObj$process)
-			
-		}  # dataset
-    return()
+  
+  # From Input File: dataframe of datasets, types and list of collections
+  datasets <- fromJSON(manifest)
+  resultObj <- list()
+  
+  # Loop for each file to load
+  for (i in 1:nrow(datasets)){
+    sourceObj <- datasets[i,]
+    stopifnot(all(c("dataset","source", "type","process") %in% names(sourceObj)))
+    cat(sourceObj$dataset,sourceObj$source, sourceObj$type,"\n")
+    
+    prev.run <- collection.exists(mongo, dataset=sourceObj$dataset, dataType=sourceObj$type,
+                                  source=sourceObj$source,processName=sourceObj$process)
+    if(prev.run){
+      print("Skipping.")
+      next;
+    }
+    
+    #specific for raw data import
+    stopifnot(all(c("directory", "file") %in% names(sourceObj)))
+    
+    inputDirectory <- sourceObj$directory
+    if(!grepl("/$", inputDirectory)) inputDirectory <- paste(inputDirectory, "/", sep="")	
+    inputFile <- paste(inputDirectory, sourceObj$file, sep = "")
+    
+    dataType <- sourceObj$type
+    #			resultObj <- list(dataset = sourceObj$dataset, type = dataType)
+    
+    if(dataType %in%  c("cnv","mut01", "mut", "rna", "protein", "methylation")){
+      # Load Data Frame - map and filter by named columns
+      result <- os.data.load.molecular( inputFile = inputFile)
+      
+      resultObj <- result
+      
+    }
+    else if(dataType %in%  c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
+      # Load Data Frame - map and filter by named columns
+      result <- os.data.load.clinical( inputFile = inputFile, ...)
+      resultObj <- result$mapped
+      #				resultObj$cde <- list(result$cde)
+      
+    }else if(dataType %in%  c("genes", "chromosome", "centromere", "genesets")){
+      resultObj <- os.data.load.genome( inputFile = inputFile)
+    }else {
+      print(paste("WARNING: data type not recognized:", dataType, sep=" "))
+      next;
+    }
+    
+    parent <-  NA
+    
+    save.collection(mongo, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$source,
+                    result=resultObj,parent=parent, process=process,processName=sourceObj$process)
+    
+  }  # dataset
+  return()
 }
 
 #----------------------------------------------------------------------------------------------------
@@ -540,10 +258,10 @@ get.category.data<- function(name, table, cat.col.name, color.col.name= "color")
   
   catNames <- unique(table[,cat.col.name])
   categories.type.list <- lapply(catNames, function(cat.name){
-    matches <- table[table[,cat.col.name]==cat.name,]
-    data <- data.frame(	name=cat.name, 
-                        color=unique(matches$color))
-    data$values = list(rownames(matches))
+    matches <- which(table[,cat.col.name]==cat.name)
+    color<- unique(table[matches,color.col.name])
+    data <- list(	name=cat.name, color=color)
+    data$values = gsub("\\.", "\\-", rownames(table)[matches])
     return(data)
   })
   return (categories.type.list)
@@ -553,8 +271,8 @@ add.category.fromFile <- function(file, name, col.name, dataset, type){
   
   tbl <- get(load(file))
   categories.list <- get.category.data(table=tbl, cat.col.name=col.name)
-  df <- data.frame(dataset=dataset, type=type, name=name)
-  df$data=list(categories.list)
+  df <- list(dataset=dataset, type=type, name=name)
+  df$data=categories.list
   return(df)
 }
 
@@ -565,25 +283,25 @@ os.save.categories <- function(datasets = c("brain")){
   type= "color"
   
   if("gbm" %in% datasets){  
-
-  ## Patient Colors by Diagnosis, glioma8, tumorGrade, verhaak
-  color.categories <- list(
-    add.category.fromFile(file='../archive/categories/brain/tumorDiagnosis.RData', name="diagnosis", col.name="diagnosis", dataset="brain", type=type) ,
-    add.category.fromFile(file='../archive/categories/brain/ericsEightGliomaClusters.RData', name="glioma8", col.name="cluster", dataset="brain", type=type) ,
-    add.category.fromFile(file='../archive/categories/brain/metabolicExpressionStemness.RData', name="metabolicExpressionStemness", col.name="cluster", dataset="brain", type=type) ,
-    add.category.fromFile(file='../archive/categories/brain/tumorGrade.RData', name="tumorGrade", col.name="cluster", dataset="brain", type=type) ,
-    add.category.fromFile(file='../archive/categories/brain/verhaakGbmClustersAugmented.RData', name="verhaakPlus1", col.name="cluster", dataset="brain", type=type) 
+    
+    ## Patient Colors by Diagnosis, glioma8, tumorGrade, verhaak
+    color.categories <- list(
+      add.category.fromFile(file='../archive/categories/brain/tumorDiagnosis.RData', name="diagnosis", col.name="diagnosis", dataset="brain", type=type) ,
+      add.category.fromFile(file='../archive/categories/brain/ericsEightGliomaClusters.RData', name="glioma8", col.name="cluster", dataset="brain", type=type) ,
+      add.category.fromFile(file='../archive/categories/brain/metabolicExpressionStemness.RData', name="metabolicExpressionStemness", col.name="cluster", dataset="brain", type=type) ,
+      add.category.fromFile(file='../archive/categories/brain/tumorGrade.RData', name="tumorGrade", col.name="cluster", dataset="brain", type=type) ,
+      add.category.fromFile(file='../archive/categories/brain/verhaakGbmClustersAugmented.RData', name="verhaakPlus1", col.name="cluster", dataset="brain", type=type) 
     )
-  
-  save.collection(mongo, dataset="brain", dataType=type, source="tcga",
-                  result=color.categories,parent=NA, process="import",processName="import")
-  
+    
+    save.collection(mongo, dataset="brain", dataType=type, source="tcga",
+                    result=color.categories,parent=NA, process="import",processName="import")
+    
   }
   if("brca" %in% datasets){
-    categories.list <- fromJSON("../archive/categories/brca/colorCategories.json")
-    color.categories <- list(categories.list)
-    save.collection(mongo, dataset="brca", dataType=type, source="tcga",
-                    result=color.categories,parent=NA, process="import",processName="import")
+    categories.list <- fromJSON("../archive/categories/brca/colorCategories.json", simplifyVector = FALSE)
+#    color.categories <- apply(categories.list, 1, function(colorcat){list(dataset=colorcat$dataset, type=colorcat$type, name=colorcat$name, data=colorcat$data)})
+     save.collection(mongo, dataset="brca", dataType=type, source="tcga",
+                    result=categories.list,parent=NA, process="import",processName="import")
     
   }
 }
@@ -606,11 +324,11 @@ if("categories" %in% commands)
 
 if("molecular" %in% commands) 
   os.data.batch("../manifests/os.molecular.manifest.json")
- 
+
 if("clinical" %in% commands) 
-    os.data.batch("../manifests/os.tcga.clinical.manifest.json",
-              checkEnumerations = FALSE,
-              checkClassType = "os.class.tcgaCharacter")
+  os.data.batch("../manifests/os.tcga.clinical.manifest.json",
+                checkEnumerations = FALSE,
+                checkClassType = "os.class.tcgaCharacter")
 
 if("scale" %in% commands){
   save.batch.genesets.scaled.pos(scaleFactor=10000)
@@ -618,161 +336,3 @@ if("scale" %in% commands){
 }
 
 close.mongo(mongo)
-<<<<<<< HEAD
-=======
-  #return(list(mapped=mappedTable, unmapped = unMappedData))
-  return(list("mapped"=mappedTable, "unmapped" = unMappedData, "cde"=cbind(tcga_columns,columns,cde_ids, column_type)))
-}
-
-#---------------------------------------------------------
-# Aggregate unmapped column names and classes into a single list  
-appendList <- function (x, val) 
-{
-    if(!is.list(x) && !is.list(val)) return(x)
-    xnames <- names(x)
-    for (v in names(val)) {
-        x[[v]] <- if (v %in% xnames && is.list(x[[v]]) && is.list(val[[v]])) 
-            appendList(x[[v]], val[[v]])
-        else unique(c(x[[v]], val[[v]]))
-    }
-    x
-}
-#---------------------------------------------------------
-get.new.collection.index <- function(Manifest, datasetName, dataTypeName){
-  
-  if(nrow(Manifest) == 0) return(1)
-  
-  dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
-  if(nrow(dataObj) == 0) return(1)
-  
-  return(nrow(dataObj$collections[[1]]) +1)
-}
-#---------------------------------------------------------
-add.new.collection <- function(Manifest, datasetName, dataTypeName, collection){
-  
-  if(nrow(Manifest) == 0){	
-    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
-    newCollection$collections <- list(collection)
-    Manifest <- newCollection
-    return(Manifest)
-  }
-  
-  dataObj <- subset(Manifest, dataset == datasetName & dataType == dataTypeName)
-  if(nrow(dataObj) == 1){
-    Manifest[Manifest$dataset==datasetName & Manifest$dataType ==dataTypeName,"collections"] <- list(rbind(dataObj$collections[[1]],collection))
-    return(Manifest)
-  }
-  if(nrow(dataObj) == 0){	
-    newCollection <- data.frame(dataset=datasetName, dataType=dataTypeName)
-    newCollection$collections <- list(collection)
-    Manifest <- rbind(Manifest, newCollection)
-    return(Manifest)
-  }
-  stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), datasetName, dataTypeName))
-  
-}
-#---------------------------------------------------------
-mapProcess <- function(process){
-  
-	processFound <-	sapply(os.dataset.enumerations$dataType, function(typeMap){ process %in% unlist(typeMap) })
-	numMatches <- length(which(processFound))
-	if(numMatches==1)
-		return (names(os.dataset.enumerations$dataType)[which(processFound)])
-
-	stop(printf("mapProcess found %d matches for process %s", numMatches, process))
-	return(NA)
-}
-#---------------------------------------------------------
-### Batch Is Used To Process Multiple TCGA Files Defined 
-os.data.batch <- function(manifest, outputDirectory, ...){
-           
-    # From Input File: dataframe of datasets, datatypes and list of collections
-    datasets <- manifest
-    
-    Manifest <- data.frame()
-      
-		# Loop for each file to load
-		for (i in 1:nrow(datasets))
-		{
-			sourceObj <- datasets[i,]
-			stopifnot(all(c("dataset", "dataType", "collections") %in% names(sourceObj)))
-			cat(sourceObj$dataset, sourceObj$dataType,"\n")
-
-			dataset <- sourceObj$dataset
-			collections <- sourceObj$collections[[1]]
-			
-			for(j in 1:nrow(collections)){
-
-				dataObj <- collections[j,]
-				stopifnot(all(c("id", "process", "directory", "file") %in% names(dataObj)))
-				
-				inputDirectory <- dataObj$directory
-				if(!grepl("/$", inputDirectory)) inputDirectory <- paste(inputDirectory, "/", sep="")	
-				inputFile <- paste(inputDirectory, dataObj$file, sep = "")
-
-				dataType <- mapProcess(dataObj$process)
-				resultObj <- data.frame(dataset = sourceObj$dataset, dataType = dataType)
-				
-				if(dataType %in%  c("cnv","mut01")){
-					# Load Data Frame - map and filter by named columns
-					result <- os.data.load.molecular( inputFile = inputFile)
-
-					result$data <- apply(result$data, 2, as.integer)
-
-					resultObj$rowType <- result$rowType; resultObj$colType <- result$colType;
-					resultObj$rows <- list(result$rows); resultObj$cols <- list(result$cols);
-					resultObj$data <- list(result$data)
-				}
-				if(dataType %in%  c("clinical")){
-					# Load Data Frame - map and filter by named columns
-					result <- os.data.load.clinical( inputFile = inputFile, ...)
-
-					resultObj$data <- list(result$data)
-				}
-
-				index <- get.new.collection.index(Manifest, dataset, dataType)
-				resultObj$id <- index
-				outputFile <- paste(dataset, dataType, index, process , sep="_")
-				parent <- list(c(sourceObj$dataset, sourceObj$dataType, dataObj$id))
-
-	      newCollection <- data.frame(id=index,
-	          								process=process,
-	          								date = date,
-	          								directory= outputDirectory,
-	          								file=outputFile)
-        newCollection$parent <- parent
-				Manifest <- add.new.collection(Manifest, dataset, dataType, newCollection)
-				
-				# Save Data Frame
-				os.data.save(
-						df = resultObj,
-						directory=outputDirectory,
-						file= outputFile,
-						format = "JSON") 
-
-		   }  # collection
-		}  # dataset
-    return(Manifest)
-}
-
-
-# Run Block  -------------------------------------------------------
-Manifest <- os.data.batch(  manifest = os.molecular.ucsc.batch, 
-				        outputDirectory = outputDir_molecular
-			 )
-
-#os.data.batch(
-#  manifest = os.clinical.tcga.batch,
-#  outputDirectory = outputDir_clinical,
-#  checkEnumerations = FALSE,
-#  checkClassType = "os.class.tcgaCharacter")
-
-
-os.data.save(
-  df = Manifest,
-  directory="../manifests",
-  file= paste("os", process, date,"manifest", sep="."),
-  format = "JSON") 
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de

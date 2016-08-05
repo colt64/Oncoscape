@@ -1,10 +1,6 @@
 {
 	"dataset": ["brca", "coadread", "hnsc", "lgg", "gbm", "luad", "lusc", "prad", "acc", "blca", "cesc", "chol", "dlbc", "esca", "laml","lung", "sarc", "stad"],
 	"dataType": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 		{"cnv": ["gistic2thd", "gistic"]},
 		{"mut01": ["mutation", "mutationBroadGene", "mutationCuratedWustlGene", "mutationBcmGene"]},
 		{"mut": ["mut"]},
@@ -17,13 +13,5 @@
 		{"otherMalignancy": ["otherMalignancy-v4.0"]},
 		{"followUp": ["followUp-v2.1","followUp-v1.5","followUp-v4.0"]},
 		{"newTumor": [ "newTumor", "newTumor-followUp-v4.0"]}
-<<<<<<< HEAD
-=======
-		{"cnv": ["gistic2thd"]},
-		{"mut01": ["mutation", "mutationBroadGene", "mutationCuratedWustlGene", "mutationBcmGene"]},
-		{"clinical": ["patient", "drug", "radiation", "other_malignancy"]}
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 	]
 }

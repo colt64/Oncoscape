@@ -186,8 +186,8 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
     
   }else if(dataType %in% c("edges")){
     #update edges
-    ptweights   <- gsub("\s+", "", tolower(paste(dataset, "ptDegree", source, processName, sep="_")))
-    geneweights <- gsub("\s+", "", tolower(paste(dataset, "geneDegree", source, processName, sep="_")))
+    ptweights   <- gsub("\\s+", "", tolower(paste(dataset, "ptDegree", source, processName, sep="_")))
+    geneweights <- gsub("\\s+", "", tolower(paste(dataset, "geneDegree", source, processName, sep="_")))
     add.collection <- list(data.frame(name=process$geneset,edges=collection.uniqueName, 
                            patientWeights=ptweights, 
                            genesWeights=geneweights))
@@ -214,7 +214,7 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
       data.list$location	<- c(data.list$location, add.collection)
     } else {data.list$location <- add.collection }
     
-  }else if(dataType %in% c("genesets", "colorCategory")){
+  }else if(dataType %in% c("genesets", "color")){
     add.collection <- list(data.frame(source=source, type=dataType, collection=collection.uniqueName))
     if("category" %in% names(data.list)){
       data.list$category <- c(data.list$category, add.collection)

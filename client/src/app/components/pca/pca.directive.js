@@ -84,9 +84,10 @@
                 vm.search = "";
                 osApi.query("render_pca", {
                         disease: vm.datasource.disease,
-                        $fields: ['geneset']
+                        $fields: ['type','geneset']
                     })
                     .then(function(response) {
+                       
                         vm.geneSets = response.data;
                         vm.geneSet = vm.geneSets[0];
                     });
@@ -98,7 +99,8 @@
                 if (geneset == null) return;
                 osApi.query("render_pca", {
                         disease: vm.datasource.disease,
-                        geneset: geneset.geneset
+                        geneset: geneset.geneset,
+                        type: geneset.type
                     })
                     .then(function(response) {
                         vm.pc1 = response.data[0].pc1;

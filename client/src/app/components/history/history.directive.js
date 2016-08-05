@@ -63,7 +63,7 @@ b:{})}});return g};"function"===typeof define&&define.amd?define(["jquery","data
             // intialize View State
             (function(vm) {
                 vm.datasource = osApi.getDataSource();
-                console.dir(vm.datasource);
+
                 vm.search = "";
                 vm.detail = null;
             })(vm);
@@ -72,10 +72,7 @@ b:{})}});return g};"function"===typeof define&&define.amd?define(["jquery","data
 
                 // Override Filter Function
                 angular.element.fn.DataTable.ext.search = [function(settings, data) {
-
-
                     if (selectedIds.length != 0) { if (selectedIds.indexOf(data[0]) == -1) return false; }
-
                     return true;
                 }];
 
@@ -156,8 +153,6 @@ b:{})}});return g};"function"===typeof define&&define.amd?define(["jquery","data
                     $fields: fields
                 })
                 .then(function(response) {
-
-
                     initDataTable(vm, columns, response.data);
                     initEvents(vm, $scope, osApi)
                     osApi.setBusy(false);

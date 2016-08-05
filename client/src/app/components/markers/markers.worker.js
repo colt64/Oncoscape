@@ -159,7 +159,7 @@ var data = (function() {
                             grabbable: false,
                             locked: true,
                             selectable: false,
-                            position: {x:item.x-40000, y:item.y},
+                            position: {x:item.x-4000, y:item.y},
                             'text-rotation': item.rotation,
                             data: {
                                 id: "annotation"+item.text.replace(/[^\w\s!?]/g,''),
@@ -194,7 +194,7 @@ var data = (function() {
                                 group: "nodes",
                                 grabbable: false,
                                 locked: true,
-                                position: {x:item.x-40000, y:item.y},
+                                position: {x:item.x-4000, y:item.y},
                                 selectable: false,
                                 data:{
                                     display: "element",
@@ -310,10 +310,10 @@ var data = (function() {
                         display: "element",
                         nodeType: "gene",
                         degree: 1,
-                        sizeBdr: 50,
-                        sizeEle: 800,
-                        weight: 800,
-                        sizeLbl: 50,
+                        sizeBdr: 10,
+                        sizeEle: 200,
+                        weight: 200,
+                        sizeLbl: 10,
                         subType: "unassigned"
                     }
                 };
@@ -331,8 +331,8 @@ var data = (function() {
                     id: "mp_" + item.g + "_" + item.p + "_" + item.m,
                     display: "element",
                     edgeType: "cn",
-                    sizeEle: 50,
-                    sizeBdr: 50,
+                    sizeEle: 1,
+                    sizeBdr: 0,
                     cn: parseInt(item.m),
                     source: item.g,
                     target: item.p
@@ -371,7 +371,7 @@ var data = (function() {
                     position: value,
                     data: data
                 };
-                node.position.x -= 40000;
+                node.position.x -= 4000;
                 return node;
             }, data);
     };
@@ -398,6 +398,8 @@ var data = (function() {
                 });
                 return;
             }
+            console.log(options.edges.geneWeights);
+
 
             // Fetch New Stuff
             var promises = [
@@ -412,21 +414,27 @@ var data = (function() {
                 request({
                     table: 'render_patient',
                     query: {
+                        dataset: options.dataset,
                         name: options.patients.layout
+                        //type: 'Cluster'
                     }
                 }, !update.patientData ? state.patients : null, formatPatientNodes),
 
                 request({
                     table: 'render_patient',
                     query: {
+                        dataset: options.dataset,
                         name: options.patients.layout
+                        //type: 'Cluster'
                     }
                 }, !update.patientLayout ? state.patients : null, formatPatientLayout),
 
                 request({
                     table: 'render_patient',
                     query: {
+                        dataset: options.dataset,
                         name: options.patients.color
+                        // type: 'colorCategory'
                     }
                 }, !update.patientColor ? state.patientColor : null, formatPatientColor),
 
@@ -442,17 +450,18 @@ var data = (function() {
                 }, !update.edges ? state.edges : null, formatEdgeNodes),
 
                 request({
-                    table: options.edges.layout.edges + "_gene_weight"
+                    table: options.edges.geneWeights
                 }, !update.edges ? state.edgeGenes : null, formatEdgeGenes),
 
                 request({
-                    table: options.edges.layout.edges + "_patient_weight"
+                    table: options.edges.patientWeights
                 }, !update.edges ? state.edgePatients : null, formatEdgePatients)
 
             ];
 
             Promise.all(promises).then(function(data) {
 
+                console.dir(data);
 
                 // Reorient patient data to use PIDs as keys
                 if (update.patientData) {

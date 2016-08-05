@@ -61,12 +61,13 @@ os.copy.chromosome.layout <- function(scaleFactor=100000){
   data_coll <- mongo.find.one(mongo, paste("oncoscape", collection[[scaled]]$collection, sep="."))
   mongo.insert(mongo, "oncoscape.render_chromosome", data_coll)
 
-  collection <- mongo.find.all(mongo, "oncoscape.manifest", 
+  genesets <- mongo.find.all(mongo, "oncoscape.manifest", 
                                query=list(dataset="hg19", dataType="genesets", process=list(scale=scaleFactor)))[[1]]
+  geneset_coll <- mongo.find.all(mongo, paste("oncoscape", genesets$collection, sep="."))
   
-  data_coll <- mongo.find.one(mongo, paste("oncoscape", collection$collection, sep="."))
-  mongo.insert(mongo, "oncoscape.render_chromosome", data_coll)
-  
+  for(collection in geneset_coll){
+    mongo.insert(mongo, "oncoscape.render_chromosome", collection)
+  }
 }
 #----------------------------------------------------------------------------------------------------
 os.save.pca <- function(scaleFactor=NA){
@@ -97,9 +98,9 @@ commands <- c("patient", "chromosome")
 mongo <- connect.to.mongo()
 
 #if("patient" %in% commands) 
- os.save.ptLayouts(scaleFactor=10000)
+ os.save.ptLayouts(scaleFactor=100000)
 #if("chromosome" %in% commands) 
-#  os.copy.chromosome.layout(scaleFactor=10000)
+#  os.copy.chromosome.layout(scaleFactor=100000)
 #if("pca" %in% commands) 
 #  os.save.pca()
 

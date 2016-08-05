@@ -186,9 +186,11 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
     
   }else if(dataType %in% c("edges")){
     #update edges
+    ptweights   <- gsub("\s+", "", tolower(paste(dataset, "ptDegree", source, processName, sep="_")))
+    geneweights <- gsub("\s+", "", tolower(paste(dataset, "geneDegree", source, processName, sep="_")))
     add.collection <- list(data.frame(name=process$geneset,edges=collection.uniqueName, 
-                           patientWeights=paste(dataset, "ptDegree", source, processName, sep="_"), 
-                           genesWeights=paste(dataset, "geneDegree", source, processName, sep="_")))
+                           patientWeights=ptweights, 
+                           genesWeights=geneweights))
     if("edges" %in% names(data.list)){
       data.list$edges	<- c(data.list$edges, add.collection)
     } else {data.list$edges <- add.collection }

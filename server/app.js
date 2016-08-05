@@ -7,7 +7,6 @@ const uuid = require('node-uuid');
 const favicon = require('serve-favicon');
 
 
-
 mongoose.connect('mongodb://localhost/oncoscape');
 
 /*mongoose.connect(
@@ -55,16 +54,13 @@ app.use(function(req, res, next) { // Diable Cors
     next();
 });
 
-
 app.get('/ping', function(req, res){
   res.send('pong');
 });
 
 // Mongoose Gateway Route
 app.get('/api/:collection*', function(req, res, next) {
-    
- 
-    
+
         mongoose.connection.db.collection(req.params.collection, function(err, collection) {
             if (err) {
                 res.status(err.code).send(err.messages);

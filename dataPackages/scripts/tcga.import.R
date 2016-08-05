@@ -277,7 +277,7 @@ add.category.fromFile <- function(file, name, col.name, dataset, type){
 }
 
 #----------------------------------------------------------------------------------------------------
-os.save.categories <- function(datasets = c("gbm")){
+os.save.categories <- function(datasets = c("brain")){
   
   color.categories <- list()
   type= "colorCategory"
@@ -286,19 +286,24 @@ os.save.categories <- function(datasets = c("gbm")){
 
   ## Patient Colors by Diagnosis, glioma8, tumorGrade, verhaak
   color.categories <- list(
-    add.category.fromFile(file='../archive/categories/brain/tumorDiagnosis.RData', name="diagnosis", col.name="diagnosis", dataset="gbm", type=type) ,
-    add.category.fromFile(file='../archive/categories/brain/ericsEightGliomaClusters.RData', name="glioma8", col.name="cluster", dataset="gbm", type=type) ,
-    add.category.fromFile(file='../archive/categories/brain/metabolicExpressionStemness.RData', name="metabolicExpressionStemness", col.name="cluster", dataset="gbm", type=type) ,
-    add.category.fromFile(file='../archive/categories/brain/tumorGrade.RData', name="tumorGrade", col.name="cluster", dataset="gbm", type=type) ,
-    add.category.fromFile(file='../archive/categories/brain/verhaakGbmClustersAugmented.RData', name="verhaakPlus1", col.name="cluster", dataset="gbm", type=type) 
+    add.category.fromFile(file='../archive/categories/brain/tumorDiagnosis.RData', name="diagnosis", col.name="diagnosis", dataset="brain", type=type) ,
+    add.category.fromFile(file='../archive/categories/brain/ericsEightGliomaClusters.RData', name="glioma8", col.name="cluster", dataset="brain", type=type) ,
+    add.category.fromFile(file='../archive/categories/brain/metabolicExpressionStemness.RData', name="metabolicExpressionStemness", col.name="cluster", dataset="brain", type=type) ,
+    add.category.fromFile(file='../archive/categories/brain/tumorGrade.RData', name="tumorGrade", col.name="cluster", dataset="brain", type=type) ,
+    add.category.fromFile(file='../archive/categories/brain/verhaakGbmClustersAugmented.RData', name="verhaakPlus1", col.name="cluster", dataset="brain", type=type) 
     )
+  
+  save.collection(mongo, dataset="brain", dataType=type, source="tcga",
+                  result=color.categories,parent=NA, process="import",processName="import")
+  
   }
   if("brca" %in% datasets){
     categories.list <- fromJSON("../archive/categories/brca/colorCategories.json")
-    color.categories <- c(color.categories, list(categories.list))
+    color.categories <- list(categories.list)
+    save.collection(mongo, dataset="brca", dataType=type, source="tcga",
+                    result=color.categories,parent=NA, process="import",processName="import")
+    
   }
-  write.to.mongo.(mongo, "os.categories.color.data",color.categories)
-  
 }
 
 
@@ -307,19 +312,27 @@ os.save.categories <- function(datasets = c("gbm")){
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
+#commands <- c("categories", "clinical", "molecular", "scale")
+commands <- c("categories")
+
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0 )
   manifest <- args
 
-#if("categories" %in% commands) 
-#  os.save.categories( datasets=c("gbm", "brca"))
+if("categories" %in% commands) 
+  os.save.categories( datasets=c("gbm", "brca"))
 
-os.data.batch("../manifests/os.molecular.manifest.json")
+if("molecular" %in% commands) 
+  os.data.batch("../manifests/os.molecular.manifest.json")
  
-os.data.batch("../manifests/os.tcga.clinical.manifest.json",
+if("clinical" %in% commands) 
+    os.data.batch("../manifests/os.tcga.clinical.manifest.json",
               checkEnumerations = FALSE,
               checkClassType = "os.class.tcgaCharacter")
 
-save.batch.genesets.scaled.pos(scaleFactor=100000)
+if("scale" %in% commands){
+  save.batch.genesets.scaled.pos(scaleFactor=10000)
+  #save.batch.cluster.scaled.pos(scaleFactor=10000)
+}
 
 close.mongo(mongo)

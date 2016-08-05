@@ -75,7 +75,7 @@ b:{})}});return g};"function"===typeof define&&define.amd?define(["jquery","data
 
 
                     if (selectedIds.length != 0) { if (selectedIds.indexOf(data[0]) == -1) return false; }
-          
+
                     return true;
                 }];
 
@@ -152,11 +152,11 @@ b:{})}});return g};"function"===typeof define&&define.amd?define(["jquery","data
 
             // Load Datasets
             osApi.setBusy(true);
-            osApi.query(vm.datasource.clinical.patient, {
+            osApi.query(vm.datasource.collections.patient, {
                     $fields: fields
                 })
                 .then(function(response) {
-                    
+
 
                     initDataTable(vm, columns, response.data);
                     initEvents(vm, $scope, osApi)

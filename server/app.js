@@ -8,8 +8,9 @@ const favicon = require('serve-favicon');
 
 
 
-//mongoose.connect('mongodb://localhost/os');
-mongoose.connect(
+mongoose.connect('mongodb://localhost/oncoscape');
+
+/*mongoose.connect(
     'mongodb://oncoscape-dev-db1.sttrcancer.io:27017,oncoscape-dev-db2.sttrcancer.io:27017,oncoscape-dev-db3.sttrcancer.io:27017/oncoscape?authSource=admin', {
         db: {
             native_parser: true
@@ -24,6 +25,7 @@ mongoose.connect(
         user: 'oncoscapeRead',
         pass: 'i1f4d9botHD4xnZ'
     });
+*/
 
 var app = express();
 
@@ -129,6 +131,6 @@ app.get('/', function(req, res) {
 });
 
 // Start Listening
-app.listen(9999, function() {
+app.listen(80, function() {
     console.log("OK");
 });

@@ -26,10 +26,15 @@ var dataSources = tableNames.map(function(f){
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 //var commands = ["ptLocations"]
 
 =======
 >>>>>>> develop
+=======
+//var commands = ["ptLocations"]
+
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 var onerror = function(e){
 	console.log("SHIT!");
 	console.log(e);
@@ -41,6 +46,9 @@ co(function *() {
 	db = yield comongo.client.connect(connectionString);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 //	if(commands.indexOf("ptLocations") != -1){
 		// Insert Patient Locations Scaled
 		var patientFiles = fs.readdirSync(dataDir+"/molecular/mds/scaled/")
@@ -67,6 +75,7 @@ co(function *() {
 		}
 	
 //	}
+<<<<<<< HEAD
 =======
 
 	
@@ -96,6 +105,8 @@ co(function *() {
 	}
 	*/
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 	
 
 	/* Insert Gene Locations Scaled 
@@ -152,9 +163,13 @@ co(function *() {
 		
 	// Insert All Clinical Json Files In DataDir --------------------------------------- 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /*
 =======
 >>>>>>> develop
+=======
+    /*
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
     var clinicalFiles = fs.readdirSync(dataDir+"/clinical/").filter(function(d){ return d.indexOf(".json")!=-1; }).filter(function(d){ return d.indexOf("metadata")==-1; })
 	for (i=0; i<clinicalFiles.length; i++){
     	data = fs.readFileSync(dataDir+"/clinical/"+fileNames[i]).toString().replace(/("\w+)(\.)(\w+":)/g, "$1$3")
@@ -164,10 +179,14 @@ co(function *() {
     	console.log("INSERT TABLE: "+tableNames[i]);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     */
 =======
     
 >>>>>>> develop
+=======
+    */
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 	
     /* Insert All Molec Json Files In DataDir --------------------------------------- 
     var molecFiles = fs.readdirSync(dataDir+"/molecular/").filter(function(d){ return d.indexOf(".json")!=-1; }).filter(function(d){ return d.indexOf("metadata")==-1; })

@@ -6,6 +6,7 @@
 ###
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 # Library Imports ---------------------------------------------------------
 library(RUnit)
@@ -14,12 +15,17 @@ library(stringr)
 library(plyr)
 library(jsonlite)
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 
 # Configuration -----------------------------------------------------------
 rm(list = ls(all = TRUE))
 options(stringsAsFactors = FALSE)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 source("common.R")
 source("os.tcga.mappings.R")
 
@@ -28,6 +34,7 @@ date <- as.character(Sys.Date())
 process <- "import"
 
 # -------------------------------------------------------
+<<<<<<< HEAD
 =======
 os.molecular.ucsc.batch   <- fromJSON("../manifests/os.ucsc.molecular.manifest.json")
 os.clinical.tcga.batch    <- fromJSON("../manifests/os.tcga.clinical.manifest.json")
@@ -61,11 +68,14 @@ os.tcga.ignore.columns <- c("bcr_patient_uuid",
                             "project_code", "patient_id")
 
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 # aggregate list of unmapped data & cde id mapping
 unmapped.List <- list()
 cde.df <- data.frame()
 
 # Data Processing Functions :: [Map, Clean, Filter]  -------------------------------------------------------
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -210,6 +220,8 @@ setAs("character","os.class.tcgaBoolean", function(from){
 })
 
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 ### Takes matrix, returns list of row names, col names, and data with NA labels removed from mtx
 get.processed.mtx <- function(mtx, dimension){
   if("row" %in% dimension){
@@ -232,6 +244,9 @@ get.processed.mtx <- function(mtx, dimension){
   return(list(rownames=rownames, colnames=colnames, data=mtx))
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 # IO Utility Functions :: [Batch, Load, Save]  -------------------------------------------------------
 
 ### Load Function Takes An Import File + Column List & Returns A DataFrame
@@ -283,6 +298,7 @@ os.data.load.molecular <- function(inputFile){
 }
 
 #---------------------------------------------------------
+<<<<<<< HEAD
 =======
 
 
@@ -335,6 +351,8 @@ os.data.load.molecular <- function(inputFile){
 }
 
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 ### Load Function Takes An Import File + Column List & Returns A DataFrame
 os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClassType = "character"){
   
@@ -348,6 +366,9 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
   tcga_columns <- columns
   
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
   if(grepl("../archive/clinical/nationwidechildrens.org_clinical_patient_skcm.txt",inputFile)){
   	columns[match("submitted_tumor_site", columns)] = "skcm_tissue_site"
   	columns[match("submitted_tumor_site", columns)] = "skcm_tumor_type"
@@ -359,6 +380,7 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
     columns[columns=="metastatic_dx_confirmed_by_other"] = "thca_metastatic_dx_confirmed_by_other"
   }
   if(grepl("../archive/clinical/nationwidechildrens.org_clinical_patient_kirp.txt",inputFile)){
+<<<<<<< HEAD
 =======
   if(grepl("clinical_patient_skcm.txt",inputFile)){
   	columns[match("submitted_tumor_site", columns)] = "skcm_tissue_site"
@@ -372,6 +394,8 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
   }
   if(grepl("clinical_patient_kirp.txt",inputFile)){
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
     columns[columns=="tumor_type"] = "disease_subtype"
   }
   
@@ -428,6 +452,9 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
 
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
   
   mappedTable$patient_ID <- gsub("\\.", "\\-", mappedTable$patient_ID)
   mappedTable$patient_ID <- paste(mappedTable$patient_ID, "-01", sep="")
@@ -591,6 +618,7 @@ if("scale" %in% commands){
 }
 
 close.mongo(mongo)
+<<<<<<< HEAD
 =======
   #return(list(mapped=mappedTable, unmapped = unMappedData))
   return(list("mapped"=mappedTable, "unmapped" = unMappedData, "cde"=cbind(tcga_columns,columns,cde_ids, column_type)))
@@ -746,3 +774,5 @@ os.data.save(
   file= paste("os", process, date,"manifest", sep="."),
   format = "JSON") 
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de

@@ -157,6 +157,7 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	   ## ----- Save Raw ------
 	   scores.list <- lapply(rownames(scores), function(name){ scores[name,1:3]})
 	   names(scores.list) <- rownames(scores)
+	   process$scale = NA
 	   result <- list(disease=collection$dataset,type=collection$dataType, geneset=genesetName,scale=NA, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
      save.collection(mongo, dataset=collection$dataset, dataType="pcaScores",source=collection$source, result=list(result),
                      parent=parent, process=process,processName=outputName)
@@ -167,6 +168,7 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	     pc3 <- scores[,1:3]; colnames(pc3) <- c("x", "y", "z")
 	     scores.list <- scaleSamplesToChromosomes(pc3, chrDim)
 	     names(scores.list) <- rownames(scores)
+	     process$scale = scaleFactor
 	     result <- list(disease=collection$dataset,type=collection$dataType, geneset=genesetName,scale=scaleFactor, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
 	     save.collection(mongo, dataset=collection$dataset, dataType="pcaScores",source=collection$source, result=list(result),
 	                     parent=parent, process=process,processName=processName)
@@ -248,12 +250,14 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
 		  mds.list<- lapply(rownames(sample_similarity), function(name) data.frame(x=sample_similarity[name,"x"], y=sample_similarity[name, "y"]))
 		  names(mds.list) <- rownames(sample_similarity)
 
+		  process$scale = NA
 			result <- list(type="cluster", dataset=tbl1$dataset, name=outputName, scale=NA, data=mds.list)
 			save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source), result=list(result),
 			                            parent=parent, process=process,processName=outputName)
 
 			if(!is.na(scaleFactor)){
-			  chrDim <- get.chromosome.dimensions(scaleFactor) 
+			    process$scale = scaleFactor
+			    chrDim <- get.chromosome.dimensions(scaleFactor) 
 			  mds.list <- scaleSamplesToChromosomes(sample_similarity, chrDim, dim.names=c("x", "y"))
 			  result <- list(type="cluster", dataset=tbl1$dataset, name=outputName, scale=scaleFactor, data=mds.list)
 			  save.collection(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source), result=list(result),

@@ -21,17 +21,17 @@ if(length(args) != 0)
 os.save.ptLayouts <- function(scaleFactor=100000){
 
 	datatypeName= "cluster"
-	mds_colls <- mongo.find.all(mongo, "oncoscape.manifest", query=list(dataType="mds", process=list(scale=scaleFactor)))
+	mds_colls <- mongo.find.all(mongo, "oncoscape.manifest", query=list(dataType="mds"))
 	
 	for(collection in mds_colls){
 	  scale <- collection$process[[1]]$scale
 	  if(is.null(scale) || scale != scaleFactor) next;
-	  data_coll <- mongo.find.one(mongo, paste("oncoscape", collection$collection, sep="."))
+	  data_coll <- mongo.find.all(mongo, paste("oncoscape", collection$collection, sep="."))
     if(length(data_coll)==0){
       print(paste("ERROR: collection not found - ", collection$collection, sep=""))
       next;
     }
-	   mongo.insert(mongo, "oncoscape.render_patient", data_coll)
+	   mongo.insert(mongo, "oncoscape.render_patient", data_coll[[1]])
 	}
 	
 	
@@ -99,7 +99,7 @@ mongo <- connect.to.mongo()
 #if("patient" %in% commands) 
  os.save.ptLayouts(scaleFactor=10000)
 #if("chromosome" %in% commands) 
-  os.copy.chromosome.layout(scaleFactor=10000)
+#  os.copy.chromosome.layout(scaleFactor=10000)
 #if("pca" %in% commands) 
 #  os.save.pca()
 

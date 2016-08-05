@@ -205,7 +205,7 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
   process$scale=scaleFactor
   processName <- paste(unlist(process), collapse="-")
   
-  prev.run <- collection.exists(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source),processName=outputName)
+  prev.run <- collection.exists(mongo, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source),processName=processName)
   if(prev.run){
     print("Skipping.")
     return()
@@ -438,12 +438,12 @@ genesets <-     mongo.find.all(mongo, "oncoscape.hg19_genesets_hgnc_import", que
 
 molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
                                     query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
-run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
+run.batch.patient_similarity(molecular_manifest, scaleFactor=10000)
 		# calculate patient similarity
 
-molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
-                                     query='{"dataType":{"$in":["cnv","mut01"]}}')
-run.batch.network_edges(molecular_manifest)
+#molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
+ #                                    query='{"dataType":{"$in":["cnv","mut01"]}}')
+#run.batch.network_edges(molecular_manifest)
 		# map edges for all patients between CNV/Mut and Geneset tables
 
 

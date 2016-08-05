@@ -11,7 +11,7 @@ source("common.R")
 # Configuration -----------------------------------------------------------
 
 date <- as.character(Sys.Date())
-scaleFactor = 100000
+scaleFactor = 10000
 
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0)
@@ -21,7 +21,7 @@ if(length(args) != 0)
 os.save.ptLayouts <- function(scaleFactor=100000){
 
 	datatypeName= "cluster"
-	mds_colls <- mongo.find.all(mongo, "oncoscape.manifest", query=list(dataType="mds"))
+	mds_colls <- mongo.find.all(mongo, "oncoscape.manifest", query=list(dataType="mds", process=list(scale=scaleFactor)))
 	
 	for(collection in mds_colls){
 	  scale <- collection$process[[1]]$scale
@@ -33,6 +33,19 @@ os.save.ptLayouts <- function(scaleFactor=100000){
     }
 	   mongo.insert(mongo, "oncoscape.render_patient", data_coll)
 	}
+	
+	
+	cat_colls <- mongo.find.all(mongo, "oncoscape.manifest", query=list(dataType="colorCategory"))
+	
+	for(collection in cat_colls){
+	  data_coll <- mongo.find.one(mongo, paste("oncoscape", collection$collection, sep="."))
+	  if(length(data_coll)==0){
+	    print(paste("ERROR: collection not found - ", collection$collection, sep=""))
+	    next;
+	  }
+	  mongo.insert(mongo, "oncoscape.render_patient", data_coll)
+	}
+	
 }
 
 ##----------------------------
@@ -79,15 +92,15 @@ os.save.pca <- function(scaleFactor=NA){
 
 ##----------------------------
 #commands <- c("patient", "pca", "chromosome")
-commands <- c("pca")
+commands <- c("patient", "chromosome")
 
 mongo <- connect.to.mongo()
 
-if("patient" %in% commands) 
- os.save.ptLayouts()
-if("chromosome" %in% commands) 
-  os.copy.chromosome.layout()
-if("pca" %in% commands) 
-  os.save.pca()
+#if("patient" %in% commands) 
+ os.save.ptLayouts(scaleFactor=10000)
+#if("chromosome" %in% commands) 
+  os.copy.chromosome.layout(scaleFactor=10000)
+#if("pca" %in% commands) 
+#  os.save.pca()
 
 close.mongo(mongo)

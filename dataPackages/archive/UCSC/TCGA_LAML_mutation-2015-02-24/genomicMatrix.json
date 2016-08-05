@@ -1,0 +1,35 @@
+{
+"domain": "TCGA", 
+"wrangling_procedure": "TCGA PANCAN strictly filtered maf files (file names: *_cleaned_filtered.maf) download from Synapse, processed into gene by sample matrix at UCSC into cgData repository", 
+"owner": "TCGA", 
+"dataProducer": "TCGA PANCAN AWG", 
+"cgDataVersion": 1, 
+"cohort": "TCGA Acute Myeloid Leukemia", 
+"anatomical_origin": [
+"White blood cell"
+], 
+":sampleMap": "TCGA.LAML.sampleMap", 
+"sample_type": [
+"tumor"
+], 
+"label": "LAML gene-level mutation (pancan awg)", 
+"version": "2015-01-28", 
+":probeMap": "hugo", 
+"type": "genomicMatrix", 
+"description": "TCGA acute myeloid leukemia (LAML) somatic mutation data. Red (=1) indicates that a non-silent somatic mutation (nonsense, missense, frame-shif indels, splice site mutations, stop codon readthroughs) was identified in the protein coding region of a gene, or any mutation identified in a non-coding gene. White (=0) indicates that none of the above mutation calls were made in this gene for the specific sample.<br><br>Somatic mutations calls (even on the same tumor DNA extract) are affected by many factors including library prep, sequencing process, read mapping method, reference genome used, genome annotation, calling algorithms, and ad-hoc pre/postprocessing such as black list genes, target selection regions, and black list samples. This dataset is the best effort made by the TCGA PANCANCER Analysis Working Group. Raw PANCAN mutation data can be downloaded at the url site shown below.<br><br>", 
+"tags": [
+"cancer"
+], 
+"longTitle": "TCGA acute myeloid leukemia (LAML) gene-level non-silent somatic mutation (pancan awg)", 
+"gain": 10, 
+"path": "data/public/TCGA/LAML/mutation", 
+":dataSubType": "somatic mutation", 
+"wrangler": "cgData TCGAscript mutationMatrix processed on 2015-01-28", 
+"redistribution": true, 
+"name": "TCGA_LAML_mutation", 
+"shortTitle": "LAML gene-level mutation (pancan awg)", 
+"url": "https://www.synapse.org/#!Synapse:syn1729383", 
+"primary_disease": "acute myeloid leukemia", 
+"security": "public", 
+"groupTitle": "TCGA acute myeloid leukemia"
+}

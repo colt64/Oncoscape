@@ -1,0 +1,20 @@
+{
+":integrationId": "TCGA.LGG.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.LGG.sampleMap", 
+"anatomical_origin": [
+"Brain"
+], 
+"primary_disease": "brain lower grade glioma", 
+"tags": [
+"cancer", 
+"nervous system"
+], 
+"sample_type": [
+"tumor"
+], 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

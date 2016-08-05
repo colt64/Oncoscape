@@ -1,0 +1,28 @@
+{
+":integrationId": "TCGA.PAAD.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.PAAD.sampleMap", 
+"anatomical_origin": [
+"Pancreas"
+], 
+"primary_disease": "pancreatic adenocarcinoma", 
+"tags": [
+"cancer"
+], 
+"sample_type": [
+"tumor"
+], 
+"blacklist": [
+"TCGA-FQ-6551", 
+"TCGA-FQ-6552", 
+"TCGA-FQ-6553", 
+"TCGA-FQ-6554", 
+"TCGA-FQ-6555", 
+"TCGA-FQ-6558", 
+"TCGA-FQ-6559"
+], 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

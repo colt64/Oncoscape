@@ -1,0 +1,42 @@
+{
+"domain": "TCGA", 
+"wrangling_procedure": "Download .maf file from TCGA DCC, processed into gene by sample matrix at UCSC, stored in the UCSC Xena repository", 
+"owner": "TCGA", 
+"dataProducer": "Broad Institute Genome Sequencing Center", 
+"cgDataVersion": 1, 
+"cohort": "TCGA Bladder Cancer", 
+"min": -1, 
+"tags": [
+"cancer"
+], 
+":sampleMap": "TCGA.BLCA.sampleMap", 
+"sample_type": [
+"tumor"
+], 
+"label": "BLCA gene-level mutation (broad automated)", 
+"PLATFORM": "IlluminaGA", 
+"version": "2015-01-27", 
+"gdata_tags": [
+"Broad Institute Genome Sequencing Center"
+], 
+":probeMap": "hugo", 
+"type": "genomicMatrix", 
+"method": "MutDect", 
+"description": "TCGA bladder urothelial carcinoma (BLCA) somatic mutation data.  Sequencing data are generated on a IlluminaGA system. The calls are generated at Broad Institute Genome Sequencing Center using the MutDect method. <br><br> Red (=1) indicates that a non-silent somatic mutation (nonsense, missense, frame-shif indels, splice site mutations, stop codon readthroughs, change of start codon, inframe indels) was identified in the protein coding region of a gene, or any mutation identified in a non-coding gene. White (=0) indicates that none of the above mutation calls were made in this gene for the specific sample.<br><br>", 
+"anatomical_origin": [
+"Bladder"
+], 
+"max": 1, 
+"longTitle": "TCGA bladder urothelial carcinoma (BLCA) gene-level nonsilent somatic mutation (broad automated)", 
+"gain": 10, 
+"path": "data/public/TCGA/BLCA/mutation_broad_gene", 
+":dataSubType": "somatic mutation", 
+"wrangler": "cgData TCGAscript maf processed on 2015-01-27", 
+"redistribution": true, 
+"name": "TCGA_BLCA_mutation_broad_gene", 
+"shortTitle": "BLCA gene-level mutation (broad automated)", 
+"url": "https://tcga-data.nci.nih.gov/tcgafiles/ftp_auth/distro_ftpusers/anonymous/tumor/blca/gsc/broad.mit.edu/illuminaga_dnaseq_automated/mutations/", 
+"primary_disease": "bladder urothelial carcinoma", 
+"security": "public", 
+"groupTitle": "TCGA bladder urothelial carcinoma"
+}

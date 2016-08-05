@@ -1,0 +1,20 @@
+{
+":integrationId": "TCGA.STAD.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.STAD.sampleMap", 
+"anatomical_origin": [
+"Stomach"
+], 
+"primary_disease": "stomach adenocarcinoma", 
+"tags": [
+"cancer", 
+"gastric cancer"
+], 
+"sample_type": [
+"tumor"
+], 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

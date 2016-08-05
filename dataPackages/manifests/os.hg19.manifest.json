@@ -8,11 +8,15 @@
         "process": ["position", "min", "abs", "start"],
         "date": "2016-06-24",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
         "source": "hg19",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_1_position-min-abs-start",
         "parent": [null]
       }    ]
+<<<<<<< HEAD
 =======
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genes_1_position-min-abs-start",
@@ -75,6 +79,8 @@
       }
     ]
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
   },
   {
     "dataset": "hg19",
@@ -85,10 +91,14 @@
         "process": ["length"],
         "date": "2016-06-24",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
         "source": "hg19",
         "directory": "../data/molecular/hg19/",
         "file": "hg19_chromosome_1_length",
         "parent": [null]
+<<<<<<< HEAD
 =======
         "directory": "../data/molecular/hg19/",
         "file": "hg19_chromosome_1_length",
@@ -105,6 +115,8 @@
           ["hg19", "centromere", "1"]
         ]
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
       }
     ]
   },
@@ -117,9 +129,13 @@
         "process": "position",
         "date": "2016-06-24",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "source": "hg19",
 =======
 >>>>>>> develop
+=======
+        "source": "hg19",
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
         "directory": "../data/molecular/hg19/",
         "file": "hg19_centromere_1_position"
       }
@@ -134,9 +150,13 @@
         "process": "hgnc",
         "date": "2016-06-24",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "source": "hg19",
 =======
 >>>>>>> develop
+=======
+        "source": "hg19",
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
         "directory": "../data/molecular/hg19/",
         "file": "hg19_genesets_1_hgnc"
       }

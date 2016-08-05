@@ -8,21 +8,30 @@ printf = function (...) print (noquote (sprintf (...)))
 options(stringsAsFactors=FALSE)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 source("common.R")
 
 commands <- c("mds", "edges")
 #commands <- c("mds")
 #commands <- c("edges")
+<<<<<<< HEAD
 =======
 #commands <- c("mds", "edges")
 commands <- c("edges")
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0)
 	commands <- args
 
 #--------------------------------- Configuration -----------------------------#
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 source("common.R")
 
 
@@ -37,6 +46,7 @@ getGeneSet <- function(geneset_name){
 	return(genesets[[match_name]]$genes)
 }
 
+<<<<<<< HEAD
 =======
 
 molecular_manifest <- "../manifests/os.import.2016-06-24.manifest.json"
@@ -84,6 +94,8 @@ os.data.save <- function(df, directory, file, format = c("tsv", "csv", "RData", 
   
 }
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 
 #----------------------------------------------------------------------------------------------------
 calcSimilarity <- function(indicatorMatrix) {
@@ -99,14 +111,20 @@ calcSimilarity <- function(indicatorMatrix) {
 
 #----------------------------------------------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA) {
 
   cat("--- sample similarity matrix\n")
   
+<<<<<<< HEAD
 =======
 calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA, copyNumberValues=c(-2, 2), threshold=NA) {
 
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
     if(!all(is.na(samples))){
         mut <- mut[,intersect(colnames(mut), samples)]
         cn  <- cn[ ,intersect(colnames(cn) , samples)]
@@ -122,10 +140,14 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA, copy
 	if(length(which(tmp))>0)
 		mut <- mut[-which(tmp),]
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 	tmp <- apply(cn, 1, function(x) any(is.na(x)))
 	if(length(which(tmp))>0)
 	  cn <- cn[-which(tmp),]
 	
+<<<<<<< HEAD
 =======
 
 	stopifnot(all(sort(unique(as.integer(mut))) == c(0,1)))
@@ -133,6 +155,8 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA, copy
     cn[!cn %in% copyNumberValues] <- 0
 
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 	similaritySNV <- calcSimilarity(as.matrix(mut))
 	similarityCNV <- calcSimilarity(as.matrix(cn))
 
@@ -149,6 +173,7 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA, copy
 	tbl.pos <- as.data.frame(tbl.pos)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 #	 ptIDs <- canonicalizePatientIDs(obj@pkg, rownames(tbl.pos))
@@ -156,11 +181,16 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA, copy
 #     rownames(tbl.pos) <- ptIDs[!duplicated(ptIDs)]
      
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
      return(tbl.pos)
 }
 
 #----------------------------------------------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 
   cat("-calculating pca\n")
@@ -382,6 +412,7 @@ run.batch.patient_similarity <- function(datasets, scaleFactor=NA){
 
 	} # for diseaseName	
   
+<<<<<<< HEAD
 =======
 run.batch.patient_similarity <- function(manifest_file, geneset_name=NA, output_directory="./"){
 
@@ -497,6 +528,8 @@ add.new.collection <- function(Manifest, datasetName, dataTypeName, collection){
   }
   stop(printf("add.new.collection found %d instances of dataset %s and dataType %s", length(dataObj), datasetName, dataTypeName))
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
   
 }
 #----------------------------------------------------------------------------------------------------
@@ -511,15 +544,22 @@ get.network_edges <- function(mtx,samples, genes, edgeTypes){
   mtx <- mtx[genes, samples]
   rows <- rownames(mtx); cols <- colnames(mtx)
 <<<<<<< HEAD
+<<<<<<< HEAD
   allEdges <- list()
 =======
   allEdges <- c()
 >>>>>>> develop
+=======
+  allEdges <- list()
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
   
   for(edgeName in names(edgeTypes)){
   	matchingIndex <- which(mtx==edgeTypes[[edgeName]], arr.ind=T)
 	  edgeMap <- apply(matchingIndex, 1, function(matchPair){
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 	    list(m=edgeName, g=rows[matchPair[1]], p=cols[matchPair[2]])
 	  })
 	  allEdges <- c(allEdges, edgeMap)
@@ -544,6 +584,7 @@ save.edge.files <- function(dataset, result, source, parent, process,processName
   node2_counts <- lapply(names(temp), function(el) temp[el])
   save.collection(mongo, dataset=dataset, dataType="geneDegree", source=source, result=node2_counts,
                               parent=parent, process=process,processName=processName)
+<<<<<<< HEAD
 =======
 	    c(edgeName, rows[matchPair[1]], cols[matchPair[2]])
 	  })
@@ -574,17 +615,23 @@ save.edge.files <- function(edgePairs, outputDirectory, datasetName, dataType, i
 	return( c(edgeFile, geneDegreeFile, ptDegreeFile) )
 
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 }
 #----------------------------------------------------------------------------------------------------
 get.edgePairs <- function(collection, genesetName, ...){				
   
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
     goi <- getGeneSet(genesetName)
  
     mtx <- convert.to.mtx(collection)
     
     ## get and save edge pairs
     edgePairs <- get.network_edges(t(mtx), samples=NA, genes=goi, ...)
+<<<<<<< HEAD
 =======
     goi <- genesets[[genesetName]]
  
@@ -597,12 +644,17 @@ get.edgePairs <- function(collection, genesetName, ...){
     ## get and save edge pairs
     edgePairs <- get.network_edges(mtx, samples=NA, genes=goi, ...)
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 
   return(edgePairs)
 }
 
 #----------------------------------------------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 run.batch.network_edges <- function(datasets){
 
   cat("-calculating edges\n")
@@ -666,6 +718,7 @@ run.batch.network_edges <- function(datasets){
 		}# for genesetName
   } #collection dataset/source type
 
+<<<<<<< HEAD
 =======
 run.batch.network_edges <- function(manifest_file, output_directory="./"){
 
@@ -763,11 +816,16 @@ run.batch.network_edges <- function(manifest_file, output_directory="./"){
 
       return(Manifest)
 >>>>>>> develop
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 }
 
 
 #----------------------------------------------------------------------------------------------------
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
@@ -784,6 +842,7 @@ run.batch.patient_similarity(molecular_manifest, scaleFactor=10000)
 		# map edges for all patients between CNV/Mut and Geneset tables
 
 
+<<<<<<< HEAD
 close.mongo(mongo)
 =======
 
@@ -811,3 +870,6 @@ if("edges" %in% commands){
 
 
 >>>>>>> develop
+=======
+close.mongo(mongo)
+>>>>>>> 28fa7a153422d214caffae02005075ac91f165de

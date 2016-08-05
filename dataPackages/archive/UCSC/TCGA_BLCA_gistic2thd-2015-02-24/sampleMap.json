@@ -1,0 +1,19 @@
+{
+":integrationId": "TCGA.BLCA.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.BLCA.sampleMap", 
+"anatomical_origin": [
+"Bladder"
+], 
+"primary_disease": "bladder urothelial carcinoma", 
+"tags": [
+"cancer"
+], 
+"sample_type": [
+"tumor"
+], 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

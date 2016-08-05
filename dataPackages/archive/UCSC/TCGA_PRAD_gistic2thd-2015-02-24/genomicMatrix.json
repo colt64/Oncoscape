@@ -1,0 +1,37 @@
+{
+"domain": "TCGA", 
+"wrangling_procedure": "FIREHOSE data download from TCGA DCC, processed at UCSC into cgData repository", 
+"owner": "TCGA", 
+"dataProducer": "TCGA FIREHOSE pipeline", 
+"cgDataVersion": 1, 
+"cohort": "TCGA Prostate Cancer", 
+"min": -2, 
+"tags": [
+"cancer"
+], 
+":sampleMap": "TCGA.PRAD.sampleMap", 
+"sample_type": [
+"tumor"
+], 
+"label": "PRAD copy number (gistic2_thresholded)", 
+"version": "2015-01-27", 
+":probeMap": "hugo", 
+"type": "genomicMatrix", 
+"description": "TCGA prostate adenocarcinoma (PRAD) thresholded gene-level copy number variation (CNV) estimated using the GISTIC2 method.<br><br> Copy number profile was measured experimentally using whole genome microarray at a TCGA genome characterization center. Subsequently, GISTIC2 method was applied using the TCGA FIREHOSE pipeline to produce gene-level copy number estimates. GISTIC2 further thresholded the estimated values to -2,-1,0,1,2, representing homozygous deletion, single copy deletion, diploid normal copy, low-level copy number amplification, or high-level copy number amplification. Genes are mapped onto the human genome coordinates using UCSC cgData HUGO probeMap. Reference to GISTIC2 method PMID:21527027.<br><br>", 
+"anatomical_origin": [
+"Prostate"
+], 
+"max": 2, 
+"longTitle": "TCGA prostate adenocarcinoma (PRAD) copy number gistic2_thresholded estimate", 
+"gain": 0.5, 
+"path": "data/public/TCGA/PRAD/Gistic2_CopyNumber_Gistic2_all_thresholded.by_genes", 
+":dataSubType": "copy number", 
+"wrangler": "cgData TCGAscript CopyNumber_Gistic2 processed on 2015-01-27", 
+"redistribution": true, 
+"name": "TCGA_PRAD_gistic2thd", 
+"shortTitle": "PRAD copy number (gistic2_thresholded)", 
+"url": "http://gdac.broadinstitute.org/runs/analyses__2014_10_17/data/PRAD/20141017/", 
+"primary_disease": "prostate adenocarcinoma", 
+"security": "public", 
+"groupTitle": "TCGA prostate adenocarcinoma"
+}

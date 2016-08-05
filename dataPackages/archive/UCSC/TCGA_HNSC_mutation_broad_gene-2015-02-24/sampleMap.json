@@ -1,0 +1,19 @@
+{
+":integrationId": "TCGA.HNSC.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.HNSC.sampleMap", 
+"anatomical_origin": [
+"Head and Neck region"
+], 
+"primary_disease": "head & neck squamous cell carcinoma", 
+"tags": [
+"cancer"
+], 
+"sample_type": [
+"tumor"
+], 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

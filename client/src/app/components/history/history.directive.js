@@ -38,7 +38,7 @@ b:{})}});return g};"function"===typeof define&&define.amd?define(["jquery","data
             // Properties
             var vm = this;
             var table;
-            
+
 
             // Retrieve Selected Patient Ids From OS Service
             var pc = osCohortService.getPatientCohort();
@@ -73,9 +73,9 @@ b:{})}});return g};"function"===typeof define&&define.amd?define(["jquery","data
                 // Override Filter Function
                 angular.element.fn.DataTable.ext.search = [function(settings, data) {
 
-                    
+
                     if (selectedIds.length != 0) { if (selectedIds.indexOf(data[0]) == -1) return false; }
-          
+
                     return true;
                 }];
 
@@ -152,11 +152,11 @@ b:{})}});return g};"function"===typeof define&&define.amd?define(["jquery","data
 
             // Load Datasets
             osApi.setBusy(true);
-            osApi.query(vm.datasource.collections.pt, {
+            osApi.query(vm.datasource.collections.patient, {
                     $fields: fields
                 })
                 .then(function(response) {
-                    
+
 
                     initDataTable(vm, columns, response.data);
                     initEvents(vm, $scope, osApi)

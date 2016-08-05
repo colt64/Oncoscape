@@ -111,6 +111,7 @@ collection.exists <- function(mongo, dataset, dataType,source,processName){
   sourceName <- paste(unlist(source), collapse="-")
 
   collection.uniqueName <- paste(dataset, dataType, sourceName, processName, sep="_")
+  collection.uniqueName <- gsub("\\s+", "", tolower(collection.uniqueName))
   collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
   if(mongo.count(mongo, collection.ns) != 0){
     print(paste(collection.uniqueName, " already exists.", sep=""))
@@ -148,7 +149,7 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   
   pass <- lapply(result, function(el){mongo.insert(mongo, collection.ns, as.list(el))})
   if(!all(unlist(pass))){
-    print("ERROR: result not inserted into mongodb.")
+    print(paste("ERROR: result not inserted into mongodb: ", collection.uniqueName, sep=""))
     return()
   }
   
@@ -199,9 +200,9 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
     #update patient
     add.collection <- list()
     add.collection[dataType] <- collection.uniqueName
-    if("clinical" %in% names(data.list)){
-      data.list$clinical	<- c(data.list$clinical, add.collection)
-    } else {data.list$clinical <- add.collection }
+    if("collections" %in% names(data.list)){
+      data.list$collections	<- c(data.list$collections, add.collection)
+    } else {data.list$collections <- add.collection }
     
   }else if(dataType %in% c("chromosome", "centromere", "genes")){
     #update patient

@@ -1,0 +1,119 @@
+[
+  {
+    "dataset": "brca",
+    "dataType": "patient",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/clinical/clean/",
+        "file": "brca_patient_1_import",
+        "source": "tcga",
+        "process": "import",
+        "parent": ["brca", "tcga", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "drug",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/clinical/clean/",
+        "file": "brca_drug_1_import",
+        "source": "tcga",
+        "process": "import",
+        "parent": ["brca", "tcga", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "radiation",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/clinical/clean/",
+        "file": "brca_radiation_1_import",
+        "source": "tcga",
+        "process": "import",
+        "parent": ["brca", "tcga", "3"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "followUp",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/clinical/clean/",
+        "file": "brca_followUp_1_import",
+        "source": "tcga",
+        "process": "import",
+        "parent": ["brca", "tcga", "4"]
+      },
+      {
+        "id": 2,
+        "date": "2016-07-14",
+        "directory": "../data/clinical/clean/",
+        "file": "brca_followUp_2_import",
+        "source": "tcga",
+        "process": "import",
+        "parent": ["brca", "tcga", "5"]
+      },
+      {
+        "id": 3,
+        "date": "2016-07-14",
+        "directory": "../data/clinical/clean/",
+        "file": "brca_followUp_3_import",
+        "source": "tcga",
+        "process": "import",
+        "parent": ["brca", "tcga", "6"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "newTumor",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/clinical/clean/",
+        "file": "brca_newTumor_1_import",
+        "source": "tcga",
+        "process": "import",
+        "parent": ["brca", "tcga", "7"]
+      },
+      {
+        "id": 2,
+        "date": "2016-07-14",
+        "directory": "../data/clinical/clean/",
+        "file": "brca_newTumor_2_import",
+        "source": "tcga",
+        "process": "import",
+        "parent": ["brca", "tcga", "8"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "otherMalignancy",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/clinical/clean/",
+        "file": "brca_otherMalignancy_1_import",
+        "source": "tcga",
+        "process": "import",
+        "parent": ["brca", "tcga", "9"]
+      }
+    ]
+  }
+]

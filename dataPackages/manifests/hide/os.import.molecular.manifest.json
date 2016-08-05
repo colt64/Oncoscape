@@ -1,0 +1,128 @@
+[
+  {
+    "dataset": "brca",
+    "dataType": "cnv",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_cnv_1_import",
+        "source": "cBio",
+        "process": "import",
+        "parent": ["brca", "cBio", "1"]
+      },
+      {
+        "id": 2,
+        "date": "2016-07-14",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_cnv_2_import",
+        "source": "ucsc",
+        "process": "import",
+        "parent": ["brca", "ucsc", "1"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "mut",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_mut_1_import",
+        "source": "cBio",
+        "process": "import",
+        "parent": ["brca", "cBio", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "mut01",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_mut01_1_import",
+        "source": "cBio",
+        "process": "import",
+        "parent": ["brca", "mut"]
+      },
+      {
+        "id": 2,
+        "date": "2016-07-14",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_mut01_2_import",
+        "source": "ucsc",
+        "process": "import",
+        "parent": ["brca", "ucsc", "2"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "methyl",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_methyl_1_import",
+        "source": "cBio",
+        "process": "import",
+        "parent": ["brca", "cBio", "3"]
+      },
+      {
+        "id": 2,
+        "date": "2016-07-14",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_methyl_2_import",
+        "source": "cBio",
+        "process": "import",
+        "parent": ["brca", "cBio", "4"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "rna",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_rna_1_import",
+        "source": "cBio",
+        "process": "import",
+        "parent": ["brca", "cBio", "5"]
+      },
+      {
+        "id": 2,
+        "date": "2016-07-14",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_rna_2_import",
+        "source": "cBio",
+        "process": "import",
+        "parent": ["brca", "cBio", "6"]
+      }
+    ]
+  },
+  {
+    "dataset": "brca",
+    "dataType": "protein",
+    "collections": [
+      {
+        "id": 1,
+        "date": "2016-07-14",
+        "directory": "../data/molecular/clean/",
+        "file": "brca_protein_1_import",
+        "source": "cBio",
+        "process": "import",
+        "parent": ["brca", "cBio", "7"]
+      }
+    ]
+  }
+]

@@ -417,9 +417,9 @@ molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest",
 run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
 		# calculate patient similarity
 
-#molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
-#                                     query='{"dataType":{"$in":["cnv","mut01"]}}')
-#run.batch.network_edges(molecular_manifest)
+molecular_manifest <- mongo.find.all(mongo, "oncoscape.manifest", 
+                                     query='{"dataType":{"$in":["cnv","mut01"]}}')
+run.batch.network_edges(molecular_manifest)
 		# map edges for all patients between CNV/Mut and Geneset tables
 
 close.mongo(mongo)

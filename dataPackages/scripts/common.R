@@ -199,9 +199,9 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
     #update patient
     add.collection <- list()
     add.collection[dataType] <- collection.uniqueName
-    if("collections" %in% names(data.list)){
-      data.list$collections	<- c(data.list$collections, add.collection)
-    } else {data.list$collections <- add.collection }
+    if("clinical" %in% names(data.list)){
+      data.list$clinical	<- c(data.list$clinical, add.collection)
+    } else {data.list$clinical <- add.collection }
     
   }else if(dataType %in% c("chromosome", "centromere", "genes")){
     #update patient

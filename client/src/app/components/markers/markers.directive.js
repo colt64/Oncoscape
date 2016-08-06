@@ -704,16 +704,16 @@
             /* Options Factory */
             var createOptions = (function(cyChart, vm) {
 
-               
+
                 return function(cmd) {
-debugger;
+
                     cmd = cmd || "";
                     var geneset = vm.optGeneSet.name;
-                   
+
                     var edges = osApi.getDataSource().edges.filter(function(f){
                         return f.name==this.geneset
                     }, {geneset:geneset})[0];
-                   
+
                     var opts = {
                         mode: vm.optCommandMode.name,
                         cmd: cmd,
@@ -737,7 +737,7 @@ debugger;
                             geneWeights: edges.genesWeights,
                             layout: vm.datasource.edges
                                 .filter(function(v) {
-                                    
+
                                     return (v.name == this)
                                 }, geneset)[0],
                             colors: vm.optEdgeColors
@@ -798,7 +798,6 @@ debugger;
                 // Patient Layout
                 watches += 1;
                 $scope.$watch('vm.optPatientLayout', function() {
-debugger;
                     if (watches > 0) {
                         watches -= 1;
                         return;

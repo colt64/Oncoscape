@@ -121,6 +121,39 @@ collection.exists <- function(mongo, dataset, dataType,source,processName){
 
 }
 #---------------------------------------------------------
+remove.collection.byName <- function(mongo, collection){
+
+		mongo.drop(mongo, collection)
+		mongo.remove(mongo, "oncoscape.manifest_copy", criteria=list(collection=collection))
+
+		parseVals <- unlist(strsplit(collection,"_"))
+		dataType = parseVals[2]
+		
+		if(dataType %in% c("cnv","mut01", "mut", "rna", "protein", "methylation")){
+			mongo.remove(mongo, "oncoscape.lookup_oncoscape_datasources", list(disease=")
+	
+		  }else if(dataType %in% c("mds", "pcaScores")){
+		  }else if(dataType %in% c("edges")){
+	
+		  }else if(dataType %in% c("ptDegree", "geneDegree")){
+		  }else if(dataType %in% c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
+	
+		  }else if(dataType %in% c("chromosome", "centromere", "genes")){
+	 
+		  }else if(dataType %in% c("genesets", "color")){
+			}
+		
+		mongo.find(mongo, "oncoscape.lookup_oncoscape_datasources",
+			query=list(disease=parseVals[1], 
+
+
+
+#		mongo.find(mongo, "oncoscape.lookup_oncoscape_datasources", 
+#			paste("{$where: function() { for (var field in this.settings) { if (this.settings[field] == '",collection,"') return true;}    return false;}}", sep=""))
+
+
+}
+#---------------------------------------------------------
 save.collection <- function(mongo, dataset, dataType,source,result, parent, 
                             process,processName){
   

@@ -200,7 +200,7 @@ os.data.batch <- function(manifest, ...){
     stopifnot(all(c("dataset","source", "type","process") %in% names(sourceObj)))
     cat(sourceObj$dataset,sourceObj$source, sourceObj$type,"\n")
     
-    prev.run <- collection.exists(mongo, dataset=sourceObj$dataset, dataType=sourceObj$type,
+    prev.run <- collection.exists(mongo,db, dataset=sourceObj$dataset, dataType=sourceObj$type,
                                   source=sourceObj$source,processName=sourceObj$process)
     if(prev.run){
       print("Skipping.")
@@ -239,7 +239,7 @@ os.data.batch <- function(manifest, ...){
     
     parent <-  NA
     
-    save.collection(mongo, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$source,
+    save.collection(mongo,db, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$source,
                     result=resultObj,parent=parent, process=process,processName=sourceObj$process)
     
   }  # dataset
@@ -286,14 +286,14 @@ os.save.categories <- function(datasets = c("brain")){
       add.category.fromFile(file='../archive/categories/brain/verhaakGbmClustersAugmented.RData', name="verhaakPlus1", col.name="cluster", dataset="brain", type=type) 
     )
     
-    save.collection(mongo, dataset="brain", dataType=type, source="tcga",
+    save.collection(mongo,db, dataset="brain", dataType=type, source="tcga",
                     result=color.categories,parent=NA, process="import",processName="import")
     
   }
   if("brca" %in% datasets){
     categories.list <- fromJSON("../archive/categories/brca/colorCategories.json", simplifyVector = FALSE)
 #    color.categories <- apply(categories.list, 1, function(colorcat){list(dataset=colorcat$dataset, type=colorcat$type, name=colorcat$name, data=colorcat$data)})
-     save.collection(mongo, dataset="brca", dataType=type, source="tcga",
+     save.collection(mongo,db, dataset="brca", dataType=type, source="tcga",
                     result=categories.list,parent=NA, process="import",processName="import")
     
   }

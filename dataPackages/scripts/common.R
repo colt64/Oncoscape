@@ -11,6 +11,8 @@ os.dataset.enumerations     <- fromJSON("../manifests/os.dataset.enumerations.js
 date <- as.character(Sys.Date())
 chromosomes <- c(seq(1:22), "X", "Y")
 
+db <- "oncoscape"
+
 dataset_map <- list(
   brca=list(name="Breast", img= "DSbreast.png", beta=FALSE, source="TCGA"),
   brain=list(name="Brain", img= "DSbrain.png", beta=FALSE, source="TCGA"),
@@ -37,7 +39,9 @@ close.mongo <- function(mongo){
 
 #---------------------------------------------------------
 mongo.collection.as.matrix <- function(collection, format=""){
-
+### NOT ACTUALLY IMPLEMENTED.  Would converting the list object from a cursor and adding it 
+### to a predefined object (with known size) reduce compute time and storage needs?
+  
   cursor <- mongo.find(mongo, paste("oncoscape",collection, sep="."), query=list(), fields=list())
   count <- mong.count(mongo, paste("oncoscape",collection, sep="."))
   result_lst <- vector('list', count)
@@ -67,7 +71,6 @@ convert.to.mtx <- function(data.list, format=""){
     if(length(null.val)>0) val[null.val] <- NA
     val <- unlist(val);
     if(format == "as.numeric") val <- as.numeric(val)
-#    if(all(is.null(val))){ val <- rep(NA, length(geneRow$patients))} 
     val})
   colnames(mtx) <- sapply(data.list, function(geneRow){ geneRow$gene})
   rownames(mtx) <- names(data.list[[1]]$patients)
@@ -87,7 +90,7 @@ mapProcess <- function(process){
 }
 #---------------------------------------------------------
 ### For any mutation file, create and save an indicator mut01 file
-save.mut01.from.mut <- function(mongo, result, dataset, dataType,source, parentID){
+save.mut01.from.mut <- function(mongo, db, result, dataset, dataType,source, parentID){
   
   mut.list <- result
   
@@ -98,13 +101,13 @@ save.mut01.from.mut <- function(mongo, result, dataset, dataType,source, parentI
   
   parent <- parentID
   
-  save.collection(mongo, dataset=dataset, dataType="mut01",source=source, result=data.list,
+  save.collection(mongo,db, dataset=dataset, dataType="mut01",source=source, result=data.list,
                               parent=parent, process=process,processName=process)
 
 }
 
 #---------------------------------------------------------
-collection.exists <- function(mongo, dataset, dataType,source,processName){
+collection.exists <- function(mongo,db, dataset, dataType,source,processName){
 
   source <- unique(source)
   if(length(source)>1) source <- list(source)
@@ -112,7 +115,7 @@ collection.exists <- function(mongo, dataset, dataType,source,processName){
 
   collection.uniqueName <- paste(dataset, dataType, sourceName, processName, sep="_")
   collection.uniqueName <- gsub("\\s+", "", tolower(collection.uniqueName))
-  collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
+  collection.ns <- paste(db, collection.uniqueName, sep=".")
   if(mongo.count(mongo, collection.ns) != 0){
     print(paste(collection.uniqueName, " already exists.", sep=""))
     return(TRUE)
@@ -121,40 +124,56 @@ collection.exists <- function(mongo, dataset, dataType,source,processName){
 
 }
 #---------------------------------------------------------
-remove.collection.byName <- function(mongo, collection){
+remove.collection.byName <- function(mongo,db, collection){
 
-		mongo.drop(mongo, collection)
-		mongo.remove(mongo, "oncoscape.manifest_copy", criteria=list(collection=collection))
+  ##TO DO: rerun render_XXX collections?  eg drop an mds collection triggers rewrite of render_patient?
+  
+  #remove collection data
+		mongo.drop(mongo,db, collection)
+  #remove manifest entry
+  		mongo.remove(mongo, paste(db, "manifest", sep="."), criteria=list(collection=collection))
 
+  # remove lookup_oncoscape_datasource entry
 		parseVals <- unlist(strsplit(collection,"_"))
+		dataset <- parseVals[1]
 		dataType = parseVals[2]
 		
-		if(dataType %in% c("cnv","mut01", "mut", "rna", "protein", "methylation")){
-			mongo.remove(mongo, "oncoscape.lookup_oncoscape_datasources", list(disease=")
-	
+		if(dataType %in% c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
+		  query <- list(disease=dataset,dataType=dataType)
+		  query[[dataType]] <- collection
+		  mongo.remove(mongo, paste(db, "lookup_oncoscape_datasources", sep="."), 
+		               query=query)
+		               
+		} else if(dataType %in% c("edges","ptDegree","geneDegree")){
+		  query <- list(disease=dataset,dataType=dataType)
+		  colType <- ifelse(dataType=="edges", "edges", ifelse(dataType=="ptDegree","patientWeights", "genesWeights"))
+		  query[[colType]] <- collection
+		  mongo.remove(mongo, paste(db, "lookup_oncoscape_datasources", sep="."), 
+		               query=query)
+		  
+		}
+		else{
+		  query=list(disease=dataset,dataType=dataType)
+
+      if(dataType %in% c("cnv","mut01", "mut", "rna", "protein", "methylation")){
+        query[["molecular"]] <- list(collection=collection) 
 		  }else if(dataType %in% c("mds", "pcaScores")){
-		  }else if(dataType %in% c("edges")){
-	
-		  }else if(dataType %in% c("ptDegree", "geneDegree")){
-		  }else if(dataType %in% c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
-	
+		    query[["calculated"]] <- list(collection=collection) 		               
 		  }else if(dataType %in% c("chromosome", "centromere", "genes")){
-	 
-		  }else if(dataType %in% c("genesets", "color")){
-			}
-		
-		mongo.find(mongo, "oncoscape.lookup_oncoscape_datasources",
-			query=list(disease=parseVals[1], 
-
-
-
-#		mongo.find(mongo, "oncoscape.lookup_oncoscape_datasources", 
-#			paste("{$where: function() { for (var field in this.settings) { if (this.settings[field] == '",collection,"') return true;}    return false;}}", sep=""))
-
+		    query[["location"]] <- list(collection=collection) 		               
+	  	}else if(dataType %in% c("genesets", "color")){
+	  	  query[["category"]] <- list(collection=collection) 		}
+		  else{ print(paste("ERROR: datatype not recognized in lookup table- ", dataType, sep=""));
+		        return()
+		  }
+		  mongo.remove(mongo, paste(db, "lookup_oncoscape_datasources", sep="."), 
+		               query=query)
+		  
+		}
 
 }
 #---------------------------------------------------------
-save.collection <- function(mongo, dataset, dataType,source,result, parent, 
+save.collection <- function(mongo,db, dataset, dataType,source,result, parent, 
                             process,processName){
   
   cat("-save collection\n")
@@ -165,7 +184,7 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   
   collection.uniqueName <- paste(dataset, dataType, sourceName, processName, sep="_")
   collection.uniqueName <- gsub("\\s+", "", tolower(collection.uniqueName))
-  collection.ns <- paste("oncoscape", collection.uniqueName, sep=".")
+  collection.ns <- paste(db, collection.uniqueName, sep=".")
   if(mongo.count(mongo, collection.ns) != 0){
     print(paste(collection.uniqueName, " already exists. Skipping.", sep=""))
     return()
@@ -178,7 +197,7 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   newCollection$parent <- parent
   
   ## add to manifest file
-  mongo.insert(mongo, "oncoscape.manifest", newCollection)
+  mongo.insert(mongo, paste, newCollection)
   
   pass <- lapply(result, function(el){mongo.insert(mongo, collection.ns, as.list(el))})
   if(!all(unlist(pass))){
@@ -186,11 +205,11 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
     return()
   }
   
-  newID <-  mongo.find.one(mongo, "oncoscape.manifest", 
+  newID <-  mongo.find.one(mongo, paste(db, "manifest", sep="."), 
                            query=newCollection, fields=list("_id"))
   
   ## add to lookup table  
-  lookup.ns <-  "oncoscape.lookup_oncoscape_datasources"
+  lookup.ns <-  paste(db, "lookup_oncoscape_datasources", sep=".")
   query <- list("disease"=dataset)
   datasource <- mongo.find.one(mongo, lookup.ns, query)
   
@@ -235,14 +254,13 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
     #update patient
     add.collection <- list()
     add.collection[dataType] <- collection.uniqueName
-    if("collections" %in% names(data.list)){
-      data.list$collections	<- c(data.list$collections, add.collection)
-    } else {data.list$collections <- add.collection }
+    if("clinical" %in% names(data.list)){
+      data.list$clinical	<- c(data.list$clinical, add.collection)
+    } else {data.list$clinical <- add.collection }
     
   }else if(dataType %in% c("chromosome", "centromere", "genes")){
     #update patient
-    add.collection <- list()
-    add.collection[dataType] <- collection.uniqueName
+    add.collection <- list(data.frame(source=source, type=dataType, collection=collection.uniqueName))
     if("location" %in% names(data.list)){
       data.list$location	<- c(data.list$location, add.collection)
     } else {data.list$location <- add.collection }
@@ -262,7 +280,7 @@ save.collection <- function(mongo, dataset, dataType,source,result, parent,
   mongo.update(mongo, lookup.ns, query, data.list, mongo.update.upsert)
   
   if(dataType == "mut")
-    save.mut01.from.mut(mongo, result, dataset, dataType,source, parentID=newID)
+    save.mut01.from.mut(mongo,db, result, dataset, dataType,source, parentID=newID)
   
 }
 
@@ -284,9 +302,9 @@ appendList <- function (x, val)
 #--------------------------------------------------------------#
 get.chromosome.dimensions <- function(scaleFactor=100000){
   
-  chrPosScaledObj <- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19",dataType="chromosome", process=list(scale=scaleFactor)))[[1]]
+  chrPosScaledObj <- mongo.find.all(mongo, paste(db, "manifest", sep="."), list(dataset="hg19",dataType="chromosome", process=list(scale=scaleFactor)))[[1]]
   
-  chrCoord <- mongo.find.all(mongo, paste("oncoscape",chrPosScaledObj$collection, sep="."))[[1]][["data"]]
+  chrCoord <- mongo.find.all(mongo, paste(db,chrPosScaledObj$collection, sep="."))[[1]][["data"]]
   chrPos_xy <-t(sapply(chromosomes, function(chr){ return(c(chrCoord[[chr]]$x, chrCoord[[chr]]$q))}))
   chrDim <- c(max(chrPos_xy[,1]), max(chrPos_xy[,2]))
   
@@ -329,13 +347,13 @@ scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
 #--------------------------------------------------------------#
 save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
   
-  geneObj<- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="genes"))
+  geneObj<- mongo.find.all(mongo, paste(db,"manifest", sep="."), list(dataset="hg19", dataType="genes"))
   matchScale <- which(sapply(geneObj, function(coll) return("scale" %in% names(coll$process[[1]]) && coll$process[[1]][["scale"]]==scaleFactor)))
   geneObj <- geneObj[[matchScale]]
-  genePos_scaled <- mongo.find.all(mongo, paste("oncoscape",geneObj$collection, sep="."))[[1]]
+  genePos_scaled <- mongo.find.all(mongo, paste(db,geneObj$collection, sep="."))[[1]]
   
-  genesetObj <-  mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19",dataType="genesets"))[[1]]
-  genesets <- mongo.find.all(mongo, paste("oncoscape",genesetObj$collection, sep="."))
+  genesetObj <-  mongo.find.all(mongo, paste(db,"manifest", sep="."), list(dataset="hg19",dataType="genesets"))[[1]]
+  genesets <- mongo.find.all(mongo, paste(db,genesetObj$collection, sep="."))
   
   process <- list(scale=scaleFactor); 
   processName <- paste(process, collapse="-")
@@ -348,21 +366,21 @@ save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
     list(type="geneset", name=geneSet$name, scale=scaleFactor, data=genesetPos)
   }	)
   
-  save.collection(mongo, dataset=geneObj$dataset, dataType="genesets",source=geneObj$source, result=result,
+  save.collection(mongo,db, dataset=geneObj$dataset, dataType="genesets",source=geneObj$source, result=result,
                   parent=parent, process=process,processName=processName)
 }
 
 #--------------------------------------------------------------#
 save.batch.cluster.scaled.pos <- function(scaleFactor=100000){
   
-  mds_colls<- mongo.find.all(mongo, "oncoscape.manifest", list(dataType="mds", scale=NA))
+  mds_colls<- mongo.find.all(mongo, paste(db,"manifest",sep="."), list(dataType="mds", scale=NA))
   chrDim <- get.chromosome.dimensions(scaleFactor) 
   
   for(collection in mds_colls)
-    coll <- mongo.find.all(mongo, paste("oncoscape",collection$collection, sep="."))[[1]]
+    coll <- mongo.find.all(mongo, paste(db,collection$collection, sep="."))[[1]]
     mtx <- convert.to.mtx(coll, format="as.numeric");
     mds.list <- scaleSamplesToChromosomes(mtx, chrDim, dim.names=c("x", "y"))
     result <- list(type="cluster", dataset=collection$dataset, name=outputName, scale=scaleFactor, data=mds.list)
-    save.collection(mongo, dataset=collection$dataset, dataType=collection$dataType,source=collection$source, result=list(result),
+    save.collection(mongo,db, dataset=collection$dataset, dataType=collection$dataType,source=collection$source, result=list(result),
                   parent=collection$parent, process=list(scale=scaleFactor),processName=collection$processName)
 }

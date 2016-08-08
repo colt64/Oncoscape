@@ -7,8 +7,6 @@ bcr_patient_uuid	bcr_patient_barcode	new_tumor_event_dx_days_to	new_tumor_event_
 a0339182-2fd6-459d-9703-422474222e76	TCGA-06-1806	[Not Available]	NO	YES	270	Locoregional Disease	[Not Available]	NA	NA	NA	NA	NA
 a0339182-2fd6-459d-9703-422474222e76	TCGA-06-1806	256	NO	YES	[Not Available]	Progression of Disease	[Not Available]	NA	NA	NA	NA	NA
 a0339182-2fd6-459d-9703-422474222e76	TCGA-06-1806	256	NO	YES	[Not Available]	Recurrence	[Not Available]	NA	NA	NA	NA	NA
-bcr_patient_uuid	bcr_patient_barcode	days_to_new_tumor_event_after_initial_treatment	additional_radiation_therapy	additional_pharmaceutical_therapy	days_to_new_tumor_event_additional_surgery_procedure	new_neoplasm_event_type	new_tumor_event_additional_surgery_procedure	additional_surgery_locoregional_procedure	days_to_additional_surgery_locoregional_procedure	additional_surgery_metastatic_procedure	days_to_additional_surgery_metastatic_procedure	additional_pharmaceutical_therapy
-CDE_ID:	CDE_ID:2673794	CDE_ID:3392464	CDE_ID:3427615	CDE_ID:3427616	CDE_ID:3008335	CDE_ID:3119721	CDE_ID:3427611	CDE_ID:3008755	CDE_ID:3408572	CDE_ID:3008757	CDE_ID:3408682	CDE_ID:3427616
 E3953994-0299-4E04-9423-6153B142FB8E	TCGA-06-A6S1	46	NO	NO	[Not Available]	Progression of Disease	[Not Available]	NA	NA	NA	NA	NA
 033C1F48-9225-4159-B23B-7042272877DA	TCGA-TM-A7CF	924	[Unknown]	NA	NA	NA	NA	YES	924	[Not Available]	[Not Available]	[Unknown]
 04E6E843-7F31-43DA-B111-280CE2BD1949	TCGA-DU-A7T8	3028	NO	NA	NA	NA	NA	YES	3028	[Not Available]	[Not Available]	YES

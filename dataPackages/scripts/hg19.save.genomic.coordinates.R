@@ -61,7 +61,7 @@ saveChromosome_Coordinates <- function(){
 
 	result = list(dataset="hg19", type="chromosome", process="length", data=df)
 	
-	save.collection(mongo, dataset="hg19", dataType="chromosome", source="orgHs",
+	save.collection(mongo,db, dataset="hg19", dataType="chromosome", source="orgHs",
 	                result=list(result),parent=NA, process="length",processName="length")
 }	
 #----------------------------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ saveGene_Coordinates <- function(){
 	processName = paste(unlist(process), collapse="-")
 	result = list(dataset="hg19", type="genes", process=process, data=genePos_min)
 	
-	save.collection(mongo, dataset="hg19", dataType="genes", source="orgHs",
+	save.collection(mongo,db, dataset="hg19", dataType="genes", source="orgHs",
 	                result=list(result),parent=NA, process=process,processName=processName)
 	
 }
@@ -117,7 +117,7 @@ saveCentromere_Coordinates <- function(cytoband_url){
 	
 	result = list(dataset="hg19", type="centromere", process="position", data=df)
 	
-	save.collection(mongo, dataset="hg19", dataType="centromere", source="orgHs",
+	save.collection(mongo,db, dataset="hg19", dataType="centromere", source="orgHs",
 	                result=list(result),parent=NA, process="position",processName="position")
 	
 }
@@ -163,13 +163,13 @@ getChromosomePositions <- function(chromosomes, chrCoordinates){
 run.scale.chr.genes <- function(scaleFactor=10000){
   
   # define data objects
-  chrLenObj <- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="chromosome", process="length"))[[1]]
-  genePosObj  <- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="genes", process=c("position", "min", "abs", "start")))[[1]]
-  centPosObj  <- mongo.find.all(mongo, "oncoscape.manifest", list(dataset="hg19", dataType="centromere",process="position"))[[1]]
+  chrLenObj <- mongo.find.all(mongo, paste(db, "manifest",sep="."), list(dataset="hg19", dataType="chromosome", process="length"))[[1]]
+  genePosObj  <- mongo.find.all(mongo, paste(db, "manifest",sep="."), list(dataset="hg19", dataType="genes", process=c("position", "min", "abs", "start")))[[1]]
+  centPosObj  <- mongo.find.all(mongo, paste(db, "manifest",sep="."), list(dataset="hg19", dataType="centromere",process="position"))[[1]]
   
-  chrLengths <- mongo.find.all(mongo, paste("oncoscape",chrLenObj$collection, sep="."), list())[[1]]
-  pLength    <- mongo.find.all(mongo, paste("oncoscape",centPosObj$collection, sep="."), list())[[1]]
-  genePos    <- mongo.find.all(mongo, paste("oncoscape",genePosObj$collection, sep="."), list())[[1]]
+  chrLengths <- mongo.find.all(mongo, paste(db,chrLenObj$collection, sep="."), list())[[1]]
+  pLength    <- mongo.find.all(mongo, paste(db,centPosObj$collection, sep="."), list())[[1]]
+  genePos    <- mongo.find.all(mongo, paste(db,genePosObj$collection, sep="."), list())[[1]]
   
   chromosomes <- c(seq(1:22), "X", "Y")
   
@@ -183,12 +183,12 @@ run.scale.chr.genes <- function(scaleFactor=10000){
   ## Chr Positions
   parent <- list(chrLenObj$`_id`, centPosObj$`_id`)
   result <- list(type="chromosome", scale=scaleFactor, data=chrPos)
-  save.collection(mongo, dataset=chrLenObj$dataset, dataType=chrLenObj$dataType,source=chrLenObj$source, result=list(result),
+  save.collection(mongo,db, dataset=chrLenObj$dataset, dataType=chrLenObj$dataType,source=chrLenObj$source, result=list(result),
                               parent=parent, process=list(process),processName=processName)
   ## Gene Positions
   parent <- list(genePosObj$`_id`, chrLenObj$`_id`)
   result <- list(type="geneset", scale=scaleFactor, data=genePos_scaled)
-  save.collection(mongo, dataset=genePosObj$dataset, dataType=genePosObj$dataType,source=genePosObj$source, result=list(result),
+  save.collection(mongo,db, dataset=genePosObj$dataset, dataType=genePosObj$dataType,source=genePosObj$source, result=list(result),
                               parent=parent, process=list(process),processName=processName)
   
 }	
@@ -200,15 +200,14 @@ run.scale.chr.genes <- function(scaleFactor=10000){
 #----------------------------------------------------------------------------------------------------
 ## must first initialize server (through shell >mongod)
 
-#mongo <- connect.to.mongo(host="oncoscape-dev-db1.sttrcancer.io", username="oncoscape", password=password)
+#mongo <- connect.to.mongo(host="oncoscape-dev-db1.sttrcancer.io:27017", username="oncoscape", password=password)
 mongo <- connect.to.mongo()
 
-
-#	saveChromosome_Coordinates()
-#	saveGene_Coordinates()
-#	saveCentromere_Coordinates(cytoband_url)	
+saveChromosome_Coordinates()
+saveGene_Coordinates()
+saveCentromere_Coordinates(cytoband_url)	
 	
-	run.scale.chr.genes(scaleFactor)
+run.scale.chr.genes(scaleFactor)
 	
 close.mongo(mongo)
 

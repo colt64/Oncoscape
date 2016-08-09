@@ -4,14 +4,22 @@ library(R.utils)
 library(stringr)
 library(plyr)
 library(jsonlite)
-library(rmongodb)
+library(mongolite)
 
+username = Sys.getenv("oncoscape_username")
+pw = Sys.getenv("oncoscape_pw")
+dev.host = paste("mongodb://",username,":",pw,"@oncoscape-dev-db1.sttrcancer.io:27017,oncoscape-dev-db2.sttrcancer.io:27017,oncoscape-dev-db3.sttrcancer.io:27017", sep="")
+local.host = "mongodb://localhost"
+#host = dev.host
+host = local.host
+db <- "oncoscape"
+## Note: RStudio does not read from bashrc, startup reads from RHome .Renviron 
 
-os.dataset.enumerations     <- fromJSON("../manifests/os.dataset.enumerations.json" )
+mongo.manifest="";
+mongo.lookup="";
+
 date <- as.character(Sys.Date())
 chromosomes <- c(seq(1:22), "X", "Y")
-
-db <- "oncoscape"
 
 dataset_map <- list(
   brca=list(name="Breast", img= "DSbreast.png", beta=FALSE, source="TCGA"),
@@ -20,14 +28,41 @@ dataset_map <- list(
 )
 
 #---------------------------------------------------------
-connect.to.mongo <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
-	mongo <- mongo.create(host = host, name = name, username = username,
-  							password = password, db = db, timeout = 0L)
-	
-	stopifnot(mongo.is.connected(mongo))
-	return(mongo)
+## mongolite requires all insertions to be of type data.frame
+connect.to.mongolite <- function(){
+#  mongo <- mongo(collection=collection, db=db, url=host)
+  
+  mongo.manifest <<- mongo(collection="manifest",db=db, url=host)
+  mongo.lookup <<- mongo(collection="lookup_oncoscape_datasources",db=db, url=host)
+  
 }
-
+#---------------------------------------------------------
+connect.to.mongo <- connect.to.rmongodb
+#---------------------------------------------------------
+## rmongodb v1.8.0 does not support SCRAM-SHA-1 from MONGODB-CR with MongoDB 3.0
+#https://github.com/mongosoup/rmongodb/issues/77
+connect.to.rmongodb <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
+  mongo <- mongo.create(host = host, name = name, username = username,
+                        password = password, db = db, timeout = 0L)
+  
+  stopifnot(mongo.is.connected(mongo))
+  return(mongo)
+}
+#---------------------------------------------------------
+## RMongo v0.1.0 from github (only 0.0.25 deposited in CRAN) 
+## Minimal updates to code: not actively supported??
+## Has javascript versioning dependencies (mine:java version "1.6.0_65", and updated to "1.8.0_101-b13")
+## Error in .jnew("rmongo/RMongo", dbName, hosts, TRUE, username, pwd) : 
+##    java.lang.UnsupportedClassVersionError: rmongo/RMongo : Unsupported major.minor version 51.0
+## http://stackoverflow.com/questions/10382929/how-to-fix-java-lang-unsupportedclassversionerror-unsupported-major-minor-versi
+connect.to.rmongo <- function(db, host="127.0.0.1:27107"){
+  host="oncoscape-dev-db1.sttrcancer.io:27017"
+  mongo <- mongoDbReplicaSetConnectWithCredentials(db, hosts=host, username, pw)
+  
+  dbDisconnect(mongo)
+  
+}
+  
 #---------------------------------------------------------
 close.mongo <- function(mongo){
 
@@ -79,7 +114,7 @@ convert.to.mtx <- function(data.list, format=""){
 
 #---------------------------------------------------------
 mapProcess <- function(process){
-  
+  os.dataset.enumerations     <- fromJSON("../manifests/os.dataset.enumerations.json" )
 	processFound <-	sapply(os.dataset.enumerations$dataType, function(typeMap){ process %in% unlist(typeMap) })
 	numMatches <- length(which(processFound))
 	if(numMatches==1)
@@ -173,8 +208,45 @@ remove.collection.byName <- function(mongo,db, collection){
 
 }
 #---------------------------------------------------------
-save.collection <- function(mongo,db, dataset, dataType,source,result, parent, 
-                            process,processName){
+save.collection <- function(dataset, dataType,source,result, parent, process,processName){
+  #mongolite version
+  
+  cat("-save collection\n")
+  
+  source <- unique(source)
+  if(length(source)>1) source <- list(source)
+  sourceName <- paste(unlist(source), collapse="-")
+  
+  collection.uniqueName <- paste(dataset, dataType, sourceName, processName, sep="_")
+  collection.uniqueName <- gsub("\\s+", "", tolower(collection.uniqueName))
+  collection.ns <- collection.uniqueName
+  
+  if(mongo(collection.ns, db=db, url=host)$count() != 0){
+    print(paste(collection.uniqueName, " already exists. Skipping.", sep=""))
+    return()
+  }  
+  
+  newCollection <- list(dataset=dataset, dataType=dataType, date=date) 
+  newCollection$collection <- collection.uniqueName
+  newCollection$source <- source
+  newCollection$process <- process
+  newCollection$parent <- parent
+  
+  ## add to manifest file
+  mongo.manifest$insert(as.data.frame(newCollection))
+  
+  con <- mongo(collection.ns, db=db, url=host)
+  pass <- lapply(result, function(el){con$insert(as.data.frame(el))})
+  if(!all(unlist(pass))){
+    print(paste("ERROR: result not inserted into mongodb: ", collection.uniqueName, sep=""))
+    return()
+  }
+  
+  newID <-  mongo.manifest$find(query=newCollection, fields=list("_id"))
+  
+}
+#---------------------------------------------------------
+save.collection.rmongodb <- function(mongo,db, dataset, dataType,source,result, parent, process,processName){
   
   cat("-save collection\n")
   

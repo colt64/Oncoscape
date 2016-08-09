@@ -13,8 +13,6 @@ options(stringsAsFactors = FALSE)
 source("common.R")
 source("os.tcga.mappings.R")
 
-
-date <- as.character(Sys.Date())
 process <- "import"
 
 # -------------------------------------------------------
@@ -286,14 +284,14 @@ os.save.categories <- function(datasets = c("brain")){
       add.category.fromFile(file='../archive/categories/brain/verhaakGbmClustersAugmented.RData', name="verhaakPlus1", col.name="cluster", dataset="brain", type=type) 
     )
     
-    save.collection(mongo,db, dataset="brain", dataType=type, source="tcga",
+    save.collection(dataset="brain", dataType=type, source="tcga",
                     result=color.categories,parent=NA, process="import",processName="import")
     
   }
   if("brca" %in% datasets){
     categories.list <- fromJSON("../archive/categories/brca/colorCategories.json", simplifyVector = FALSE)
 #    color.categories <- apply(categories.list, 1, function(colorcat){list(dataset=colorcat$dataset, type=colorcat$type, name=colorcat$name, data=colorcat$data)})
-     save.collection(mongo,db, dataset="brca", dataType=type, source="tcga",
+     save.collection(dataset="brca", dataType=type, source="tcga",
                     result=categories.list,parent=NA, process="import",processName="import")
     
   }
@@ -303,7 +301,7 @@ os.save.categories <- function(datasets = c("brain")){
 # Run Block  -------------------------------------------------------
 
 ## must first initialize server (through shell >mongod)
-mongo <- connect.to.mongo()
+connect.to.mongo()
 
 #commands <- c("categories", "clinical", "molecular", "scale")
 commands <- c("categories")
@@ -313,7 +311,7 @@ if(length(args) != 0 )
   manifest <- args
 
 if("categories" %in% commands) 
-  os.save.categories( datasets=c("gbm", "brca"))
+  os.save.categories( datasets=c( "brca"))
 
 if("molecular" %in% commands) 
   os.data.batch("../manifests/os.molecular.manifest.json")
@@ -328,4 +326,4 @@ if("scale" %in% commands){
   #save.batch.cluster.scaled.pos(scaleFactor=10000)
 }
 
-close.mongo(mongo)
+#close.mongo(mongo)

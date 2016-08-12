@@ -35,7 +35,7 @@ os.save.ptLayouts <- function(scaleFactor=100000){
 	}
 	
 	
-	cat_colls <- mongo.find.all(mongo, paste(db, "manifest", sep="."), query=list(dataType="colorCategory"))
+	cat_colls <- mongo.find.all(mongo, paste(db, "manifest", sep="."), query=list(dataType="color"))
 	
 	for(collection in cat_colls){
 	  data_coll <- mongo.find.one(mongo, paste(db, collection$collection, sep="."))

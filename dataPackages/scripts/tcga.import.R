@@ -306,7 +306,11 @@ os.save.categories <- function(datasets = c("brain")){
 mongo <- connect.to.mongo()
 
 #commands <- c("categories", "clinical", "molecular", "scale")
-commands <- c("categories")
+#commands <- c("categories")
+#commands <- c("molecular")
+#commands <- c("scale")
+commands <- "clinical"
+
 
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0 )
@@ -316,7 +320,7 @@ if("categories" %in% commands)
   os.save.categories( datasets=c("gbm", "brca"))
 
 if("molecular" %in% commands) 
-  os.data.batch("../manifests/os.molecular.manifest.json")
+  os.data.batch("../manifests/os.validate.brain.manifest.json")
 
 if("clinical" %in% commands) 
   os.data.batch("../manifests/os.tcga.clinical.manifest.json",
@@ -324,7 +328,7 @@ if("clinical" %in% commands)
                 checkClassType = "os.class.tcgaCharacter")
 
 if("scale" %in% commands){
-  save.batch.genesets.scaled.pos(scaleFactor=10000)
+  save.batch.genesets.scaled.pos(scaleFactor=100000)
   #save.batch.cluster.scaled.pos(scaleFactor=10000)
 }
 

@@ -320,6 +320,8 @@ get.network_edges <- function(mtx,samples, genes, edgeTypes){
   mtx <- mtx[genes, samples]
   rows <- rownames(mtx); cols <- colnames(mtx)
 
+  allEdges <- list()
+  
   for(edgeName in names(edgeTypes)){
   	matchingIndex <- which(mtx==edgeTypes[[edgeName]], arr.ind=T)
 	  edgeMap <- apply(matchingIndex, 1, function(matchPair){
@@ -434,13 +436,20 @@ mongo <- connect.to.mongo()
 
 genesets <-     mongo.find.all(mongo,paste(db, "hg19_genesets_hgnc_import", sep="."), query=list())
 
-molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
-                                    query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
-run.batch.patient_similarity(molecular_manifest, scaleFactor=10000)
+#molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
+#                                    query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
+
+#molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
+#                                     query='{"dataType":{"$in":["cnv","mut01"]}, "source":"ucsc-HoBo"}')
+
+#run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
 		# calculate patient similarity
 
+#molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
+#                                     query='{"dataType":{"$in":["cnv","mut01"]}}')
 molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
-                                     query='{"dataType":{"$in":["cnv","mut01"]}}')
+                                     query='{"dataType":{"$in":["cnv","mut01"]},"source":"ucsc-HoBo"}')
+
 run.batch.network_edges(molecular_manifest)
 		# map edges for all patients between CNV/Mut and Geneset tables
 

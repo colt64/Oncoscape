@@ -11,7 +11,7 @@ os.dataset.enumerations     <- fromJSON("../manifests/os.dataset.enumerations.js
 date <- as.character(Sys.Date())
 chromosomes <- c(seq(1:22), "X", "Y")
 
-db <- "oncoscape"
+db <- "pancan12"
 
 dataset_map <- list(
   brca=list(name="Breast", img= "DSbreast.png", beta=FALSE, source="TCGA"),
@@ -20,7 +20,7 @@ dataset_map <- list(
 )
 
 #---------------------------------------------------------
-connect.to.mongo <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
+connect.to.mongo <- function(host= "140.107.29.3", name = "", username = "", password = "", db = "admin"){
 	mongo <- mongo.create(host = host, name = name, username = username,
   							password = password, db = db, timeout = 0L)
 	

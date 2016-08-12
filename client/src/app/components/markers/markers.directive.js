@@ -719,7 +719,7 @@
                         cmd: cmd,
                         dataset: osApi.getDataSource().disease,
                         patients: {
-                            data: vm.datasource.collections.patient,
+                            data: vm.datasource.clinical.patient,
                             layout: vm.optPatientLayout.name,
                             color: vm.optPatientColor.name,
                             selected: cyChart.$('node[nodeType="patient"]:selected').map(function(p) {

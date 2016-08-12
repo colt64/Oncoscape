@@ -1,22 +1,21 @@
 [
-{
-		"dataset": "brain",
-		"source": "ucsc",
-		"type": "cnv",		
-		"process": "gistic",
-		"date": "2015-02-24",
-		"directory": "../archive/UCSC/TCGA_BRAIN/",
-		"file": "mtx.ucsc.cnv.RData"
-	},
-	{	"dataset": "brain",
-		"source": "ucsc",
-		"type": "mut01",		
-		"process": "import",
-		"date": "2015-02-24",
-		"directory": "../archive/UCSC/TCGA_BRAIN/",
-		"file": "mtx.ucsc.mut01.RData"
-	},
-	{	
+	{
+	"dataset": "brain",
+	"source": "ucsc",
+	"type": "cnv",		
+	"process": "gistic",
+	"date": "2015-02-24",
+	"directory": "../archive/UCSC/TCGA_BRAIN/",
+	"file": "mtx.ucsc.cnv.RData"
+	},{
+	"dataset": "brain",
+	"source": "ucsc",
+	"type": "mut01",		
+	"process": "import",
+	"date": "2015-02-24",
+	"directory": "../archive/UCSC/TCGA_BRAIN/",
+	"file": "mtx.ucsc.mut01.RData"
+	},{	
 	"dataset": "gbm",
 	"type": "cnv",
 	"source": "ucsc",
@@ -24,7 +23,7 @@
 	"date": "2015-02-24",
 	"directory": "../archive/UCSC/",
 	"file": "TCGA_GBM_gistic2thd-2015-02-24/genomicMatrix"
- 	},	{
+ 	},{
  	"dataset": "gbm",
 	"source": "ucsc",
 	"type": "mut",
@@ -32,8 +31,7 @@
 	"date": "2015-02-24",
 	"directory": "../archive/UCSC/",
 	"file": "TCGA_GBM_mutation_broad_gene-2015-02-24/genomicMatrix"
-},
-{
+	},{
 		"dataset": "brain",
 		"source": "cBio",
 		"type": "cnv",		

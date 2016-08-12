@@ -4,19 +4,10 @@ library(R.utils)
 library(stringr)
 library(plyr)
 library(jsonlite)
-library(mongolite)
+library(rmongodb)
 
-username = Sys.getenv("oncoscape_username")
-pw = Sys.getenv("oncoscape_pw")
-dev.host = paste("mongodb://",username,":",pw,"@oncoscape-dev-db1.sttrcancer.io:27017,oncoscape-dev-db2.sttrcancer.io:27017,oncoscape-dev-db3.sttrcancer.io:27017", sep="")
-local.host = "mongodb://localhost"
-#host = dev.host
-host = local.host
 db <- "oncoscape"
 ## Note: RStudio does not read from bashrc, startup reads from RHome .Renviron 
-
-mongo.manifest="";
-mongo.lookup="";
 
 date <- as.character(Sys.Date())
 chromosomes <- c(seq(1:22), "X", "Y")
@@ -28,17 +19,6 @@ dataset_map <- list(
 )
 
 #---------------------------------------------------------
-## mongolite requires all insertions to be of type data.frame
-connect.to.mongolite <- function(){
-#  mongo <- mongo(collection=collection, db=db, url=host)
-  
-  mongo.manifest <<- mongo(collection="manifest",db=db, url=host)
-  mongo.lookup <<- mongo(collection="lookup_oncoscape_datasources",db=db, url=host)
-  
-}
-#---------------------------------------------------------
-connect.to.mongo <- connect.to.rmongodb
-#---------------------------------------------------------
 ## rmongodb v1.8.0 does not support SCRAM-SHA-1 from MONGODB-CR with MongoDB 3.0
 #https://github.com/mongosoup/rmongodb/issues/77
 connect.to.rmongodb <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
@@ -47,6 +27,17 @@ connect.to.rmongodb <- function(host= "127.0.0.1", name = "", username = "", pas
   
   stopifnot(mongo.is.connected(mongo))
   return(mongo)
+}#---------------------------------------------------------
+connect.to.mongo <- connect.to.rmongodb
+
+#---------------------------------------------------------
+## mongolite requires all insertions to be of type data.frame
+connect.to.mongolite <- function(){
+#  mongo <- mongo(collection=collection, db=db, url=host)
+  
+  mongo.manifest <<- mongo(collection="manifest",db=db, url=host)
+  mongo.lookup <<- mongo(collection="lookup_oncoscape_datasources",db=db, url=host)
+  
 }
 #---------------------------------------------------------
 ## RMongo v0.1.0 from github (only 0.0.25 deposited in CRAN) 
@@ -125,8 +116,8 @@ mapProcess <- function(process){
 }
 #---------------------------------------------------------
 ### For any mutation file, create and save an indicator mut01 file
-save.mut01.from.mut <- function(mongo, db, result, dataset, dataType,source, parentID){
-  
+save.mut01.from.mut <- function(mongo,db, dataset, dataType="mut01",source, result,
+                                parent, process,processName){
   mut.list <- result
   
   data.list <- lapply(result, function(geneSet){
@@ -134,11 +125,10 @@ save.mut01.from.mut <- function(mongo, db, result, dataset, dataType,source, par
     list(gene=geneSet$gene,min=min(unlist(patients)), max=max(unlist(patients)), patients = patients)
   })    
   
-  parent <- parentID
+  #parent <- parentID
   
-  save.collection(mongo,db, dataset=dataset, dataType="mut01",source=source, result=data.list,
-                              parent=parent, process=process,processName=process)
-
+  save.collection(mongo,db, dataset, dataType="mut01",source, result=data.list,
+                  parent, process,processName)
 }
 
 #---------------------------------------------------------
@@ -207,46 +197,9 @@ remove.collection.byName <- function(mongo,db, collection){
 		}
 
 }
+
 #---------------------------------------------------------
-save.collection <- function(dataset, dataType,source,result, parent, process,processName){
-  #mongolite version
-  
-  cat("-save collection\n")
-  
-  source <- unique(source)
-  if(length(source)>1) source <- list(source)
-  sourceName <- paste(unlist(source), collapse="-")
-  
-  collection.uniqueName <- paste(dataset, dataType, sourceName, processName, sep="_")
-  collection.uniqueName <- gsub("\\s+", "", tolower(collection.uniqueName))
-  collection.ns <- collection.uniqueName
-  
-  if(mongo(collection.ns, db=db, url=host)$count() != 0){
-    print(paste(collection.uniqueName, " already exists. Skipping.", sep=""))
-    return()
-  }  
-  
-  newCollection <- list(dataset=dataset, dataType=dataType, date=date) 
-  newCollection$collection <- collection.uniqueName
-  newCollection$source <- source
-  newCollection$process <- process
-  newCollection$parent <- parent
-  
-  ## add to manifest file
-  mongo.manifest$insert(as.data.frame(newCollection))
-  
-  con <- mongo(collection.ns, db=db, url=host)
-  pass <- lapply(result, function(el){con$insert(as.data.frame(el))})
-  if(!all(unlist(pass))){
-    print(paste("ERROR: result not inserted into mongodb: ", collection.uniqueName, sep=""))
-    return()
-  }
-  
-  newID <-  mongo.manifest$find(query=newCollection, fields=list("_id"))
-  
-}
-#---------------------------------------------------------
-save.collection.rmongodb <- function(mongo,db, dataset, dataType,source,result, parent, process,processName){
+save.collection<- function(mongo,db, dataset, dataType,source,result, parent, process,processName){
   
   cat("-save collection\n")
   
@@ -268,9 +221,10 @@ save.collection.rmongodb <- function(mongo,db, dataset, dataType,source,result, 
   newCollection$process <- process
   newCollection$parent <- parent
   
-  ## add to manifest file
-  mongo.insert(mongo, paste, newCollection)
+  ## add record to manifest collection
+  mongo.insert(mongo, paste(db, "manifest", sep="."), newCollection)
   
+  ## insert new collection data
   pass <- lapply(result, function(el){mongo.insert(mongo, collection.ns, as.list(el))})
   if(!all(unlist(pass))){
     print(paste("ERROR: result not inserted into mongodb: ", collection.uniqueName, sep=""))
@@ -280,7 +234,7 @@ save.collection.rmongodb <- function(mongo,db, dataset, dataType,source,result, 
   newID <-  mongo.find.one(mongo, paste(db, "manifest", sep="."), 
                            query=newCollection, fields=list("_id"))
   
-  ## add to lookup table  
+  ## add record to lookup collection
   lookup.ns <-  paste(db, "lookup_oncoscape_datasources", sep=".")
   query <- list("disease"=dataset)
   datasource <- mongo.find.one(mongo, lookup.ns, query)
@@ -322,7 +276,7 @@ save.collection.rmongodb <- function(mongo,db, dataset, dataType,source,result, 
   }else if(dataType %in% c("ptDegree", "geneDegree")){
     print(paste(dataType, "lookup info processed with edge creation", sep=" "))
     return()
-  }else if(dataType %in% c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
+  }else if(dataType %in% c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0","followUp-v4p4","followUp-v4p8", "newTumor", "newTumor-followUp-v4p0","newTumor-followUp-v4p4","newTumor-followUp-v4p8", "otherMalignancy-v4p0")){
     #update patient
     add.collection <- list()
     add.collection[dataType] <- collection.uniqueName
@@ -352,8 +306,7 @@ save.collection.rmongodb <- function(mongo,db, dataset, dataType,source,result, 
   mongo.update(mongo, lookup.ns, query, data.list, mongo.update.upsert)
   
   if(dataType == "mut")
-    save.mut01.from.mut(mongo,db, result, dataset, dataType,source, parentID=newID)
-  
+    save.mut01.from.mut(mongo,db, dataset, dataType="mut01",source,result=result, parent=newID, process, processName)
 }
 
 #---------------------------------------------------------
@@ -419,9 +372,7 @@ scaleGenesToChromosomes <- function(genePos, chrCoordinates, scaleFactor=1000){
 #--------------------------------------------------------------#
 save.batch.genesets.scaled.pos <- function(scaleFactor=100000){
   
-  geneObj<- mongo.find.all(mongo, paste(db,"manifest", sep="."), list(dataset="hg19", dataType="genes"))
-  matchScale <- which(sapply(geneObj, function(coll) return("scale" %in% names(coll$process[[1]]) && coll$process[[1]][["scale"]]==scaleFactor)))
-  geneObj <- geneObj[[matchScale]]
+  geneObj<- mongo.find.all(mongo, paste(db,"manifest", sep="."), list(dataset="hg19", dataType="genes", process=list(scale=scaleFactor)))[[1]]
   genePos_scaled <- mongo.find.all(mongo, paste(db,geneObj$collection, sep="."))[[1]]
   
   genesetObj <-  mongo.find.all(mongo, paste(db,"manifest", sep="."), list(dataset="hg19",dataType="genesets"))[[1]]

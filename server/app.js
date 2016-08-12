@@ -9,8 +9,7 @@ const favicon = require('serve-favicon');
 
 mongoose.connect('mongodb://localhost/oncoscape');
 
-/*
-mongoose.connect(
+/*mongoose.connect(
     'mongodb://oncoscape-dev-db1.sttrcancer.io:27017,oncoscape-dev-db2.sttrcancer.io:27017,oncoscape-dev-db3.sttrcancer.io:27017/BnB?authSource=admin', {
         db: {
             native_parser: true

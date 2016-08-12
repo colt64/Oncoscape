@@ -1,0 +1,21 @@
+<os-tray caption="Patients" content="tray-content-block">
+    <section class="tray-content">
+        <div class="row">
+            <div class="col-xs-12 form-item">
+                <br />
+                <label>Select Clusters</label>
+                <div>
+                    <button class="btn btn-default" ng-click="vm.exportCsv()">Excel (CSV)</button>
+                </div>
+            </div>
+           
+        </div>
+    </section>
+</os-tray>
+<section class="comparecluster">
+    <div id="compareclusterChart"></div>
+    <div class="container-fluid" style="text-align:center;">
+        <h2 class="h2-tool">Patient Data</h2>
+        <span class="h3-tool">{{vm.datasource.source}} {{vm.datasource.name}} </span>
+    </div>
+</section>

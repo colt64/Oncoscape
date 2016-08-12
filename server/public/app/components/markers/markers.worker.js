@@ -21,7 +21,7 @@
             }
 
             //var query = "http://localhost:80/api/" + object.table;
-            var query = "https://dev.oncoscape.sttrcancer.io/api/" + object.table;
+            var query = "/api/" + object.table;
             if (object.query) query += "/?q=" + encodeURIComponent(JSON.stringify(object.query));
             load(query, function(response) {
                 resolve(format(JSON.parse(response.responseText)));
@@ -45,7 +45,6 @@ var state = {
 
     },
     patientData: [],
-    patientColors: [],
     genes: [],
     patients: [],
     edges: [],
@@ -149,70 +148,95 @@ var data = (function() {
 
             var annotations = data[0].annotation;
             if (annotations){
-                // Text Annotaitons
-                data[0].annotation = annotations.filter(function(annotation){
-                    return (annotation.hasOwnProperty("text"));
-                }).map(function(item){
-                    return {
-                        group: "nodes",
-                        grabbable: false,
-                        locked: true,
-                        selectable: false,
-                        position: {x:item.x-40000, y:item.y+1000},
-                        data: {
-                            id: "annotation"+item.text.replace(/[^\w\s!?]/g,''),
-                            color: "rgb(0, 255, 255)",
-                            display: "element",
-                            nodeType: "annotation-text",
-                            sizeEle: 800,
-                            weight: 800,
-                            sizeLbl: 500,
-                            degree: 1,
-                            sizeBdr: 50,
-                            label: item.text + " (" + item.count + ")"
-                        }
-                    }
-                });
-            }
-            send("patients_layout", data[0]);
-        }
-    };
 
-    var formatPatientColor = function(data) {
-        var degMap = {};
-        var legend = [];
-        if (data.length == 1) {
-            data[0].data.forEach(function(color) {
-                var colorName = color.name;
-                var colorValue = color.color;
-                legend.push({
-                    name: colorName,
-                    color: colorValue
-                });
-                color.values.forEach(function(patient) {
-                    this.degmap[patient + "-01"] = {
-                        'color': this.color
-                    }
-                }, {
-                    degmap: this,
-                    color: colorValue
-                });
-            }, degMap);
-            send("patients_legend", legend);
-            send("patients_color", degMap);
-        } else {
-            if (state.patients.length > 0) {
-                state.patients.forEach(function(f) {
-                    this[f.data.id] = {
-                        'color': '#1396DE'
-                    }
-                }, degMap)
-                send("patients_color", degMap);
-                send("patients_legend", [{
-                    name: 'Patient',
-                    color: '#1396DE'
-                }]);
+
+                var text = annotations
+                    .filter(function(item){ return item.type=="text"; })
+                    .map(function(item){
+                        return {
+                            group: "nodes",
+                            grabbable: false,
+                            locked: true,
+                            selectable: false,
+                            position: {x:item.x-4000, y:item.y},
+                            'text-rotation': item.rotation,
+                            data: {
+                                id: "annotation"+item.text.replace(/[^\w\s!?]/g,''),
+                                color: "rgb(0, 255, 255)",
+                                display: "element",
+                                nodeType: "annotation-text",
+                                sizeEle: 800,
+                                weight: 800,
+                                sizeLbl: 500,
+                                degree: 1,
+                                sizeBdr: 50,
+                                'text-rotation': item.rotation,
+                                label: item.text + " (" + item.dataValue + ")"
+                            }
+                        }
+                    });
+
+
+                var lines = annotations
+                    .filter(function(item){ return item.type=="line"})
+                    .map(function(line){
+
+                        var id = "annotation-"+Math.random().toString().substring(2);
+                        
+                        var elements = [];
+                        for (var i=0; i<line.points.length; i++){
+
+                            var item = line.points[i];
+                            
+                            elements.push({
+
+                                group: "nodes",
+                                grabbable: false,
+                                locked: true,
+                                position: {x:item.x-4000, y:item.y},
+                                selectable: false,
+                                data:{
+                                    display: "element",
+                                    id: id + i.toString(),
+                                    nodeType: "annotation-point",
+                                    sizeEle: 100,
+                                    sizeBdr: 1,
+                                    sizeLbl: 0
+                                }
+                            });
+                            if (i>0){
+                                elements.push({
+                                    
+                                    group: "edges",
+                                    grabbable: false,
+                                    locked: true,
+                                    position: line.points[i],
+                                    selectable: false,
+                                    data: {
+                                        display: "element",
+                                        id: id,
+                                        nodeType: "annotation-line",
+                                        source: id + i.toString(),
+                                        target: id + (i-1).toString(),
+                                        sizeEle: 50,
+                                        sizeBdr: 1,
+                                        sizeLbl: 0,
+                                        'color': "#000000"
+                                    }
+                                })
+                            }
+                        }
+                        return elements;
+
+                    });
+
+
+
+                data[0].annotation = text.concat( [].concat.apply( [], lines ) );
+                
             }
+            
+            send("patients_layout", data[0]);
         }
     };
 
@@ -247,10 +271,10 @@ var data = (function() {
                         display: "element",
                         nodeType: "gene",
                         degree: 1,
-                        sizeBdr: 50,
-                        sizeEle: 800,
-                        weight: 800,
-                        sizeLbl: 50,
+                        sizeBdr: 10,
+                        sizeEle: 200,
+                        weight: 200,
+                        sizeLbl: 10,
                         subType: "unassigned"
                     }
                 };
@@ -268,8 +292,8 @@ var data = (function() {
                     id: "mp_" + item.g + "_" + item.p + "_" + item.m,
                     display: "element",
                     edgeType: "cn",
-                    sizeEle: 50,
-                    sizeBdr: 50,
+                    sizeEle: 1,
+                    sizeBdr: 0,
                     cn: parseInt(item.m),
                     source: item.g,
                     target: item.p
@@ -281,10 +305,6 @@ var data = (function() {
     var formatPatientNodes = function(data) {
 
         data = data[0].data;
-        send("patients_legend", [{
-            name: 'Patient',
-            color: '#1396DE'
-        }]);
         return Object.keys(data)
             .map(function(key) {
                 var value = this[key];
@@ -308,7 +328,7 @@ var data = (function() {
                     position: value,
                     data: data
                 };
-                node.position.x -= 40000;
+                node.position.x -= 4000;
                 return node;
             }, data);
     };
@@ -319,7 +339,6 @@ var data = (function() {
             // What Changed?
             var update = {
                 patientData: (state.options.patients.data != options.patients.data),
-                patientColor: (state.options.patients.color != options.patients.color),
                 patientLayout: (state.options.patients.layout != options.patients.layout),
                 edges: (state.options.edges.layout.name != options.edges.layout.name),
                 genes: (state.options.genes.layout != options.genes.layout)
@@ -328,13 +347,14 @@ var data = (function() {
 
 
             // Nothing? Return
-            if (!update.patientData && !update.patientColor && !update.patientLayout && !update.patients && !update.edges && !update.genes) {
+            if (!update.patientData && !update.patientLayout && !update.patients && !update.edges && !update.genes) {
                 resolve({
                     state: state,
                     update: update
                 });
                 return;
             }
+
 
             // Fetch New Stuff
             var promises = [
@@ -349,23 +369,20 @@ var data = (function() {
                 request({
                     table: 'render_patient',
                     query: {
+                        dataset: options.dataset,
                         name: options.patients.layout
+                        //type: 'Cluster'
                     }
                 }, !update.patientData ? state.patients : null, formatPatientNodes),
 
                 request({
                     table: 'render_patient',
                     query: {
+                        dataset: options.dataset,
                         name: options.patients.layout
+                        //type: 'Cluster'
                     }
                 }, !update.patientLayout ? state.patients : null, formatPatientLayout),
-
-                request({
-                    table: 'render_patient',
-                    query: {
-                        name: options.patients.color
-                    }
-                }, !update.patientColor ? state.patientColor : null, formatPatientColor),
 
                 request({
                     table: 'render_chromosome',
@@ -379,17 +396,16 @@ var data = (function() {
                 }, !update.edges ? state.edges : null, formatEdgeNodes),
 
                 request({
-                    table: options.edges.layout.edges + "_gene_weight"
+                    table: options.edges.geneWeights
                 }, !update.edges ? state.edgeGenes : null, formatEdgeGenes),
 
                 request({
-                    table: options.edges.layout.edges + "_patient_weight"
+                    table: options.edges.patientWeights
                 }, !update.edges ? state.edgePatients : null, formatEdgePatients)
 
             ];
 
             Promise.all(promises).then(function(data) {
-
 
                 // Reorient patient data to use PIDs as keys
                 if (update.patientData) {
@@ -419,11 +435,10 @@ var data = (function() {
                 }
 
                 state.patientLayout = data[2];
-                state.patientColor = data[3];
-                state.genes = data[4];
-                state.edges = data[5];
-                state.edgeGenes = data[6];
-                state.edgePatients = data[7];
+                state.genes = data[3];
+                state.edges = data[4];
+                state.edgeGenes = data[5];
+                state.edgePatients = data[6];
                 state.options = options;
                 state.degrees = (update.edges) ? clean(state) : null;
                 resolve({

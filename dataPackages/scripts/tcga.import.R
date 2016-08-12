@@ -332,7 +332,7 @@ if("categories" %in% commands)
   os.save.categories( datasets=c( "brain", "brca"))
 
 if("molecular" %in% commands) 
-  os.data.batch("../manifests/os.validate.brain.manifest.json")
+  os.data.batch("../manifests/os.full.molecular.manifest.json")
 
 if("clinical" %in% commands) 
   os.data.batch("../manifests/os.tcga.full.clinical.manifest.json",

@@ -6,7 +6,7 @@
         var n;
         if ("undefined" != typeof XMLHttpRequest) n = new XMLHttpRequest;
         else
-            for (var X = ["MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp"], M = 0, o = X.length; o > M; M++) 
+            for (var X = ["MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp"], M = 0, o = X.length; o > M; M++)
             try {
                 n = new ActiveXObject(X[M]);
             } catch (e) {}
@@ -21,7 +21,7 @@
             }
 
             var query = "http://localhost:80/api/" + object.table;
-            //var query = "https://dev.oncoscape.sttrcancer.io/api/" + object.table;
+            //var query = "/api/" + object.table;
             if (object.query) query += "/?q=" + encodeURIComponent(JSON.stringify(object.query));
             load(query, function(response) {
                 resolve(format(JSON.parse(response.responseText)));
@@ -45,7 +45,6 @@ var state = {
 
     },
     patientData: [],
-    patientColors: [],
     genes: [],
     patients: [],
     edges: [],
@@ -183,12 +182,12 @@ var data = (function() {
                     .map(function(line){
 
                         var id = "annotation-"+Math.random().toString().substring(2);
-                        
+
                         var elements = [];
                         for (var i=0; i<line.points.length; i++){
 
                             var item = line.points[i];
-                            
+
                             elements.push({
 
                                 group: "nodes",
@@ -207,7 +206,7 @@ var data = (function() {
                             });
                             if (i>0){
                                 elements.push({
-                                    
+
                                     group: "edges",
                                     grabbable: false,
                                     locked: true,
@@ -234,48 +233,10 @@ var data = (function() {
 
 
                 data[0].annotation = text.concat( [].concat.apply( [], lines ) );
-                
-            }
-            
-            send("patients_layout", data[0]);
-        }
-    };
 
-    var formatPatientColor = function(data) {
-        var degMap = {};
-        var legend = [];
-        if (data.length == 1) {
-            data[0].data.forEach(function(color) {
-                var colorName = color.name;
-                var colorValue = color.color;
-                legend.push({
-                    name: colorName,
-                    color: colorValue
-                });
-                color.values.forEach(function(patient) {
-                    this.degmap[patient + "-01"] = {
-                        'color': this.color
-                    }
-                }, {
-                    degmap: this,
-                    color: colorValue
-                });
-            }, degMap);
-            send("patients_legend", legend);
-            send("patients_color", degMap);
-        } else {
-            if (state.patients.length > 0) {
-                state.patients.forEach(function(f) {
-                    this[f.data.id] = {
-                        'color': '#1396DE'
-                    }
-                }, degMap)
-                send("patients_color", degMap);
-                send("patients_legend", [{
-                    name: 'Patient',
-                    color: '#1396DE'
-                }]);
             }
+
+            send("patients_layout", data[0]);
         }
     };
 
@@ -344,10 +305,6 @@ var data = (function() {
     var formatPatientNodes = function(data) {
 
         data = data[0].data;
-        send("patients_legend", [{
-            name: 'Patient',
-            color: '#1396DE'
-        }]);
         return Object.keys(data)
             .map(function(key) {
                 var value = this[key];
@@ -382,7 +339,6 @@ var data = (function() {
             // What Changed?
             var update = {
                 patientData: (state.options.patients.data != options.patients.data),
-                patientColor: (state.options.patients.color != options.patients.color),
                 patientLayout: (state.options.patients.layout != options.patients.layout),
                 edges: (state.options.edges.layout.name != options.edges.layout.name),
                 genes: (state.options.genes.layout != options.genes.layout)
@@ -391,14 +347,13 @@ var data = (function() {
 
 
             // Nothing? Return
-            if (!update.patientData && !update.patientColor && !update.patientLayout && !update.patients && !update.edges && !update.genes) {
+            if (!update.patientData && !update.patientLayout && !update.patients && !update.edges && !update.genes) {
                 resolve({
                     state: state,
                     update: update
                 });
                 return;
             }
-            console.log(options.edges.geneWeights);
 
 
             // Fetch New Stuff
@@ -430,15 +385,6 @@ var data = (function() {
                 }, !update.patientLayout ? state.patients : null, formatPatientLayout),
 
                 request({
-                    table: 'render_patient',
-                    query: {
-                        dataset: options.dataset,
-                        name: options.patients.color
-                        // type: 'colorCategory'
-                    }
-                }, !update.patientColor ? state.patientColor : null, formatPatientColor),
-
-                request({
                     table: 'render_chromosome',
                     query: {
                         name: options.genes.layout
@@ -461,13 +407,11 @@ var data = (function() {
 
             Promise.all(promises).then(function(data) {
 
-                console.dir(data);
-
                 // Reorient patient data to use PIDs as keys
                 if (update.patientData) {
                     var patientInfo = data[0].reduce(function(prev, curr) {
 
-                        // Generate Html Representation of Data					
+                        // Generate Html Representation of Data
                         prev.data[curr.patient_ID] = curr;
                         prev.html[curr.patient_ID] = Object.keys(curr).sort()
                             .reduce(function(prev, curr) {
@@ -491,11 +435,10 @@ var data = (function() {
                 }
 
                 state.patientLayout = data[2];
-                state.patientColor = data[3];
-                state.genes = data[4];
-                state.edges = data[5];
-                state.edgeGenes = data[6];
-                state.edgePatients = data[7];
+                state.genes = data[3];
+                state.edges = data[4];
+                state.edgeGenes = data[5];
+                state.edgePatients = data[6];
                 state.options = options;
                 state.degrees = (update.edges) ? clean(state) : null;
                 resolve({

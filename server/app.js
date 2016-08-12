@@ -7,9 +7,9 @@ const uuid = require('node-uuid');
 const favicon = require('serve-favicon');
 
 
-//mongoose.connect('mongodb://localhost/oncoscape');
+mongoose.connect('mongodb://localhost/oncoscape');
 
-mongoose.connect(
+/*mongoose.connect(
     'mongodb://oncoscape-dev-db1.sttrcancer.io:27017,oncoscape-dev-db2.sttrcancer.io:27017,oncoscape-dev-db3.sttrcancer.io:27017/BnB?authSource=admin', {
         db: {
             native_parser: true
@@ -24,7 +24,7 @@ mongoose.connect(
         user: 'oncoscapeRead',
         pass: 'i1f4d9botHD4xnZ'
     });
-
+*/
 
 var app = express();
 
@@ -61,40 +61,41 @@ app.get('/ping', function(req, res){
 
 // Mongoose Gateway Route
 app.get('/api/:collection*', function(req, res, next) {
-    
- 
-    
-        mongoose.connection.db.collection(req.params.collection, function(err, collection) {
-            if (err) {
-                res.status(err.code).send(err.messages);
-                res.end();
-                return;
-            }
 
-            // Process Query
-            var query = (req.query.q) ? JSON.parse(req.query.q) : {};
+    mongoose.connection.db.collection(req.params.collection, function(err, collection) {
+        if (err) {
+            res.status(err.code).send(err.messages);
+            res.end();
+            return;
+        }
 
-            // Todo: Process Limit
-            if (query.$limit) {
-                delete query.$limit;
-            }
+        // Process Query
+        var query = (req.query.q) ? JSON.parse(req.query.q) : {};
 
-            // Process Fields
-            var fields = {
-                _id: 0
-            };
-            if (query.$fields) {
-                query.$fields.forEach(function(field) {
-                    this[field] = 1;
-                }, fields);
-                delete query.$fields;
-            }
+        // Todo: Process Limit
+        if (query.$limit) {
+            delete query.$limit;
+        }
+        if (query.$skip) {
+            delete query.$skip;
+        }
 
-            collection.find(query, fields).toArray(function(err, results) {
-                res.send(results);
-                res.end();
-            });
+        // Process Fields
+        var fields = {
+            _id: 0
+        };
+        if (query.$fields) {
+            query.$fields.forEach(function(field) {
+                this[field] = 1;
+            }, fields);
+            delete query.$fields;
+        }
+
+        collection.find(query, fields).toArray(function(err, results) {
+            res.send(results);
+            res.end();
         });
+    });
 });
 
 // Login + Logout

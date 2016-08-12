@@ -13,9 +13,8 @@ options(stringsAsFactors = FALSE)
 source("common.R")
 source("os.tcga.mappings.R")
 
-
-date <- as.character(Sys.Date())
-process <- "import"
+process <- list(type="import", scale=NA)
+processName = "import"
 
 # -------------------------------------------------------
 # aggregate list of unmapped data & cde id mapping
@@ -47,7 +46,7 @@ get.processed.mtx <- function(mtx, dimension){
 # IO Utility Functions :: [Batch, Load, Save]  -------------------------------------------------------
 
 ### Load Function Takes An Import File + Column List & Returns A DataFrame
-os.data.load.molecular <- function(inputFile){
+os.data.load.molecular <- function(inputFile, type){
   
   mtx <- matrix();
   
@@ -56,8 +55,17 @@ os.data.load.molecular <- function(inputFile){
     if(all(grepl("^TCGA", rownames(mtx)))) { mtx <- t(mtx)}
     colType <- "patient"; rowType <- "gene"
     colnames(mtx) <- gsub("\\.", "-", colnames(mtx)); 
-    if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", colnames(mtx))))
-      colType <- "sample"
+    
+    if(!grepl("\\-\\d\\d$",colnames(mtx))){
+      colnames(mtx) <- paste(colnames(mtx), "01", sep="-")
+    }
+    
+
+    if(type != "mut"){ 
+      rowname <- rownames(mtx)
+      mtx <- apply(mtx, 2, as.numeric)
+      rownames(mtx) <- rowname
+    }
     
    data.list <- lapply(rownames(mtx), function(geneName){
      list(gene=geneName, min=min(mtx[geneName,]), max=max(mtx[geneName,]), patients = as.list(mtx[geneName,]))
@@ -81,13 +89,18 @@ os.data.load.molecular <- function(inputFile){
     if(length(removers >0))
       mtx <- mtx[-removers,]
     
+    if(type != "mut"){
+      rowname <- rownames(mtx)
+      mtx <- apply(mtx, 2, as.numeric)
+      rownames(mtx) <- rowname
+    }
+    
     data.list <- lapply(rownames(mtx), function(geneName){
       list(gene=geneName, min=min(mtx[geneName,]), max=max(mtx[geneName,]), patients = as.list(mtx[geneName,]))
     })    
     
   }
   return(data.list)
-  # return(list(rowType=rowType, colType=colType, rows=mtx.Data$rownames, cols=mtx.Data$colnames, data=mtx.Data$data))
 }
 
 #---------------------------------------------------------
@@ -219,12 +232,12 @@ os.data.batch <- function(manifest, ...){
     
     if(dataType %in%  c("cnv","mut01", "mut", "rna", "protein", "methylation")){
       # Load Data Frame - map and filter by named columns
-      result <- os.data.load.molecular( inputFile = inputFile)
+      result <- os.data.load.molecular( inputFile = inputFile, type=dataType)
       
       resultObj <- result
       
     }
-    else if(dataType %in%  c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0", "newTumor", "newTumor-followUp-v4p0", "otherMalignancy-v4p0")){
+    else if(dataType %in%  c("patient", "drug", "radiation", "followUp-v1p0","followUp-v1p5", "followUp-v2p1", "followUp-v4p0","followUp-v4p8","followUp-v4p4", "newTumor", "newTumor-followUp-v4p0","newTumor-followUp-v4p4","newTumor-followUp-v4p8", "otherMalignancy-v4p0")){
       # Load Data Frame - map and filter by named columns
       result <- os.data.load.clinical( inputFile = inputFile, ...)
       resultObj <- result$mapped
@@ -241,7 +254,6 @@ os.data.batch <- function(manifest, ...){
     
     save.collection(mongo,db, dataset=sourceObj$dataset, dataType=dataType, source=sourceObj$source,
                     result=resultObj,parent=parent, process=process,processName=sourceObj$process)
-    
   }  # dataset
   return()
 }
@@ -275,7 +287,7 @@ os.save.categories <- function(datasets = c("brain")){
   color.categories <- list()
   type= "color"
   
-  if("gbm" %in% datasets){  
+  if("brain" %in% datasets){  
     
     ## Patient Colors by Diagnosis, glioma8, tumorGrade, verhaak
     color.categories <- list(
@@ -287,14 +299,14 @@ os.save.categories <- function(datasets = c("brain")){
     )
     
     save.collection(mongo,db, dataset="brain", dataType=type, source="tcga",
-                    result=color.categories,parent=NA, process="import",processName="import")
+                    result=color.categories,parent=NA, process=list(type="import"),processName="import")
     
   }
   if("brca" %in% datasets){
     categories.list <- fromJSON("../archive/categories/brca/colorCategories.json", simplifyVector = FALSE)
 #    color.categories <- apply(categories.list, 1, function(colorcat){list(dataset=colorcat$dataset, type=colorcat$type, name=colorcat$name, data=colorcat$data)})
      save.collection(mongo,db, dataset="brca", dataType=type, source="tcga",
-                    result=categories.list,parent=NA, process="import",processName="import")
+                    result=categories.list,parent=NA, process=list(type="import"),processName="import")
     
   }
 }
@@ -306,25 +318,29 @@ os.save.categories <- function(datasets = c("brain")){
 mongo <- connect.to.mongo()
 
 #commands <- c("categories", "clinical", "molecular", "scale")
-commands <- c("categories")
+#commands <- c("categories")
+#commands <- c("molecular")
+#commands <- c("scale")
+commands <- "molecular"
+
 
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0 )
   manifest <- args
 
 if("categories" %in% commands) 
-  os.save.categories( datasets=c("gbm", "brca"))
+  os.save.categories( datasets=c( "brain", "brca"))
 
 if("molecular" %in% commands) 
-  os.data.batch("../manifests/os.molecular.manifest.json")
+  os.data.batch("../manifests/os.validate.brain.manifest.json")
 
 if("clinical" %in% commands) 
-  os.data.batch("../manifests/os.tcga.clinical.manifest.json",
+  os.data.batch("../manifests/os.tcga.full.clinical.manifest.json",
                 checkEnumerations = FALSE,
                 checkClassType = "os.class.tcgaCharacter")
 
 if("scale" %in% commands){
-  save.batch.genesets.scaled.pos(scaleFactor=10000)
+  save.batch.genesets.scaled.pos(scaleFactor=100000)
   #save.batch.cluster.scaled.pos(scaleFactor=10000)
 }
 

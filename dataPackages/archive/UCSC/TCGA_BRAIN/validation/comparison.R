@@ -1,3 +1,7 @@
+####---------------------
+##  Compare CNV/SNV Input
+
+
 ## Hamid
 LGG.GBM.mut <- get(load("~/Desktop/OncoGit/Oncoscape/dataPackages/archive/UCSC/TCGA_BRAIN/validation/HoBo.LGG.GBM.mut.RData"))
 # 39356 x 746
@@ -28,3 +32,25 @@ rownames(LGG.GBM.cnv) <- gsub("\\|.+", "", toupper(rownames(LGG.GBM.cnv)))
 rownames(brain.cnv) <- gsub("\\|.+", "", toupper(rownames(brain.cnv)))
 
 setdiff(rownames(LGG.GBM.cnv), rownames(brain.cnv))
+
+
+
+####---------------------
+##  Compare MDS output
+
+coll <- mongo.find.all(mongo, "oncoscape.brain_mds_ucsc-hobo_mds-allgenes-cnv-mut01")
+mtx <- t(sapply(coll[[1]]$data, function(ptData) c(ptData$x, ptData$y)))
+
+mtx <- mtx *-1
+
+plot(mtx, pch=19)
+
+load("/Volumes/homes/HollandLabShared/Hamid/HoBo/autoHoboPlotData/HoBoPlotData7Apr2015.RData")
+h.plot <- plotData$joint.SNA.CNA
+rownames(h.plot) <- gsub("\\.", "\\-", rownames(h.plot))
+
+
+diff = mtx[rownames(h.plot),] - h.plot
+
+
+coll <- mongo.find.all(mongo, "oncoscape.brain_mds_ucsc-hobo_mds-allgenes-cnv-mut01")

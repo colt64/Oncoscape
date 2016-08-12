@@ -9,7 +9,7 @@ library(org.Hs.eg.db)
 cytoband_url <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg38/database/cytoBand.txt.gz"
 chromosomes <- c(seq(1:22), "X", "Y")
 date <- as.character(Sys.Date())
-scaleFactor <- 10000
+scaleFactor <- 100000
 
 #----------------------------------------------------------------------------------------------------
 getChromosomeLengths <- function(){

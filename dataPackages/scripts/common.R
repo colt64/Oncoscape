@@ -197,7 +197,7 @@ save.collection <- function(mongo,db, dataset, dataType,source,result, parent,
   newCollection$parent <- parent
   
   ## add to manifest file
-  mongo.insert(mongo, paste, newCollection)
+  mongo.insert(mongo, paste(db, "manifest", sep="."), newCollection)
   
   pass <- lapply(result, function(el){mongo.insert(mongo, collection.ns, as.list(el))})
   if(!all(unlist(pass))){

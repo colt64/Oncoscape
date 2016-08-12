@@ -95,12 +95,13 @@ os.save.pca <- function(scaleFactor=NA){
 
 ##----------------------------
 #commands <- c("patient", "pca", "chromosome")
-commands <- c("patient", "chromosome")
+commands <- c("patient", "chromosome", "pca")
 
 mongo <- connect.to.mongo()
 
 if("patient" %in% commands){
-  mds_colls <- mongo.find.all(mongo, paste(db, "manifest", sep="."), query=list(dataType="mds", source="ucsc-HoBo"))
+#  mds_colls <- mongo.find.all(mongo, paste(db, "manifest", sep="."), query=list(dataType="mds", source="ucsc-HoBo"))
+   mds_colls <- mongo.find.all(mongo, paste(db, "manifest", sep="."), query=list(dataType="mds"))
   os.save.ptLayouts(mds_colls, scaleFactor=100000) 
 }
  

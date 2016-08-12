@@ -317,11 +317,11 @@ os.save.categories <- function(datasets = c("brain")){
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
-#commands <- c("categories", "clinical", "molecular", "scale")
+commands <- c("categories", "clinical", "molecular", "scale")
 #commands <- c("categories")
 #commands <- c("molecular")
 #commands <- c("scale")
-commands <- "molecular"
+#commands <- "molecular"
 
 
 args = commandArgs(trailingOnly=TRUE)

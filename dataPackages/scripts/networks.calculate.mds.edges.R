@@ -52,6 +52,11 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA, copy
         cn  <- cn[ intersect(rownames(cn) , genes),]
     }
 
+  if(any(dim(mut)<3) | any(dim(cn)<3)){
+    print("WARNING: mtx does not match gene/pt set.  Less than 3 observations.")
+    return(matrix());
+  }
+  
 	#remove any genes with NA in mutation
 	tmp <- apply(mut, 1, function(x) any(is.na(x)))
 	if(length(which(tmp))>0)
@@ -59,6 +64,11 @@ calculateSampleSimilarityMatrix <- function (mut, cn, samples=NA, genes=NA, copy
 	tmp <- apply(cn, 1, function(x) any(is.na(x)))
 	if(length(which(tmp))>0)
 	  cn <- cn[-which(tmp),]
+
+	if(any(dim(mut)<3) | any(dim(cn)<3)){
+	  print("WARNING: mtx does not match gene/pt set.  Less than 3 observations.")
+	  return(matrix());
+	}
 	
 	similaritySNV <- calcSimilarity(as.matrix(mut))
 	similarityCNV <- calcSimilarity(as.matrix(cn))
@@ -99,7 +109,7 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	process$center="TRUE"; process$scaled="TRUE"
 	process <- list(process)
 
-	prev.run <- collection.exists(mongo, collection$dataset, dataType="pcaScores",
+	prev.run <- collection.exists(mongo,db, collection$dataset, dataType="pcaScores",
 	                              source=collection$source,processName=outputName)
 	if(prev.run){
 	  print("Skipping.")
@@ -113,7 +123,12 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 
 	if(!is.na(geneset)){
 	  genes <- getGeneSet(geneset)
-	  mtx <- mtx[, intersect(colnames(mtx), genes)]
+	  mtx <- mtx[, intersect(colnames(mtx), genes), drop=F]
+	}
+
+	if(any(dim(mtx)<3)){
+	  print("WARNING: mtx does not match gene/patient set.")
+	  return();
 	}
 	
 	column.sums <- colSums(mtx, na.rm=TRUE)
@@ -124,7 +139,7 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 		   mtx <- mtx[, -removers]
 	} # if removers
 
-	if(any(dim(mtx)==0)){
+	if(any(dim(mtx)<3)){
 	  print("WARNING: mtx is singular.  PCA not computed")
 	  return();
 	}
@@ -155,7 +170,7 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	   scores.list <- lapply(rownames(scores), function(name){ scores[name,1:3]})
 	   names(scores.list) <- rownames(scores)
 	   process$scale = NA
-	   result <- list(disease=collection$dataset,type=collection$dataType, geneset=genesetName,scale=NA, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
+	   result <- list(disease=collection$dataset,source = collection$source, type=collection$dataType, geneset=genesetName,scale=NA, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
      save.collection(mongo,db, dataset=collection$dataset, dataType="pcaScores",source=collection$source, result=list(result),
                      parent=parent, process=process,processName=outputName)
 
@@ -166,7 +181,7 @@ save.pca<- function(collection, geneset=NA, scaleFactor=NA){
 	     scores.list <- scaleSamplesToChromosomes(pc3, chrDim)
 	     names(scores.list) <- rownames(scores)
 	     process$scale = scaleFactor
-	     result <- list(disease=collection$dataset,type=collection$dataType, geneset=genesetName,scale=scaleFactor, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
+	     result <- list(disease=collection$dataset,source=collection$source, type=collection$dataType, geneset=genesetName,scale=scaleFactor, pc1=propVar[1], pc2=propVar[2] ,pc3=propVar[3],data=scores.list)
 	     save.collection(mongo,db, dataset=collection$dataset, dataType="pcaScores",source=collection$source, result=list(result),
 	                     parent=parent, process=process,processName=processName)
 	     
@@ -197,10 +212,10 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
   datasetName <- tbl1$dataset
   process <- list(calculation="mds", geneset= genesetName)
   process$input=list( tbl1$dataType, tbl2$dataType)
-  outputName <- paste(unlist(process), collapse="-")
+  outputName <- paste(c(unlist(process),tbl1$source), collapse="-")
 
   process$scale=scaleFactor
-  processName <- paste(unlist(process), collapse="-")
+  processName <- paste(c(unlist(process),tbl1$source), collapse="-")
   
   prev.run <- collection.exists(mongo,db, dataset=datasetName, dataType=dataType,source=c(tbl1$source, tbl2$source),processName=processName)
   if(prev.run){
@@ -235,6 +250,11 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
 			samples <- unique(tbl1.samples, tbl2.samples)
 			sample_similarity <- calculateSampleSimilarityMatrix(t(mtx.tbl1), t(mtx.tbl2),samples=samples, genes=genes)
 											 #expects rows as genes and cols as samples
+			
+			if(any(dim(sample_similarity)<3)){
+			  print("WARNING: mtx does not match gene/pt set.  Less than 3 observations.")
+			  return();
+			}
 			
 			sample_similarity[, "y"] <- -1 * sample_similarity[, "y"]
 			
@@ -317,7 +337,7 @@ get.network_edges <- function(mtx,samples, genes, edgeTypes){
   samples <- intersect(samples, colnames(mtx))
   genes <- intersect(genes, rownames(mtx))
   
-  mtx <- mtx[genes, samples]
+  mtx <- mtx[genes, samples, drop=F]
   rows <- rownames(mtx); cols <- colnames(mtx)
 
   allEdges <- list()
@@ -434,25 +454,25 @@ run.batch.network_edges <- function(datasets){
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
+#commands <- c("cluster", "edges")
+commands <- "edges"
+
 genesets <-     mongo.find.all(mongo,paste(db, "hg19_genesets_hgnc_import", sep="."), query=list())
 
-#molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
-#                                    query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
+if("cluster" %in% commands){
+  # calculate patient similarity
+  molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
+                                    query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
+  run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
+}
 
-#molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
-#                                     query='{"dataType":{"$in":["cnv","mut01"]}, "source":"ucsc-HoBo"}')
+if("edges" %in% commands){
+  # map edges for all patients between CNV/Mut and Geneset tables
+  molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
+                                       query='{"dataType":{"$in":["cnv","mut01"]}}')
 
-#run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
-		# calculate patient similarity
-
-#molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
-#                                     query='{"dataType":{"$in":["cnv","mut01"]}}')
-molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
-                                     query='{"dataType":{"$in":["cnv","mut01"]},"source":"ucsc-HoBo"}')
-
-run.batch.network_edges(molecular_manifest)
-		# map edges for all patients between CNV/Mut and Geneset tables
-
+    run.batch.network_edges(molecular_manifest)
+}
 
 
 close.mongo(mongo)

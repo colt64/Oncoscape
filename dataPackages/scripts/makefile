@@ -15,10 +15,6 @@
 
 #----------------------------------------------------
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 default: setup run
 
 setup: mapCoordinates
@@ -28,11 +24,6 @@ run: import cluster tools
 data: mapCoordinates import mds edges scale tools
 
 
-<<<<<<< HEAD
-=======
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 #-----  Create Files
 
 import:
@@ -50,10 +41,6 @@ mapCoordinates:
 
 #----- Calculate Values
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 cluster:
 	Rscript networks.calculate.mds.edges.R
 		# hobo MDS
@@ -65,24 +52,6 @@ tools: MnP
 MnP:
 	Rscript os.data.for.mnp.R
 		# hobo MDS
-
-<<<<<<< HEAD
-=======
-mds:
-	Rscript networks.calculate.mds.edges.R cnvsnv
-		# hobo MDS
-edges:
-	Rscript networks.calculate.mds.edges.R mds edges
-		# edges
-
-scale10k:
-	Rscript networks.scale.mds.genomic.coordinates.R mdsScaled
-		# MDS values scaled
-	Rscript networks.scale.mds.genomic.coordinates.R geneScaled
-		# genomic coordinates scaled
->>>>>>> develop
-=======
->>>>>>> 28fa7a153422d214caffae02005075ac91f165de
 		
 #----- Import into MongoDB
 

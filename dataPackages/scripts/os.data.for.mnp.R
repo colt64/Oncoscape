@@ -18,24 +18,24 @@ if(length(args) != 0)
 	commands <- args
 
 #----------------------------------------------------------------------------------------------------
-os.save.ptLayouts <- function(scaleFactor=100000){
+os.save.ptLayouts <- function(mds_colls, scaleFactor=100000){
 
 	datatypeName= "cluster"
-	mds_colls <- mongo.find.all(mongo, paste(db, "manifest", sep="."), query=list(dataType="mds"))
 	
 	for(collection in mds_colls){
 	  scale <- collection$process[[1]]$scale
 	  if(is.null(scale) || scale != scaleFactor) next;
-	  data_coll <- mongo.find.all(mongo, paste(db, collection$collection, sep="."))
+	  data_coll <- mongo.find.all(mongo, paste(db, collection$collection, sep="."))[[1]]
+	  data_coll$source <- collection$source
     if(length(data_coll)==0){
       print(paste("ERROR: collection not found - ", collection$collection, sep=""))
       next;
     }
-	   mongo.insert(mongo, paste(db, "render_patient", sep="."), data_coll[[1]])
+	   mongo.insert(mongo, paste(db, "render_patient", sep="."), data_coll)
 	}
 	
 	
-	cat_colls <- mongo.find.all(mongo, paste(db, "manifest", sep="."), query=list(dataType="colorCategory"))
+	cat_colls <- mongo.find.all(mongo, paste(db, "manifest", sep="."), query=list(dataType="color"))
 	
 	for(collection in cat_colls){
 	  data_coll <- mongo.find.one(mongo, paste(db, collection$collection, sep="."))
@@ -81,12 +81,14 @@ os.save.pca <- function(scaleFactor=NA){
     if(is.na(scaleFactor)){
       if(is.null(scale)){
         data_coll <- mongo.find.one(mongo, paste(db, collection$collection, sep="."))
+        data_coll$source <- collection$source
         mongo.insert(mongo, paste(db, "render_pca",sep="."), data_coll)
       }
       next;
     }
     if(is.null(scale) ||is.na(scale) || scale != scaleFactor) next;
     data_coll <- mongo.find.one(mongo, paste(db, collection$collection, sep="."))
+    data_coll$source <- collection$source
     mongo.insert(mongo, paste(db, "render_pca",sep="."), data_coll)
   }
 }
@@ -97,11 +99,14 @@ commands <- c("patient", "chromosome")
 
 mongo <- connect.to.mongo()
 
-#if("patient" %in% commands) 
- os.save.ptLayouts(scaleFactor=100000)
-#if("chromosome" %in% commands) 
-#  os.copy.chromosome.layout(scaleFactor=100000)
-#if("pca" %in% commands) 
-#  os.save.pca()
+if("patient" %in% commands){
+  mds_colls <- mongo.find.all(mongo, paste(db, "manifest", sep="."), query=list(dataType="mds", source="ucsc-HoBo"))
+  os.save.ptLayouts(mds_colls, scaleFactor=100000) 
+}
+ 
+if("chromosome" %in% commands) 
+  os.copy.chromosome.layout(scaleFactor=100000)
+if("pca" %in% commands) 
+  os.save.pca()
 
 close.mongo(mongo)

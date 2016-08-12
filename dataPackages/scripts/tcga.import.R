@@ -55,9 +55,12 @@ os.data.load.molecular <- function(inputFile, type){
     if(all(grepl("^TCGA", rownames(mtx)))) { mtx <- t(mtx)}
     colType <- "patient"; rowType <- "gene"
     colnames(mtx) <- gsub("\\.", "-", colnames(mtx)); 
-    if(all(grepl("TCGA-\\w{2}-\\w{4}-\\w{2}", colnames(mtx))))
-      colType <- "sample"
-  
+    
+    if(!grepl("\\-\\d\\d$",colnames(mtx))){
+      colnames(mtx) <- paste(colnames(mtx), "01", sep="-")
+    }
+    
+
     if(type != "mut"){ 
       rowname <- rownames(mtx)
       mtx <- apply(mtx, 2, as.numeric)
@@ -318,7 +321,7 @@ mongo <- connect.to.mongo()
 #commands <- c("categories")
 #commands <- c("molecular")
 #commands <- c("scale")
-commands <- "clinical"
+commands <- "molecular"
 
 
 args = commandArgs(trailingOnly=TRUE)
@@ -329,7 +332,7 @@ if("categories" %in% commands)
   os.save.categories( datasets=c( "brain", "brca"))
 
 if("molecular" %in% commands) 
-  os.data.batch("../manifests/os.full.molecular.manifest.json")
+  os.data.batch("../manifests/os.validate.brain.manifest.json")
 
 if("clinical" %in% commands) 
   os.data.batch("../manifests/os.tcga.full.clinical.manifest.json",

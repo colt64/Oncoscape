@@ -251,11 +251,12 @@ save.mds.innerProduct <- function(tbl1, tbl2, geneset=NA, scaleFactor=NA, ...){
 			sample_similarity <- calculateSampleSimilarityMatrix(t(mtx.tbl1), t(mtx.tbl2),samples=samples, genes=genes)
 											 #expects rows as genes and cols as samples
 			
-			if(any(dim(sample_similarity)<3)){
+			if(any(dim(sample_similarity)==0)){
 			  print("WARNING: mtx does not match gene/pt set.  Less than 3 observations.")
 			  return();
 			}
 			
+			sample_similarity[, "x"] <- -1 * sample_similarity[, "x"]
 			sample_similarity[, "y"] <- -1 * sample_similarity[, "y"]
 			
 			if(!is.na(threshold)){
@@ -455,7 +456,7 @@ run.batch.network_edges <- function(datasets){
 mongo <- connect.to.mongo()
 
 #commands <- c("cluster", "edges")
-commands <- "edges"
+commands <- "cluster"
 
 genesets <-     mongo.find.all(mongo,paste(db, "hg19_genesets_hgnc_import", sep="."), query=list())
 
@@ -463,6 +464,8 @@ if("cluster" %in% commands){
   # calculate patient similarity
   molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
                                     query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
+  molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
+                                       query='{"dataType":{"$in":["cnv","mut01"]}, "source":"ucsc-HoBo"}')
   run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
 }
 
@@ -471,7 +474,9 @@ if("edges" %in% commands){
   molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
                                        query='{"dataType":{"$in":["cnv","mut01"]}}')
 
-    run.batch.network_edges(molecular_manifest)
+  molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
+                                       query='{"dataType":{"$in":["cnv","mut01"]}, "source":"ucsc-HoBo"}')
+  run.batch.network_edges(molecular_manifest)
 }
 
 

@@ -998,11 +998,6 @@
                 osCohortService.onPatientColorChange.remove(onPatientColorChange);
                 worker.terminate();
                 signal.clear();
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 5e32b540b970327cfab2e992b2e9426dfe30600c
             });
         }
     }

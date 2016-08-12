@@ -6,7 +6,7 @@
         var n;
         if ("undefined" != typeof XMLHttpRequest) n = new XMLHttpRequest;
         else
-            for (var X = ["MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp"], M = 0, o = X.length; o > M; M++) 
+            for (var X = ["MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp"], M = 0, o = X.length; o > M; M++)
             try {
                 n = new ActiveXObject(X[M]);
             } catch (e) {}
@@ -20,8 +20,8 @@
                 return;
             }
 
-            //var query = "http://localhost:80/api/" + object.table;
-            var query = "/api/" + object.table;
+            var query = "http://localhost:80/api/" + object.table;
+            //var query = "/api/" + object.table;
             if (object.query) query += "/?q=" + encodeURIComponent(JSON.stringify(object.query));
             load(query, function(response) {
                 resolve(format(JSON.parse(response.responseText)));
@@ -182,12 +182,12 @@ var data = (function() {
                     .map(function(line){
 
                         var id = "annotation-"+Math.random().toString().substring(2);
-                        
+
                         var elements = [];
                         for (var i=0; i<line.points.length; i++){
 
                             var item = line.points[i];
-                            
+
                             elements.push({
 
                                 group: "nodes",
@@ -206,7 +206,7 @@ var data = (function() {
                             });
                             if (i>0){
                                 elements.push({
-                                    
+
                                     group: "edges",
                                     grabbable: false,
                                     locked: true,
@@ -233,9 +233,9 @@ var data = (function() {
 
 
                 data[0].annotation = text.concat( [].concat.apply( [], lines ) );
-                
+
             }
-            
+
             send("patients_layout", data[0]);
         }
     };
@@ -411,7 +411,7 @@ var data = (function() {
                 if (update.patientData) {
                     var patientInfo = data[0].reduce(function(prev, curr) {
 
-                        // Generate Html Representation of Data					
+                        // Generate Html Representation of Data
                         prev.data[curr.patient_ID] = curr;
                         prev.html[curr.patient_ID] = Object.keys(curr).sort()
                             .reduce(function(prev, curr) {

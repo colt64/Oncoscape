@@ -21,8 +21,6 @@ setup: mapCoordinates
 
 run: import cluster tools
 
-data: mapCoordinates import mds edges scale tools
-
 
 #-----  Create Files
 
@@ -57,7 +55,4 @@ MnP:
 
 setupMongo:
 	npm install co-mongodb co underscore assert fs readline sync-request xmldom
-	
-syncMongo:
-	sudo node sync.js
 	

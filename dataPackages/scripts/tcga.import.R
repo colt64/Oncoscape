@@ -317,11 +317,11 @@ os.save.categories <- function(datasets = c("brain")){
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
-#commands <- c("categories", "clinical", "molecular", "scale")
+commands <- c("categories", "clinical", "molecular", "scale")
 #commands <- c("categories")
 #commands <- c("molecular")
 #commands <- c("scale")
-commands <- "molecular"
+#commands <- "molecular"
 
 
 args = commandArgs(trailingOnly=TRUE)
@@ -332,7 +332,7 @@ if("categories" %in% commands)
   os.save.categories( datasets=c( "brain", "brca"))
 
 if("molecular" %in% commands) 
-  os.data.batch("../manifests/os.validate.brain.manifest.json")
+  os.data.batch("../manifests/os.full.molecular.manifest.json")
 
 if("clinical" %in% commands) 
   os.data.batch("../manifests/os.tcga.full.clinical.manifest.json",

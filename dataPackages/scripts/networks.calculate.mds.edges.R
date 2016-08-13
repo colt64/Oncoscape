@@ -9,8 +9,6 @@ options(stringsAsFactors=FALSE)
 
 source("common.R")
 
-commands <- c("mds", "edges")
-#commands <- c("mds")
 args = commandArgs(trailingOnly=TRUE)
 if(length(args) != 0)
 	commands <- args
@@ -455,8 +453,8 @@ run.batch.network_edges <- function(datasets){
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
-#commands <- c("cluster", "edges")
-commands <- "cluster"
+commands <- c("cluster", "edges")
+#commands <- "cluster"
 
 genesets <-     mongo.find.all(mongo,paste(db, "hg19_genesets_hgnc_import", sep="."), query=list())
 
@@ -464,8 +462,6 @@ if("cluster" %in% commands){
   # calculate patient similarity
   molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
                                     query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
-  molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
-                                       query='{"dataType":{"$in":["cnv","mut01"]}, "source":"ucsc-HoBo"}')
   run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
 }
 
@@ -474,8 +470,6 @@ if("edges" %in% commands){
   molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
                                        query='{"dataType":{"$in":["cnv","mut01"]}}')
 
-  molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
-                                       query='{"dataType":{"$in":["cnv","mut01"]}, "source":"ucsc-HoBo"}')
   run.batch.network_edges(molecular_manifest)
 }
 

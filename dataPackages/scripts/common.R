@@ -6,28 +6,45 @@ library(plyr)
 library(jsonlite)
 library(rmongodb)
 
-db <- "oncoscape"
-## Note: RStudio does not read from bashrc, startup reads from RHome .Renviron 
-
 date <- as.character(Sys.Date())
 chromosomes <- c(seq(1:22), "X", "Y")
+
+db <- "pancan12"
 
 dataset_map <- list(
   brca=list(name="Breast", img= "DSbreast.png", beta=FALSE, source="TCGA"),
   brain=list(name="Brain", img= "DSbrain.png", beta=FALSE, source="TCGA"),
-  gbm=list(name="Glioblastoma", img= "DSbrain.png", beta=TRUE, source="TCGA")
+  gbm=list(name="Glioblastoma", img= "DSbrain.png", beta=TRUE, source="TCGA"),
+  coadread=list(name="Colorectal", img= "DScoadread.png", beta=TRUE, source="TCGA"),
+  hnsc=list(name="Head and Neck", img= "DShnsc.png", beta=TRUE, source="TCGA"),
+  lgg=list(name="Lower grade glioma", img= "DSbrain.png", beta=TRUE, source="TCGA"),
+  luad=list(name="Lung adenocarcinoma", img= "DSlung.png", beta=TRUE, source="TCGA"),
+  lusc=list(name="Lung squamous cell", img= "DSlung.png", beta=TRUE, source="TCGA"),
+  lung=list(name="Lung", img= "DSlung.png", beta=TRUE, source="TCGA"),
+  prad=list(name="Prostate", img= "DSprostate.png", beta=TRUE, source="TCGA"),
+  paad=list(name="Pancreas", img= "DSpancreas.png", beta=TRUE, source="TCGA"),
+  acc=list(name="Adrenocortical carcinoma", img= "DSdemo.png", beta=TRUE, source="TCGA"),
+  blca=list(name="Bladder urothelial carcinoma", img= "DSbladder.png", beta=TRUE, source="TCGA"),
+  cesc=list(name="Cervical", img= "DSovary.png", beta=TRUE, source="TCGA"),
+  chol=list(name="Cholangiocarcinoma", img= "DSdemo.png", beta=TRUE, source="TCGA"),
+  dlbc=list(name="Diffuse large B-cell", img= "DSdemo.png", beta=TRUE, source="TCGA"),
+  esca=list(name="Esophageal", img= "DShnsc.png", beta=TRUE, source="TCGA"),
+  laml=list(name="Acute Myeloid Leukemia", img= "DSdemo.png", beta=TRUE, source="TCGA"),
+  sarc=list(name="Sarcoma", img= "DSsarcoma.png", beta=TRUE, source="TCGA"),
+  stad=list(name="Stomach", img= "DSdemo.png", beta=TRUE, source="TCGA")
+
+
 )
 
 #---------------------------------------------------------
-## rmongodb v1.8.0 does not support SCRAM-SHA-1 from MONGODB-CR with MongoDB 3.0
-#https://github.com/mongosoup/rmongodb/issues/77
-connect.to.rmongodb <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
-  mongo <- mongo.create(host = host, name = name, username = username,
-                        password = password, db = db, timeout = 0L)
-  
-  stopifnot(mongo.is.connected(mongo))
-  return(mongo)
-}#---------------------------------------------------------
+connect.to.rmongodb <- function(host= "140.107.29.3", name = "", username = "", password = "", db = "admin"){
+	mongo <- mongo.create(host = host, name = name, username = username,
+  							password = password, db = db, timeout = 0L)
+	
+	stopifnot(mongo.is.connected(mongo))
+	return(mongo)
+}
+#---------------------------------------------------------
 connect.to.mongo <- connect.to.rmongodb
 
 #---------------------------------------------------------

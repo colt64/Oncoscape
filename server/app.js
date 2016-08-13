@@ -7,10 +7,10 @@ const uuid = require('node-uuid');
 const favicon = require('serve-favicon');
 
 
-mongoose.connect('mongodb://localhost/oncoscape');
+//mongoose.connect('mongodb://localhost/oncoscape');
 
-/*mongoose.connect(
-    'mongodb://oncoscape-dev-db1.sttrcancer.io:27017,oncoscape-dev-db2.sttrcancer.io:27017,oncoscape-dev-db3.sttrcancer.io:27017/BnB?authSource=admin', {
+mongoose.connect(
+    'mongodb://oncoscape-dev-db1.sttrcancer.io:27017,oncoscape-dev-db2.sttrcancer.io:27017,oncoscape-dev-db3.sttrcancer.io:27017/pancan12?authSource=admin', {
         db: {
             native_parser: true
         },
@@ -24,7 +24,6 @@ mongoose.connect('mongodb://localhost/oncoscape');
         user: 'oncoscapeRead',
         pass: 'i1f4d9botHD4xnZ'
     });
-*/
 
 var app = express();
 

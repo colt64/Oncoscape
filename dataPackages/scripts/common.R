@@ -37,7 +37,7 @@ dataset_map <- list(
 )
 
 #---------------------------------------------------------
-connect.to.rmongodb <- function(host= "140.107.29.3", name = "", username = "", password = "", db = "admin"){
+connect.to.rmongodb <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
 	mongo <- mongo.create(host = host, name = name, username = username,
   							password = password, db = db, timeout = 0L)
 	
@@ -213,6 +213,16 @@ remove.collection.byName <- function(mongo,db, collection){
 		  
 		}
 
+}
+
+#---------------------------------------------------------
+save.lookup.collection<- function(mongo,db,name, lookup.collection){
+
+  ## add collection to database
+  lapply(lookup.collection, function(item){
+    mongo.insert(mongo, paste(db, name, sep="."), item)
+  })
+ 
 }
 
 #---------------------------------------------------------

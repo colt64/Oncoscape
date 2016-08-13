@@ -317,11 +317,12 @@ os.save.categories <- function(datasets = c("brain")){
 ## must first initialize server (through shell >mongod)
 mongo <- connect.to.mongo()
 
-commands <- c("categories", "clinical", "molecular", "scale")
+commands <- c("categories", "clinical", "molecular", "scale", "lookup")
 #commands <- c("categories")
 #commands <- c("molecular")
 #commands <- c("scale")
 #commands <- "molecular"
+commands <- "lookup"
 
 
 args = commandArgs(trailingOnly=TRUE)
@@ -344,4 +345,8 @@ if("scale" %in% commands){
   #save.batch.cluster.scaled.pos(scaleFactor=10000)
 }
 
+if("lookup" %in% commands){
+	lookup_tools <- fromJSON("../manifests/os.lookup_tools.json")
+	save.lookup.collection(mongo,db,"lookup_oncoscape_tools", lookup_tools)
+}
 close.mongo(mongo)

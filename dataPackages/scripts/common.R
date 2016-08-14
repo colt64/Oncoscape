@@ -9,7 +9,8 @@ library(rmongodb)
 date <- as.character(Sys.Date())
 chromosomes <- c(seq(1:22), "X", "Y")
 
-db <- "pancan12"
+#db <- "pancan12"
+db <- "oncoscape"
 
 dataset_map <- list(
   brca=list(name="Breast", img= "DSbreast.png", beta=FALSE, source="TCGA"),
@@ -37,7 +38,7 @@ dataset_map <- list(
 )
 
 #---------------------------------------------------------
-connect.to.rmongodb <- function(host= "140.107.29.3", name = "", username = "", password = "", db = "admin"){
+connect.to.rmongodb <- function(host= "127.0.0.1", name = "", username = "", password = "", db = "admin"){
 	mongo <- mongo.create(host = host, name = name, username = username,
   							password = password, db = db, timeout = 0L)
 	

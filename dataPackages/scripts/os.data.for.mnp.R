@@ -56,7 +56,7 @@ os.copy.chromosome.layout <- function(scaleFactor=100000){
                               query=list(dataset="hg19", dataType="chromosome"))
   scaled <- which(sapply(collection, function(coll){ 
     if(coll$process == "length") return(FALSE)
-    coll$process[[1]][["scale"]]==scaleFactor}))
+    coll$process$scale==scaleFactor}))
   
   data_coll <- mongo.find.one(mongo, paste(db, collection[[scaled]]$collection, sep="."))
   mongo.insert(mongo, "oncoscape.render_chromosome", data_coll)
@@ -77,7 +77,7 @@ os.save.pca <- function(scaleFactor=NA){
                               query=list(dataType="pcaScores"))
   
   for(collection in pca_colls){
-    scale <- collection$process[[1]]$scale
+    scale <- collection$process$scale
     if(is.na(scaleFactor)){
       if(is.null(scale)){
         data_coll <- mongo.find.one(mongo, paste(db, collection$collection, sep="."))
@@ -96,6 +96,7 @@ os.save.pca <- function(scaleFactor=NA){
 ##----------------------------
 #commands <- c("patient", "pca", "chromosome")
 commands <- c("patient", "chromosome", "pca")
+commands <- "pca"
 
 mongo <- connect.to.mongo()
 
@@ -107,6 +108,7 @@ if("patient" %in% commands){
  
 if("chromosome" %in% commands) 
   os.copy.chromosome.layout(scaleFactor=100000)
+
 if("pca" %in% commands) 
   os.save.pca()
 

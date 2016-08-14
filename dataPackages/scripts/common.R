@@ -217,6 +217,16 @@ remove.collection.byName <- function(mongo,db, collection){
 }
 
 #---------------------------------------------------------
+save.lookup.collection<- function(mongo,db,name, lookup.collection){
+
+  ## add collection to database
+  lapply(lookup.collection, function(item){
+    mongo.insert(mongo, paste(db, name, sep="."), item)
+  })
+ 
+}
+
+#---------------------------------------------------------
 save.collection<- function(mongo,db, dataset, dataType,source,result, parent, process,processName){
   
   cat("-save collection\n")

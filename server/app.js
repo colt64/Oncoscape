@@ -24,7 +24,6 @@ mongoose.connect(
         user: 'oncoscapeRead',
         pass: 'i1f4d9botHD4xnZ'
     });
-
 var app = express();
 
 // Compression
@@ -130,6 +129,6 @@ app.get('/', function(req, res) {
 });
 
 // Start Listening
-app.listen(9999, function() {
+app.listen(80, function() {
     console.log("OK");
 });

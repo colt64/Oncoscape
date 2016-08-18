@@ -460,16 +460,23 @@ genesets <-     mongo.find.all(mongo,paste(db, "hg19_genesets_hgnc_import", sep=
 
 if("cluster" %in% commands){
   # calculate patient similarity
+#  molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
+#                                    query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
+  
   molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
-                                    query='{"dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
+                                       query='{"dataset": "hnsc", "dataType":{"$in":["cnv","mut01", "rna", "protein", "methylation"]}}')
+  
   run.batch.patient_similarity(molecular_manifest, scaleFactor=100000)
 }
 
 if("edges" %in% commands){
   # map edges for all patients between CNV/Mut and Geneset tables
+#  molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
+#                                       query='{"dataType":{"$in":["cnv","mut01"]}}')
   molecular_manifest <- mongo.find.all(mongo, paste(db, "manifest", sep="."), 
-                                       query='{"dataType":{"$in":["cnv","mut01"]}}')
-
+                                       query='{"dataset": "hnsc", "dataType":{"$in":["cnv","mut01"]}}')
+  
+  
   run.batch.network_edges(molecular_manifest)
 }
 

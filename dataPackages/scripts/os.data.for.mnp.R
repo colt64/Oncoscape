@@ -80,14 +80,14 @@ os.save.pca <- function(scaleFactor=NA){
     scale <- collection$process$scale
     if(is.na(scaleFactor)){
       if(is.null(scale)){
-        data_coll <- mongo.find.one(mongo, paste(db, collection$collection, sep="."))
+        data_coll <- mongo.find.all(mongo, paste(db, collection$collection, sep="."))[[1]]
         data_coll$source <- collection$source
         mongo.insert(mongo, paste(db, "render_pca",sep="."), data_coll)
       }
       next;
     }
     if(is.null(scale) ||is.na(scale) || scale != scaleFactor) next;
-    data_coll <- mongo.find.one(mongo, paste(db, collection$collection, sep="."))
+    data_coll <- mongo.find.all(mongo, paste(db, collection$collection, sep="."))[[1]]
     data_coll$source <- collection$source
     mongo.insert(mongo, paste(db, "render_pca",sep="."), data_coll)
   }
@@ -95,8 +95,7 @@ os.save.pca <- function(scaleFactor=NA){
 
 ##----------------------------
 #commands <- c("patient", "pca", "chromosome")
-commands <- c("patient", "chromosome", "pca")
-commands <- "pca"
+commands <- c("pca", "patient")
 
 mongo <- connect.to.mongo()
 

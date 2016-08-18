@@ -76,7 +76,6 @@
 
             // View Model
             var vm = (function(vm, osApi) {
-            debugger;
                 vm.datasource = osApi.getDataSource();
                 vm.geneSets = [];
                 vm.geneSet = null;
@@ -245,9 +244,9 @@
                     .remove();
 
                 circles
-                    .style("fill", function(d,i) { 
-                        
-                        return d.color; 
+                    .style("fill", function(d,i) {
+
+                        return d.color;
                     } );
 
 
@@ -271,12 +270,12 @@
                     .attr("cy", function(d) {
                         return layout.yScale(d[1]);
                     })
-                    .style("fill", function(d,i) { 
-                        return d.color; 
+                    .style("fill", function(d,i) {
+                        return d.color;
                     } )
                     .style("fill-opacity", .8);
 
-                
+
 
                 d3yAxis
                     .attr("class", "axis")
@@ -334,7 +333,7 @@
                     return p;
                 },{});
 
-                data = data.map(function(v){ 
+                data = data.map(function(v){
                     v.color = (this[v.id]!=undefined) ? this[v.id] : "#DDD";
                     return v;
                 },degMap);
@@ -342,7 +341,7 @@
                 draw();
 
             }
-            
+
             osCohortService.onPatientColorChange.add(onPatientColorChange);
 
             // Destroy

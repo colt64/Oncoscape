@@ -38,7 +38,6 @@
             }else if (angular.isString(value)){
                 if (_dataSource.disease!=value){
                     if (_dataSource != value){
-                            debugger;
                         _dataSource = _dataSources.filter(function(v){ v.disease==disease}, {key:value})[0]
                         onDataSource.dispatch(_dataSource);
                     }

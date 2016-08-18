@@ -261,13 +261,23 @@ os.data.batch <- function(manifest, ...){
 #----------------------------------------------------------------------------------------------------
 get.category.data<- function(name, table, cat.col.name, color.col.name= "color"){
   
+  table[,cat.col.name] <- as.character(table[,cat.col.name])
+  NoCategory <- is.na(table[,cat.col.name])
+  table[NoCategory,cat.col.name] <- "NA"
+  table[NoCategory,color.col.name] <- "grey"
+  
   catNames <- unique(table[,cat.col.name])
   categories.type.list <- lapply(catNames, function(cat.name){
     matches <- which(table[,cat.col.name]==cat.name)
     color<- unique(table[matches,color.col.name])
     data <- list(	name=cat.name, color=color)
     data$values = gsub("\\.", "\\-", rownames(table)[matches])
-    return(data)
+
+    if(!grepl("\\-\\d\\d$",data$values)){
+      data$values <- paste(data$values, "01", sep="-")
+    }
+    
+     return(data)
   })
   return (categories.type.list)
 }
@@ -320,9 +330,9 @@ mongo <- connect.to.mongo()
 commands <- c("categories", "clinical", "molecular", "scale", "lookup")
 #commands <- c("categories")
 #commands <- c("molecular")
-#commands <- c("scale")
+commands <- c("scale")
 #commands <- "molecular"
-commands <- "lookup"
+#commands <- "lookup"
 
 
 args = commandArgs(trailingOnly=TRUE)

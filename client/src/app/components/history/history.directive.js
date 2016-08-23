@@ -144,7 +144,6 @@ b:{})}});return g};"function"===typeof define&&define.amd?define(["jquery","data
 
                 });
 
-
             }
 
             // Load Datasets

@@ -23,9 +23,7 @@
 
             // Retrieve Selected Patient Ids From OS Service
             var pc = osCohortService.getPatientCohort();
-            if (pc==null){
-                osCohortService.setPatientCohort([],"All Patients")
-            }
+            if (pc==null){ osCohortService.setPatientCohort([],"All Patients") }
             var selectedIds = (pc==null) ? [] : pc.ids;
 
             var osCohortServiceUpdate = true;
@@ -73,6 +71,12 @@
                 xAxis: 0,
                 yAxis: 0
             };
+            var colors = {
+                data: [],
+                dataset: osApi.getDataSource().disease,
+                name: "None",
+                type: "color"
+            };
 
             // View Model
             var vm = (function(vm, osApi) {
@@ -82,18 +86,21 @@
                 vm.search = "";
                 osApi.query("render_pca", {
                         disease: vm.datasource.disease,
-                        $fields: ['type','geneset']
+                        $fields: ['type','geneset','source']
                     })
                     .then(function(response) {
                         var mr = response.data.reduce( function (p, c) {
                             if (!p.hasOwnProperty(c.geneset)) p[c.geneset] = [];
-                            p[c.geneset].push({name:c.type});
+                            p[c.geneset].push({name:c.type, source:c.source, label:(c.type+"-"+c.source).toUpperCase().replace(/-/gi," - ")});
                             return p;
                         }, {});
                         vm.geneSets = Object.keys(mr).reduce(function(p,c){
-                          p.rv.push( {name:c, types:p.values[c]});
+                          p.rv.push( {name:c, types:p.values[c], label:c.toUpperCase()});
                           return p;
-                        }, {rv:[], values:mr}).rv;
+                        }, {rv:[], values:mr}).rv.sort(function(a,b){
+                            return a.label > b.label;
+                        });
+
                         vm.geneSet = vm.geneSets[0];
                     });
                 return vm;
@@ -101,7 +108,11 @@
             })(this, osApi)
             $scope.$watch('vm.geneSet', function(geneset) {
                 try{
-                    vm.pcaTypes = vm.geneSet.types;
+                    // Sort PCA Types Alphabetically Then By Source R-Alpha (to put ucsc first)
+                    vm.pcaTypes = vm.geneSet.types.sort(function(a,b){
+                        if (a.name!=b.name) return a.name > b.name;
+                        else return a.source < b.source;
+                    });
                     vm.pcaType  = vm.pcaTypes[0];
                 }catch(e){}
             });
@@ -111,7 +122,8 @@
                 osApi.query("render_pca", {
                         disease: vm.datasource.disease,
                         geneset: vm.geneSet.name,
-                        type: vm.pcaType.name
+                        type: vm.pcaType.name,
+                        source: vm.pcaType.source
                     })
                     .then(function(response) {
                         vm.pc1 = response.data[0].pc1;
@@ -123,14 +135,12 @@
                         }, {
                             data: response.data[0].data
                         });
-                        setColor();
                         draw();
                     });
             });
 
             // Drawing Functions
             function scale() {
-
 
                 var osLayout = osApi.getLayout();
 
@@ -150,13 +160,37 @@
                     .domain([-layout.yMax, layout.yMax])
                     .range([layout.height-20, 20]).nice();
             }
-            function setColor(){
-                Object.keys(data).map(function(key){
-                    this[key].color = "#0095e1";
-                }, data);
-            }
-            function draw() {
 
+
+            function setColors(){
+
+                vm.legendCaption = colors.name;
+                vm.legendNodes = colors.data;
+
+                if(colors.name=="None"){
+                    vm.legendCaption = "";
+                    data.forEach(function(v){  v.color = '#0096d5'; })
+
+                }else{
+                    var degMap =colors.data.reduce(function(p,c){
+                        for (var i=0; i<c.values.length; i++){
+                            p[c.values[i]] = c.color;
+                        }
+                        return p;
+                    },{});
+
+                    data = data.map(function(v){
+                        v.color = (this[v.id]!=undefined) ? this[v.id] : "#DDD";
+                        return v;
+                    },degMap);
+                }
+
+
+
+            }
+
+            function draw() {
+                setColors();
                 var vals = Object.keys(data).map(function(key) {
                     return data[key]
                 }, {
@@ -294,6 +328,7 @@
                     .text("PC2");
 
                 setSelected();
+
             }
 
             vm.resize = function() {
@@ -321,25 +356,10 @@
             );
 
 
-            var onPatientColorChange = function(colors){
+            var onPatientColorChange = function(value){
+                colors = value;
                 vm.showPanelColor = false;
-                vm.legendCaption = colors.name;
-                vm.legendNodes = colors.data;
-
-                var degMap =colors.data.reduce(function(p,c){
-                    for (var i=0; i<c.values.length; i++){
-                        p[c.values[i]] = c.color;
-                    }
-                    return p;
-                },{});
-
-                data = data.map(function(v){
-                    v.color = (this[v.id]!=undefined) ? this[v.id] : "#DDD";
-                    return v;
-                },degMap);
-
                 draw();
-
             }
 
             osCohortService.onPatientColorChange.add(onPatientColorChange);

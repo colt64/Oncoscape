@@ -94,6 +94,26 @@
                 authenticate: true,
                 datasource: true
             })
+            .state('example', {
+                url: '/example/{datasource}',
+                template: '<os-example>',
+                authenticate: true
+            })
+            .state('sunburst', {
+                url: '/sunburst/{datasource}',
+                template: '<os-sunburst>',
+                authenticate: true
+            })
+           .state('barplot', {
+                url: '/barplot/{datasource}',
+                template: '<os-barplot>',
+                authenticate: true
+            })
+           .state('bubble', {
+                url: '/bubble/{datasource}',
+                template: '<os-bubble>',
+                authenticate: true
+            })
             .state('oncoprint', {
                 url: '/oncoprint/{datasource}',
                 template: '<os-oncoprint>',

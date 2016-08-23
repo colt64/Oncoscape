@@ -17,7 +17,6 @@
                 left:  (angular.element('#cohortmenu-lock').attr("locked")=="true") ? 300 : 0,
                 right: (angular.element(".tray-right").attr("locked")==="true") ? 300 : 0
             };
-<<<<<<< HEAD
         }
 
 
@@ -27,17 +26,6 @@
         function getDataSources(){
             return _dataSources;
         }
-=======
-        }
-
-
-        // State
-        var _dataSources;
-        var _dataSource;
-        function getDataSources(){
-            return _dataSources;
-        }
->>>>>>> ffb7b99ee6ee33f67b0d081593a390e79fe7c3e8
         function getDataSource(){
             return _dataSource;
         }

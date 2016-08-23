@@ -17,13 +17,11 @@ process <- list(type="import", scale=NA)
 processName = "import"
 
 # -------------------------------------------------------
-
 # aggregate list of unmapped data & cde id mapping
 unmapped.List <- list()
 cde.df <- data.frame()
 
 # Data Processing Functions :: [Map, Clean, Filter]  -------------------------------------------------------
-
 ### Takes matrix, returns list of row names, col names, and data with NA labels removed from mtx
 get.processed.mtx <- function(mtx, dimension){
   if("row" %in% dimension){
@@ -106,7 +104,6 @@ os.data.load.molecular <- function(inputFile, type){
 }
 
 #---------------------------------------------------------
-
 ### Load Function Takes An Import File + Column List & Returns A DataFrame
 os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClassType = "character"){
   
@@ -129,7 +126,6 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
     columns[columns=="metastatic_dx_confirmed_by_other"] = "thca_metastatic_dx_confirmed_by_other"
   }
   if(grepl("../archive/clinical/nationwidechildrens.org_clinical_patient_kirp.txt",inputFile)){
-
     columns[columns=="tumor_type"] = "disease_subtype"
   }
   
@@ -138,7 +134,6 @@ os.data.load.clinical <- function(inputFile, checkEnumerations=FALSE, checkClass
   if(checkEnumerations) { column_type <- rep("character", length(columns))}
   else                  { column_type <- rep("NULL", length(columns)) }
   
-
   # assign class types for recognized columns
   #   for each enumerated class type, 
   #     rename matching column to mapped name and assign appropriate type

@@ -49,7 +49,6 @@ tools: MnP
 MnP:
 	Rscript os.data.for.mnp.R
 		# hobo MDS
-
 #----- Import into MongoDB
 
 setupMongo:

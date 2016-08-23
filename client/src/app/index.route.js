@@ -132,7 +132,7 @@
                 authenticate: true,
                 datasource: true
             })
-           
+
 
         $urlRouterProvider.otherwise('/');
     }

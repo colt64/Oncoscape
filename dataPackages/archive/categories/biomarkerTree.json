@@ -1,0 +1,113 @@
+{
+  "name": ["live"],
+  "size": [1],
+  "children": [
+    {
+      "name": "CD45",
+      "size": 1,
+      "children": [
+        {
+          "name": "B cell",
+          "size": 1,
+          "children": {}
+        },
+        {
+          "name": "NK",
+          "size": 1,
+          "children": {}
+        },
+        {
+          "name": "PMN-MDSC",
+          "size": 1,
+          "children": {}
+        },
+        {
+          "name": "Macrophage",
+          "size": 1,
+          "children": {}
+        },
+        {
+          "name": "Monocyte",
+          "size": 1,
+          "children": {}
+        },
+        {
+          "name": "M-MDSC",
+          "size": 1,
+          "children": {}
+        },
+        {
+          "name": "CD14-CD33-",
+          "size": 1,
+          "children": {}
+        },
+        {
+          "name": "CD3",
+          "size": 1,
+          "children": [
+            {
+              "name": "Tgd",
+              "size": 1,
+              "children": [
+                {
+                  "name": "Tgd_INFG",
+                  "size": 1
+                },
+                {
+                  "name": "Tgd_IL22",
+                  "size": 1
+                },
+                {
+                  "name": "Tgd_IL17",
+                  "size": 1
+                }
+              ]
+            },
+            {
+              "name": "NKT",
+              "size": 1,
+              "children": {}
+            },
+            {
+              "name": "CD8",
+              "size": 1,
+              "children": [
+                {
+                  "name": "CD8_INFG",
+                  "size": 1
+                }
+              ]
+            },
+            {
+              "name": "CD4",
+              "size": 1,
+              "children": [
+                {
+                  "name": "Th22",
+                  "size": 1
+                },
+                {
+                  "name": "Th17",
+                  "size": 1
+                },
+                {
+                  "name": "Th1",
+                  "size": 1
+                },
+                {
+                  "name": "Treg",
+                  "size": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "epCAM",
+      "size": 1,
+      "children": {}
+    }
+  ]
+} 

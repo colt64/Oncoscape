@@ -22,6 +22,7 @@ getGeneSet <- function(geneset_name){
     return(NA)
   
 	return(genesets[[match_name]]$genes)
+
 }
 
 #----------------------------------------------------------------------------------------------------
@@ -325,7 +326,6 @@ run.batch.patient_similarity <- function(datasets, scaleFactor=NA){
 
 	} # for diseaseName	
   
-
 }
 #----------------------------------------------------------------------------------------------------
 get.network_edges <- function(mtx,samples, genes, edgeTypes){
@@ -368,6 +368,7 @@ save.edge.files <- function(dataset, result, source, parent, process,processName
   node2_counts <- lapply(names(temp), function(el) temp[el])
   save.collection(mongo,db, dataset=dataset, dataType="geneDegree", source=source, result=node2_counts,
                               parent=parent, process=process,processName=processName)
+
 }
 #----------------------------------------------------------------------------------------------------
 get.edgePairs <- function(collection, genesetName, ...){				

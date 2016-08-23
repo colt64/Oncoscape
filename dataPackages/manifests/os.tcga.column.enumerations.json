@@ -79,6 +79,9 @@
 		"serum_markers":["serum_markers"],
 		"masaoka_stage":["masaoka_stage"]
 	},
+	"os.class.encounter_type": {
+		"encounter_type": ["performance_status_timing"]
+	},
 	"os.class.clark.level":{
 		"clark_level_at_diagnosis": [  "clark_level_at_diagnosis"]
 	},
@@ -779,7 +782,6 @@
 		"fedpet_or_ct_results": ["fedpet_or_ct_results"],
 		"lymph_nodes_supraclavicular": ["lymph_nodes_supraclavicular"],
 		"her2_and_cent17_scale_other":["her2_and_cent17_scale_other"],
-
 		"extracapsular_spread_pathologic":["extracapsular_spread_pathologic"],
 		"mri_results":["mri_results"],
 		"supratentorial_localization":["supratentorial_localization"],
@@ -864,3 +866,4 @@
 		"new_tumor_event_pathologic_dx_other": ["new_tumor_event_pathologic_dx_other"]
 	}
 } 
+

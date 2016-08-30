@@ -1,0 +1,19 @@
+{
+":integrationId": "TCGA.ESCA.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.ESCA.sampleMap", 
+"anatomical_origin": [
+"Esophagus"
+], 
+"primary_disease": "esophageal carcinoma", 
+"tags": [
+"cancer"
+], 
+"sample_type": [
+"tumor"
+], 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

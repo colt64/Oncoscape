@@ -1,0 +1,19 @@
+{
+":integrationId": "TCGA.COADREAD.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.COADREAD.sampleMap", 
+"anatomical_origin": [
+"Colon and Rectum"
+], 
+"primary_disease": "colon & rectum adenocarcinoma", 
+"tags": [
+"cancer"
+], 
+"sample_type": [
+"tumor"
+], 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

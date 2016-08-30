@@ -1,0 +1,19 @@
+{
+":integrationId": "TCGA.ACC.sampleMap.integrationID", 
+"domain": "TCGA", 
+"name": "TCGA.ACC.sampleMap", 
+"anatomical_origin": [
+"Adrenal gland"
+], 
+"primary_disease": "adrenocortical cancer", 
+"tags": [
+"cancer"
+], 
+"sample_type": [
+"tumor"
+], 
+"version": "2015-01-28", 
+"owner": "TCGA", 
+"type": "sampleMap", 
+"cgDataVersion": 1
+}

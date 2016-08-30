@@ -1,0 +1,34 @@
+{
+"domain": "TCGA", 
+"owner": "TCGA", 
+"cgDataVersion": 1, 
+"cohort": "TCGA Lung Cancer", 
+"min": -2, 
+"tags": [
+"cancer", 
+"non-small cell lung cancer"
+], 
+":sampleMap": "TCGA.LUNG.sampleMap", 
+"sample_type": [
+"tumor"
+], 
+"label": "LUNG copy number (gistic2_thresholded)", 
+"version": "2015-01-27", 
+":probeMap": "hugo", 
+"type": "genomicMatrix", 
+"description": "The dataset is combined from TCGA lung squamous cell carcinoma and lung adenocarcinoma datasets. TCGA lung cancer (LUNG) thresholded gene-level copy number variation (CNV) estimated using the GISTIC2 method.<br><br> Copy number profile was measured experimentally using whole genome microarray at a TCGA genome characterization center. Subsequently, GISTIC2 method was applied using the TCGA FIREHOSE pipeline to produce gene-level copy number estimates. GISTIC2 further thresholded the estimated values to -2,-1,0,1,2, representing homozygous deletion, single copy deletion, diploid normal copy, low-level copy number amplification, or high-level copy number amplification. Genes are mapped onto the human genome coordinates using UCSC cgData HUGO probeMap. Reference to GISTIC2 method PMID:21527027.<br><br>", 
+"anatomical_origin": [
+"Lung"
+], 
+"max": 2, 
+"longTitle": "TCGA lung cancer (LUNG) copy number gistic2_thresholded estimate", 
+"gain": 0.5, 
+"path": "data/public/TCGA/LUNG/Gistic2_CopyNumber_Gistic2_all_thresholded.by_genes", 
+":dataSubType": "copy number", 
+"groupTitle": "TCGA lung cancer", 
+"name": "TCGA_LUNG_gistic2thd", 
+"shortTitle": "LUNG copy number (gistic2_thresholded)", 
+"primary_disease": "lung cancer", 
+"security": "public", 
+"redistribution": true
+}

@@ -1,0 +1,16 @@
+exportClasses(PCA)
+
+export(
+  PCA,
+  printf
+  )
+
+exportMethods(
+  show,
+  pcaDataSummary,
+  getDataMatrixName,
+  setDataMatrixName,
+  getDataPackage,
+  calculate
+  )
+

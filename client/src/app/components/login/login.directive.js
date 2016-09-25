@@ -5,6 +5,7 @@
         .module('oncoscape')
         .directive('osLogin', login);
 
+
     /** @ngInject */
     function login() {
 
@@ -21,21 +22,20 @@
 
         /** @ngInject */
         function LoginController(osApi, $state, $scope, osAuth) {
+            
 
             var vm = this;
             vm.networks = osAuth.getAuthSources();
             vm.login = osAuth.login;
 
-            var loginSuccess = function(v) {
-                $state.go("datasource");
-            };
+            var loginSuccess = function(v){ $state.go("datasource"); };
 
             osAuth.onLogin.add(loginSuccess);
 
             // Desotroy
             $scope.$on('$destroy', function() {
                 osAuth.onLogin.remove(loginSuccess);
-            });
+            });            
         }
     }
 })();
